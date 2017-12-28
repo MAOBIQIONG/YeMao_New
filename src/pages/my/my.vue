@@ -3,7 +3,9 @@
     <!--<div v-tap="{ methods:cgLink , pagename:'vuxtest' }" class="msg">{{ msg }}</div>-->
     <!--头部-->
     <div class="mine-top">
-      <div class="shezhi" v-tap="{ methods:toSet }"></div>
+      <div class="shezhi" v-tap="{ methods:toSet }">
+          <img src="../../../static/images/my/shezhi1.png" />
+      </div>
       <div class="tu-nicheng">
         <div class="touxiang" v-tap="{ methods:modifyAvatar }">
           <img :src="userInfo.img || defultAvatar" />

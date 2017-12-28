@@ -46,7 +46,7 @@
         <div class="dj-shuru"><span class="msgs">点击获取验证码</span></div>
       </div>
     </div>
-    <div class="log-btn"><span>下一步</span></div>
+    <div class="log-btn" @click="nextStep()"><span>下一步</span></div>
   </div>
 </template>
 
@@ -162,7 +162,18 @@
             $('.tishi').text("");
           }
         })
-      }
+      },
+
+        nextStep(){
+            let param1 = [
+                {key:"nickname",value:this.param.nickname},
+                {key:"mobile_phone",value:this.param.mobile_phone},
+                {key:"verifying_code",value:this.param.verifying_code}
+            ]
+            // let storage = common.op_localStorage().getStorage();
+            common.op_localStorage().setArray(param1);
+            // console.log(storage);
+        }
     },
   }
 </script>

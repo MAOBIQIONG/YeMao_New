@@ -70,7 +70,7 @@
     },
     store,
     created: function () {
-      this.submit();
+    //   this.submit();
     },
     mounted:function(){
       //输入框内有内容时显示清空按钮

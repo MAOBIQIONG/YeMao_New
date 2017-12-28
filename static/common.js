@@ -161,4 +161,33 @@ const common = {
 
 }
 
+common.op_localStorage = function() {
+    let storage = window.localStorage;
+    let show = function(){
+        console.log(storage);
+    };
+    let set = function(key, value){
+        storage.setItem(key,value);
+    };
+    let setArray = function(array){
+        let i;
+        for (i in array) {
+            storage.setItem(array[i].key,array[i].value)
+        }
+    };
+    let get = function(key){
+        return storage.getItem(key);     
+    };
+    let remove = function(key) {
+        storage.removeItem(key);
+    };
+    let clear = function(){
+        storage.clear();
+    };
+    let getStorage = function(){
+        return storage
+    }
+    return {set,get,remove,setArray,show,getStorage,clear}
+}
+
 export default common;
