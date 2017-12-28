@@ -98,8 +98,9 @@
             var data = response.data;
             if( data && data.code == 200 ){
               this.$store.state.indexRefreshMark = 1;
-              _self.showToast("抢单成功！");
-              _self.goback();
+            //   _self.showToast("抢单成功！");
+            //   _self.goback();
+             _self.toUrl("competiteSuccess")
             }else{
               _self.showToast("抢单失败！");
             }

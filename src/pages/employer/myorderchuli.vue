@@ -225,7 +225,9 @@
     },
     methods: {
       goback() {
-        this.$router.goBack();
+        // this.$router.goBack();
+        if(common.op_localStorage().get("fromRS")){common.op_localStorage().remove("fromRS"); this.$router.push({name:"index"});}
+        else{this.$router.goBack();}
       },
       toUrl(name) {
         this.$router.push({name: name});

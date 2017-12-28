@@ -288,8 +288,9 @@
           if( response ){
             var data = response.data;
             if( data && data.code == 200 ){
-              _self.showToast("发布成功！");
-              _self.goback();
+            //   _self.showToast("发布成功！");
+            //   _self.goback();
+             _self.toUrl('releaseSuccess');
             }else{
               _self.showToast("发布失败！");
             }

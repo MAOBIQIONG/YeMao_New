@@ -34,6 +34,7 @@ import daizhifu from '@/pages/employer/daizhifu'
 import daijiaofu from '@/pages/employer/daijiaofu'
 import yiwancheng from '@/pages/employer/yiwancheng'
 import yijianhuisheng from '@/pages/employer/yijianhuisheng'
+import releaseSuccess from '@/pages/employer/releaseSuccess'
 import sjszxxq from '@/pages/designer/sjszx-xq'
 import shejishigerenzhongxin from '@/pages/designer/shejishigerenzhongxin'
 import xiugaigerenxinxi from '@/pages/designer/xiugaigerenxinxi'
@@ -52,6 +53,7 @@ import tijiaoshenhe from '@/pages/designer/tijiaoshenhe'
 import anliexq from '@/pages/designer/anliexq'
 import tixianchenggong from '@/pages/designer/tixianchenggong'
 import renzhengchenggong from '@/pages/designer/renzhengchenggong'
+import competiteSuccess from '@/pages/designer/competiteSuccess'
 import set from '@/pages/my/set'
 import setnicheng from '@/pages/my/set-nicheng'
 import setnum from '@/pages/my/set-num'
@@ -123,6 +125,10 @@ const routeArray = [
     name: 'renzhengchenggong',
     component: renzhengchenggong
   },
+    { path:'/competiteSuccess',
+    name:'competiteSuccess',
+    component: competiteSuccess
+    },
   { path: '/tixianchenggong',
     name: 'tixianchenggong',
     component: tixianchenggong
@@ -220,6 +226,11 @@ const routeArray = [
     name: 'fabudingdan',
     component: fabudingdan
   },
+    {
+        path:'/releaseSuccess',
+        name:'releaseSuccess',
+        component: releaseSuccess
+    },
   { path: '/myorderchuli',
     name: 'myorderchuli',
     component: myorderchuli

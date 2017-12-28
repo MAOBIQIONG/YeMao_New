@@ -10,31 +10,31 @@
     </div>
     <!--模块-->
     <div class="mokuai">
-       <ul>
-          <li @click="toUrl('shejishigerenzhongxin')">
-           <p>
-             <img src="../../../static/images/designer/geren.png" />
-           </p>
-           <p>个人中心</p>
-          </li>
-          <li @click="toUrl('mymoney')">
-            <p>
-              <img src="../../../static/images/designer/qianbao.png" />
-            </p>
-            <p>钱包</p>
-          </li>
-          <li @click="toUrl('renzheng')">
-            <p>
-              <img src="../../../static/images/designer/renzhen.png" />
-            </p>
-            <p>认证中心</p>
-          </li>
-          <li @click="toUrl('myorderchuli')">
-            <p>
-              <img src="../../../static/images/designer/dingdan.png" />
-            </p>
-            <p>订单</p>
-          </li>
+      <ul>
+        <li @click="toUrl('shejishigerenzhongxin')">
+          <p>
+            <img src="../../../static/images/designer/geren.png" />
+          </p>
+          <p>个人中心</p>
+        </li>
+        <li @click="toUrl('mymoney')">
+          <p>
+            <img src="../../../static/images/designer/qianbao.png" />
+          </p>
+          <p>钱包</p>
+        </li>
+        <li @click="toUrl('renzheng')">
+          <p>
+            <img src="../../../static/images/designer/renzhen.png" />
+          </p>
+          <p>认证中心</p>
+        </li>
+        <li @click="toUrl('myorderchuli')">
+          <p>
+            <img src="../../../static/images/designer/dingdan.png" />
+          </p>
+          <p>订单</p>
+        </li>
       </ul>
     </div>
     <!--智能排序-->
@@ -81,110 +81,171 @@
     </div>
     <!--设计师列表-->
     <div class="content">
-      <div class="sjs-list"@click="toUrl('sjszxxq')">
-        <div class="sjs-top">
-          <div class="st-touxiang">
-            <img src="../../../static/images/bj.jpg" />
-          </div>
-          <div class="st-neirong">
-            <div class="sn-top">
-              <div class="st-nicheng">设计师小a</div>
-              <div class="st-pingxin"></div>
+      <!--<div class="sjs-list"@click="toUrl('sjszxxq')">-->
+      <!--<div class="sjs-top">-->
+      <!--<div class="st-touxiang">-->
+      <!--<img src="../../../static/images/bj.jpg" />-->
+      <!--</div>-->
+      <!--<div class="st-neirong">-->
+      <!--<div class="sn-top">-->
+      <!--<div class="st-nicheng">设计师小a</div>-->
+      <!--<div class="st-pingxin"></div>-->
+      <!--</div>-->
+      <!--<div class="sn-bottom">-->
+      <!--<div class="sb-nianling">5年</div>-->
+      <!--<div class="sb-qian">签</div>-->
+      <!--<div class="sb-ysm">已实名</div>-->
+      <!--<div class="sb-yrz">已认证</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="st-jiageleixin">-->
+      <!--<div class="st-jiage"><span>￥</span><span>100</span>/时</div>-->
+      <!--<div class="st-leixin"><span>景观设计</span></div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-content">-->
+      <!--<div class="sc-jiesao">-->
+      <!--已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-bottom">-->
+      <!--<div class="sjs-yysj">应邀设计</div>-->
+      <!--<div class="sjs-mmlt">喵喵聊天</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-list">-->
+      <!--<div class="sjs-top">-->
+      <!--<div class="st-touxiang">-->
+      <!--<img src="../../../static/images/bj.jpg" />-->
+      <!--</div>-->
+      <!--<div class="st-neirong">-->
+      <!--<div class="sn-top">-->
+      <!--<div class="st-nicheng">设计师小a</div>-->
+      <!--<div class="st-pingxin"></div>-->
+      <!--</div>-->
+      <!--<div class="sn-bottom">-->
+      <!--<div class="sb-nianling">5年</div>-->
+      <!--<div class="sb-qian">签</div>-->
+      <!--<div class="sb-ysm">已实名</div>-->
+      <!--<div class="sb-yrz">已认证</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="st-jiageleixin">-->
+      <!--<div class="st-jiage"><span>￥</span><span>100</span>/时</div>-->
+      <!--<div class="st-leixin"><span>景观设计</span></div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-content">-->
+      <!--<div class="sc-jiesao">-->
+      <!--已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-bottom">-->
+      <!--<div class="sjs-yysj">应邀设计</div>-->
+      <!--<div class="sjs-mmlt">喵喵聊天</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-list">-->
+      <!--<div class="sjs-top">-->
+      <!--<div class="st-touxiang">-->
+      <!--<img src="../../../static/images/bj.jpg" />-->
+      <!--</div>-->
+      <!--<div class="st-neirong">-->
+      <!--<div class="sn-top">-->
+      <!--<div class="st-nicheng">设计师小a</div>-->
+      <!--<div class="st-pingxin"></div>-->
+      <!--</div>-->
+      <!--<div class="sn-bottom">-->
+      <!--<div class="sb-nianling">5年</div>-->
+      <!--<div class="sb-qian">签</div>-->
+      <!--<div class="sb-ysm">已实名</div>-->
+      <!--<div class="sb-yrz">已认证</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="st-jiageleixin">-->
+      <!--<div class="st-jiage"><span>￥</span><span>100</span>/时</div>-->
+      <!--<div class="st-leixin"><span>景观设计</span></div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-content">-->
+      <!--<div class="sc-jiesao">-->
+      <!--已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--<div class="sjs-bottom">-->
+      <!--<div class="sjs-yysj">应邀设计</div>-->
+      <!--<div class="sjs-mmlt">喵喵聊天</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <scroller lock-x height="-44" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
+        <div>
+          <div class="sjs-list" v-for="order in orderList" @click="toUrl('sjszxxq')">
+            <div class="sjs-top">
+              <div class="st-touxiang">
+                <img src="../../../static/images/bj.jpg" />
+              </div>
+              <div class="st-neirong">
+                <div class="sn-top">
+                  <div class="st-nicheng">设计师小a</div>
+                  <div class="st-pingxin"></div>
+                </div>
+                <div class="sn-bottom">
+                  <div class="sb-nianling">5年</div>
+                  <div class="sb-qian">签</div>
+                  <div class="sb-ysm">已实名</div>
+                  <div class="sb-yrz">已认证</div>
+                </div>
+              </div>
+              <div class="st-jiageleixin">
+                <div class="st-jiage"><span>￥</span><span>100</span>/时</div>
+                <div class="st-leixin"><span>景观设计</span></div>
+              </div>
             </div>
-            <div class="sn-bottom">
-              <div class="sb-nianling">5年</div>
-              <div class="sb-qian">签</div>
-              <div class="sb-ysm">已实名</div>
-              <div class="sb-yrz">已认证</div>
+            <div class="sjs-content">
+              <div class="sc-jiesao">
+                已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成
+              </div>
+            </div>
+            <div class="sjs-bottom">
+              <div class="sjs-yysj">应邀设计</div>
+              <div class="sjs-mmlt">喵喵聊天</div>
             </div>
           </div>
-          <div class="st-jiageleixin">
-            <div class="st-jiage"><span>￥</span><span>100</span>/时</div>
-            <div class="st-leixin"><span>景观设计</span></div>
-          </div>
+          <load-more :show-loading="sliderFlag" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 50px"></load-more>
         </div>
-        <div class="sjs-content">
-          <div class="sc-jiesao">
-            已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成
-          </div>
-        </div>
-        <div class="sjs-bottom">
-          <div class="sjs-yysj">应邀设计</div>
-          <div class="sjs-mmlt">喵喵聊天</div>
-        </div>
-      </div>
-      <div class="sjs-list">
-        <div class="sjs-top">
-          <div class="st-touxiang">
-            <img src="../../../static/images/bj.jpg" />
-          </div>
-          <div class="st-neirong">
-            <div class="sn-top">
-              <div class="st-nicheng">设计师小a</div>
-              <div class="st-pingxin"></div>
-            </div>
-            <div class="sn-bottom">
-              <div class="sb-nianling">5年</div>
-              <div class="sb-qian">签</div>
-              <div class="sb-ysm">已实名</div>
-              <div class="sb-yrz">已认证</div>
-            </div>
-          </div>
-          <div class="st-jiageleixin">
-            <div class="st-jiage"><span>￥</span><span>100</span>/时</div>
-            <div class="st-leixin"><span>景观设计</span></div>
-          </div>
-        </div>
-        <div class="sjs-content">
-          <div class="sc-jiesao">
-            已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成
-          </div>
-        </div>
-        <div class="sjs-bottom">
-          <div class="sjs-yysj">应邀设计</div>
-          <div class="sjs-mmlt">喵喵聊天</div>
-        </div>
-      </div>
-      <div class="sjs-list">
-        <div class="sjs-top">
-          <div class="st-touxiang">
-            <img src="../../../static/images/bj.jpg" />
-          </div>
-          <div class="st-neirong">
-            <div class="sn-top">
-              <div class="st-nicheng">设计师小a</div>
-              <div class="st-pingxin"></div>
-            </div>
-            <div class="sn-bottom">
-              <div class="sb-nianling">5年</div>
-              <div class="sb-qian">签</div>
-              <div class="sb-ysm">已实名</div>
-              <div class="sb-yrz">已认证</div>
-            </div>
-          </div>
-          <div class="st-jiageleixin">
-            <div class="st-jiage"><span>￥</span><span>100</span>/时</div>
-            <div class="st-leixin"><span>景观设计</span></div>
-          </div>
-        </div>
-        <div class="sjs-content">
-          <div class="sc-jiesao">
-            已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成
-          </div>
-        </div>
-        <div class="sjs-bottom">
-          <div class="sjs-yysj">应邀设计</div>
-          <div class="sjs-mmlt">喵喵聊天</div>
-        </div>
-      </div>
+      </scroller>
     </div>
   </div>
 </template>
 
 <script>
+  import { Scroller, Divider, Spinner, LoadMore,Datetime,} from 'vux'
   export default {
+    components: {
+      Scroller,
+      Divider,
+      Spinner,
+      LoadMore,
+      Datetime,
+    },
     data() {
       return {
+        orderList: [
+          {"signInSituationId":"1001",},
+          {"signInSituationId":"1002",},
+          {"signInSituationId":"1003",},
+          {"signInSituationId":"1004",},
+          {"signInSituationId":"1005",},
+          {"signInSituationId":"1006",},
+          {"signInSituationId":"1007",},
+          {"signInSituationId":"1008",},
+        ],
+        index:4,
+        isSlider:false,
+        sliderFlag:true,
+        loadtext:"正在加载...",
+        loadrefresh: '正在加载...',
+        loadnomore: '没有更多数据了',
       }
     },
     mounted: function () {
@@ -232,7 +293,41 @@
           }
           $others.addClass('bg').removeClass('bg_click')
         });
-      }
+      },
+      //上拉加载
+      onScrollBottom () {
+        var obj = this;
+        if( obj.isSlider == true ) return;
+        obj.isSlider = true;
+
+        if( obj.index == 0 ){
+          obj.loadtext = obj.loadnomore;
+          obj.sliderFlag = false;
+          return;
+        }
+        obj.index--;
+        obj.loadtext = obj.loadrefresh;
+        obj.sliderFlag = true;
+        if (this.onFetching) {
+          // do nothing
+        } else {
+          this.onFetching = true
+          setTimeout(() => {
+            for (let i=0;i<10;i++){
+              let jia = {"id":"",};
+              obj. orderList.push(jia);
+            }
+            this.$nextTick(() => {
+              this.$refs.scrollerBottom.reset()
+            })
+            this.onFetching = false
+          }, 2000)
+        }
+
+        setTimeout(() => {
+          obj.isSlider = false;
+        }, 2500)
+      },
     }
   }
 </script>
