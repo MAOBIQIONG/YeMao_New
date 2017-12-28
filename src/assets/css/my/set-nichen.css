@@ -1,0 +1,36 @@
+
+.setp-content {
+  width: 100%;
+  position: fixed;
+  height: 100%;
+  background: #f2f2f2;
+  top: 0.88rem;
+  left: 0;
+}
+
+.setp-content .ymm {
+  width: 100%;
+  height: 0.8rem;
+  background: white;
+  font-size: 0.28rem;
+  line-height: 0.8rem;
+  margin-top: 0.1rem;
+}
+
+.setp-content .ymm .left {
+  float: left;
+  margin-left: 0.2rem;
+}
+
+.setp-content .ymm .right {
+  float: right;
+  margin-right: 2.4rem;
+}
+
+.setp-content .ymm .right input {
+  border: none;
+  font-size: 0.28rem;
+  outline: medium;
+}
+
+/*# sourceMappingURL=set-nichen.css.map */

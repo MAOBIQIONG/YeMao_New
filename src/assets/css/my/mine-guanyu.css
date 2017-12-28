@@ -1,0 +1,23 @@
+
+.log {
+	width: 100%;
+	height: 3.8rem;
+	display: inline-block;
+	font-size: 0.28rem;
+	text-align: center;
+	color: #d9d4d9;
+  margin-top: 0.88rem;
+}
+
+.log .log-img {
+	width: 2.1rem;
+	height: 2.1rem;
+	margin: auto;
+	margin-top: 0.85rem;
+	margin-bottom: 0.3rem;
+}
+
+.log .log-img img {
+	width: 100%;
+}
+

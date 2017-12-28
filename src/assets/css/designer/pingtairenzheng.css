@@ -1,0 +1,144 @@
+
+.content {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	font-size: 0.24rem;
+	background: #F2F2F2;
+	padding-bottom: 0.4rem;
+  margin-top: 0.88rem;
+}
+
+.content .banner {
+	width: 100%;
+}
+
+.content .banner img {
+	width: 100%;
+	height: 100%;
+}
+
+.content .tixin {
+	width: 100%;
+	height: 0.9rem;
+	line-height: 0.9rem;
+	text-align: center;
+	color: #c9c9ce;
+	position: relative;
+}
+
+.content .tixin .tx-left {
+	position: absolute;
+	top: 0;
+	left:0rem;
+	width: 0.9rem;
+	height: 0.9rem;
+}
+
+.content .tixin .tx-left img {
+	width:0.3rem;
+  margin-top: 0.28rem;
+}
+
+.content .tixin .tx-right {
+	position: absolute;
+	top: 0;
+	right: 0rem;
+	width: 0.9rem;
+	height: 0.9rem;
+}
+
+.content .tixin .tx-right img {
+  width:0.3rem;
+  margin-top: 0.28rem;
+}
+
+.content .ys-time {
+	width: 100%;
+	background: white;
+}
+
+.content .ys-time .qdtime {
+	width: 6.9rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	margin: auto;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.content .ys-time .qdtime .qdtime-left {
+	float: left;
+}
+
+.content .ys-time .qdtime .qdtime-right {
+	float: right;
+	height: 0.8rem;
+}
+
+.content .ys-time .qdtime .qdtime-right input {
+	border: none;
+	font-size: 0.28rem;
+	outline: medium;
+	text-align: right;
+}
+
+.content .shangchuan {
+	width: 6.4rem;
+	height: 3.2rem;
+	border-radius: 0.2rem;
+	background: white;
+	margin: 0.4rem auto;
+}
+
+.content .shangchuan .sc {
+	width: 2rem;
+	height: 2rem;
+	display: inline-block;
+	border: 1px dashed #F2F2F2;
+	margin: 0.3rem 2.2rem;
+}
+.content .shangchuan .sc img{
+  width: 100%;
+  height: 100%;
+}
+.content .shangchuan p {
+	text-align: center;
+	color: #999999;
+}
+
+.content .cgzt {
+	width: 5.6rem;
+	height: 0.9rem;
+	font-size: 0.32rem;
+	margin: auto;
+  text-align: center;
+	margin-top: 2rem;
+}
+
+.content .cgzt .tupiao {
+	width: 0.9rem;
+	height: 0.9rem;
+	background: white;
+	border-radius: 50%;
+	float: left;
+  margin-right:0.1rem;
+}
+.content .cgzt .tupiao img{
+  width: 100%;
+}
+.content .cgzt .wzsm {
+	float: right;
+}
+
+.content .cgzt .wzsm p {
+	height: 0.45rem;
+	line-height: 25px;
+}
+
+.content .cgzt .wzsm .sz {
+	color: #d9d4d9;
+	font-size: 0.28rem;
+}
+
+
+/*# sourceMappingURL=pingtairenzheng.css.map */

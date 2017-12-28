@@ -1,0 +1,69 @@
+
+.content {
+	width: 100%;
+	height: 100%;
+	font-size: 0.28rem;
+	padding-bottom: 0.4rem;
+}
+
+.content .cgzt {
+	width: 3rem;
+	height: 0.9rem;
+	font-size: 0.36rem;
+	margin: auto;
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.content .cgzt .tupiao {
+	width: 0.9rem;
+	height: 0.9rem;
+	background: white;
+	border-radius: 50%;
+	float: left;
+}
+
+.content .cgzt .tupiao img {
+	width: 100%;
+}
+
+.content .cgzt .wzsm {
+	float: left;
+	height: 0.9rem;
+	line-height: 0.9rem;
+	margin-left: 0.2rem;
+}
+
+.content .anniu {
+	width: 5.1rem;
+	margin: auto;
+	margin-top: 2rem;
+}
+
+.content .anniu .fhsy {
+	float: left;
+	width: 2.2rem;
+	line-height: 0.7rem;
+	text-align: center;
+	border-radius: 0.7rem;
+	color: white;
+	background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
+	background: -o-linear-gradient(right, #f74f9c, #fd7376);
+	background: -moz-linear-gradient(right, #f74f9c, #fd7376);
+	background: linear-gradient(to right, #f74f9c, #fd7376);
+  box-shadow: 0px 5px 10px rgba(23,209,253,0.3);
+}
+
+.content .anniu .ckdd {
+	float: right;
+	width: 2.2rem;
+	line-height: 0.7rem;
+	text-align: center;
+	border-radius: 0.7rem;
+	border: 1px solid #FD7376;
+	color: #FD7376;
+  box-shadow: 0px 5px 10px rgba(23,209,253,0.3);
+}
+
+
+/*# sourceMappingURL=tixianchenggong.css.map */

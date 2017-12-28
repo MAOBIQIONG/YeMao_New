@@ -1,0 +1,244 @@
+
+.index-banner {
+  width: 100%;
+  height: 4rem;
+  overflow: hidden;
+}
+
+.index-banner .id-header {
+  width: 100%;
+  position: fixed;
+  height: 1rem;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+.index-banner .id-header .crity {
+  position: relative;
+  float: left;
+  width: 1rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  margin-left: 0.1rem;
+  margin-top: 0.1rem;
+  color: #333333 !important;
+  font-size:0.28rem !important;
+  overflow: hidden;
+}
+
+.index-banner .id-header .crity .select-value {
+  position: absolute;
+  width: 1rem;
+  height: 0.5rem;
+  border: none;
+  top: 0;
+  background: transparent;
+}
+
+.index-banner .id-header .id-sousuo {
+  float: right;
+  width: 1.2rem;
+  height: 0.6rem;
+  transition: width 0.2s;
+  background: white;
+  -webkit-transition: width 1s;
+  border-radius: 0.6rem;
+  margin-right: 0.2rem;
+  margin-top: 0.2rem;
+}
+
+.index-banner .id-header .id-sousuo img {
+  height: 0.4rem;
+  float: right;
+  display: block;
+  margin: 0.1rem 0.2rem;
+}
+
+.index-banner .id-header .id-xiaoxi {
+  position: relative;
+  float: right;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin: 0.1rem;
+  margin-right: 0.2rem;
+  margin-top: 0.3rem;
+}
+.index-banner .id-header .id-xiaoxi .hongdian{
+  width: 0.1rem;
+  height: 0.1rem;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: -0.1rem;
+}
+
+.index-banner .id-header .id-xiaoxi img {
+  width: 100%;
+  display: block;
+}
+
+  .id-list {
+  width: 100%;
+  height: 3rem;
+  font-size: 0.28rem;
+  color: #929292;
+  background: white;
+}
+
+.id-list .list-box {
+  width: 20%;
+  height: 1.4rem;
+  text-align: center;
+  float: left;
+}
+
+.id-list .list-box .lb-img {
+  height: 1rem;
+  margin: 0 auto;
+}
+
+.id-list .list-box .lb-img img {
+  margin-top:  0.3rem;
+  width:  0.5rem;
+  height: 0.5rem;
+}
+
+.wzgd-box {
+  height: .9rem;
+  line-height: .9rem;
+  font-size: .30rem;
+  margin: 0 .3rem;
+  overflow: hidden;
+  background: white;
+}
+.wzgd-box .notice-img {
+  height: 0.9rem;
+  width: 0.9rem;
+  float: left
+}
+.wzgd-box .notice-img img{
+  margin-top: .1rem;
+  height: 0.7rem;
+  width: 0.7rem;
+  border-radius: 50%;
+}
+.wzgd-box .notice-text{
+  height: .9rem;
+  line-height: .9rem;
+  float: left
+}
+
+.wzgd-box .scrollWrap {
+  width: 100%;
+  height: 0.9rem;
+  font-size: 0.32rem;
+  line-height: 0.9rem;
+  overflow: Hidden;
+  background-color: white;
+}
+
+.wzgd-box .scrollWrap li {
+  width: 7.06rem;
+  height: 0.9rem;
+  line-height: 0.9rem;
+  margin: 0px 0.22rem;
+}
+
+.wzgd-box .scrollWrap li a {
+  color: #020202;
+}
+
+.wzgd-box .scrollWrap li a span {
+  display: block;
+  float: left;
+}
+
+.wzgd-box .scrollWrap li a .msg-img {
+  width: 0.6rem;
+  height: 0.6rem;
+  margin: 0.15rem 0px;
+  border-radius: 50%;
+  margin-right: 0.2rem;
+  background-color: #9E9E9E;
+}
+
+.wzgd-box .scrollWrap li a .msg-img img {
+  width: 100%;
+}
+
+.id-znpx {
+  position: relative;
+  width: 100%;
+  height: 0.7rem;
+  font-size: 0.32rem;
+  background: white;
+  z-index: 99;
+}
+
+.id-znpx .xian {
+  position: relative;
+  width: 7.06rem;
+  height: 0.4rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.32rem;
+  margin-left: 0.22rem;
+}
+
+.id-znpx .xian p {
+  position: absolute;
+  width: 2.06rem;
+  height: 0.4rem;
+  background-color: white;
+  left: 2.5rem;
+  bottom: -0.15rem;
+  padding-left: 0.2rem;
+}
+
+.id-znpx .xian p:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.1rem;
+  margin-left: 0.6rem;
+  width: 0.16rem;
+  height: 0.16rem;
+  border: #666 solid;
+  border-width: 1px 1px 0 0;
+  content: ' ';
+  -webkit-transform: rotate(135deg);
+}
+
+.id-znpx .xian .up:after {
+  margin-top: 0;
+  -webkit-transform: rotate(-45deg);
+}
+
+.id-znpx .area {
+  position: absolute;
+  width: 100%;
+  top: 0.7rem;
+  left: 0;
+  background: #fefefe;
+  z-index: 999;
+  /*display: none;*/
+}
+
+.id-znpx .area ul li {
+  width: 100%;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  text-align: center;
+  color: #8d8d8d;
+  border-top: 1px solid #f2f2f2;
+}
+.content{
+  background-color: #f2f2f2;
+  padding-bottom: 1.2rem;
+}
+/********************************/
+.gap-line{
+  background: #f2f2f2;
+  height: 0.1rem;
+}

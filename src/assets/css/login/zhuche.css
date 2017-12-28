@@ -1,0 +1,124 @@
+.header{
+  border:none;
+}
+.zc-piaoti {
+  width: 100%;
+  height: 1.9rem;
+  display: inline-block;
+  margin-top: 0.8rem;
+}
+
+.zc-piaoti span {
+  width: 2.1rem;
+  font-size: 0.44rem;
+  margin-top: 0.54rem;
+  color: #f64299;
+  margin-left: 0.6rem;
+}
+
+.login-shuru {
+  width: 100%;
+  position: relative;
+}
+
+.login-shuru .tishi {
+  position: absolute;
+  width: 6.35rem;
+  font-size: 0.24rem;
+  top: -0.4rem;
+  left: 0.7rem;
+  color: #f65aa6;
+}
+
+.login-shuru .ls-shouji,
+.login-shuru .ls-yanzheng {
+  width: 6.35rem;
+  height: 0.78rem;
+  border: 1px solid #CCCCCC;
+  border-radius: 0.78rem;
+  margin-left: 0.58rem;
+  margin-top: 0.2rem;
+  position: relative;
+}
+/*.ls-shouji .xmlx-left {*/
+  /*float: left;*/
+  /*font-size: 0.28rem;*/
+  /*height: 0.8rem;*/
+  /*line-height: 0.8rem;*/
+  /*margin-left: 0.3rem;*/
+  /*color:#999999;*/
+/*}*/
+
+.ls-shouji .xmlx-right {
+  float: left;
+  height: 0.8rem;
+  margin-left: 0.24rem
+}
+  .xmlx-right .xmlx-kuang {
+  width: 5.8rem;
+  height: 0.72rem;
+  border: none;
+  display: block;
+  border: none;
+  font-size: 0.28rem;
+  color: #999;
+  background: white;
+  outline: medium;
+}
+
+
+.login-shuru .ls-shouji .shouji,
+.login-shuru .ls-shouji .yanzheng,
+.login-shuru .ls-yanzheng .shouji,
+.login-shuru .ls-yanzheng .yanzheng {
+  width: 5.6rem;
+  height: 0.72rem;
+  display: block;
+  border: none;
+  margin-left: 0.3rem;
+  color: #999;
+  outline: medium;
+}
+
+.login-shuru .ls-shouji .del,
+.login-shuru .ls-yanzheng .del {
+  width: 0.4rem;
+  height: 0.4rem;
+  text-align: center;
+  line-height: 0.4rem;
+  position: absolute;
+  top: 0.14rem;
+  right: 0.2rem;
+  font-size: 0.4rem;
+  color: #999;
+  display: inline-block;
+  display: none;
+}
+
+.login-shuru .ls-shouji .dj-shuru,
+.login-shuru .ls-yanzheng .dj-shuru {
+  position: absolute;
+  top: 0;
+  right: 0.3rem;
+  height: 0.72rem;
+  line-height: 0.72rem;
+  font-size: 0.22rem;
+  color: #f63e96;
+}
+
+.log-btn {
+  width: 6.35rem;
+  height: 0.78rem;
+  border-radius: 0.78rem;
+  margin-left: 0.58rem;
+  margin-top: 0.5rem;
+  font-size: 0.32rem;
+  line-height: 0.78rem;
+  text-align: center;
+  color: white;
+  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
+  background: -o-linear-gradient(right, #f74f9c, #fd7376);
+  background: -moz-linear-gradient(right, #f74f9c, #fd7376);
+  background: linear-gradient(to right, #f74f9c, #fd7376);
+}
+/*# sourceMappingURL=zhuche.css.map */

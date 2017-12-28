@@ -1,0 +1,50 @@
+
+.set-content {
+	width: 100%;
+	height: 4.8rem;
+	background: white;
+  margin-top:1rem;
+}
+
+.set-content .xgnc {
+	width: 100%;
+	height: 0.8rem;
+	background: white;
+	font-size: 0.28rem;
+	line-height: 0.8rem;
+}
+
+.set-content .xgnc .left {
+	float: left;
+	margin-left: 0.2rem;
+}
+
+.set-content .pc-shuru {
+	position: relative;
+	width: 7.1rem;
+	height: 3.8rem;
+	border: 1px solid #F2F2F2;
+	margin: auto;
+	background-color: white;
+}
+
+.set-content .pc-shuru .area {
+	width: 6.9rem;
+	height: 3.6rem;
+	margin: 0.1rem;
+	border: none;
+	line-height: 0.4rem;
+	background: white;
+	outline: medium;
+}
+
+.set-content .pc-shuru .xianzhi {
+	position: absolute;
+	font-size: 0.24rem;
+	background: white;
+	right: 0.1rem;
+	bottom: 0.1rem;
+}
+
+
+/*# sourceMappingURL=yijian.css.map */

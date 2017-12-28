@@ -1,0 +1,105 @@
+
+.heade {
+	position: relative;
+	width: 100%;
+	height: 0.8rem;
+	font-size: 0.4rem;
+	color: #f65aa6;
+	line-height: 0.8rem;
+	text-align: center;
+	background: white;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.heade .header-left {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 0.8rem;
+	height: 0.8rem;
+	font-size: 0.32rem;
+	line-height: 0.8rem;
+}
+
+.heade .header-left img {
+	height: 0.75rem;
+}
+.msg-content{
+  margin-top: 0.8rem;
+}
+.weida-list {
+	width: 7.5rem;
+	font-size: 0.28rem;
+	color: #666666;
+}
+
+.weida-list .weida {
+	width: 7.2rem;
+	margin: 0 0.15rem;
+}
+
+.weida-list .weida .wd-top {
+	height: 0.8rem;
+}
+
+.weida-list .weida .wd-top .touxiang {
+	float: left;
+	width: 0.6rem;
+	height: 0.6rem;
+	border-radius: 50%;
+	margin-top: 0.1rem;
+	margin-right: 0.2rem;
+	background: #CCCCCC;
+	overflow: hidden;
+}
+
+.weida-list .weida .wd-top .touxiang img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.weida-list .weida .wd-top .nicheng {
+	height: 0.8rem;
+	line-height: 0.8rem;
+}
+
+.weida-list .weida .tupian {
+	width: 7.2rem;
+	height: 2.6rem;
+	background: #CCCCCC;
+	margin-bottom: 0.2rem;
+	overflow: hidden;
+}
+
+.weida-list .weida .tupian img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.weida-list .weida .neirong .piapti {
+	font-size: 0.32rem;
+	color: #000000;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+.weida-list .weida .neirong .jieshao {
+	margin-top: 0.1rem;
+	line-height: 0.4rem;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+
+.weida-list .weida .pingjia {
+	height: 0.8rem;
+	line-height: 0.8rem;
+}
+
+
+/*# sourceMappingURL=shouchang-wenda.css.map */

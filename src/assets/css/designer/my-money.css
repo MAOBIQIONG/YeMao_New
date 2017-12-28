@@ -1,0 +1,120 @@
+
+.content {
+	width: 100%;
+	background: #F2F2F2;
+  margin-top: 0.88rem;
+}
+
+.content .jinge-top {
+	width: 100%;
+	height: 3rem;
+	background: #ff4fae;
+}
+
+.content .jinge-top .biaoti {
+	width: 6.3rem;
+	height: 0.5rem;
+	line-height: 0.5rem;
+	font-size: 0.28rem;
+	margin-left: 0.3rem;
+	color: white;
+	display: inline-block;
+}
+
+.content .jinge-top .biaoti .duoshao {
+	float: left;
+}
+.content .jinge-top .biaoti .yanjin {
+  float: right;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-size: 0.5rem;
+}
+.content .jinge-top .biaoti .yanjin img{
+  width: 100%;
+}
+.content .jinge-top .biaoti .shumu {
+	float: right;
+}
+
+.content .jinge-top .shumu {
+	width: 6.3rem;
+	margin: 0 0.3rem;
+	color: white;
+}
+
+.content .srqk {
+	width: 100%;
+	height: 1.2rem;
+	background: white;
+}
+
+.content .srqk ul {
+	width: 100%;
+	height: 0.8rem;
+	display: inline-block;
+	margin: 0.2rem 0;
+}
+
+.content .srqk ul li {
+	width: 3.45rem;
+	height: 0.8rem;
+	line-height: 0.4rem;
+	float: left;
+	border-right: 1px solid #F2F2F2;
+	margin-left: 0.3rem;
+}
+
+.content .srqk ul li p {
+	font-size: 0.32rem;
+}
+
+.content .srqk ul li .timu {
+	font-size: 0.28rem;
+	color: #999999;
+}
+
+.content .srqk ul li:last-child {
+	border: none;
+}
+
+.content .list {
+	width: 100%;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	font-size: 0.28rem;
+	background: white;
+	margin-top: 0.1rem;
+}
+
+.content .list .tupiao {
+	float: left;
+	width: 0.6rem;
+	height: 0.6rem;
+	margin: 0.1rem 0;
+  margin-left: 0.3rem;
+}
+.content .list .tupiao img{
+  width: 0.4rem;
+  margin: 0.1rem;
+}
+.content .list .xingxi {
+	float: left;
+	margin-left: 0.1rem;
+}
+
+.content .list .list-right {
+	float: right;
+	width: 0.8rem;
+	height: 0.8rem;
+	margin-right: 0.3rem;
+	text-align: right;
+}
+
+.content .list .list-right img {
+	width: 0.3rem;
+	margin-top: 0.25rem;
+}
+
+
+/*# sourceMappingURL=my-money.css.map */

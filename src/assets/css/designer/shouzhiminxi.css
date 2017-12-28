@@ -1,0 +1,48 @@
+
+.content {
+	width: 100%;
+	background: #F2F2F2;
+  margin-top: 0.88rem;
+}
+
+.content .list {
+	width: 100%;
+	height: 1.2rem;
+	line-height: 0.6rem;
+	background: white;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.content .list .list-left {
+	float: left;
+	margin-left: 0.3rem;
+}
+
+.content .list .list-left .one {
+	font-size: 0.36rem;
+}
+
+.content .list .list-left .fist {
+	font-size: 0.28rem;
+}
+
+.content .list .list-left .two {
+	font-size: 0.24rem;
+}
+
+.content .list .list-right {
+	float: right;
+	margin-right: 0.3rem;
+	text-align: right;
+}
+
+.content .list .list-right .one {
+	font-size: 0.28rem;
+}
+
+.content .list .list-right .two {
+	font-size: 0.24rem;
+}
+
+
+/*# sourceMappingURL=shouzhiminxi.css.map */

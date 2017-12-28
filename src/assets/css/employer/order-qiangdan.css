@@ -1,0 +1,55 @@
+
+.oq-content {
+  width: 100%;
+  background: #F2F2F2;
+  margin-top: 0.88rem;
+}
+
+.oq-content .oq-list {
+  width: 100%;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.28rem;
+  background: white;
+  margin-top: 0.1rem;
+}
+
+.oq-content .oq-list .oq-left {
+  float: left;
+  margin-left: 0.3rem;
+}
+
+.oq-content .oq-list .oq-right {
+  float: right;
+  margin-right: 1.4rem;
+}
+
+.oq-content .oq-list .oq-right input {
+  border: none;
+  font-size: 0.28rem;
+  outline: medium;
+}
+
+.oq-content .fangan {
+  width: 100%;
+  margin-top: 0.1rem;
+  background: white;
+  font-size: 0.28rem;
+}
+
+.oq-content .fangan .tle {
+  height: 0.8rem;
+  line-height: 0.8rem;
+  margin-left: 0.3rem;
+}
+
+.oq-content .fangan .xt-txt {
+  width: 6.9rem;
+  height: 3rem;
+  margin-left: 0.3rem;
+  border: none;
+  outline: medium;
+}
+
+
+/*# sourceMappingURL=order-qiangdan.css.map */

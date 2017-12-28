@@ -1,0 +1,65 @@
+
+.od-condent{
+  padding-bottom: 1rem;
+}
+
+.od-condent .od-renshu {
+	height: 0.8rem;
+  margin: 0 .2rem;
+}
+
+.od-condent .od-renshu .tu {
+	float: left;
+	width: 0.6rem;
+	height: 0.8rem;
+  background-size: .5rem .5rem;
+}
+
+.od-condent .od-renshu p {
+	float: left;
+	font-size: 0.3rem;
+	line-height: 0.8rem;
+}
+
+.od-condent .od-renshu .gengduo {
+	float: right;
+	width: 0.8rem;
+	height: 0.8rem;
+  background-size: .5rem .5rem;
+}
+
+.od-botton {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 1rem;
+  display:-webkit-box;
+}
+
+.od-botton .mmliaotian {
+	height: 1rem;
+	line-height: 1rem;
+  padding-right: .2rem;
+	font-size: 0.26rem;
+	color: white;
+  background-color: #ff88c4;
+}
+.od-botton .mmliaotian span{
+   display:block ;
+    float: left;
+}
+.od-botton .mmliaotian img{
+  width: 0.6rem;
+  margin: 0.2rem;
+}
+.od-botton .lijiqiangdan {
+  -webkit-box-flex:1;
+	height: 1rem;
+	text-align: center;
+	line-height: 1rem;
+	font-size: 0.36rem;
+	background-color: #f74d9f;
+	color: white;
+}
+/*# sourceMappingURL=order.css.map */

@@ -1,0 +1,55 @@
+
+.zfcg-content {
+  width: 100%;
+  margin-top:0.88rem;
+}
+
+.zfcg-content .zfcg-top {
+  width: 100%;
+  height: 4.2rem;
+  background: white;
+}
+
+.zfcg-content .zfcg-top .zt-left {
+  float: left;
+  width: 0.9rem;
+  height: 3.47rem;
+  margin-left: 0.7rem;
+  margin-top: 0.4rem;
+  display: inline-block;
+}
+
+.zfcg-content .zfcg-top .zt-left img {
+  width: 100%;
+}
+
+.zfcg-content .zfcg-top .zt-right {
+  float: left;
+  height: 3.47rem;
+  margin-top: 0.4rem;
+  margin-left: 0.5rem;
+  font-size: 0.28rem;
+}
+
+.zfcg-content .zfcg-top .zt-right .zr-box {
+  height: 1rem;
+  line-height: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.zfcg-content .zfcg-top .zt-right .zr-box .first-p {
+  font-size: 0.36rem;
+}
+
+.zfcg-bottom {
+  width: 100%;
+  height: 1rem;
+  line-height: 1rem;
+  font-size: 0.3rem;
+  background-color: white;
+  text-align: center;
+  color: #f65aa6;
+}
+
+
+/*# sourceMappingURL=zfcg.css.map */

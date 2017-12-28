@@ -1,0 +1,130 @@
+
+.content {
+	width: 100%;
+	font-size: 0.28rem;
+	background: #F2F2F2;
+  margin-top: 1rem;
+}
+
+.content .xmlx {
+	width: 100%;
+	height: 0.8rem;
+	background: white;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.content .xmlx .xmlx-left {
+	float: left;
+	font-size: 0.28rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	margin-left: 0.3rem;
+}
+
+.content .xmlx .xmlx-right {
+	float: right;
+	height: 0.8rem;
+	margin-right: 0.3rem;
+}
+
+.content .xmlx .xmlx-right .xmlx-kuang {
+	width: 3rem;
+	height: 0.78rem;
+	border: none;
+	display: block;
+	border: none;
+	font-size: 0.28rem;
+	color: #999999;
+	outline: medium;
+}
+
+.content .ys-time {
+	width: 100%;
+	background: white;
+}
+
+.content .ys-time .ys {
+	width: 100%;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.content .ys-time .ys .ys-left {
+	float: left;
+	margin-left: 0.3rem;
+}
+
+.content .ys-time .ys .ys-right {
+	float: right;
+	height: 0.8rem;
+	width: 3.2rem;
+}
+
+.content .ys-time .ys .ys-right input {
+  width: 3.2rem;
+	border: none;
+	font-size: 0.28rem;
+	outline: medium;
+}
+
+.content .ys-time .qdtime {
+	width: 100%;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.content .ys-time .qdtime .qdtime-left {
+	float: left;
+	margin-left: 0.3rem;
+}
+
+.content .ys-time .qdtime .qdtime-right {
+	float: right;
+	width: 3.2rem;
+	height: 0.8rem;
+}
+
+.content .ys-time .qdtime .qdtime-right input {
+  width: 3.2rem;
+	border: none;
+	font-size: 0.28rem;
+	outline: medium;
+}
+
+.liebiao {
+	width: 100%;
+	font-size: 0.28rem;
+	display: inline-block;
+	background: white;
+	margin-top: 0.05rem;
+}
+
+.liebiao .list {
+	width: 100%;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.liebiao .list .xingxi {
+	float: left;
+	margin-left: 0.3rem;
+}
+
+.liebiao .list .list-right {
+	float: right;
+	width: 0.8rem;
+	height: 0.8rem;
+	text-align: right;
+	margin-right: 0.3rem;
+}
+
+.liebiao .list .list-right img {
+	width: 0.3rem;
+	margin-top: 0.25rem;
+}
+
+
+/*# sourceMappingURL=xiugaigerenxinxi.css.map */

@@ -1,0 +1,139 @@
+
+.dcl-content {
+  width: 100%;
+  display: inline-block;
+  background: #F2F2F2;
+  margin-bottom: 1rem;
+  margin-top: 0.88rem;
+}
+
+.dcl-content .dcl-top {
+  width: 100%;
+  height: 2.4rem;
+  background: white;
+  margin: 0.1rem 0;
+}
+
+.dcl-content .dcl-top img {
+  width: 100%;
+}
+
+
+.dcl-content .ddxq {
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+.dcl-content .ddxq .ddxq-top {
+  width: 100%;
+  height: 2rem;
+  background-color: white;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-img {
+  width: 1.6rem;
+  height: 1.6rem;
+  background-color: #CCCCCC;
+  margin: 0.2rem 0.18rem;
+  float: left;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie {
+  float: left;
+  width: 5.4rem;
+  height: 1.6rem;
+  line-height: 0.4rem;
+  margin: 0.2rem 0px;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie .jianjie-top {
+  width: 100%;
+  height: 1rem;
+  font-size: 0.26rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  color: #4e4e4e;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom {
+  width: 100%;
+  height: 0.6rem;
+  font-size: 0.2rem;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-yushuan {
+  float: left;
+  line-height: 0.6rem;
+  height: 0.6rem;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-yushuan .yushuan {
+  color: #f54747;
+  font-size: 0.32rem;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-miaomiao {
+  float: right;
+  height: 0.6rem;
+  line-height: 0.6rem;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-miaomiao span {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  float: left;
+}
+
+.dcl-content .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-miaomiao span img {
+  width:0.4rem;
+  margin: 0.1rem;
+}
+
+
+
+.dcl-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1rem;
+  background: #F8F7F8;
+  font-size: 0.22rem;
+}
+
+.dcl-bottom .db-right {
+  float: right;
+  height: 1rem;
+}
+
+.dcl-bottom .db-right .db-qxdd {
+  float: left;
+  width: 1.7rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  text-align: center;
+  border: 1px solid #f75ea7;
+  border-radius: 0.5rem;
+  color: #f75ea7;
+  margin-right: 0.24rem;
+  margin-top: 0.25rem;
+}
+
+.dcl-bottom .db-right .db-qrdd {
+  float: left;
+  width: 2rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  color: white;
+  margin-right: 0.24rem;
+  margin-top: 0.25rem;
+  background: linear-gradient(to right, #f74f9c, #fd7376);
+}
+
+/*# sourceMappingURL=daichulixq.css.map */

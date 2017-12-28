@@ -1,0 +1,82 @@
+
+.rmsearch {
+  width: 100%;
+  height: 2.4rem;
+  margin-top: 1rem;
+  color: #101010;
+}
+
+.rmsearch .search-rm {
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.32rem;
+  color: #d1d1d1;
+  margin-left: 0.25rem;
+}
+
+.rmsearch .search-list {
+  width: 7.3rem;
+  height: 1.7rem;
+  margin-left: 0.2rem;
+}
+
+.rmsearch .search-list .guanjianchi {
+  float: left;
+  width: 1.5rem;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  text-align: center;
+  font-size: 0.32rem;
+  background: #f4f4f4;
+  border-radius: 0.1rem;
+  margin-right: 0.32rem;
+  margin-bottom: 0.2rem;
+}
+
+.seach-lishi {
+  width: 100%;
+  color: #101010;
+}
+
+.seach-lishi .seach-ls {
+  width: 7rem;
+  height: 0.8rem;
+  font-size: 0.32rem;
+  line-height: 0.8rem;
+  color: #d1d1d1;
+  margin-left: 0.25rem;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.seach-lishi .seach-ls .sl-left {
+  float: left;
+}
+
+.seach-lishi .seach-ls .sl-right {
+  float: right;
+}
+
+.seach-lishi .searchls-list {
+  width: 7rem;
+  font-size: 0.32rem;
+  margin-left: 0.25rem;
+}
+
+.seach-lishi .searchls-list .ls-list {
+  width: 100%;
+  height: 0.8rem;
+  font-size: 0.32rem;
+  line-height: 0.8rem;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.seach-lishi .searchls-list .ls-list .ll-left {
+  float: left;
+}
+
+.seach-lishi .searchls-list .ls-list .ll-right {
+  float: right;
+  color: #d9d4d9;
+}
+
+/*# sourceMappingURL=search.css.map */

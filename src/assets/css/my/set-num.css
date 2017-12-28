@@ -1,0 +1,68 @@
+
+.setn-content {
+  position: fixed;
+  background: #f2f2f2;
+  top: 0.88rem;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.setn-content .gh-sjh {
+	width: 100%;
+	margin-top: 0.1rem;
+	background: white;
+	font-size: 0.28rem;
+}
+
+.setn-content .gh-sjh .list {
+	position: relative;
+	width: 7.3rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	margin-left: 0.2rem;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.setn-content .gh-sjh .list .left {
+	float: left;
+}
+
+.setn-content .gh-sjh .list .right {
+	float: right;
+	margin-right: 1.8rem;
+}
+
+.setn-content .gh-sjh .list .right input {
+	border: none;
+	font-size: 0.28rem;
+	outline: medium;
+}
+
+.setn-content .gh-sjh .list .yzm {
+	width: 2.4rem;
+	height: 0.6rem;
+	line-height: 0.6rem;
+	text-align: center;
+	border: 1px solid #ff4fae;
+	color: #ff4fae;
+	border-radius: 0.1rem;
+	position: absolute;
+	top: 0.1rem;
+	right: 0.2rem;
+}
+
+.gunzhe {
+	position: fixed;
+	bottom: 0.4rem;
+	left: 0.8rem;
+	width: 5.9rem;
+	font-size: 0.28rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	text-align: center;
+	color: white;
+	background: #ff4fae;
+	border-radius: 0.1rem;
+}
+

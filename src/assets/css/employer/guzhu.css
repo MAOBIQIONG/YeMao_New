@@ -1,0 +1,103 @@
+
+.gu-mokuai {
+  width: 100%;
+  height: 1.6rem;
+  color: white;
+  font-size: 0.36rem;
+  background: white;
+  margin-top: 0.88rem;
+}
+.gu-mokuai .dingdan {
+  float: left;
+  width: 3.4rem;
+  height: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  margin-top: 0.3rem;
+  background: #04C0AD;
+  margin-left: 0.2rem;
+  border-radius: 0.1rem;
+  background-size: 100% 100%;
+}
+.gu-mokuai .shouchang {
+  float: right;
+  width: 3.4rem;
+  height: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  margin-top: 0.3rem;
+  background: #929292;
+  margin-right: 0.2rem;
+  border-radius: 0.1rem;
+  background-size: 100% 100%;
+}
+.id-znpx {
+  position: relative;
+  width: 100%;
+  height: 0.7rem;
+  font-size: 0.32rem;
+  background: white;
+  margin-top: 0.1rem;
+  z-index: 9999;
+}
+
+.id-znpx .xian {
+  position: relative;
+  width: 7.06rem;
+  height: 0.4rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.32rem;
+  margin-left: 0.22rem;
+}
+
+.id-znpx .xian p {
+  position: absolute;
+  width: 2.06rem;
+  height: 0.4rem;
+  background-color: white;
+  left: 2.5rem;
+  bottom: -0.15rem;
+  padding-left: 0.2rem;
+}
+
+.id-znpx .xian p:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.1rem;
+  margin-left: 0.6rem;
+  width: 0.16rem;
+  height: 0.16rem;
+  border: #666 solid;
+  border-width: 1px 1px 0 0;
+  content: ' ';
+  -webkit-transform: rotate(135deg);
+}
+
+.id-znpx .xian .up:after {
+  margin-top: 0;
+  -webkit-transform: rotate(-45deg);
+}
+
+.id-znpx .area {
+  position: absolute;
+  width: 100%;
+  top: 0.7rem;
+  left: 0;
+  background: #fefefe;
+  z-index: 999;
+  /*display: none;*/
+}
+
+.id-znpx .area ul li {
+  width: 100%;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  text-align: center;
+  color: #8d8d8d;
+  border-top: 1px solid #f2f2f2;
+}
+.content{
+  padding-bottom: 1.2rem;
+}
+

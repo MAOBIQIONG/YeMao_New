@@ -1,0 +1,135 @@
+
+.content {
+	width: 100%;
+	background: #F2F2F2;
+  margin-top: 0.88rem;
+}
+
+.content .tixian {
+	width: 100%;
+	background: white;
+}
+
+.content .tixian .list {
+	width: 6.9rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	font-size: 0.28rem;
+	border-bottom: 1px solid #F2F2F2;
+	margin: auto;
+}
+
+.content .tixian .list .list-left {
+	float: left;
+  height: 1.2rem;
+}
+
+.content .tixian .list .list-left .shengyu {
+	margin-right: 0.3rem;
+	font-size: 0.24rem;
+	color: #999999;
+}
+
+.content .tixian .list .list-right {
+	float: right;
+}
+
+.content .tixian .ys-time {
+	width: 6.9rem;
+	margin: auto;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.content .tixian .ys-time .qdtime {
+	width: 100%;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	font-size: 0.28rem;
+}
+
+.content .tixian .ys-time .qdtime .qdtime-left {
+	float: left;
+	width: 2rem;
+	margin-left: 0.3rem;
+}
+
+.content .tixian .ys-time .qdtime .qdtime-right {
+	float: left;
+	width: 3.2rem;
+	height: 1.2rem;
+}
+
+.content .tixian .ys-time .qdtime .qdtime-right input {
+	border: none;
+	font-size: 0.28rem;
+	outline: medium;
+}
+
+.content .tixian .tixianje {
+	width: 6.9rem;
+	margin: auto;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.content .tixian .tixianje p {
+	font-size: 0.28rem;
+	line-height: 0.8rem;
+	margin-left: 0.3rem;
+}
+
+.content .tixian .tixianje .qdtime {
+	width: 100%;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	font-size: 0.28rem;
+}
+
+.content .tixian .tixianje .qdtime .qdtime-left {
+	float: left;
+	width: 2rem;
+	margin-left: 0.3rem;
+	font-size: 0.48rem;
+}
+
+.content .tixian .tixianje .qdtime .qdtime-right {
+	float: left;
+	width: 3.2rem;
+	height: 1.2rem;
+}
+
+.content .tixian .tixianje .qdtime .qdtime-right input {
+	border: none;
+	font-size: 0.28rem;
+	outline: medium;
+}
+
+.qrtx {
+	width: 100%;
+}
+
+.qrtx .txqr {
+	width: 5.4rem;
+	height: 1.2rem;
+	margin: 2rem auto;
+}
+
+.qrtx .txqr p {
+	font-size: 0.24rem;
+	text-align: center;
+	color: #d9d4d9;
+}
+
+.qrtx .txqr .qrtx {
+	width: 5.4rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	border-radius: 0.1rem;
+	font-size: 0.28rem;
+	text-align: center;
+	background: #ff4fae;
+	margin-top: 0.2rem;
+	color: white;
+}
+
+
+/*# sourceMappingURL=tixian.css.map */

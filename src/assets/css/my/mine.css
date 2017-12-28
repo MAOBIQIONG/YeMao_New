@@ -1,0 +1,174 @@
+.my{
+  background: #F2F2F2;
+  padding-bottom:1.2rem;
+}
+.mine-top {
+	position: relative;
+	width: 100%;
+	height: 4.6rem;
+	background: #fd70bc;
+}
+
+.mine-top .shezhi {
+	position: absolute;
+	width: 0.4rem;
+	height: 0.4rem;
+	right: 0.4rem;
+	top: 0.6rem;
+	/*background: #4E4E4E;*/
+}
+.mine-top .shezhi img{
+  width: 100%;
+  display: block;
+}
+.mine-top .tu-nicheng {
+	position: absolute;
+	width: 100%;
+	height: 1.3rem;
+	left: 0;
+	bottom: 2rem;
+}
+
+.mine-top .tu-nicheng .touxiang {
+	width: 1.4rem;
+	height: 1.4rem;
+	background: #CCCCCC;
+	border-radius: 50%;
+	margin: auto;
+	overflow: hidden;
+}
+
+.mine-top .tu-nicheng .touxiang img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.mine-top .tu-nicheng .nicheng {
+	height: 1.3rem;
+	font-size: 0.36rem;
+	color: white;
+	margin-top: 0.3rem;
+	text-align: center;
+}
+
+.msage-top {
+	position: relative;
+	width: 7rem;
+	height: 1.8rem;
+	background: white;
+	margin-top: -0.9rem;
+	margin-left: 0.25rem;
+	border-radius: 0.1rem;
+	margin-bottom: 0.2rem;
+	z-index: 99;
+}
+
+.msage-top ul li {
+	width: 25%;
+	height: 1.6rem;
+	margin-top: 0.3rem;
+	font-size: 0.28rem;
+	float: left;
+	text-align: center;
+	overflow: hidden;
+}
+
+.msage-top ul li p {
+	margin-top: 0.1rem;
+}
+
+.msage-top ul li p img {
+	width: 0.6rem;
+	height: 0.6rem;
+}
+
+.my-msg {
+	position: relative;
+	width: 7rem;
+	height: 2.6rem;
+	background: white;
+	margin-left: 0.25rem;
+	margin-bottom: 0.2rem;
+}
+
+.yijian {
+	width: 7rem;
+	height: 3.4rem;
+	background: white;
+	margin-left: 0.25rem;
+}
+
+.liebiao {
+	width: 6.6rem;
+	height: 2.4rem;
+	margin: 0.1rem 0.2rem;
+	font-size: 0.28rem;
+	display: inline-block;
+}
+
+.liebiao .list {
+	width: 100%;
+	height: 0.8rem;
+	line-height: 0.8rem;
+}
+
+.liebiao .list .tupiao {
+	float: left;
+	width: 0.6rem;
+	height: 0.6rem;
+	background: #CCCCCC;
+	margin: 0.1rem 0px;
+}
+
+.liebiao .list .xingxi {
+	float: left;
+	margin-left: 0.1rem;
+}
+
+.liebiao .list .list-right {
+	float: right;
+	width: 0.8rem;
+	height: 0.8rem;
+	text-align: right;
+}
+
+.liebiao .list .list-right img {
+	width: 0.3rem;
+	margin-top: 0.25rem;
+}
+
+.pop {
+	position: relative;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	display: none;
+}
+
+.pop .pop-bottom {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 7.1rem;
+	height: 2.8rem;
+	margin-left: 0.2rem;
+	font-size: 0.4rem;
+}
+
+.pop .pop-bottom .anniu {
+	background: white;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	text-align: center;
+	border-radius: 0.2rem;
+	margin-bottom: 0.2rem;
+	color: #fe3824;
+}
+
+
+/*# sourceMappingURL=mine.css.map */

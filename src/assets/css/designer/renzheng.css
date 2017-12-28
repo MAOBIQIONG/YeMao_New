@@ -1,0 +1,55 @@
+
+.content {
+	width: 100%;
+	font-size: 0.28rem;
+  margin-top: 0.88rem;
+}
+
+.liebiao {
+	width: 100%;
+	font-size: 0.32rem;
+	display: inline-block;
+	background: white;
+	margin-top: 0.05rem;
+}
+
+.liebiao .list {
+	width: 100%;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.liebiao .list .tupiao {
+	float: left;
+	width: 0.6rem;
+	height: 0.6rem;
+	margin: 0.1rem 0px;
+	margin-left: 0.3rem;
+}
+.liebiao .list .tupiao img{
+  width: 100%;
+}
+.liebiao .list .sm img{
+  width: 0.4rem ;
+  margin: 0.1rem;
+}
+.liebiao .list .xingxi {
+	float: left;
+}
+
+.liebiao .list .list-right {
+	float: right;
+	width: 0.8rem;
+	height: 0.8rem;
+	text-align: right;
+	margin-right: 0.3rem;
+}
+
+.liebiao .list .list-right img {
+	width: 0.3rem;
+	margin-top: 0.25rem;
+}
+
+
+/*# sourceMappingURL=renzheng.css.map */

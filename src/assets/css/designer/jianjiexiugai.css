@@ -1,0 +1,37 @@
+
+.content {
+	width: 100%;
+	background: white;
+	margin-top: 1.1rem;
+}
+
+.content .pc-shuru {
+	position: relative;
+	width: 7.1rem;
+	height: 3.8rem;
+	border: 1px solid #F2F2F2;
+	margin: auto;
+	background-color: white;
+}
+
+.content .pc-shuru .area {
+	width: 6.9rem;
+	height: 3.6rem;
+	margin: 0.1rem;
+	border: none;
+	background: #F2F2F2;
+	line-height: 0.4rem;
+	background: white;
+	outline: medium;
+}
+
+.content .pc-shuru .xianzhi {
+	position: absolute;
+	font-size: 0.24rem;
+	background: white;
+	right: 0.1rem;
+	bottom: 0.1rem;
+}
+
+
+/*# sourceMappingURL=jianjiexiugai.css.map */

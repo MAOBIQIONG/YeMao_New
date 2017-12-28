@@ -1,0 +1,279 @@
+.content{
+  background: #f2f2f2;
+  height: 100%;
+  width: 100%;
+  margin-top: 0.88rem;
+}
+ .xc-top {
+	width: 7.5rem;
+	height: 1.3rem;
+	background: white;
+}
+
+ .xc-top .touxiang {
+	float: left;
+	width: 0.8rem;
+	height: 0.8rem;
+	border-radius: 50%;
+	background: #CCCCCC;
+	margin: 0.25rem;
+	overflow: hidden;
+}
+
+ .xc-top .touxiang img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+ .xc-top p {
+	float: left;
+	font-size: 0.28rem;
+	line-height: 1.3rem;
+}
+
+ .xc-top .shijian {
+	float: right;
+	font-size: 0.24rem;
+	line-height: 1.3rem;
+	color: #999999;
+	margin-right: 0.2rem;
+}
+
+ .xc-banner {
+	width: 7.5rem;
+	height: 4.8rem;
+	background: #CCCCCC;
+}
+
+ .xc-banner img {
+	width: 100%;
+	height: 100%;
+}
+
+ .gkrs {
+	width: 7.5rem;
+	height: 0.6rem;
+	font-size: 0.24rem;
+	background: white;
+}
+
+ .gkrs .zhan,
+ .gkrs .guankan {
+	float: left;
+	margin: 0px 0.1rem;
+}
+
+ .gkrs .zhan span,
+ .gkrs .guankan span {
+	float: left;
+	width: 0.4rem;
+	height: 0.6rem;
+	line-height: 0.6rem;
+	display: block;
+	margin-left: 0.2rem;
+}
+
+ .gkrs .zhan span img,
+ .gkrs .guankan span img {
+	width: 0.4rem;
+	margin-top: 0.1rem;
+}
+
+ .xqjs {
+	background: white;
+}
+
+ .xqjs .smjs {
+	width: 7.1rem;
+	margin: auto;
+	font-size: 0.28rem;
+	line-height: 0.4rem;
+}
+
+ .pingjia-list {
+	margin-top: 0.4rem;
+}
+
+ .pingjia-list .gzpj-list {
+	width: 7.5rem;
+	margin: auto;
+	background: white;
+}
+
+ .pingjia-list .gzpj-list .pl-top {
+	width: 7.1rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	margin: auto;
+}
+
+ .pingjia-list .gzpj-list .pl-top .touxiang {
+	float: left;
+	width: 0.5rem;
+	height: 0.5rem;
+	background: #CCCCCC;
+	border-radius: 50%;
+	display: inline-block;
+	margin: 0.35rem 0.2rem;
+	overflow: hidden;
+}
+
+ .pingjia-list .gzpj-list .pl-top .touxiang img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+ .pingjia-list .gzpj-list .pl-top p {
+	font-size: 0.28rem;
+}
+
+ .pingjia-list .gzpj-list .pl-content {
+	width: 7.1rem;
+	font-size: 0.28rem;
+	line-height: 0.4rem;
+	margin: auto;
+	background: white;
+}
+
+ .pingjia-list .gzpj-list .pl-bottom {
+	width: 7.1rem;
+	height: 1rem;
+	font-size: 0.28rem;
+	line-height: 1rem;
+	margin: auto;
+	background: white;
+}
+
+ .pingjia-list .gzpj-list .pl-bottom .shijian {
+	float: left;
+	font-size: 0.24rem;
+	color: #999999;
+}
+
+ .pingjia-list .gzpj-list .pl-bottom .pingfen {
+	float: right;
+	width: 1.9rem;
+	height: 0.3rem;
+}
+
+ .pingjia-list .gzpj-list .pl-bottom .pingfen img {
+	width: 100%;
+}
+
+ .pingjia-list .ygpj-list {
+	width: 7.5rem;
+	margin: auto;
+	background: white;
+}
+
+ .pingjia-list .ygpj-list .ygpj-top {
+	width: 7.1rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	margin: auto;
+}
+
+ .pingjia-list .ygpj-list .ygpj-top .touxiang {
+	float: left;
+	width: 0.5rem;
+	height: 0.5rem;
+	background: #CCCCCC;
+	border-radius: 50%;
+	display: inline-block;
+	margin: 0.35rem 0.2rem;
+	overflow: hidden;
+}
+
+ .pingjia-list .ygpj-list .ygpj-top .touxiang img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+ .pingjia-list .ygpj-list .ygpj-top p {
+	float: left;
+	font-size: 0.28rem;
+}
+
+ .pingjia-list .ygpj-list .ygpj-top .shijian {
+	float: right;
+	font-size: 0.24rem;
+	color: #999999;
+}
+
+ .pingjia-list .ygpj-list .ygpj-content {
+	width: 7.1rem;
+	font-size: 0.28rem;
+	line-height: 0.4rem;
+	margin: auto;
+	background: white;
+}
+
+.tanchuang {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.tanchuang .tisi {
+  position: fixed;
+  width: 5.4rem;
+  border-radius: 0.1rem;
+  background: white;
+  text-align: center;
+  left: 1.05rem;
+  top: 40%;
+}
+
+.tanchuang .tisi .ts-top {
+  width: 100%;
+  font-size: 0.36rem;
+  color: #000000;
+  font-weight: bold;
+  height: 0.3rem;
+  line-height: 30px;
+  margin-top: 0.3rem;
+}
+
+.tanchuang .tisi .nr {
+  width: 4.6rem;
+  height: 1.2rem;
+  margin-left: 0.4rem;
+  font-size: 0.3rem;
+  margin-top: 0.4rem;
+  line-height: 0.5rem;
+  color: #888888;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.tanchuang .tisi .ts-bottom {
+  width: 100%;
+  height: 0.98rem;
+  line-height: 0.98rem;
+  font-size: 0.36rem;
+  border-top: 1px solid #F2F2F2;
+  color: #F74098;
+}
+
+.tanchuang .tisi .ts-bottom .bt-left,
+.tanchuang .tisi .ts-bottom .bt-right {
+  float: left;
+  width: 50%;
+  text-align: center;
+  border-right: 1px solid #F2F2F2;
+  color: #000000;
+}
+
+.tanchuang .tisi .ts-bottom .bt-right {
+  border: none;
+  color: #F74098;
+}
+/*# sourceMappingURL=anliexq.css.map */

@@ -1,0 +1,24 @@
+.content{
+  background: #f2f2f2;
+  margin-top: 0.88rem;
+}
+.tabs {
+  width: 100%;
+  position: relative;
+}
+.tabs a {
+  display: block;
+  float: left;
+  width: 50%;
+  color: #333;
+  text-align: center;
+  background: #fff;
+  line-height: 0.8rem;
+  font-size: 0.36rem;
+}
+
+.tabs a.active {
+  color: #f74098;
+  border-bottom: 2px solid #f74098;
+}
+/*# sourceMappingURL=search-jieguo.css.map */

@@ -1,0 +1,315 @@
+
+.content {
+	width: 7.5rem;
+  margin-top: 0.88rem;
+}
+
+.content .jbxx {
+	width: 6.9rem;
+	height: 7.7rem;
+	border: 2px solid #dbd9db;
+	margin: 0.3rem;
+}
+
+.content .jbxx .touxiang {
+	width: 1.2rem;
+	height: 1.2rem;
+	border-radius: 50%;
+	margin: 0.5rem auto;
+	background: #CCCCCC;
+	overflow: hidden;
+}
+
+.content .jbxx .touxiang img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.content .jbxx p {
+	text-align: center;
+	font-size: 0.32rem;
+}
+
+.content .jbxx .xingmin {
+	font-size: 0.28rem;
+	margin-top: 0.1rem;
+	color: #bbbbbb;
+}
+
+.content .jbxx .xq {
+	width: 6.5rem;
+	height: 4rem;
+	margin: 0.3rem 0.2rem;
+	font-size: 0.28rem;
+}
+
+.content .jbxx .xq .xinxi-list {
+	height: 0.8rem;
+	line-height: 0.8rem;
+	color: #bbbbbb;
+}
+
+.content .jbxx .xq .xinxi-list .xx-left {
+	float: left;
+}
+
+.content .jbxx .xq .xinxi-list .xx-right {
+	text-align: center;
+}
+
+.content .qwgz {
+	position: relative;
+	width: 7.5rem;
+	height: 3.5rem;
+	margin-top: 0.2rem;
+	display: inline-block;
+}
+
+.content .qwgz .left {
+	position: absolute;
+	width: 0.9rem;
+	height: 0.9rem;
+	left: 0.3rem;
+	top: 0.3rem;
+	border-top: 2px solid #bbbbbb;
+	border-left: 2px solid #bbbbbb;
+}
+
+.content .qwgz .right {
+	position: absolute;
+	width: 0.9rem;
+	height: 0.9rem;
+	right: 0.3rem;
+	bottom: 0.3rem;
+	border-bottom: 2px solid #bbbbbb;
+	border-right: 2px solid #bbbbbb;
+}
+
+.content .qwgz .qwgz-top {
+	width: 6.9rem;
+	height: 0.9rem;
+	margin: 0.3rem;
+	font-size: 0.28rem;
+	text-align: center;
+	position: relative;
+}
+
+.content .qwgz .qwgz-top .biaoti {
+	font-size: 0.32rem;
+	font-weight: bold;
+}
+
+.content .qwgz .qwgz-top .zhiwei {
+	padding-top: 0.2rem;
+	color: #b5acb5;
+}
+
+.content .qwgz .qwgz-bottom {
+	font-size: 0.26rem;
+	width: 5.6rem;
+	height: 1.2rem;
+	text-align: center;
+	margin: auto;
+	color: #b5acb5;
+}
+
+.content .gzjl {
+	width: 7.5rem;
+	margin-top: 0.2rem;
+}
+
+.content .gzjl .gzjl-top {
+	width: 2rem;
+	height: 0.6rem;
+	text-align: center;
+	line-height: 0.6rem;
+	font-size: 0.32rem;
+	margin: auto;
+	font-weight: bold;
+	position: relative;
+}
+
+.content .gzjl .gzjl-top .left {
+	width: 0.4rem;
+	height: 0.4rem;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-top: 2px solid #bbbbbb;
+	border-left: 2px solid #bbbbbb;
+}
+
+.content .gzjl .gzjl-top .right {
+	width: 0.4rem;
+	height: 0.4rem;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	border-bottom: 2px solid #bbbbbb;
+	border-right: 2px solid #bbbbbb;
+}
+
+.content .gzjl .gzjl-content {
+	margin-top: 0.3rem;
+}
+
+.content .gzjl .gzjl-content .gc-list {
+	position: relative;
+	width: 6.8rem;
+	height: 3.6rem;
+	margin: auto;
+	border-left: 1px dashed #bbbbbb;
+}
+
+.content .gzjl .gzjl-content .gc-list .yuan {
+	position: absolute;
+	top: 0;
+	left: -0.2rem;
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 50%;
+	background: white;
+	border: 1px solid #bbbbbb;
+}
+
+.content .gzjl .gzjl-content .gc-list .neirong {
+	font-size: 0.28rem;
+	margin-left: 0.6rem;
+	color: #000000;
+}
+
+.content .gzjl .gzjl-content .gc-list .neirong p {
+	line-height: 0.48rem;
+	font-weight: bold;
+}
+
+.content .gzjl .gzjl-content .gc-list .neirong .gznr {
+	color: #101010;
+	font-weight: normal;
+}
+
+.content .gzjl .gzjl-content .gc-list .neirong .list-neirong {
+	font-size: 0.26rem;
+	line-height: 0.4rem;
+}
+
+.content .zwms {
+	width: 7.5rem;
+	margin-top: 0.2rem;
+}
+
+.content .zwms .zwms-top {
+	width: 2rem;
+	height: 0.6rem;
+	text-align: center;
+	line-height: 0.6rem;
+	font-size: 0.32rem;
+	margin: auto;
+	font-weight: bold;
+	position: relative;
+}
+
+.content .zwms .zwms-top .left {
+	width: 0.4rem;
+	height: 0.4rem;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-top: 2px solid #bbbbbb;
+	border-left: 2px solid #bbbbbb;
+}
+
+.content .zwms .zwms-top .right {
+	width: 0.4rem;
+	height: 0.4rem;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	border-bottom: 2px solid #bbbbbb;
+	border-right: 2px solid #bbbbbb;
+}
+
+.content .zwms .zwms-content {
+	width: 6.48rem;
+	height: toewn(250px);
+	margin: auto;
+	margin-top: 0.3rem;
+	font-size: 0.28rem;
+	line-height: 0.4rem;
+	color: #b5acb5;
+}
+
+.content .grzp {
+	width: 7.5rem;
+	margin-top: 0.2rem;
+	position: relative;
+}
+
+.content .grzp .grzp-top {
+	width: 2rem;
+	height: 0.6rem;
+	text-align: center;
+	line-height: 0.6rem;
+	font-size: 0.32rem;
+	margin: auto;
+	font-weight: bold;
+	position: relative;
+}
+
+.content .grzp .grzp-top .left {
+	width: 0.4rem;
+	height: 0.04rem;
+	position: absolute;
+	left: -0.2rem;
+	top: 0.29rem;
+	background: #000;
+}
+
+.content .grzp .grzp-top .right {
+	width: 0.4rem;
+	height: 0.04rem;
+	position: absolute;
+	right: -10px;
+	bottom: 0.29rem;
+	background: #000;
+}
+
+.content .grzp .fanhui {
+	position: absolute;
+	width: 0.5rem;
+	line-height: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	top: 0;
+	right: 0.3rem;
+	text-align: center;
+	background: #dbd9db;
+	font-size: 0.28rem;
+	border: #000000 solid #bbbbbb;
+	margin-top: 0.02rem;
+}
+
+.content .grzp .gzzp-content {
+	width: 7.3rem;
+	margin: auto;
+	margin-top: 0.4rem;
+}
+
+.content .grzp .gzzp-content ul li {
+	float: left;
+	width: 1.8rem;
+	height: 1.8rem;
+	background: #CCCCCC;
+	margin: 0px 0.01rem;
+	overflow: hidden;
+}
+
+.content .grzp .gzzp-content ul li img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+
+/*# sourceMappingURL=mine-jianli.css.map */

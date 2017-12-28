@@ -1,0 +1,43 @@
+
+.content {
+  position: fixed;
+	width: 100%;
+  height: 100%;
+	font-size: 0.28rem;
+	background: #F2F2F2;
+	padding-bottom: 0.4rem;
+  margin-top: 0.88rem;
+}
+
+.content .ys-time {
+	width: 100%;
+	background: white;
+}
+
+.content .ys-time .qdtime {
+	width: 6.9rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	margin: auto;
+	border-bottom: 1px solid #F2F2F2;
+  overflow: hidden;
+}
+
+.content .ys-time .qdtime .qdtime-left {
+	float: left;
+}
+
+.content .ys-time .qdtime .qdtime-right {
+	float: right;
+	height: 0.8rem;
+}
+
+.content .ys-time .qdtime .qdtime-right input {
+	border: none;
+	font-size: 0.28rem;
+	outline: medium;
+	text-align: right;
+}
+
+
+/*# sourceMappingURL=qianyuesjs.css.map */

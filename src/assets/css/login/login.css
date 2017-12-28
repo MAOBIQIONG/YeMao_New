@@ -1,0 +1,191 @@
+.header{
+  border:none;
+}
+
+.log {
+  width: 100%;
+  height: 3.8rem;
+  display: inline-block;
+  margin-top: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.log .log-img {
+  width: 2.1rem;
+  height: 2.1rem;
+  margin: auto;
+  margin-top: 0.85rem;
+}
+
+.log .log-img img {
+  width: 100%;
+}
+
+.login-shuru {
+  width: 100%;
+  height: 3.8rem;
+  position: relative;
+}
+
+.login-shuru .tishi {
+  position: absolute;
+  width: 6.35rem;
+  font-size: 0.24rem;
+  top: -0.4rem;
+  left: 0.7rem;
+  color: #f65aa6;
+}
+
+.login-shuru .ls-shouji,
+.login-shuru .ls-yanzheng {
+  width: 6.35rem;
+  height: 0.78rem;
+  border: 1px solid #CCCCCC;
+  border-radius: 0.78rem;
+  margin-left: 0.58rem;
+  margin-top: 0.2rem;
+  position: relative;
+}
+
+.login-shuru .ls-shouji .shouji,
+.login-shuru .ls-shouji .yanzheng,
+.login-shuru .ls-yanzheng .shouji,
+.login-shuru .ls-yanzheng .yanzheng {
+  width: 5.6rem;
+  height: 0.72rem;
+  display: block;
+  border: none;
+  margin-left: 0.3rem;
+  color: #999;
+  outline: medium;
+}
+
+.login-shuru .ls-shouji .del,
+.login-shuru .ls-yanzheng .del {
+  width: 0.4rem;
+  height: 0.4rem;
+  text-align: center;
+  line-height: 0.4rem;
+  position: absolute;
+  top: 0.14rem;
+  right: 0.2rem;
+  color: #999999;
+  font-size: 0.4rem;
+  display: inline-block;
+  display: none;
+}
+
+.login-shuru .ls-shouji .dj-shuru,
+.login-shuru .ls-yanzheng .dj-shuru {
+  position: absolute;
+  top: 0;
+  right: 0.3rem;
+  height: 0.72rem;
+  line-height: 0.72rem;
+  font-size: 0.22rem;
+  color: #f63e96;
+}
+
+.login-shuru .log-btn {
+  width: 6.35rem;
+  height: 0.78rem;
+  border-radius: 0.78rem;
+  margin-left: 0.58rem;
+  margin-top: 0.5rem;
+  font-size: 0.32rem;
+  line-height: 0.78rem;
+  text-align: center;
+  color: white;
+  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
+  background: linear-gradient(to right, #f74f9c, #fd7376);
+}
+
+.log-botton {
+  width: 100%;
+  height: 0.6rem;
+  font-size: 0.24rem;
+  color: #b4c1d2;
+}
+
+.log-botton .lb-left {
+  height: 0.6rem;
+  line-height: 0.6rem;
+  float: left;
+  margin-left: 0.92rem;
+}
+
+.log-botton .lb-right {
+  height: 0.6rem;
+  line-height: 0.6rem;
+  float: right;
+  margin-right: 0.92rem;
+}
+
+.tanchuang {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.tanchuang .tisi {
+  position: fixed;
+  width: 5.4rem;
+  border-radius: 0.1rem;
+  background: white;
+  text-align: center;
+  left: 1.05rem;
+  top: 40%;
+}
+
+.tanchuang .tisi .ts-top {
+  width: 100%;
+  font-size: 0.36rem;
+  color: #000000;
+  font-weight: bold;
+  height: 0.3rem;
+  line-height: 30px;
+  margin-top: 0.3rem;
+}
+
+.tanchuang .tisi .nr {
+  width: 4.6rem;
+  height: 1.2rem;
+  margin-left: 0.4rem;
+  font-size: 0.3rem;
+  margin-top: 0.4rem;
+  line-height: 0.5rem;
+  color: #888888;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.tanchuang .tisi .ts-bottom {
+  width: 100%;
+  height: 0.98rem;
+  line-height: 0.98rem;
+  font-size: 0.36rem;
+  border-top: 1px solid #F2F2F2;
+  color: #F74098;
+}
+
+.tanchuang .tisi .ts-bottom .bt-left,
+.tanchuang .tisi .ts-bottom .bt-right {
+  float: left;
+  width: 50%;
+  text-align: center;
+  border-right: 1px solid #F2F2F2;
+  color: #000000;
+}
+
+.tanchuang .tisi .ts-bottom .bt-right {
+  border: none;
+  color: #F74098;
+}
+
+/*# sourceMappingURL=login.css.map */

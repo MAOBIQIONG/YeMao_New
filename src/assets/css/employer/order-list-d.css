@@ -1,0 +1,131 @@
+
+.od-heade {
+  position: relative;
+  width: 100%;
+  height: 0.8rem;
+  font-size: 0.4rem;
+  color: #f65aa6;
+  line-height: 0.8rem;
+  text-align: center;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.od-heade .header-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+  font-size: 0.32rem;
+  line-height: 0.8rem;
+}
+
+.od-heade .header-left img {
+  height: 0.75rem;
+}
+
+.old-content {
+  width: 100%;
+  background-color: #f2f2f2;
+  padding-bottom: 0.1rem;
+}
+
+.old-content .qdsjs-list {
+  width: 100%;
+}
+
+.old-content .qdsjs-list .qdsjs-time {
+  height: 0.8rem;
+  border-left: 1px solid #CCCCCC;
+  margin-left: 0.56rem;
+  font-size: 0.24rem;
+  line-height: 0.8rem;
+}
+
+.old-content .qdsjs-list .qdsjs-time p {
+  margin-left: 0.3rem;
+  color: #999999;
+}
+
+.old-content .qdsjs-list .qdsjs-box {
+  width: 7.24rem;
+  padding-bottom: 1rem;
+  background: white;
+  margin-left: 0.13rem;
+  border-radius: 0.06rem;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-top {
+  width: 7rem;
+  height: 0.8rem;
+  margin-left: 0.12rem;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-top .qt-touxiang {
+  float: left;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #B1B1B1;
+  border-radius: 50%;
+  margin: 0.1rem 0px;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-top .qt-nichen {
+  float: left;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.24rem;
+  margin-left: 0.26rem;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-top .qt-jiage {
+  float: right;
+  height: 0.8rem;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-top .qt-jiage .qt-time {
+  float: left;
+  padding: 0.02rem 0.08rem;
+  border: 1px solid #f7b011;
+  border-radius: 0.08rem;
+  color: #f7b011;
+  font-size: 0.24rem;
+  display: block;
+  margin: 0.2rem 0.06rem;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-top .qt-jiage .qt-jingqian {
+  float: right;
+  font-size: 0.32rem;
+  color: #f64097;
+  line-height: 0.8rem;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-content {
+  width: 7rem;
+  font-size: 0.26rem;
+  margin-left: 0.12rem;
+  margin-top: 0.24rem;
+  line-height: 0.46rem;
+}
+
+.old-content .qdsjs-list .qdsjs-box .qb-botton {
+  float: right;
+  width: 2rem;
+  height: 0.54rem;
+  font-size: 0.28rem;
+  line-height: 0.54rem;
+  text-align: center;
+  border-radius: 0.54rem;
+  color: white;
+  margin-right: 0.2rem;
+  margin-top: 0.2rem;
+  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
+  background: -o-linear-gradient(right, #f74f9c, #fd7376);
+  background: -moz-linear-gradient(right, #f74f9c, #fd7376);
+  background: linear-gradient(to right, #f74f9c, #fd7376);
+}
+
+
+/*# sourceMappingURL=order-list-d.css.map */

@@ -1,0 +1,17 @@
+
+.hd-list {
+	width: 6.8rem;
+	height: 2.8rem;
+	border-radius: 0.2rem;
+	background: #CCCCCC;
+	margin: auto;
+	margin-top: 1rem;
+	overflow: hidden;
+}
+
+.hd-list img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+

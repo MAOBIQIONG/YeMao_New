@@ -1,0 +1,88 @@
+
+.pj-content {
+  width: 7.1rem;
+  height: 8.4rem;
+  background-color: #f7f8fa;
+  margin: 0.2rem;
+  margin-top: 1rem;
+}
+
+.pj-content .pc-top {
+  width: 6.6rem;
+  height: 1.4rem;
+  border-bottom: 1px solid #F2F2F2;
+  margin-left: 0.25rem;
+}
+
+.pj-content .pc-top .pt-tu {
+  float: left;
+  width: 1rem;
+  height: 1rem;
+  background: #CCCCCC;
+  border-radius: 50%;
+  margin-top: 0.2rem;
+  overflow: hidden;
+}
+.pj-content .pc-top .pt-tu img{
+  width: 100%;
+  height: 100%;
+}
+.pj-content .pc-top .pt-nichen {
+  float: left;
+  height: 1.4rem;
+  line-height: 1.4rem;
+  font-size: 0.24rem;
+  margin-left: 0.2rem;
+}
+
+.pj-content .pc-xing {
+  width: 100%;
+}
+.pj-content .pc-xing ul{
+  margin: 0.5rem 0;
+}
+.pj-content .pc-xing ul li{
+  width: 4.8rem;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  font-size:0.28rem;
+  margin: 0.1rem auto;
+}
+.pj-content .pc-xing ul li .px-left{
+  width: 1.5rem;
+  float: left;
+  color: #AFB9C1;
+}
+.pj-content .pc-xing ul li .px-right{
+  width: 3rem;
+  float: right;
+  color: #AFB9C1;
+}
+.pj-content .pc-shuru {
+  position: relative;
+  width: 6.6rem;
+  height: 3.8rem;
+  margin: auto;
+  background-color: #F2F2F2;
+}
+
+.pj-content .pc-shuru .area {
+  width: 6.4rem;
+  height: 3.6rem;
+  margin: 0.1rem;
+  border: none;
+  background: #F2F2F2;
+  line-height: 0.4rem;
+  outline: medium;
+}
+
+.pj-content .pc-shuru .xianzhi {
+  position: absolute;
+  font-size: 0.24rem;
+  background: #F2F2F2;
+  right: 0.1rem;
+  bottom: 0.1rem;
+}
+
+
+/*# sourceMappingURL=order-pingjia.css.map */

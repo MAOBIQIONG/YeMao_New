@@ -1,0 +1,88 @@
+.mokuai {
+  width:7.1rem;
+  height:1.8rem;
+  background: white;
+  font-size: 0.28rem;
+  margin: auto;
+  margin-top: 1rem;
+
+}
+
+.mokuai ul li {
+  width: 25%;
+  height:1.8rem;
+  text-align: center;
+  float: left;
+  overflow: hidden;
+}
+
+.mokuai ul li p {
+  margin-top: 0.2rem;
+}
+
+.mokuai ul li img {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+.sanxuan {
+  width: 100%;
+  height: 1rem;
+  background: #F2F2F2;
+  display: inline-block;
+  position: relative;
+}
+
+.sanxuan .sx-cont {
+  width: 100%;
+  height: 0.8rem;
+  margin-top: 0.1rem;
+  background: white;
+  font-size: 0.28rem;
+}
+
+.sanxuan .sx-cont ul li {
+  float: left;
+  width: 33.3%;
+  height: 0.8rem;
+  position: relative;
+}
+
+.sanxuan .sx-cont ul li p {
+  height: 0.6rem;
+  line-height: 0.6rem;
+  border-right: 1px solid #F2F2F2;
+  margin-top: 0.1rem;
+  padding-left: 0.6rem;
+}
+
+.sanxuan .sx-cont ul li p:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.1rem;
+  margin-left: 0.6rem;
+  width: 0.16rem;
+  height: 0.16rem;
+  border: #666 solid;
+  border-width: 1px 1px 0 0;
+  content: ' ';
+  -webkit-transform: rotate(135deg);
+}
+
+.sanxuan .sx-cont ul li .nx,
+.sanxuan .sx-cont ul li .rz {
+  padding-left: 0.7rem;
+}
+
+.sanxuan .sx-cont ul li .nx:after {
+  margin-left: 0.4rem;
+}
+
+.sanxuan .sx-cont ul li .rz:after {
+  margin-left: 0.4rem;
+}
+.content{
+  background: #F2F2F2;
+  padding-bottom: 1.2rem;
+}

@@ -1,0 +1,91 @@
+
+.xiaoxi-content {
+  width: 100%;
+}
+
+.xiaoxi-content .xiaoxi-list {
+  width: 7.1rem;
+  height: 3.9rem;
+  margin-left: 0.2rem;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-time {
+  width: 100%;
+  height: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  font-size: 0.26rem;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-content {
+  position: relative;
+  width: 5.2rem;
+  height: 2.8rem;
+  border-radius: 0.1rem;
+  border: 1px solid #f74d9f;
+  background: white;
+  margin-left: 0.2rem;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-content .jianjia {
+  width: 0.4rem;
+  height: 0.4rem;
+  position: absolute;
+  top: 0.3rem;
+  left: -0.22rem;
+  border-bottom: 1px solid #f74d9f;
+  border-left: 1px solid #f74d9f;
+  transform: rotate(45deg);
+  background: white;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-content .zf-jg {
+  height: 1rem;
+  font-size: 0.28rem;
+  line-height: 1rem;
+  margin-left: 0.4rem;
+  color: #333333;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-content .zf-sm {
+  width: 4.4rem;
+  height: 0.8rem;
+  font-size: 0.28rem;
+  margin-left: 0.4rem;
+  color: #999;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-content .ckxq {
+  position: relative;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-left: 0.4rem;
+  height: 0.8rem;
+  width: 4.8rem;
+  line-height: 0.8rem;
+  font-size: 0.28rem;
+  color: #999999;
+  border-top: 1px solid #F2F2F2;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-content .ckxq .ck-right {
+  position: absolute;
+  width: 0.78rem;
+  height: 0.78rem;
+  right: 0;
+  top: 0;
+  text-align: center;
+  line-height: 0.78rem;
+}
+
+.xiaoxi-content .xiaoxi-list .xl-content .ckxq .ck-right img {
+  width: 0.3rem;
+  margin-top: 0.22rem;
+}
+
+/*# sourceMappingURL=inform-xitong.css.map */

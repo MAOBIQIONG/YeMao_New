@@ -1,0 +1,37 @@
+
+.fenlei-list {
+  margin-left: 0.24rem;
+  margin-top: 1rem;
+  font-size: 0.24rem;
+}
+
+.fenlei-list .fl-box {
+  position: relative;
+  float: left;
+  width: 2.2rem;
+  margin-right: 0.21rem;
+  margin-bottom: 0.21rem;
+  height: 2.2rem;
+  border: 1px solid #B1B1B1;
+  border-radius: 0.1rem;
+  text-align: center;
+  line-height: 2.2rem;
+  color: white;
+  overflow: hidden;
+}
+
+.fenlei-list .fl-box img {
+  width: 100%;
+}
+
+.fenlei-list .fl-box .zhezhao {
+  /*background: rgba(0, 0, 0, 0.5);*/
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+
+/*# sourceMappingURL=fenlei.css.map */
