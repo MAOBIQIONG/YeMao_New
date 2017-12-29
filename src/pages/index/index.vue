@@ -20,7 +20,7 @@
       </div>
     </div>
     <!-- 上拉加载 -->
-    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: rem;">
+    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
         <!--banner-->
         <swiper loop auto height="4rem" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange"></swiper>
@@ -42,7 +42,7 @@
             <div class="lb-img">
               <img src="../../../static/images/index/jianzhusheji.png" />
             </div>
-            <p>建筑设计</p>
+            <p>建筑</p>
           </div>
           <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d35d' }">
             <div class="lb-img">
@@ -78,9 +78,9 @@
             <div class="lb-img">
               <img src="../../../static/images/index/shinei.png" />
             </div>
-            <p>室内设计</p>
+            <p>室内</p>
           </div>
-          <div class="list-box" @click="toUrl('fenlei')">
+          <div class="list-box"  v-tap="{ methods:toUrl , pagename:'fenlei' }">
             <div class="lb-img">
               <img src="../../../static/images/index/qunab.png" />
             </div>
@@ -207,15 +207,16 @@
       })
     },
     methods: {
-      cgLink: function (param) {
-        this.$router.push({name: param.pagename})
-      },
       toUrl: function (params) {
         this.$router.push({name: params.pagename})
       },
       // 详情页
       toDetails (id) {
         this.$router.push({name: 'emporder', query: {id: id}})
+      },
+      // 根据类别id查询订单
+      getOrderByTypeId (params) {
+        this.$router.push({name: 'leibie', query: {id: params.id}})
       },
       /*******************************************************/
       // 项目类型名称
@@ -241,7 +242,7 @@
       grabOrder (id) {
         var userInfo = common.getObjStorage('userInfo');
         if ( common.isNull(userInfo._id) == true ) { // 未登录
-          this.toUrl('login')
+          this.$router.push({name: 'login'})
         } else {
           var status = this.getBidStatus(id, userInfo._id);
           // console.log("status:"+status)
