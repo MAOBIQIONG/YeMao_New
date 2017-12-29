@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import vueTap from 'v-tap'
 import { Datetime, Group } from 'vux'
-import $ from '../utils/jquery-3.2.1.min';
+import $ from '../static/jquery-3.2.1.min';
 import axios from 'axios'
 import store from './vuex/store'
 import common from '../static/common.js'

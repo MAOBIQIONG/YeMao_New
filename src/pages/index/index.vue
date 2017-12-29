@@ -1,119 +1,118 @@
 <template>
 
   <div id="page">
-    <!--banner-->
     <div class="index-banner">
-      <!--轮播-->
-      <swiper loop auto height="4rem" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange"></swiper>
       <!--搜索栏-->
-      <div class="id-header">
+      <div class="id-header" :class="srollFlag==0?'bg-clo1':'bg-clo'">
         <!--地区选择-->
         <div class="crity">
           <group>
             <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="value3"></x-address>
           </group>
         </div>
-        <div class="id-xiaoxi"@click="toUrl('message')">
+        <div class="id-xiaoxi" @click="toUrl('message')">
           <img src="../../../static/images/index/ling.png" />
           <div class="hongdian"></div>
         </div>
-        <div class="id-sousuo"@click="toUrl('search')">
+        <div class="id-sousuo" :class="srollFlag==0?'sousuo1':'sousuo'" @click="toUrl('search')">
           <img src="../../../static/images/index/search.png" />
         </div>
       </div>
     </div>
-    <!--功能列表-->
-    <div class="id-list">
-      <div class="list-box"@click="toUrl('leibie')">
-        <div class="lb-img">
-          <img src="../../../static/images/index/chehua.png" />
+    <!-- 上拉加载 -->
+    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: rem;">
+      <div>
+        <!--banner-->
+        <swiper loop auto height="4rem" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange"></swiper>
+        <!--功能列表-->
+        <div class="id-list">
+          <div class="list-box"@click="toUrl('leibie')">
+            <div class="lb-img">
+              <img src="../../../static/images/index/chehua.png" />
+            </div>
+            <p>策划</p>
+          </div>
+          <div class="list-box"@click="toUrl('leibie')">
+            <div class="lb-img">
+              <img src="../../../static/images/index/guihua.png" />
+            </div>
+            <p>规划</p>
+          </div>
+          <div class="list-box"@click="toUrl('leibie')">
+            <div class="lb-img">
+              <img src="../../../static/images/index/jianzhusheji.png" />
+            </div>
+            <p>建筑设计</p>
+          </div>
+          <div class="list-box"@click="toUrl('leibie')">
+            <div class="lb-img">
+              <img src="../../../static/images/index/jiegou.png" />
+            </div>
+            <p>结构</p>
+          </div>
+          <div class="list-box">
+            <div class="lb-img">
+              <img src="../../../static/images/index/jipaishui.png" />
+            </div>
+            <p>给排水</p>
+          </div>
+          <div class="list-box">
+            <div class="lb-img">
+              <img src="../../../static/images/index/dianqi.png" />
+            </div>
+            <p>电气</p>
+          </div>
+          <div class="list-box">
+            <div class="lb-img">
+              <img src="../../../static/images/index/nuantong.png" />
+            </div>
+            <p>暖通</p>
+          </div>
+          <div class="list-box">
+            <div class="lb-img">
+              <img src="../../../static/images/index/jingguan.png" />
+            </div>
+            <p>景观</p>
+          </div>
+          <div class="list-box">
+            <div class="lb-img">
+              <img src="../../../static/images/index/shinei.png" />
+            </div>
+            <p>室内设计</p>
+          </div>
+          <div class="list-box"@click="toUrl('fenlei')">
+            <div class="lb-img">
+              <img src="../../../static/images/index/qunab.png" />
+            </div>
+            <p>全部</p>
+          </div>
         </div>
-        <p>策划</p>
-      </div>
-      <div class="list-box"@click="toUrl('leibie')">
-        <div class="lb-img">
-          <img src="../../../static/images/index/guihua.png" />
+        <div class="gap-line"></div>
+        <!--文字滚动广告-->
+        <div class="wzgd-box">
+          <swiper loop auto height="45px" direction="vertical" :interval=1000 class="text-scroll" :show-dots="false">
+            <swiper-item v-for="item in noticeList">
+              <div class="notice-img"><img :src="item.user_img" /></div>
+              <div class="notice-text">{{item.title}}</div>
+            </swiper-item>
+          </swiper>
         </div>
-        <p>规划</p>
-      </div>
-      <div class="list-box"@click="toUrl('leibie')">
-        <div class="lb-img">
-          <img src="../../../static/images/index/jianzhusheji.png" />
+        <div class="gap-line"></div>
+        <!--智能排序-->
+        <div class="id-znpx">
+          <div class="xian" @click="znbx()">
+            <p :class="znpxMark==true ? 'up' : ''">智能排序</p>
+          </div>
+          <div class="area" v-if="znpxMark">
+            <ul>
+              <li @click="sort(0)">智能排序</li>
+              <li @click="sort(1)">人气最高</li>
+              <li @click="sort(0)">最新发布</li>
+            </ul>
+          </div>
         </div>
-        <p>建筑设计</p>
-      </div>
-      <div class="list-box"@click="toUrl('leibie')">
-        <div class="lb-img">
-          <img src="../../../static/images/index/jiegou.png" />
-        </div>
-        <p>结构</p>
-      </div>
-      <div class="list-box">
-        <div class="lb-img">
-          <img src="../../../static/images/index/jipaishui.png" />
-        </div>
-        <p>给排水</p>
-      </div>
-      <div class="list-box">
-        <div class="lb-img">
-          <img src="../../../static/images/index/dianqi.png" />
-        </div>
-        <p>电气</p>
-      </div>
-      <div class="list-box">
-        <div class="lb-img">
-          <img src="../../../static/images/index/nuantong.png" />
-        </div>
-        <p>暖通</p>
-      </div>
-      <div class="list-box">
-        <div class="lb-img">
-          <img src="../../../static/images/index/jingguan.png" />
-        </div>
-        <p>景观</p>
-      </div>
-      <div class="list-box">
-        <div class="lb-img">
-          <img src="../../../static/images/index/shinei.png" />
-        </div>
-        <p>室内设计</p>
-      </div>
-      <div class="list-box"@click="toUrl('fenlei')">
-        <div class="lb-img">
-          <img src="../../../static/images/index/qunab.png" />
-        </div>
-        <p>全部</p>
-      </div>
-    </div>
-    <div class="gap-line"></div>
-    <!--文字滚动广告-->
-    <div class="wzgd-box">
-      <swiper loop auto height="45px" direction="vertical" :interval=1000 class="text-scroll" :show-dots="false">
-        <swiper-item v-for="item in noticeList">
-          <div class="notice-img"><img :src="item.user_img" /></div>
-          <div class="notice-text">{{item.title}}</div>
-        </swiper-item>
-      </swiper>
-    </div>
-    <div class="gap-line"></div>
-    <!--智能排序-->
-    <div class="id-znpx">
-      <div class="xian" @click="znbx()">
-        <p :class="znpxMark==true ? 'up' : ''">智能排序</p>
-      </div>
-      <div class="area" v-if="znpxMark">
-        <ul>
-          <li @click="sort(0)">智能排序</li>
-          <li @click="sort(1)">人气最高</li>
-          <li @click="sort(0)">最新发布</li>
-        </ul>
-      </div>
-    </div>
-    <!--雇主列表-->
-    <div class="content">
-      <!-- 上拉加载 -->
-      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: rem;">
-        <div>
+        <!--雇主列表-->
+        <div class="content">
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
               <div class="gz-touxiang">
@@ -146,10 +145,10 @@
               </div>
             </div>
           </div>
-          <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
         </div>
-      </scroller>
-    </div>
+        <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
+      </div>
+    </scroller>
   </div>
 </template>
 
@@ -170,6 +169,7 @@
     store,
     data () {
       return {
+        srollFlag:0,
         imgList: [],
         noticeList : [],
         orderList : [],
@@ -190,6 +190,7 @@
     },
     activated: function () {
       // console.log("activated:")
+      this.$refs.scrollerBottom.reset()
       var irm = this.$store.state.indexRefreshMark;
       if( irm>0 ){
         this.$store.state.indexRefreshMark = 0;
@@ -198,14 +199,11 @@
     },
     created: function () {
       // console.log("inde created:")
-      // console.log('startTime: ' + this.$route.query.startTime);
-      this.scrolle();
       this.initData();
-      this.addSth()
     },
     mounted: function () {
       this.$nextTick(() => {
-          this.$refs.scrollerBottom.reset({top: 0})
+        this.$refs.scrollerBottom.reset({top: 0})
       })
     },
     methods: {
@@ -217,29 +215,6 @@
       },
       onIndexChange (index) {
         this.imgIndex = index
-      },
-      //下拉搜索框变长
-      scrolle(){
-        $(window).on('scroll', function() {
-          var $scroll = $(this).scrollTop();
-          if($scroll >= 100) {
-            $('.id-header').css(
-              "background-color", "rgba(255,255,255,1)"
-            );
-            $('.id-sousuo').css({
-              "width": "5.5rem",
-              "background-color": "rgba(0,0,0,.1)"
-            });
-          } else {
-            $('.id-header').css({
-              "background-color": ""
-            });
-            $('.id-sousuo').css({
-              "width": "1.2rem",
-              "background-color": "white"
-            });
-          }
-        });
       },
       //智能排序
       znbx(){
@@ -278,16 +253,22 @@
         return img;
       },
 
+      //滑动
+      onScroll(sroll){
+        // console.log("onScroll:"+JSON.stringify(sroll))
+        this.srollFlag = sroll.top > 100 ? 1 : 0;
+      },
+
       //下拉加载下拉加载
       onScrollBottom () {
-        console.log("onScrollBottom:")
+        // console.log("onScrollBottom:")
         var _self = this;
         if (_self.onFetching) {
           // do nothing
         } else {
           _self.onFetching = true
           setTimeout(() => {
-              _self.loadMore()
+            _self.loadMore()
           }, 100)
         }
       },
@@ -348,7 +329,7 @@
               });
               _self.orderList = orderList;
               _self.$nextTick(() => {
-                  _self.$refs.scrollerBottom.reset()
+                _self.$refs.scrollerBottom.reset()
               })
 
               if( orderList.length < _self.pageSize ){
@@ -409,8 +390,8 @@
               });
               _self.orderList = [..._self.orderList, ...orderList];
               _self.$nextTick(() => {
-                  _self.$refs.scrollerBottom.reset()
-               })
+                _self.$refs.scrollerBottom.reset()
+              })
 
               _self.showLoading = false;
               if( orderList.length < _self.pageSize ){
@@ -458,23 +439,6 @@
           }
         })
         return status;
-      },
-
-      addSth(){
-        var params = {
-          interfaceId:'insertMany',
-          coll:"indexImgList",
-          data:[
-            { "_id" : "img001", "img" : "../../../static/images/img/2.jpg", "title" : "" },
-            { "_id" : "img002", "img" : "../../../static/images/img/3.jpg", "title" : "" },
-            { "_id" : "img003", "img" : "../../../static/images/img/4.jpg", "title" : "" }
-          ]
-        }
-//        this.$axios.post('/api/mongoApi',{
-//          params:params
-//        }).then((response)=>{
-//
-//        })
       },
 
     }
@@ -529,5 +493,16 @@
   }
   .bg_click {
     background:#f3f3f3;
+  }
+  /**************************************/
+  .bg-clo{background-color:rgba(255,255,255,1);}
+  .bg-clo1{background-color:rgba(0,0,0,.1)}
+  .sousuo{
+    width:5.5rem !important;
+    background-color:rgba(0,0,0,.1) !important;
+  }
+  .sousuo1{
+    width:1.2rem;
+    background-color:rgba(255,255,255,1);
   }
 </style>
