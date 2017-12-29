@@ -176,7 +176,7 @@ common.op_localStorage = function() {
         }
     };
     let get = function(key){
-        return storage.getItem(key);     
+        return storage.getItem(key);
     };
     let remove = function(key) {
         storage.removeItem(key);

@@ -10,11 +10,11 @@
             <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="value3"></x-address>
           </group>
         </div>
-        <div class="id-xiaoxi" @click="toUrl('message')">
+        <div class="id-xiaoxi" v-tap="{ methods:toUrl , pagename:'message' }">
           <img src="../../../static/images/index/ling.png" />
           <div class="hongdian"></div>
         </div>
-        <div class="id-sousuo" :class="srollFlag==0?'sousuo1':'sousuo'" @click="toUrl('search')">
+        <div class="id-sousuo" :class="srollFlag==0?'sousuo1':'sousuo'" v-tap="{ methods:toUrl , pagename:'search' }">
           <img src="../../../static/images/index/search.png" />
         </div>
       </div>
@@ -26,61 +26,61 @@
         <swiper loop auto height="4rem" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange"></swiper>
         <!--功能列表-->
         <div class="id-list">
-          <div class="list-box"@click="toUrl('leibie')">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d35a' }">
             <div class="lb-img">
               <img src="../../../static/images/index/chehua.png" />
             </div>
             <p>策划</p>
           </div>
-          <div class="list-box"@click="toUrl('leibie')">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d35b' }">
             <div class="lb-img">
               <img src="../../../static/images/index/guihua.png" />
             </div>
             <p>规划</p>
           </div>
-          <div class="list-box"@click="toUrl('leibie')">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d35c' }">
             <div class="lb-img">
               <img src="../../../static/images/index/jianzhusheji.png" />
             </div>
             <p>建筑设计</p>
           </div>
-          <div class="list-box"@click="toUrl('leibie')">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d35d' }">
             <div class="lb-img">
               <img src="../../../static/images/index/jiegou.png" />
             </div>
             <p>结构</p>
           </div>
-          <div class="list-box">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d35e' }">
             <div class="lb-img">
               <img src="../../../static/images/index/jipaishui.png" />
             </div>
             <p>给排水</p>
           </div>
-          <div class="list-box">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d35f' }">
             <div class="lb-img">
               <img src="../../../static/images/index/dianqi.png" />
             </div>
             <p>电气</p>
           </div>
-          <div class="list-box">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d360' }">
             <div class="lb-img">
               <img src="../../../static/images/index/nuantong.png" />
             </div>
             <p>暖通</p>
           </div>
-          <div class="list-box">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d361' }">
             <div class="lb-img">
               <img src="../../../static/images/index/jingguan.png" />
             </div>
             <p>景观</p>
           </div>
-          <div class="list-box">
+          <div class="list-box" v-tap="{ methods:getOrderByTypeId , id:'5a4248b1160048792cd9d362' }">
             <div class="lb-img">
               <img src="../../../static/images/index/shinei.png" />
             </div>
             <p>室内设计</p>
           </div>
-          <div class="list-box"@click="toUrl('fenlei')">
+          <div class="list-box" @click="toUrl('fenlei')">
             <div class="lb-img">
               <img src="../../../static/images/index/qunab.png" />
             </div>
@@ -153,8 +153,8 @@
 </template>
 
 <script>
-  import {LoadMore, Scroller, Swiper, SwiperItem, Divider,XAddress,ChinaAddressV4Data,} from 'vux'
-  import common from '../../../static/common';
+  import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data} from 'vux'
+  import common from '../../../static/common'
   import store from '@/vuex/store'
 
   export default {
@@ -164,42 +164,42 @@
       Divider,
       XAddress,
       Scroller,
-      LoadMore,
+      LoadMore
     },
     store,
     data () {
       return {
-        srollFlag:0,
+        srollFlag: 0,
         imgList: [],
-        noticeList : [],
-        orderList : [],
+        noticeList: [],
+        orderList: [],
         imgIndex: 0,
-        znpxMark:false,
+        znpxMark: false,
         addressData: ChinaAddressV4Data,
         value3: ['上海市'],
 
         pageNo: 0,
         pageSize: 10,
-        onFetching:true,
-        showLoading:false,
-        loadtext:"上拉加载",
-        loadmore:"上拉加载",
+        onFetching: true,
+        showLoading: false,
+        loadtext: '上拉加载',
+        loadmore: '上拉加载',
         loadrefresh: '正在加载...',
-        loadnomore: '没有更多数据了',
+        loadnomore: '没有更多数据了'
       }
     },
     activated: function () {
       // console.log("activated:")
       this.$refs.scrollerBottom.reset()
-      var irm = this.$store.state.indexRefreshMark;
-      if( irm>0 ){
-        this.$store.state.indexRefreshMark = 0;
-        this.initData();
+      var irm = this.$store.state.indexRefreshMark
+      if ( irm > 0 ) {
+        this.$store.state.indexRefreshMark = 0
+        this.initData()
       }
     },
     created: function () {
       // console.log("inde created:")
-      this.initData();
+      this.initData()
     },
     mounted: function () {
       this.$nextTick(() => {
@@ -210,59 +210,97 @@
       cgLink: function (param) {
         this.$router.push({name: param.pagename})
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
+      // 详情页
+      toDetails (id) {
+        this.$router.push({name: 'emporder', query: {id: id}})
+      },
+      /*******************************************************/
+      // 项目类型名称
+      getNameById (id) {
+        return common.getNameByTypeId(id)
+      },
+      // 头像
+      checkAvatar (path) {
+        var img = common.getAvatar(path, '../../../static/images/bj.jpg')
+        return img
+      },
+      // 智能排序
+      znbx () {
+        var _self = this
+        _self.znpxMark = _self.znpxMark == true ? false : true
+      },
+      // 排序
+      sort (flag) {
+        var _self = this
+        _self.znpxMark = false
+      },
+      // 抢单
+      grabOrder (id) {
+        var userInfo = common.getObjStorage('userInfo');
+        if ( common.isNull(userInfo._id) == true ) { // 未登录
+          this.toUrl('login')
+        } else {
+          var status = this.getBidStatus(id, userInfo._id);
+          // console.log("status:"+status)
+          if ( status == 0 ) { // 未参与
+            this.$router.push({name: 'orderqiangdan', query: {id: id}});
+          } else { // 已参与
+            this.$router.push({name: 'emporder', query: {id: id}});
+          }
+        }
+      },
+      // 获取用户抢单状态
+      getBidStatus (oid, uid) {
+        var _self = this;
+        var status = 0; // 0、未参与，1、已参与
+        _self.orderList.forEach(function (item, index) {
+          if ( item._id == oid ) {
+            item.bidders.forEach(function (item, index) {
+              if ( item.user_id == uid ) {
+                status = 1;
+              }
+            })
+          }
+        })
+        return status;
+      },
+      /**
+       * vux
+       * */
+      // 图片轮播
       onIndexChange (index) {
         this.imgIndex = index
       },
-      //智能排序
-      znbx(){
-        var _self = this;
-        _self.znpxMark = _self.znpxMark == true ? false : true;
-      },
-      //排序
-      sort(flag){
-        var _self = this;
-        _self.znpxMark = false;
-      },
       // 地区
       logHide (str) {
-        var obj = this;
+        var obj = this
         console.log('on-hide', str)
-        if( str == true ){
+        if ( str == true ) {
           console.log('value', obj.value3)
-          if( obj.value3[0] == '110000' || obj.value3[0] == '120000' ||
-            obj.value3[0] == '310000' || obj.value3[0] == '500000' ){
-            obj.value3[1] = '--';
-          }else{
-            obj.value3[0] = '--';
+          if (obj.value3[0] == '110000' || obj.value3[0] == '120000' ||
+            obj.value3[0] == '310000' || obj.value3[0] == '500000') {
+            obj.value3[1] = '--'
+          } else {
+            obj.value3[0] = '--'
           }
         }
       },
       logShow (str) {
-        console.log('on-show',str)
+        console.log('on-show', str)
       },
-      //项目类型名称
-      getNameById(id){
-        return common.getNameByTypeId(id);
-      },
-      //头像
-      checkAvatar(path){
-        var img = common.getAvatar(path,"../../../static/images/bj.jpg");
-        return img;
-      },
-
-      //滑动
-      onScroll(sroll){
+      // 滑动
+      onScroll (sroll) {
         // console.log("onScroll:"+JSON.stringify(sroll))
-        this.srollFlag = sroll.top > 100 ? 1 : 0;
+        this.srollFlag = sroll.top > 100 ? 1 : 0
       },
 
-      //下拉加载下拉加载
+      // 下拉加载下拉加载
       onScrollBottom () {
         // console.log("onScrollBottom:")
-        var _self = this;
+        var _self = this
         if (_self.onFetching) {
           // do nothing
         } else {
@@ -272,53 +310,56 @@
           }, 100)
         }
       },
-
+      /**
+       * interface
+       * */
+      // 初始化首页
       initData () {
-        var _self = this;
+        var _self = this
         var params = {
-          interfaceId:'getIndexInfo'
+          interfaceId: 'getIndexInfo'
         }
-        _self.$axios.post('/api/mongoApi',{
-          params:params
-        }).then((response)=>{
+        _self.$axios.post('/api/mongoApi', {
+          params: params
+        }).then((response) => {
           // console.log(response);
-          if( response.data ){
-            var data = response.data.data;
-            if( data ){
-              //轮播图
+          if ( response.data ) {
+            var data = response.data.data
+            if ( data ) {
+              // 轮播图
               _self.imgList = data.imgList || [];
 
-              //通知
+              // 通知
               _self.noticeList = data.noticeList || [];
               var noticeUsers = data.noticeUsers || [];
-              _self.noticeList.forEach(function (item,index) {
-                noticeUsers.forEach(function (obj,j) {
-                  if( item.user_id == obj._id ){
+              _self.noticeList.forEach(function (item, index) {
+                noticeUsers.forEach(function (obj, j) {
+                  if ( item.user_id == obj._id ) {
                     item.user_img = obj.img;
                   }
                 })
               });
 
-              //订单
+              // 订单
               var orderUsers = data.orderUsers || [];
               var orderBidders = data.orderBidders || [];
               var bidders = data.bidders || [];
               var orderList = data.orderList || [];
-              orderList.forEach(function (item,index) {
-                //雇主
-                orderUsers.forEach(function (u,j) {
-                  if( item.user_id == u._id ){
+              orderList.forEach(function (item, index) {
+                // 雇主
+                orderUsers.forEach(function (u, j) {
+                  if ( item.user_id == u._id ) {
                     item.user = u;
-                  }else{
+                  } else {
                     item.user = {};
                   }
                 })
-                //参与人
+                // 参与人
                 item.bidders = [];
-                orderBidders.forEach(function (b,j) {
-                  if( item._id == b.order_id ){
-                    bidders.forEach(function (u,j) {
-                      if( b.user_id == u._id ){
+                orderBidders.forEach(function (b, j) {
+                  if ( item._id == b.order_id ) {
+                    bidders.forEach(function (u, j) {
+                      if ( b.user_id == u._id ) {
                         b.user_name = u.user_name;
                         b.img = u.img;
                       }
@@ -332,9 +373,9 @@
                 _self.$refs.scrollerBottom.reset()
               })
 
-              if( orderList.length < _self.pageSize ){
+              if ( orderList.length < _self.pageSize ) {
                 _self.loadtext = _self.loadnomore;
-              }else{
+              } else {
                 _self.onFetching = false
                 _self.pageNo++;
               }
@@ -342,44 +383,44 @@
           }
         })
       },
-
+      // 加载更多
       loadMore () {
         var _self = this;
         var params = {
-          interfaceId:'getOrderList',
+          interfaceId: 'getOrderList',
           pageNo: _self.pageNo,
-          pageSize: _self.pageSize,
+          pageSize: _self.pageSize
         }
 
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
-        _self.$axios.post('/api/mongoApi',{
-          params:params
-        }).then((response)=>{
-          if( response.data ){
+        _self.$axios.post('/api/mongoApi', {
+          params: params
+        }).then((response) => {
+          if ( response.data ) {
             var data = response.data.data;
-            if( data ){
+            if ( data ) {
               // console.log("loadMore:"+data);
-              //订单
+              // 订单
               var orderUsers = data.orderUsers || [];
               var orderBidders = data.orderBidders || [];
               var bidders = data.bidders || [];
               var orderList = data.orderList || [];
-              orderList.forEach(function (item,index) {
-                //雇主
-                orderUsers.forEach(function (u,j) {
-                  if( item.user_id == u._id ){
+              orderList.forEach(function (item, index) {
+                // 雇主
+                orderUsers.forEach(function (u, j) {
+                  if ( item.user_id == u._id ) {
                     item.user = u;
-                  }else{
+                  } else {
                     item.user = {};
                   }
                 })
-                //参与人
+                // 参与人
                 item.bidders = [];
-                orderBidders.forEach(function (b,j) {
-                  if( item._id == b.order_id ){
-                    bidders.forEach(function (u,j) {
-                      if( b.user_id == u._id ){
+                orderBidders.forEach(function (b, j) {
+                  if ( item._id == b.order_id ) {
+                    bidders.forEach(function (u, j) {
+                      if ( b.user_id == u._id ) {
                         b.user_name = u.user_name;
                         b.img = u.img;
                       }
@@ -394,9 +435,9 @@
               })
 
               _self.showLoading = false;
-              if( orderList.length < _self.pageSize ){
+              if ( orderList.length < _self.pageSize ) {
                 _self.loadtext = _self.loadnomore;
-              }else{
+              } else {
                 _self.loadtext = _self.loadmore;
                 _self.onFetching = false
                 _self.pageNo++;
@@ -404,42 +445,7 @@
             }
           }
         })
-      },
-
-      //详情页
-      toDetails(id){
-        this.$router.push({name:'emporder',query:{id:id}});
-      },
-
-      grabOrder(id){
-        var userInfo = common.getObjStorage("userInfo");
-        if( common.isNull(userInfo._id) == true ){//未登录
-          this.toUrl("login");
-        }else{
-          var status = this.getBidStatus(id,userInfo._id);
-          // console.log("status:"+status)
-          if( status == 0 ){//未参与
-            this.$router.push({name:'orderqiangdan',query:{id:id}});
-          }else{//已参与
-            this.$router.push({name:'emporder',query:{id:id}});
-          }
-        }
-      },
-
-      getBidStatus(oid,uid){
-        var _self = this;
-        var status = 0;//0、未参与，1、已参与
-        _self.orderList.forEach(function (item,index) {
-          if( item._id == oid ){
-            item.bidders.forEach(function (item,index) {
-              if( item.user_id == uid ){
-                status = 1;
-              }
-            })
-          }
-        })
-        return status;
-      },
+      }
 
     }
   }
