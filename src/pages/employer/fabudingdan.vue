@@ -129,8 +129,9 @@
 
 <script>
   import imageUpload from '../../components/upload/image-upload.vue'
-  import {XAddress,ChinaAddressV4Data,Datetime, Group,Checker, CheckerItem, Toast } from 'vux'
-  import common from '../../../static/common';
+  import { XAddress, ChinaAddressV4Data, Datetime, Group, Checker, CheckerItem, Toast } from 'vux'
+  import common from '../../../static/common'
+  import store from '@/vuex/store'
 
   export default {
     components: {
@@ -142,6 +143,7 @@
       imageUpload,
       Toast
     },
+    store,
     data () {
       return {
         userInfo:{},
@@ -171,6 +173,7 @@
       }
     },
     created: function () {
+      console.log("fbdd created:")
       this.userInfo = common.getObjStorage("userInfo");
       this.subParams.user_id = this.userInfo._id;
 
@@ -223,6 +226,7 @@
       },
 
       submit(){
+        console.log("submit:")
         var _self = this;
         if( common.isNull(_self.subParams.user_id) == true ){
           _self.showToast("未成功获取用户信息!");
@@ -288,9 +292,13 @@
           if( response ){
             var data = response.data;
             if( data && data.code == 200 ){
-            //   _self.showToast("发布成功！");
-            //   _self.goback();
-             _self.toUrl('releaseSuccess');
+              this.$store.state.indexRefreshMark = 1;
+              this.$store.state.employerRefreshMark = 1;
+               _self.showToast("发布成功！");
+               // _self.goback();
+              setTimeout(function () {
+                _self.toUrl('releaseSuccess');
+              },1000)
             }else{
               _self.showToast("发布失败！");
             }

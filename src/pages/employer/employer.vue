@@ -10,10 +10,10 @@
     </div>
     <!--状态模块-->
     <div class="gu-mokuai">
-      <div class="dingdan"@click="toUrl('fabudingdan',true)">
+      <div class="dingdan" v-tap="{ methods:toUrl, pagename:'fabudingdan', flag:true }">
         发 布 项 目
       </div>
-      <div class="shouchang"@click="toUrl('myorderchuli',true)">
+      <div class="shouchang" v-tap="{ methods:toUrl, pagename:'myorderchuli', flag:true }">
         我 的 订 单
       </div>
     </div>
@@ -74,72 +74,117 @@
 </template>
 
 <script>
-  import {LoadMore, Scroller,} from 'vux'
-  import common from '../../../static/common';
+  import { LoadMore, Scroller } from 'vux'
+  import common from '../../../static/common'
   export default {
     components: {
       Scroller,
-      LoadMore,
+      LoadMore
     },
     data () {
       return {
-        orderList : [],
-        znpxMark:false,
+        orderList: [],
+        znpxMark: false,
 
         pageNo: 0,
         pageSize: 10,
-        onFetching:true,
-        showLoading:false,
-        loadtext:"上拉加载",
-        loadmore:"上拉加载",
+        onFetching: true,
+        showLoading: false,
+        loadtext: '上拉加载',
+        loadmore: '上拉加载',
         loadrefresh: '正在加载...',
-        loadnomore: '没有更多数据了',
+        loadnomore: '没有更多数据了'
       }
     },
-    created:function () {
-       this.loadMore();
+    activated: function () {
+      console.log("employer activated:")
+      var erm = this.$store.state.employerRefreshMark;
+      if ( erm > 0 ) {
+        this.$store.state.employerRefreshMark = 0;
+        this.pageNo = 0;
+        this.pageSize = 10;
+        this.onFetching = true;
+        this.loadMore()
+      }
+    },
+    created: function () {
+      this.loadMore()
     },
     mounted: function () {
-//      this.$nextTick(() => {
-//          this.$refs.scrollerBottom.reset({top: 0})
-//      })
+      // console.log("employer mounted:")
+      //this.$nextTick(() => {
+      //    this.$refs.scrollerBottom.reset({top: 0})
+      //})
     },
     methods: {
-      cgLink: function (param) {
-        this.$router.push({name: param.pagename})
-      },
-      toUrl: function (pagename,flag) {
-        var user = common.getObjStorage("userInfo");
-        console.log("flag:"+flag);
-        console.log("common.isNull(user._id):"+common.isNull(user._id));
-        if( flag == true && common.isNull(user._id) == true ){
+      toUrl: function (params) {
+
+        var user = common.getObjStorage('userInfo');
+        if ( params.flag == true && common.isNull(user._id) == true ) {
           this.$router.push({name: 'login'})
-        }else{
-          this.$router.push({name: pagename})
+        } else {
+          this.$router.push({name: params.pagename})
         }
       },
-      //项目类型名称
+      // 详情页
+      toDetails (id) {
+        this.$router.push({name: 'emporder', query: {id: id}})
+      },
+      /*******************************************************/
+      // 项目类型名称
       getNameById(id){
         return common.getNameByTypeId(id);
       },
-      //头像
+      // 头像
       checkAvatar(path){
         var img = common.getAvatar(path,"../../../static/images/bj.jpg");
         return img;
       },
-      //智能排序
+      // 智能排序
       znbx(){
         var _self = this;
         _self.znpxMark = _self.znpxMark == true ? false : true;
       },
-      //排序
+      // 排序
       sort(flag){
         var _self = this;
         _self.znpxMark = false;
       },
-      //下拉加载下拉加载
+      // 抢单
+      grabOrder(id){
+        var userInfo = common.getObjStorage("userInfo");
+        if( common.isNull(userInfo._id) == true ){//未登录
+          this.toUrl("login");
+        }else{
+          var status = this.getBidStatus(id,userInfo._id);
+          // console.log("status:"+status)
+          if( status == 0 ){//未参与
+            this.$router.push({name:'orderqiangdan',query:{id:id}});
+          }else{//已参与
+            this.$router.push({name:'emporder',query:{id:id}});
+          }
+        }
+      },
+      // 获取用户抢单状态
+      getBidStatus(oid,uid){
+        var _self = this;
+        var status = 0;//0、未参与，1、已参与
+        _self.orderList.forEach(function (item,index) {
+          if( item._id == oid ){
+            item.bidders.forEach(function (item,index) {
+              if( item.user_id == uid ){
+                status = 1;
+              }
+            })
+          }
+        })
+        return status;
+      },
+      /**
+       * vux
+       * */
+      // 下拉加载下拉加载
       onScrollBottom () {
-        console.log("onScrollBottom:")
         var _self = this;
         if (_self.onFetching) {
           // do nothing
@@ -150,7 +195,9 @@
           }, 100)
         }
       },
-
+      /**
+       * interface
+       * */
       loadMore () {
         var _self = this;
         var params = {
@@ -196,7 +243,11 @@
                   }
                 })
               });
-              _self.orderList = [..._self.orderList, ...orderList];
+              if( _self.pageNo == 0 ){
+                _self.orderList = orderList;
+              }else{
+                _self.orderList = [..._self.orderList, ...orderList];
+              }
               _self.$nextTick(() => {
                   _self.$refs.scrollerBottom.reset()
               })
@@ -212,42 +263,7 @@
             }
           }
         })
-      },
-
-      //详情页
-      toDetails(id){
-        this.$router.push({name:'emporder',query:{id:id}});
-      },
-
-      grabOrder(id){
-        var userInfo = common.getObjStorage("userInfo");
-        if( common.isNull(userInfo._id) == true ){//未登录
-          this.toUrl("login");
-        }else{
-          var status = this.getBidStatus(id,userInfo._id);
-          // console.log("status:"+status)
-          if( status == 0 ){//未参与
-            this.$router.push({name:'orderqiangdan',query:{id:id}});
-          }else{//已参与
-            this.$router.push({name:'emporder',query:{id:id}});
-          }
-        }
-      },
-
-      getBidStatus(oid,uid){
-        var _self = this;
-        var status = 0;//0、未参与，1、已参与
-        _self.orderList.forEach(function (item,index) {
-          if( item._id == oid ){
-            item.bidders.forEach(function (item,index) {
-              if( item.user_id == uid ){
-                status = 1;
-              }
-            })
-          }
-        })
-        return status;
-      },
+      }
 
     }
   }

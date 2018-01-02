@@ -189,16 +189,19 @@
       }
     },
     activated: function () {
-      // console.log("activated:")
+      // console.log("index activated:")
       this.$refs.scrollerBottom.reset()
       var irm = this.$store.state.indexRefreshMark
       if ( irm > 0 ) {
         this.$store.state.indexRefreshMark = 0
+        this.pageNo = 0;
+        this.pageSize = 10;
+        this.onFetching = true;
         this.initData()
       }
     },
     created: function () {
-      // console.log("inde created:")
+      console.log("")
       this.initData()
     },
     mounted: function () {

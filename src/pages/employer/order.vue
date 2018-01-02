@@ -122,7 +122,7 @@
 
 <script>
   import xheader2 from '../../components/header/xheader2.vue'
-  import common from '../../../static/common';
+  import common from '../../../static/common'
   export default {
     components: {
       xheader2
@@ -135,19 +135,19 @@
           backgroundImage: 'url(' + require('../../../static/images/bj.jpg') + ')'
         },
 
-        order_id:null,
-        user_id:null,
-        collectFlag:0,
-        order:{},
-        bidders:[],
-        imgSize:0
+        order_id: null,
+        user_id: null,
+        collectFlag: 0,
+        order: {},
+        bidders: [],
+        imgSize: 0
       }
     },
     activated: function () {
-      console.log("activated:")
+      console.log('activated:')
       var id = this.$route.query.id;
       var oid = this.order_id;
-      if( oid != id ){
+      if ( oid != id ) {
         this.order_id = this.$route.query.id;
         this.initData();
       }
@@ -230,7 +230,7 @@
           order_id:_self.order_id,
           user_id:_self.user_id
         }
-        console.log("params:"+JSON.stringify(params))
+        // console.log("params:"+JSON.stringify(params))
         _self.$axios.post('/api/mongoApi',{
           params:params
         }).then((response)=>{

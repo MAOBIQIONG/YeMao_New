@@ -24,6 +24,20 @@ window.jQuery = $
 window.$ = $
 window.common = common
 
+router.beforeEach(function (to, from, next) {
+  // 如果isBack为true时，证明是用户点击了回退，执行slide-right动画
+  let isBack = router.isBack
+  console.log('isBack:' + isBack)
+  if (isBack) {
+    store.state.direction = 1
+  } else {
+    store.state.direction = 0
+  }
+  // 做完回退动画后，要设置成前进动画，否则下次打开页面动画将还是回退
+  router.isBack = false
+  next()
+})
+
 // axios
 Vue.prototype.$axios = axios;
 
@@ -31,7 +45,7 @@ Vue.prototype.$axios = axios;
 new Vue({
   el: '#app',
   router,
-  store,//使用store
+  store, // 使用store
   template: '<App/>',
   components: { App }
 })

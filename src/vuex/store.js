@@ -1,16 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const state = {
-  count:0,
+  count: 0,
+  // 页面跳转方向：0、向前，1、向后。
+  direction: 0,
   // 首页底部导航栏页面状态
-  pageIndex:0,
+  pageIndex: 0,
   // 首页页面刷新状态
-  indexRefreshMark:0,
-  // 页面订单详情刷新状态
-  detailRefreshMark:0,
+  indexRefreshMark: 0,
+  // 订单详情页面刷新状态
+  detailRefreshMark: 0,
+  // 设计师首页刷新状态
+  employerRefreshMark: 0
 
 }
 

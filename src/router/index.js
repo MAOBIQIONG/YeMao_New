@@ -70,6 +70,7 @@ import pz from '@/pages/meow/pz'
 Vue.use(Router)
 
 Router.prototype.goBack = function () {
+  console.log("back:")
   this.isBack = true
   window.history.go(-1)
 }

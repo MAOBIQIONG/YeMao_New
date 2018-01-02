@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="anniu">
-        <div class="fhsy" @click="toUrl('index')">
+        <div class="fhsy" v-tap="{ methods:toIndex, pagename:'index' }">
           返回首页
         </div>
         <div class="ckdd" @click="toMyOrder()">
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import common from '../../../static/common';
+  import store from '@/vuex/store'
   export default {
     // 引入组件
     data () {
@@ -34,16 +36,21 @@
         recommendArray:'发布成功',
       }
     },
+    store,
     mounted: function () {
     },
     methods: {
-      goback(){
-        this.$router.goBack();
+      goback () {
+        this.$router.goBack()
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      toMyOrder:function(){
+      toIndex: function (params) {
+        this.$store.state.pageIndex = 0;
+        this.$router.push({name: params.pagename})
+      },
+      toMyOrder: function() {
         common.op_localStorage().set("fromRS",1);
         console.log(localStorage);
         this.toUrl('myorderchuli');

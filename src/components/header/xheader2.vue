@@ -1,6 +1,6 @@
 <template>
   <div class="header-box">
-    <x-header :left-options="{backText: ''}" :title="title"><a slot="right" :class="flag==0?right_class:right_hover_class" v-tap="{ methods:setHover }"></a></x-header>
+    <x-header :left-options="{backText: '',preventGoBack:true}" @on-click-back="goback" :title="title"><a slot="right" :class="flag==0?right_class:right_hover_class" v-tap="{ methods:setHover }"></a></x-header>
   </div>
 </template>
 
@@ -16,6 +16,7 @@
     },
     props: {
       title: String,
+      preventGoBack: true,
       rightClass: String,
       collectFlag: Number
     },
@@ -26,12 +27,15 @@
     },
     data () {
       return {
-        flag:0,
-        right_class: "",
-        right_hover_class: "",
+        flag: 0,
+        right_class: '',
+        right_hover_class: ''
       }
     },
     methods: {
+      goback () {
+        this.$router.goBack()
+      },
       setHover: function () {
         if ( this.flag == 0 ) {
           this.flag = 1;
