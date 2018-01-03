@@ -101,13 +101,13 @@
         <!--智能排序-->
         <div class="id-znpx">
           <div class="xian" v-tap="{ methods:znbx }">
-            <p :class="znpxMark==true ? 'up' : ''">智能排序</p>
+            <p :class="znpxMark==true ? 'up' : ''" v-text="sortName"></p>
           </div>
           <div class="area" v-if="znpxMark">
             <ul>
               <li v-tap="{ methods:sort, value:0 }">智能排序</li>
               <li v-tap="{ methods:sort, value:1 }">人气最高</li>
-              <li v-tap="{ methods:sort, value:0 }">最新发布</li>
+              <li v-tap="{ methods:sort, value:2 }">最新发布</li>
             </ul>
           </div>
         </div>
@@ -173,6 +173,7 @@
         noticeList: [],
         orderList: [],
         imgIndex: 0,
+        sortName: '智能排序',
         sortMark: 0,
         znpxMark: false,
         addressData: ChinaAddressV4Data,
@@ -239,6 +240,7 @@
       sort (param) {
         var _self = this
         _self.znpxMark = _self.znpxMark == true ? false : true
+        _self.sortName = event.target.innerText;
         if( _self.sortMark != param.value  ){
           _self.sortMark = param.value;
           _self.pageNo = 0;
@@ -266,6 +268,7 @@
         var status = 0; // 0、未参与，1、已参与
         _self.orderList.forEach(function (item, index) {
           if ( item._id == oid ) {
+            status = item.user_id == uid ? 1 : 0;
             item.bidders.forEach(function (item, index) {
               if ( item.user_id == uid ) {
                 status = 1;
@@ -327,6 +330,7 @@
         var params = {
           interfaceId: common.interfaceIds.getIndexInfo
         }
+        params.sort = {create_date:-1};
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -348,7 +352,7 @@
           pageSize: _self.pageSize
         }
         // 排序
-        params.sort = _self.sortMark==1?{create_date:1}:null;
+        params.sort = _self.sortMark==1?{project_participants:-1}:{create_date:-1};
         //上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
@@ -357,7 +361,6 @@
         }, response => {
           var data = response.data
           if ( data ) {
-            // console.log("loadMore:"+data);
             _self.setOrderData(data);
           }
         })
@@ -411,19 +414,19 @@
             }
           })
         });
-        // 判断页码是否为0
+        //判断页码是否为0
         if( _self.pageNo == 0 ){
           _self.orderList = orderList;
         }else{
           _self.orderList = [..._self.orderList, ...orderList];
         }
-        // 重置页面滚动距离
+        //重置页面滚动距离
         _self.$nextTick(() => {
           _self.$refs.scrollerBottom.reset()
         })
-        // 底部加载动画
+        //底部加载动画
         _self.showLoading = false;
-        // 判断数据是否有一页
+        //判断数据是否有一页
         if ( orderList.length < _self.pageSize ) {
           _self.loadtext = _self.loadnomore;
         } else {

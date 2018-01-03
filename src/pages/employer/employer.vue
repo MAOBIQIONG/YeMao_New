@@ -168,6 +168,7 @@
         var status = 0;//0、未参与，1、已参与
         _self.orderList.forEach(function (item,index) {
           if( item._id == oid ){
+            status = item.user_id == uid ? 1 : 0;
             item.bidders.forEach(function (item,index) {
               if( item.user_id == uid ){
                 status = 1;

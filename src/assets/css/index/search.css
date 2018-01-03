@@ -68,15 +68,16 @@
   font-size: 0.32rem;
   line-height: 0.8rem;
   border-bottom: 1px solid #F2F2F2;
+  display:-webkit-box;
 }
 
 .seach-lishi .searchls-list .ls-list .ll-left {
-  float: left;
+  -webkit-box-flex:1;
 }
 
 .seach-lishi .searchls-list .ls-list .ll-right {
-  float: right;
   color: #d9d4d9;
+  padding: .2rem .25rem;
 }
 
 /*# sourceMappingURL=search.css.map */

@@ -163,6 +163,7 @@
           project_workHours:"",
           project_startTime:"",
           project_endTime:"",
+          project_participants:0,
           project_winBidder:"",
           imgs:[]
         },
