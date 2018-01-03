@@ -156,7 +156,7 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
           params.data = data;
           params.data.password = _self.param.password;
 
-          params.interfaceId = "insertData";
+          params.interfaceId = common.interfaceIds.insertData;
           params.coll= "users";
           console.log(params);
 

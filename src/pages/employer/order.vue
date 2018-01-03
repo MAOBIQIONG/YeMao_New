@@ -238,7 +238,7 @@
           return;
         }
         var params = {
-          interfaceId:'getProjectDetail',
+          interfaceId:common.interfaceIds.getProjectDetail,
           order_id:_self.order_id,
           user_id:_self.user_id
         }
@@ -276,7 +276,7 @@
       canclePart(){
         var _self = this;
         var params = {
-          interfaceId:'competiteAnOrder',
+          interfaceId:common.interfaceIds.competiteAnOrder,
           data:{
             order_id: _self.order_id,
             user_id: _self.user_id,
@@ -287,7 +287,6 @@
         }, response => {
           var data = response.data;
           if( data && data.code == 200 ){
-             console.log("200:")
             _self.$store.state.indexRefreshMark = 1;
             _self.isPart=false;
             _self.bidders.forEach(function (item,index) {

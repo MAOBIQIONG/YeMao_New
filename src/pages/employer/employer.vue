@@ -198,7 +198,7 @@
       loadMore () {
         var _self = this;
         var params = {
-          interfaceId:'getOrderList',
+          interfaceId:common.interfaceIds.getOrderList,
           pageNo: _self.pageNo,
           pageSize: _self.pageSize,
         }
@@ -211,44 +211,48 @@
           var data = response.data
           if( data ){
             // console.log("loadMore:"+JSON.stringify(data));
-            //订单
+            // 订单
             var orderUsers = data.orderUsers || [];
             var orderBidders = data.orderBidders || [];
             var bidders = data.bidders || [];
             var orderList = data.orderList || [];
+            orderBidders.forEach(function (b,j) {
+              bidders.forEach(function (u,j) {
+                if( b.user_id == u._id ){
+                  b.user_name = u.user_name;
+                  b.img = u.img;
+                }
+              })
+            })
             orderList.forEach(function (item,index) {
-              //雇主
+              // 雇主
+              item.user = {};
               orderUsers.forEach(function (u,j) {
                 if( item.user_id == u._id ){
                   item.user = u;
-                }else{
-                  item.user = {};
                 }
               })
-              //参与人
+              // 参与人
               item.bidders = [];
               orderBidders.forEach(function (b,j) {
                 if( item._id == b.order_id ){
-                  bidders.forEach(function (u,j) {
-                    if( b.user_id == u._id ){
-                      b.user_name = u.user_name;
-                      b.img = u.img;
-                    }
-                  })
                   item.bidders.push(b);
                 }
               })
             });
+            // 判断页码是否为0
             if( _self.pageNo == 0 ){
               _self.orderList = orderList;
             }else{
               _self.orderList = [..._self.orderList, ...orderList];
             }
+            // 重置页面滚动距离
             _self.$nextTick(() => {
                 _self.$refs.scrollerBottom.reset()
             })
-
+            // 底部加载动画
             _self.showLoading = false;
+            // 判断数据是否有一页
             if( orderList.length < _self.pageSize ){
               _self.loadtext = _self.loadnomore;
             }else{

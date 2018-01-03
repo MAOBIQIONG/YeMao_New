@@ -279,8 +279,8 @@
         }
         var params = {
         //批量添加
-        interfaceId:'insertData',
-          coll:'orderList',
+        interfaceId:common.interfaceIds.insertData,
+          coll:common.collections.orderList,
           data:_self.subParams
         }
         _self.$axios.post('/mongoApi', {

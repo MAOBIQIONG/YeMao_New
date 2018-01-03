@@ -184,7 +184,7 @@
       submit () {
         var _self = this;
         var params = {
-          interfaceId:'queryData',
+          interfaceId:common.interfaceIds.queryData,
           coll:'users',
           where:{
             "phone":_self.phone

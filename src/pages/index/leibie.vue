@@ -149,7 +149,7 @@
       loadMore () {
         var _self = this;
         var params = {
-          interfaceId: 'getOrderList',
+          interfaceId: common.interfaceIds.getOrderList,
           pageNo: _self.pageNo,
           pageSize: _self.pageSize,
           where: {

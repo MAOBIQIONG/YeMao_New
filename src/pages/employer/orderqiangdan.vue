@@ -81,7 +81,7 @@
 
         var params = {
           //批量添加
-          interfaceId:'competiteAnOrder',
+          interfaceId:common.interfaceIds.competiteAnOrder,
           data:_self.subParams
         }
         _self.$axios.post('/mongoApi', {
