@@ -1,3 +1,4 @@
+var root = 'http://47.100.34.193:3000/';
 const common = {
   /*****************1、验证*******************/
   //1.1、验证是否为空：返回boolean
@@ -151,13 +152,45 @@ const common = {
     return name;
   },
 
+  //
   getAvatar(path,local){
-    if( common.isNull(path) == true ){
-      return local;
-    }else{
-      return path;
+    if( common.isNull(local) == true ){
+      local = './static/images/bj.jpg';
     }
+    if( common.isNull(path) == true ){
+      path = local;
+    }else if( path.indexOf("http") < 0 ) {
+      path = root + path;
+    }
+    return path;
   },
+
+  // 集合
+  collections:{
+    users:'users',                                 // 用户
+    indexImgList:'indexImgList',                   // 轮播突破
+    indexNoticeList:'indexNoticeList',             // 首页通知轮播内容
+    orderList:'orderList',                         // 订单列表
+    orderParts:'orderParts',                       // 订单参与人
+    collects:'collects',                           // 收藏
+    projectTypes:'projectTypes'                    // 项目类型(字典表)
+  },
+
+  // 接口
+  interfaceIds:{
+    insertData:'insertData',                       // 插入一条
+    insertMany:'insertMany',                       // 插入多条
+    saveData:'saveData',                           // 保存（数据存在更新，不存在则保存）
+    updateData:'updateData',                       // 更新
+    queryData:'queryData',                         // 查询多条
+    queryOne:'queryOne',                           // 查询一条
+    removeData:'removeData',                       // 删除
+    getIndexInfo:'getIndexInfo',                   // 查询首页
+    getOrderList:'getOrderList',                   // 获取订单列表
+    getProjectDetail:'getProjectDetail',           // 查询订单详情
+    getBidders:'getBidders',                       // 查询参与人
+    competiteAnOrder:'competiteAnOrder',           // 抢单
+  }
 
 }
 

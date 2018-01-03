@@ -11,7 +11,6 @@
 <script>
   import xheader from '../../components/header/xheader.vue'
   import { Swiper, SwiperItem } from 'vux'
-  import common from '../../../static/common';
   export default {
     components: {
       Swiper,

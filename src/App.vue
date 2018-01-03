@@ -51,8 +51,8 @@
     height: 100%;
     top: 0;
     position: absolute;
-    backface-visibility: hidden;
-    perspective: 1000;
+    /*backface-visibility: hidden;*/
+    /*perspective: 1000;*/
   }
 
   .vux-pop-out-enter {
@@ -61,8 +61,9 @@
   }
 
   .vux-pop-out-leave-active {
+    transition: all 0ms;
     opacity: 0;
-    transform: translate3d(100%, 0, 0);
+    /*transform: translate3d(100%, 0, 0);*/
   }
 
   .vux-pop-in-enter {
@@ -71,8 +72,9 @@
   }
 
   .vux-pop-in-leave-active {
+    transition: all 0ms;
     opacity: 0;
-    transform: translate3d(-100%, 0, 0);
+    /*transform: translate3d(-100%, 0, 0);*/
   }
 </style>
 

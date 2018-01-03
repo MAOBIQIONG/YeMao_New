@@ -130,7 +130,6 @@
 <script>
   import imageUpload from '../../components/upload/image-upload.vue'
   import { XAddress, ChinaAddressV4Data, Datetime, Group, Checker, CheckerItem, Toast } from 'vux'
-  import common from '../../../static/common'
   import store from '@/vuex/store'
 
   export default {
@@ -284,24 +283,20 @@
           coll:'orderList',
           data:_self.subParams
         }
-
-        this.$axios.post('/api/mongoApi',{
-          params:params
-        }).then((response)=>{
-          console.log(response);
-          if( response ){
-            var data = response.data;
-            if( data && data.code == 200 ){
-              this.$store.state.indexRefreshMark = 1;
-              this.$store.state.employerRefreshMark = 1;
-               _self.showToast("发布成功！");
-               // _self.goback();
-              setTimeout(function () {
-                _self.toUrl('releaseSuccess');
-              },1000)
-            }else{
-              _self.showToast("发布失败！");
-            }
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          // console.log(JSON.stringify(response))
+          var data = response.data;
+          if( data && response.code == '200' ){
+            this.$store.state.indexRefreshMark = 1;
+            this.$store.state.employerRefreshMark = 1;
+            _self.showToast("发布成功！");
+            setTimeout(function () {
+              _self.toUrl('releaseSuccess');
+            },1000)
+          }else{
+            _self.showToast("发布失败！");
           }
         })
       }

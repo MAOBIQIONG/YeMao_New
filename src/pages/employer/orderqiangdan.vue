@@ -26,7 +26,6 @@
 
 <script>
   import { Toast } from 'vux'
-  import common from '../../../static/common';
   import store from '@/vuex/store'
   export default {
     components: {
@@ -79,28 +78,22 @@
           _self.showToast("请输入时长!");
           return
         }
-//        if( common.isNull(_self.subParams.schemeExplains) == true ){
-//          _self.showToast("未成功获取用户信息!");
-//          return
-//        }
 
         var params = {
           //批量添加
           interfaceId:'competiteAnOrder',
           data:_self.subParams
         }
-
-        this.$axios.post('/api/mongoApi',{
-          params:params
-        }).then((response)=>{
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
           console.log(response);
           if( response ){
             var data = response.data;
             if( data && data.code == 200 ){
+              // 刷新首页
               this.$store.state.indexRefreshMark = 1;
-            //   _self.showToast("抢单成功！");
-            //   _self.goback();
-             _self.toUrl("competiteSuccess")
+              _self.toUrl("competiteSuccess")
             }else{
               _self.showToast("抢单失败！");
             }

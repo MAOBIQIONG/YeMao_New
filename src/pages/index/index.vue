@@ -100,14 +100,14 @@
         <div class="gap-line"></div>
         <!--智能排序-->
         <div class="id-znpx">
-          <div class="xian" @click="znbx()">
+          <div class="xian" v-tap="{ methods:znbx }">
             <p :class="znpxMark==true ? 'up' : ''">智能排序</p>
           </div>
           <div class="area" v-if="znpxMark">
             <ul>
-              <li @click="sort(0)">智能排序</li>
-              <li @click="sort(1)">人气最高</li>
-              <li @click="sort(0)">最新发布</li>
+              <li v-tap="{ methods:sort, value:0 }">智能排序</li>
+              <li v-tap="{ methods:sort, value:1 }">人气最高</li>
+              <li v-tap="{ methods:sort, value:0 }">最新发布</li>
             </ul>
           </div>
         </div>
@@ -154,7 +154,6 @@
 
 <script>
   import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data} from 'vux'
-  import common from '../../../static/common'
   import store from '@/vuex/store'
 
   export default {
@@ -174,6 +173,7 @@
         noticeList: [],
         orderList: [],
         imgIndex: 0,
+        sortMark: 0,
         znpxMark: false,
         addressData: ChinaAddressV4Data,
         value3: ['上海市'],
@@ -201,7 +201,7 @@
       }
     },
     created: function () {
-      console.log("")
+      // console.log('created:')
       this.initData()
     },
     mounted: function () {
@@ -228,8 +228,7 @@
       },
       // 头像
       checkAvatar (path) {
-        var img = common.getAvatar(path, '../../../static/images/bj.jpg')
-        return img
+        return common.getAvatar(path)
       },
       // 智能排序
       znbx () {
@@ -237,13 +236,18 @@
         _self.znpxMark = _self.znpxMark == true ? false : true
       },
       // 排序
-      sort (flag) {
+      sort (param) {
         var _self = this
-        _self.znpxMark = false
+        _self.znpxMark = _self.znpxMark == true ? false : true
+        if( _self.sortMark != param.value  ){
+          _self.sortMark = param.value;
+          _self.pageNo = 0;
+          _self.loadMore();
+        }
       },
       // 抢单
       grabOrder (id) {
-        var userInfo = common.getObjStorage('userInfo');
+        var userInfo = common.getObjStorage('userInfo') || {};
         if ( common.isNull(userInfo._id) == true ) { // 未登录
           this.$router.push({name: 'login'})
         } else {
@@ -323,66 +327,64 @@
         var params = {
           interfaceId: 'getIndexInfo'
         }
-        _self.$axios.post('/api/mongoApi', {
+        _self.$axios.post('/mongoApi', {
           params: params
-        }).then((response) => {
+        }, response => {
           // console.log(response);
-          if ( response.data ) {
-            var data = response.data.data
-            if ( data ) {
-              // 轮播图
-              _self.imgList = data.imgList || [];
+          var data = response.data
+          if ( data ) {
+            // 轮播图
+            _self.imgList = data.imgList || [];
 
-              // 通知
-              _self.noticeList = data.noticeList || [];
-              var noticeUsers = data.noticeUsers || [];
-              _self.noticeList.forEach(function (item, index) {
-                noticeUsers.forEach(function (obj, j) {
-                  if ( item.user_id == obj._id ) {
-                    item.user_img = obj.img;
-                  }
-                })
-              });
-
-              // 订单
-              var orderUsers = data.orderUsers || [];
-              var orderBidders = data.orderBidders || [];
-              var bidders = data.bidders || [];
-              var orderList = data.orderList || [];
-              orderList.forEach(function (item, index) {
-                // 雇主
-                orderUsers.forEach(function (u, j) {
-                  if ( item.user_id == u._id ) {
-                    item.user = u;
-                  } else {
-                    item.user = {};
-                  }
-                })
-                // 参与人
-                item.bidders = [];
-                orderBidders.forEach(function (b, j) {
-                  if ( item._id == b.order_id ) {
-                    bidders.forEach(function (u, j) {
-                      if ( b.user_id == u._id ) {
-                        b.user_name = u.user_name;
-                        b.img = u.img;
-                      }
-                    })
-                    item.bidders.push(b);
-                  }
-                })
-              });
-              _self.orderList = orderList;
-              _self.$nextTick(() => {
-                _self.$refs.scrollerBottom.reset()
+            // 通知
+            _self.noticeList = data.noticeList || [];
+            var noticeUsers = data.noticeUsers || [];
+            _self.noticeList.forEach(function (item, index) {
+              noticeUsers.forEach(function (obj, j) {
+                if ( item.user_id == obj._id ) {
+                  item.user_img = obj.img;
+                }
               })
+            });
 
-              if ( orderList.length < _self.pageSize ) {
-                _self.loadtext = _self.loadnomore;
-              } else {
-                _self.onFetching = false
-                _self.pageNo++;
-              }
+            // 订单
+            var orderUsers = data.orderUsers || [];
+            var orderBidders = data.orderBidders || [];
+            var bidders = data.bidders || [];
+            var orderList = data.orderList || [];
+            orderList.forEach(function (item, index) {
+              // 雇主
+              orderUsers.forEach(function (u, j) {
+                if ( item.user_id == u._id ) {
+                  item.user = u;
+                } else {
+                  item.user = {};
+                }
+              })
+              // 参与人
+              item.bidders = [];
+              orderBidders.forEach(function (b, j) {
+                if ( item._id == b.order_id ) {
+                  bidders.forEach(function (u, j) {
+                    if ( b.user_id == u._id ) {
+                      b.user_name = u.user_name;
+                      b.img = u.img;
+                    }
+                  })
+                  item.bidders.push(b);
+                }
+              })
+            });
+            _self.orderList = orderList;
+            _self.$nextTick(() => {
+              _self.$refs.scrollerBottom.reset()
+            })
+
+            if ( orderList.length < _self.pageSize ) {
+              _self.loadtext = _self.loadnomore;
+            } else {
+              _self.onFetching = false
+              _self.pageNo++;
             }
           }
         })
@@ -395,57 +397,62 @@
           pageNo: _self.pageNo,
           pageSize: _self.pageSize
         }
+        // 排序
+        params.sort = _self.sortMark==1?{create_date:1}:null;
 
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
-        _self.$axios.post('/api/mongoApi', {
+        _self.$axios.post('/mongoApi', {
           params: params
-        }).then((response) => {
-          if ( response.data ) {
-            var data = response.data.data;
-            if ( data ) {
-              // console.log("loadMore:"+data);
-              // 订单
-              var orderUsers = data.orderUsers || [];
-              var orderBidders = data.orderBidders || [];
-              var bidders = data.bidders || [];
-              var orderList = data.orderList || [];
-              orderList.forEach(function (item, index) {
-                // 雇主
-                orderUsers.forEach(function (u, j) {
-                  if ( item.user_id == u._id ) {
-                    item.user = u;
-                  } else {
-                    item.user = {};
-                  }
-                })
-                // 参与人
-                item.bidders = [];
-                orderBidders.forEach(function (b, j) {
-                  if ( item._id == b.order_id ) {
-                    bidders.forEach(function (u, j) {
-                      if ( b.user_id == u._id ) {
-                        b.user_name = u.user_name;
-                        b.img = u.img;
-                      }
-                    })
-                    item.bidders.push(b);
-                  }
-                })
-              });
-              _self.orderList = [..._self.orderList, ...orderList];
-              _self.$nextTick(() => {
-                _self.$refs.scrollerBottom.reset()
+        }, response => {
+          var data = response.data
+          if ( data ) {
+            // console.log("loadMore:"+data);
+            // 订单
+            var orderUsers = data.orderUsers || [];
+            var orderBidders = data.orderBidders || [];
+            var bidders = data.bidders || [];
+            var orderList = data.orderList || [];
+            orderList.forEach(function (item, index) {
+              // 雇主
+              orderUsers.forEach(function (u, j) {
+                if ( item.user_id == u._id ) {
+                  item.user = u;
+                } else {
+                  item.user = {};
+                }
               })
+              // 参与人
+              item.bidders = [];
+              orderBidders.forEach(function (b, j) {
+                if ( item._id == b.order_id ) {
+                  bidders.forEach(function (u, j) {
+                    if ( b.user_id == u._id ) {
+                      b.user_name = u.user_name;
+                      b.img = u.img;
+                    }
+                  })
+                  item.bidders.push(b);
+                }
+              })
+            });
+            if( _self.pageNo == 0 ){
+              _self.orderList = orderList;
+            }else{
+              _self.orderList = [..._self.orderList, ...orderList];
+            }
 
-              _self.showLoading = false;
-              if ( orderList.length < _self.pageSize ) {
-                _self.loadtext = _self.loadnomore;
-              } else {
-                _self.loadtext = _self.loadmore;
-                _self.onFetching = false
-                _self.pageNo++;
-              }
+            _self.$nextTick(() => {
+              _self.$refs.scrollerBottom.reset()
+            })
+
+            _self.showLoading = false;
+            if ( orderList.length < _self.pageSize ) {
+              _self.loadtext = _self.loadnomore;
+            } else {
+              _self.loadtext = _self.loadmore;
+              _self.onFetching = false
+              _self.pageNo++;
             }
           }
         })

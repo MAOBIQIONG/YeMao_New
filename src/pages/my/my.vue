@@ -98,12 +98,11 @@
 </template>
 
 <script>
-  import common from '../../../static/common';
   export default {
     data () {
       return {
         userInfo:{},
-        defultAvatar:"../../../static/images/bj.jpg",
+        defultAvatar:"./static/images/bj.jpg",
         tips:"点击登录"
       }
     },
@@ -114,7 +113,7 @@
     activated: function () {
       console.log("activated:")
       var _self = this;
-      _self.userInfo = common.getObjStorage("userInfo");
+      _self.userInfo = common.getObjStorage("userInfo") || {};
     },
     methods: {
       goback(){

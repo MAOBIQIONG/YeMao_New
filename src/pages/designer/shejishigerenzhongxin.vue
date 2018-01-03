@@ -61,7 +61,7 @@
         </tab>
       </div>
       <div class="lunpo">
-        <swiper v-model="index" :show-dots="false"class="swps">
+        <swiper v-model="index" height="100%" :show-dots="false" class="swps">
           <swiper-item key="0">
             <div class="alzs-list"@click="toUrl('anliexq')">
               <div class="al-top">

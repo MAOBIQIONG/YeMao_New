@@ -67,7 +67,6 @@
 </template>
 
 <script>
-  import common from '../../../static/common'
   export default {
     data () {
       return {

@@ -10,11 +10,11 @@
     </div>
     <!--tab选项卡-->
     <div class="content">
-      <tab :line-width=2 active-color='#fc378c' v-model="index" class="tabs">
+      <tab :line-width=2 active-color='#fc378c' prevent-default="true" v-model="index" class="tabs">
         <tab-item class="vux-center"   key="0">设计师</tab-item>
         <tab-item class="vux-center"   key="1">订单</tab-item>
       </tab>
-      <swiper v-model="index" :show-dots="false"class="swps">
+      <swiper v-model="index" height="100%" :show-dots="false" class="swps">
         <swiper-item >
           <div class="tab-swiper vux-center">
             <div class="sjs-list">
@@ -609,14 +609,14 @@
   }
 </script>
 <style>
-  .vux-slider > .vux-swiper{
-    height: 100% !important;
-    overflow:auto !important;
-  }
-  .vux-swiper-item{
-    height:auto !important;
-    background: #f2f2f2 !important;
-  }
+  /*.vux-slider > .vux-swiper{*/
+    /*height: 100% !important;*/
+    /*overflow:auto !important;*/
+  /*}*/
+  /*.vux-swiper-item{*/
+    /*height:auto !important;*/
+    /*background: #f2f2f2 !important;*/
+  /*}*/
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>

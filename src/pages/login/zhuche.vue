@@ -9,7 +9,7 @@
     <div class="login-shuru">
       <p class="tishi"></p>
       <div class="ls-shouji">
-        <input type="text"class="shouji nicheng" placeholder="昵称"/>
+        <input type="text"class="shouji nicheng" placeholder="昵称" v-model="param.nickname"/>
         <span class="del">×</span>
       </div>
       <div class="ls-shouji">
@@ -38,11 +38,11 @@
         </div>
       </div>
       <div class="ls-shouji">
-        <input type="text"class="shouji sjh" placeholder="手机号"/>
+        <input type="text"class="shouji sjh" placeholder="手机号" v-model="param.mobile_phone"/>
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
-        <input type="text"class="yanzheng"maxlength="8" placeholder="验证码"/>
+        <input type="text"class="yanzheng"maxlength="8" placeholder="验证码"  v-model="param.verifying_code"/>
         <div class="dj-shuru"><span class="msgs">点击获取验证码</span></div>
       </div>
     </div>
@@ -54,6 +54,11 @@
   export default {
     data () {
       return {
+        param:{
+          nickname:'',
+          mobile_phone:'',
+          verifying_code:''
+        }
       }
     },
     mounted: function () {
@@ -165,14 +170,15 @@
       },
 
         nextStep(){
+            var _self = this;
             let param1 = [
-                {key:"nickname",value:this.param.nickname},
-                {key:"mobile_phone",value:this.param.mobile_phone},
-                {key:"verifying_code",value:this.param.verifying_code}
+                {key:"nickname",value:_self.param.nickname},
+                {key:"mobile_phone",value:_self.param.mobile_phone},
+                {key:"verifying_code",value:_self.param.verifying_code}
             ]
-            // let storage = common.op_localStorage().getStorage();
+//             let storage = common.op_localStorage().getStorage();
             common.op_localStorage().setArray(param1);
-            // console.log(storage);
+//             console.log(storage);
         }
     },
   }

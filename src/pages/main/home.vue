@@ -16,8 +16,7 @@
       }
     },
     created: function () {
-      console.log('$route.meta.keepAlive:' + this.$route.meta.keepAlive)
-      this.$router.push({name: 'index'}) // 页面加载时跳转
+      // console.log('$route.meta.keepAlive:' + this.$route.meta.keepAlive)
     },
     components: { tabbar },
     methods: {

@@ -70,12 +70,94 @@ import pz from '@/pages/meow/pz'
 Vue.use(Router)
 
 Router.prototype.goBack = function () {
-  console.log("back:")
+  // console.log('back:')
   this.isBack = true
   window.history.go(-1)
 }
 
 const routeArray = [
+  // 1、打包后，浏览器运行首页空白
+  {
+    path: '/dist/index.html',
+    redirect: '/home/index'
+  },
+  {
+    path: '/dist',
+    redirect: '/home/index'
+  },
+  {
+    path: '/',
+    redirect: '/home/index'
+  },
+  // 嵌套路由(router-view)：配置子路由
+  {
+    path: '/home',
+    component: home,
+    meta: { keepAlive: true },
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: index,
+        meta: { keepAlive: true }
+      },
+      {
+        path: 'employer',
+        name: 'employer',
+        component: employer,
+        meta: { keepAlive: true }
+      },
+      {
+        path: 'meow',
+        name: 'meow',
+        component: meow,
+        meta: { keepAlive: true }
+      },
+      {
+        path: 'designer',
+        name: 'designer',
+        component: designer,
+        meta: { keepAlive: true }
+      },
+      {
+        path: 'my',
+        name: 'my',
+        component: my,
+        meta: { keepAlive: true }
+      }
+    ]
+  },
+  // 雇主订单
+  {
+    path: '/emporder',
+    name: 'emporder',
+    component: emporder,
+    meta: { keepAlive: true }
+  },
+  // 雇主订单预览图片页面
+  {
+    path: '/emporderimgs',
+    name: 'emporderimgs',
+    component: emporderimgs
+  },
+  // 雇主订单已参与人员列表
+  {
+    path: '/emporderparts',
+    name: 'emporderparts',
+    component: emporderparts
+  },
+  {
+    path: '/vuxtest',
+    name: 'vuxtest',
+    component: vuxtest,
+    meta: { keepAlive: true }
+  },
+  {
+    path: '/vuxswiper',
+    name: 'vuxswiper',
+    component: vuxswiper,
+    meta: { keepAlive: true }
+  },
   { path: '/pz',
     name: 'pz',
     component: pz
@@ -126,10 +208,10 @@ const routeArray = [
     name: 'renzhengchenggong',
     component: renzhengchenggong
   },
-    { path:'/competiteSuccess',
-    name:'competiteSuccess',
+  { path: '/competiteSuccess',
+    name: 'competiteSuccess',
     component: competiteSuccess
-    },
+  },
   { path: '/tixianchenggong',
     name: 'tixianchenggong',
     component: tixianchenggong
@@ -227,11 +309,11 @@ const routeArray = [
     name: 'fabudingdan',
     component: fabudingdan
   },
-    {
-        path:'/releaseSuccess',
-        name:'releaseSuccess',
-        component: releaseSuccess
-    },
+  {
+    path: '/releaseSuccess',
+    name: 'releaseSuccess',
+    component: releaseSuccess
+  },
   { path: '/myorderchuli',
     name: 'myorderchuli',
     component: myorderchuli
@@ -302,88 +384,7 @@ const routeArray = [
     name: 'zhuche2',
     component: zhuche2
   },
-  // 1、打包后，浏览器运行首页空白
-  {
-    path: '/dist/index.html',
-    redirect: '/home'
-  },
-  {
-    path: '/dist',
-    redirect: '/home'
-  },
-  {
-    path: '/',
-    redirect: '/home'
-  },
-  // 嵌套路由(router-view)：配置子路由
-  {
-    path: '/home',
-    component: home,
-    meta: { keepAlive: true },
-    children: [
-      {
-        path: 'index',
-        name: 'index',
-        component: index,
-        meta: { keepAlive: true }
-      },
-      {
-        path: 'employer',
-        name: 'employer',
-        component: employer,
-        meta: { keepAlive: true }
-      },
-      {
-        path: 'meow',
-        name: 'meow',
-        component: meow,
-        meta: { keepAlive: true }
-      },
-      {
-        path: 'designer',
-        name: 'designer',
-        component: designer,
-        meta: { keepAlive: true }
-      },
-      {
-        path: 'my',
-        name: 'my',
-        component: my,
-        meta: { keepAlive: true }
-      }
-    ]
-  },
-  // 雇主订单
-  {
-    path: '/emporder',
-    name: 'emporder',
-    component: emporder,
-    meta: { keepAlive: true }
-  },
-  // 雇主订单预览图片页面
-  {
-    path: '/emporderimgs',
-    name: 'emporderimgs',
-    component: emporderimgs
-  },
-  // 雇主订单已参与人员列表
-  {
-    path: '/emporderparts',
-    name: 'emporderparts',
-    component: emporderparts
-  },
-  {
-    path: '/vuxtest',
-    name: 'vuxtest',
-    component: vuxtest,
-    meta: { keepAlive: true }
-  },
-  {
-    path: '/vuxswiper',
-    name: 'vuxswiper',
-    component: vuxswiper,
-    meta: { keepAlive: true }
-  }
+
 ]
 
 export default new Router({

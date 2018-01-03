@@ -74,7 +74,7 @@
         <div class="tu"></div>
         <p v-if="bidders.length>0">已有<span>{{bidders.length}}</span>位设计师抢单</p>
         <p v-if="bidders.length==0">还没有设计师抢单</p>
-        <div class="gengduo" @click="toUrl('emporderparts')"></div>
+        <div class="gengduo" v-tap="{ methods:toUrl, pagename:'emporderparts' }"></div>
       </div>
 
       <div class="od-list">
@@ -109,7 +109,8 @@
         <span><img src='../../../static/images/employer/miaomiao.png'></span>
         <span>喵喵聊天</span>
       </div>
-      <div class="lijiqiangdan"@click="toUrl('orderqiangdan')">立即抢单</div>
+      <div v-if="isPart==false" class="lijiqiangdan" v-tap="{ methods:toUrl, pagename:'orderqiangdan' }">立即抢单</div>
+      <div v-if="isPart==true" class="lijiqiangdan" v-tap="{ methods:canclePart }">取消抢单</div>
     </div>
     <!--弹窗-->
     <div class="tishikuang">
@@ -117,15 +118,17 @@
         收藏成功
       </div>
     </div>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
   import xheader2 from '../../components/header/xheader2.vue'
-  import common from '../../../static/common'
+  import { Toast } from 'vux'
   export default {
     components: {
-      xheader2
+      xheader2,
+      Toast
     },
     data () {
       return {
@@ -137,33 +140,43 @@
 
         order_id: null,
         user_id: null,
+        isInit: false,
+        isPart: false,
         collectFlag: 0,
         order: {},
         bidders: [],
-        imgSize: 0
+        imgSize: 0,
+
+        showMark:false,
+        showMsg:"",
       }
     },
     activated: function () {
-      console.log('activated:')
-      var id = this.$route.query.id;
-      var oid = this.order_id;
-      if ( oid != id ) {
-        this.order_id = this.$route.query.id;
-        this.initData();
+      var _self = this;
+      if( _self.isInit == true ){
+        _self.order_id = _self.$route.query.id;
+        _self.initData();
       }
+      _self.isInit = true;
     },
     created: function () {
-      this.order_id = this.$route.query.id;
-      this.userInfo = common.getObjStorage("userInfo");
-      this.user_id = this.userInfo._id;
-      this.zhishu();
-      this.initData();
+      var _self = this;
+      _self.order_id = _self.$route.query.id;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
+      _self.user_id = _self.userInfo._id;
+      _self.zhishu();
+      _self.initData();
     },
     mounted: function () {
     },
     methods: {
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      /**************************************/
+      showToast(msg){
+        this.showMark = true;
+        this.showMsg = msg;
+      },
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:{id:this.order_id}})
       },
       toViewImgs: function (imgs) {
         common.setStorage("viewImgs",imgs);
@@ -182,8 +195,7 @@
       },
       //头像
       checkAvatar(path){
-        var img = common.getAvatar(path,"../../../static/images/bj.jpg");
-        return img;
+        return common.getAvatar(path);
       },
       // 项目深度
       getDepthName(num){
@@ -231,11 +243,10 @@
           user_id:_self.user_id
         }
         // console.log("params:"+JSON.stringify(params))
-        _self.$axios.post('/api/mongoApi',{
-          params:params
-        }).then((response)=>{
-          console.log(response);
-          var data = response.data.data;
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data;
           if( data ){
             _self.collectFlag = data.collectFlag;
             //订单
@@ -243,6 +254,9 @@
             var orderBidders = data.orderBidders || [];
             var bidders = data.bidders || [];
             orderBidders.forEach(function (b,j) {
+              if( _self.userInfo._id == b.user_id ){
+                _self.isPart = true;
+              }
               bidders.forEach(function (u,j) {
                 if( b.user_id == u._id ){
                   b.user_name = u.user_name;
@@ -259,20 +273,35 @@
         })
       },
 
-      grabOrder(id){
-        var userInfo = common.getObjStorage("userInfo");
-        if( common.isNull(userInfo._id) == true ){//未登录
-          this.toUrl("login");
-        }else{
-          var status = this.getBidStatus(id,userInfo._id);
-          // console.log("status:"+status)
-          if( status == 0 ){//未参与
-            this.$router.push({name:'orderqiangdan',query:{id:id}});
-          }else{//已参与
-            this.$router.push({name:'emporder',query:{id:id}});
+      canclePart(){
+        var _self = this;
+        var params = {
+          interfaceId:'competiteAnOrder',
+          data:{
+            order_id: _self.order_id,
+            user_id: _self.user_id,
           }
         }
-      },
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data;
+          if( data && data.code == 200 ){
+             console.log("200:")
+            _self.$store.state.indexRefreshMark = 1;
+            _self.isPart=false;
+            _self.bidders.forEach(function (item,index) {
+              if( _self.user_id == item.user_id ){
+                _self.bidders.splice(index,1);
+              }
+            })
+            _self.showToast("取消成功！");
+          }else{
+            _self.showToast("取消失败！");
+          }
+        })
+      }
+
     }
   }
 </script>

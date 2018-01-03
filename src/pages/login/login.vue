@@ -56,7 +56,6 @@
 <script>
   import { Toast, } from 'vux'
   import store from '@/vuex/store'
-  import common from '../../../static/common';
   export default {
     components: {
       Toast,
@@ -192,10 +191,10 @@
           }
         }
 
-        _self.$axios.post('/api/mongoApi',{
-          params:params
-        }).then((response)=>{
-          var data = response.data.data;
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data;
           if( data ){
             console.log("data:"+JSON.stringify(data))
             if( data.length == 1 ){

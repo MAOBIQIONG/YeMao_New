@@ -5,10 +5,12 @@ import App from './App'
 import router from './router'
 import vueTap from 'v-tap'
 import { Datetime, Group } from 'vux'
-import $ from '../static/jquery-3.2.1.min';
-import axios from 'axios'
+import $ from '../static/jquery-3.2.1.min'
+// import axios from 'axios'
 import store from './vuex/store'
 import common from '../static/common.js'
+// 引用API文件
+import api from './api/api.js'
 
 Vue.config.productionTip = false
 
@@ -27,7 +29,7 @@ window.common = common
 router.beforeEach(function (to, from, next) {
   // 如果isBack为true时，证明是用户点击了回退，执行slide-right动画
   let isBack = router.isBack
-  console.log('isBack:' + isBack)
+  // console.log('isBack:' + isBack)
   if (isBack) {
     store.state.direction = 1
   } else {
@@ -39,7 +41,10 @@ router.beforeEach(function (to, from, next) {
 })
 
 // axios
-Vue.prototype.$axios = axios;
+// Vue.prototype.$axios = axios;
+
+// 将API方法绑定到全局
+Vue.prototype.$axios = api
 
 /* eslint-disable no-new */
 new Vue({
