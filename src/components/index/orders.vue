@@ -67,10 +67,15 @@
         loadnomore: '没有更多数据了'
       }
     },
+    activated: function () {
+      console.log("orders activated:")
+    },
     created: function () {
+      console.log("orders created:")
       this.loadMore()
     },
     mounted: function () {
+      console.log("orders mounted:")
       this.$nextTick(() => {
         this.$refs.scrollerBottom.reset({top: 0})
       })
