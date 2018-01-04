@@ -13,7 +13,7 @@
                 <div class="sn-top">
                   <div class="st-nicheng">{{item.user_name}}</div>
                   <div class="st-pingxin" style="width: 2rem">
-                    <rater v-model="item.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" disabled="true" :max="5" :margin="5" :font-size="14"></rater>
+                    <rater v-model="item.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
                   </div>
                 </div>
                 <div class="sn-bottom">

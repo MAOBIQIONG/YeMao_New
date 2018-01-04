@@ -1,6 +1,6 @@
 <template>
   <div class="bg">
-    <div style="height: 1.6rem">
+    <div class="top">
       <div class="search">
         <div class="search-input">
           <form class="mission_search_form">
@@ -73,6 +73,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
   @import "../../assets/css/index/search-jieguo.css";
+  .top{
+    height: 1.6rem;
+  }
   .tabs{
     position: fixed;
     top: 0.8rem;

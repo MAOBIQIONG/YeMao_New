@@ -1,5 +1,5 @@
 <template>
-  <div class="employer" style="background: #f2f2f2">
+  <div class="employer">
     <!--头部导航-->
     <div class="header">
       <span>雇主</span>
@@ -286,6 +286,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/css/employer/guzhu.css';
+  .employer{
+    background-color: #F2F2F2;
+  }
   .gu-mokuai .dingdan {
     background: url('../../../static/images/fabubj.png');
     background-size: 100% 100%;

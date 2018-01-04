@@ -1,125 +1,87 @@
 <template>
   <div class="designer">
-    <!--头部导航-->
-    <div class="header">
-      <span>设计师</span>
-      <div class="header-right" @click="toUrl('message')">
-        <span><img src="../../../static/images/designer/ling.png" /></span>
-        <div class="hongdian"></div>
+    <div class="top">
+      <!--头部导航-->
+      <div class="header">
+        <span>设计师</span>
+        <div class="header-right" @click="toUrl('message')">
+          <span><img src="../../../static/images/designer/ling.png" /></span>
+          <div class="hongdian"></div>
+        </div>
       </div>
-    </div>
-    <!--模块-->
-    <div class="mokuai">
-      <ul>
-        <li @click="toUrl('shejishigerenzhongxin')">
-          <p>
-            <img src="../../../static/images/designer/geren.png" />
-          </p>
-          <p>个人中心</p>
-        </li>
-        <li @click="toUrl('mymoney')">
-          <p>
-            <img src="../../../static/images/designer/qianbao.png" />
-          </p>
-          <p>钱包</p>
-        </li>
-        <li @click="toUrl('renzheng')">
-          <p>
-            <img src="../../../static/images/designer/renzhen.png" />
-          </p>
-          <p>认证中心</p>
-        </li>
-        <li @click="toUrl('myorderchuli')">
-          <p>
-            <img src="../../../static/images/designer/dingdan.png" />
-          </p>
-          <p>订单</p>
-        </li>
-      </ul>
-    </div>
-    <!--智能排序-->
-    <div class="sanxuan">
-      <div class="sx-cont">
+      <!--模块-->
+      <div class="mokuai">
         <ul>
-          <li class="znpx-1">
-            <p class="znpx">智能排序</p>
+          <li @click="toUrl('shejishigerenzhongxin')">
+            <p>
+              <img src="../../../static/images/designer/geren.png" />
+            </p>
+            <p>个人中心</p>
           </li>
-          <li class="nx-1">
-            <p class="nx">年限</p>
+          <li @click="toUrl('mymoney')">
+            <p>
+              <img src="../../../static/images/designer/qianbao.png" />
+            </p>
+            <p>钱包</p>
           </li>
-          <li class="rz-1">
-            <p class="rz">认证</p>
+          <li @click="toUrl('renzheng')">
+            <p>
+              <img src="../../../static/images/designer/renzhen.png" />
+            </p>
+            <p>认证中心</p>
+          </li>
+          <li @click="toUrl('myorderchuli')">
+            <p>
+              <img src="../../../static/images/designer/dingdan.png" />
+            </p>
+            <p>订单</p>
           </li>
         </ul>
-        <div class="sort-filter">
-          <div class="area on">
-            <ul>
-              <li class="bg_click">人气最高</li>
-              <li class="bg">最新发布</li>
-            </ul>
-          </div>
-          <div class="areanx on">
-            <ul>
-              <li class="bg_click">不限</li>
-              <li class="bg">一年以下</li>
-              <li class="bg">1-3年</li>
-              <li class="bg">3-5年</li>
-              <li class="bg">5年以上</li>
-            </ul>
-          </div>
-          <div class="arearz on">
-            <ul>
-              <li class="bg_click">不限</li>
-              <li class="bg">已实名</li>
-              <li class="bg">已认证</li>
-              <li class="bg">已签约</li>
-            </ul>
+      </div>
+      <!--智能排序-->
+      <div class="sanxuan">
+        <div class="sx-cont">
+          <ul>
+            <li class="znpx-1">
+              <p class="znpx">智能排序</p>
+            </li>
+            <li class="nx-1">
+              <p class="nx">年限</p>
+            </li>
+            <li class="rz-1">
+              <p class="rz">认证</p>
+            </li>
+          </ul>
+          <div class="sort-filter">
+            <div class="area on">
+              <ul>
+                <li class="bg_click">人气最高</li>
+                <li class="bg">最新发布</li>
+              </ul>
+            </div>
+            <div class="areanx on">
+              <ul>
+                <li class="bg_click">不限</li>
+                <li class="bg">一年以下</li>
+                <li class="bg">1-3年</li>
+                <li class="bg">3-5年</li>
+                <li class="bg">5年以上</li>
+              </ul>
+            </div>
+            <div class="arearz on">
+              <ul>
+                <li class="bg_click">不限</li>
+                <li class="bg">已实名</li>
+                <li class="bg">已认证</li>
+                <li class="bg">已签约</li>
+              </ul>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
     <!--设计师列表-->
     <designers></designers>
-    <!--<div class="content">-->
-      <!--<scroller lock-x height="-44" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">-->
-        <!--<div>-->
-          <!--<div class="sjs-list" v-for="order in orderList" @click="toUrl('sjszxxq')">-->
-            <!--<div class="sjs-top">-->
-              <!--<div class="st-touxiang">-->
-                <!--<img src="../../../static/images/bj.jpg" />-->
-              <!--</div>-->
-              <!--<div class="st-neirong">-->
-                <!--<div class="sn-top">-->
-                  <!--<div class="st-nicheng">设计师小a</div>-->
-                  <!--<div class="st-pingxin"></div>-->
-                <!--</div>-->
-                <!--<div class="sn-bottom">-->
-                  <!--<div class="sb-nianling">5年</div>-->
-                  <!--<div class="sb-qian">签</div>-->
-                  <!--<div class="sb-ysm">已实名</div>-->
-                  <!--<div class="sb-yrz">已认证</div>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="st-jiageleixin">-->
-                <!--<div class="st-jiage"><span>￥</span><span>100</span>/时</div>-->
-                <!--<div class="st-leixin"><span>景观设计</span></div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="sjs-content">-->
-              <!--<div class="sc-jiesao">-->
-                <!--已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="sjs-bottom">-->
-              <!--<div class="sjs-yysj">应邀设计</div>-->
-              <!--<div class="sjs-mmlt">喵喵聊天</div>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<load-more :show-loading="sliderFlag" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 50px"></load-more>-->
-        <!--</div>-->
-      <!--</scroller>-->
-    </div>
   </div>
 </template>
 
@@ -242,8 +204,11 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/css/designer/designer.css';
-  .designers{
+  .designer{
     background-color: #f2f2f2;
+  }
+  .top{
+    height: 2.75rem;
   }
   .header .header-right .hongdian{
     width: 0.1rem;
