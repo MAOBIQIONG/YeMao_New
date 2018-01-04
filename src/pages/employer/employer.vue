@@ -1,5 +1,5 @@
 <template>
-  <div class="employer" style="background: #f2f2f2">
+  <div class="employer">
     <!--头部导航-->
     <div class="header">
       <span>雇主</span>
@@ -19,14 +19,14 @@
     </div>
     <!--智能排序-->
     <div class="id-znpx">
-      <div class="xian" @click="znbx()">
-        <p :class="znpxMark==true ? 'up' : ''">智能排序</p>
+      <div class="xian" v-tap="{ methods:znbx }">
+        <p :class="znpxMark==true ? 'up' : ''" v-text="sortName"></p>
       </div>
       <div class="area" v-if="znpxMark">
         <ul>
-          <li @click="sort(0)">智能排序</li>
-          <li @click="sort(1)">人气最高</li>
-          <li @click="sort(0)">最新发布</li>
+          <li v-tap="{ methods:sort, value:0 }">智能排序</li>
+          <li v-tap="{ methods:sort, value:1 }">人气最高</li>
+          <li v-tap="{ methods:sort, value:2 }">最新发布</li>
         </ul>
       </div>
     </div>
@@ -83,6 +83,8 @@
     data () {
       return {
         orderList: [],
+        sortName: '智能排序',
+        sortMark: 0,
         znpxMark: false,
 
         pageNo: 0,
@@ -138,14 +140,20 @@
         return common.getAvatar(path);
       },
       // 智能排序
-      znbx(){
-        var _self = this;
-        _self.znpxMark = _self.znpxMark == true ? false : true;
+      znbx () {
+        var _self = this
+        _self.znpxMark = _self.znpxMark == true ? false : true
       },
       // 排序
-      sort(flag){
-        var _self = this;
-        _self.znpxMark = false;
+      sort (param) {
+        var _self = this
+        _self.znpxMark = _self.znpxMark == true ? false : true
+        _self.sortName = event.target.innerText;
+        if( _self.sortMark != param.value  ){
+          _self.sortMark = param.value;
+          _self.pageNo = 0;
+          _self.loadMore();
+        }
       },
       // 抢单
       grabOrder(id){
@@ -203,7 +211,9 @@
           pageNo: _self.pageNo,
           pageSize: _self.pageSize,
         }
-
+        // 排序
+        params.sort = _self.sortMark==1?{project_participants:-1}:{create_date:-1};
+　　　　　// 上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
         _self.$axios.post('/mongoApi', {
@@ -211,58 +221,62 @@
         }, response => {
           var data = response.data
           if( data ){
-            // console.log("loadMore:"+JSON.stringify(data));
-            // 订单
-            var orderUsers = data.orderUsers || [];
-            var orderBidders = data.orderBidders || [];
-            var bidders = data.bidders || [];
-            var orderList = data.orderList || [];
-            orderBidders.forEach(function (b,j) {
-              bidders.forEach(function (u,j) {
-                if( b.user_id == u._id ){
-                  b.user_name = u.user_name;
-                  b.img = u.img;
-                }
-              })
-            })
-            orderList.forEach(function (item,index) {
-              // 雇主
-              item.user = {};
-              orderUsers.forEach(function (u,j) {
-                if( item.user_id == u._id ){
-                  item.user = u;
-                }
-              })
-              // 参与人
-              item.bidders = [];
-              orderBidders.forEach(function (b,j) {
-                if( item._id == b.order_id ){
-                  item.bidders.push(b);
-                }
-              })
-            });
-            // 判断页码是否为0
-            if( _self.pageNo == 0 ){
-              _self.orderList = orderList;
-            }else{
-              _self.orderList = [..._self.orderList, ...orderList];
-            }
-            // 重置页面滚动距离
-            _self.$nextTick(() => {
-                _self.$refs.scrollerBottom.reset()
-            })
-            // 底部加载动画
-            _self.showLoading = false;
-            // 判断数据是否有一页
-            if( orderList.length < _self.pageSize ){
-              _self.loadtext = _self.loadnomore;
-            }else{
-              _self.loadtext = _self.loadmore;
-              _self.onFetching = false
-              _self.pageNo++;
-            }
+            _self.setOrderData(data);
           }
         })
+      },
+
+      setOrderData(data){
+        var _self = this;
+        // 订单
+        var orderBidders = data.orderBidders || [];
+        var bidders = data.bidders || [];
+        var orderList = data.orderList || [];
+        var orderUsers = data.orderUsers || [];
+        orderBidders.forEach(function (b, j) {
+          bidders.forEach(function (u, j) {
+            if ( b.user_id == u._id ) {
+              b.user_name = u.user_name;
+              b.img = u.img;
+            }
+          })
+        })
+        orderList.forEach(function (item, index) {
+          // 雇主
+          item.user = {};
+          orderUsers.forEach(function (u, j) {
+            if ( item.user_id == u._id ) {
+              item.user = u;
+            }
+          })
+          // 参与人
+          item.bidders = [];
+          orderBidders.forEach(function (b, j) {
+            if ( item._id == b.order_id ) {
+              item.bidders.push(b);
+            }
+          })
+        });
+        //判断页码是否为0
+        if( _self.pageNo == 0 ){
+          _self.orderList = orderList;
+        }else{
+          _self.orderList = [..._self.orderList, ...orderList];
+        }
+        //重置页面滚动距离
+        _self.$nextTick(() => {
+          _self.$refs.scrollerBottom.reset()
+        })
+        //底部加载动画
+        _self.showLoading = false;
+        //判断数据是否有一页
+        if ( orderList.length < _self.pageSize ) {
+          _self.loadtext = _self.loadnomore;
+        } else {
+          _self.loadtext = _self.loadmore;
+          _self.onFetching = false
+          _self.pageNo++;
+        }
       }
 
     }
@@ -272,6 +286,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/css/employer/guzhu.css';
+  .employer{
+    background-color: #F2F2F2;
+  }
   .gu-mokuai .dingdan {
     background: url('../../../static/images/fabubj.png');
     background-size: 100% 100%;
