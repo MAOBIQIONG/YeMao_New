@@ -494,6 +494,12 @@ const routeArray = [
     name: 'zhuche2',
     component: zhuche2
   },
+  //其他url重定向
+  {
+    path:'*',
+    name:"others",
+    redirect:'/home/index'
+  }
 
 ]
 
