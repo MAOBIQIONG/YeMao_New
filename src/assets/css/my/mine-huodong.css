@@ -1,4 +1,16 @@
+.header .hd-cont {
+  width: 4.2rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.32rem;
+  margin: auto;
+}
 
+.header .hd-cont ul li {
+  width: 1.4rem;
+  text-align: center;
+  float: left;
+}
 .hd-list {
 	width: 6.8rem;
 	height: 2.8rem;

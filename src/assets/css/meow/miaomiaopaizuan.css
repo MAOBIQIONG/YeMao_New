@@ -1,0 +1,72 @@
+
+.header .hd-cont {
+  width: 4.2rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.32rem;
+  margin: auto;
+}
+
+.header .hd-cont ul li {
+  width: 1.4rem;
+  text-align: center;
+  float: left;
+}
+
+.content {
+  width: 100%;
+  background: #F2F2F2;
+  margin-top: 0.88rem;
+  display: inline-block;
+}
+
+.content .list-paizuan {
+  width: 3.45rem;
+  height: 4.9rem;
+  margin-left: 0.2rem;
+  margin-top: 0.2rem;
+  float: left;
+}
+
+.content .list-paizuan .tu {
+  width: 100%;
+  height: 4rem;
+  background: #C9C9CE;
+}
+
+.content .list-paizuan .tu img {
+  width: 100%;
+  height: 100%;
+}
+
+.content .list-paizuan .zan {
+  width: 100%;
+  height: 0.9rem;
+  background: white;
+}
+
+.content .list-paizuan .zan .left-zan {
+  float: left;
+  line-height: 0.9rem;
+  font-size: 0.28rem;
+  margin-left: 0.2rem;
+}
+
+.content .list-paizuan .zan .left-zan span {
+  margin-right: 0.1rem;
+}
+
+.content .list-paizuan .zan .left-zan span img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0.3rem;
+}
+
+.content .list-paizuan .zan .right-time {
+  float: right;
+  font-size: 0.24rem;
+  line-height: 0.9rem;
+  margin-right: 0.2rem;
+}
+
+/*# sourceMappingURL=miaomiaopaizuan.css.map */

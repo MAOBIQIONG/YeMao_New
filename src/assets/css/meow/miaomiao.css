@@ -1,0 +1,262 @@
+
+.header .hd-cont {
+	width: 4.2rem;
+	height: 0.88rem;
+	line-height: 0.88rem;
+	font-size: 0.32rem;
+	margin: auto;
+}
+
+.header .hd-cont ul li {
+	width: 1.4rem;
+	text-align: center;
+	float: left;
+}
+
+.bankuai {
+	width: 100%;
+	height: 2rem;
+  margin-top: 0.88rem;
+	display: inline-block;
+	background: #F2F2F2;
+}
+
+.bankuai ul {
+	margin-top: 0.2rem;
+}
+
+.bankuai ul li {
+	width: 1.6rem;
+	height: 1.6rem;
+	float: left;
+	display: block;
+	margin-left: 0.22rem;
+}
+
+.bankuai ul li img {
+	width: 100%;
+	height: 100%;
+}
+.content{
+  margin-top: 0.88rem;
+}
+.miao{
+  margin-bottom: 1.2rem;
+}
+.mm-list {
+	background: #F2F2F2;
+}
+
+.mm-list .sjse-list {
+	width: 100%;
+	background: white;
+	margin-bottom: 0.1rem;
+}
+
+.mm-list .sjse-list .sjs-top {
+	width: 100%;
+	height: 1.18rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-touxiang {
+	float: left;
+	width: 0.8rem;
+	height: 0.8rem;
+	border-radius: 50%;
+	background: #B4C1D2;
+	margin: 0.19rem 0px;
+	margin-left: 0.26rem;
+	overflow: hidden;
+}
+
+.mm-list .sjse-list .sjs-top .st-touxiang img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong {
+	float: left;
+	height: 0.8rem;
+	margin: 0.19rem 0.1rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong .sn-top {
+	height: 0.4rem;
+	font-size: 0.28rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong .sn-top .st-nicheng {
+	width: 1.4rem;
+	height: 0.4rem;
+	float: left;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong .sn-top .st-pingxin {
+	float: left;
+	width: 1.5rem;
+	height: 0.4rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong .sn-bottom {
+	height: 0.4rem;
+	font-size: 0.22rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong .sn-bottom .sb-qian {
+	border: 1px solid #ffe354;
+	background-color: #fff9d9;
+	border-radius: 0.08rem;
+	float: left;
+	text-align: center;
+	color: #cda566;
+	padding: 0.02rem 0.08rem;
+	margin-right: 0.14rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong .sn-bottom .sb-ysm {
+	float: left;
+	border: 1px solid #6ddacf;
+	color: #6ddacf;
+	text-align: center;
+	border-radius: 0.08rem;
+	margin-right: 0.14rem;
+	padding: 0.02rem 0.08rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-neirong .sn-bottom .sb-yrz {
+	float: left;
+	border: 1px solid #142aa4;
+	color: #142aa4;
+	text-align: center;
+	border-radius: 0.08rem;
+	padding: 0.02rem 0.08rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-jiageleixin {
+	float: right;
+	height: 0.8rem;
+	margin-right: 0.32rem;
+}
+
+.mm-list .sjse-list .sjs-top .st-jiageleixin .st-jiage {
+	height: 0.4rem;
+	margin-top: 0.19rem;
+	font-size: 0.24rem;
+	color: #999999;
+}
+
+.mm-list .sjse-list .sjs-content {
+	width: 7rem;
+	margin-left: 0.25rem;
+	height: 0.9rem;
+	font-size: 0.28rem;
+}
+
+.mm-list .sjse-list .sjs-content .sc-jiesao {
+	width: 7rem;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	color: #666;
+	overflow: hidden;
+}
+
+.mm-list .sjse-list .sjs-bottom {
+	width: 100%;
+	font-size: 0.24rem;
+}
+
+.mm-list .sjse-list .sjs-bottom ul li {
+	float: left;
+	width: 2.4rem;
+	height: 2.4rem;
+	background: #CCCCCC;
+	margin: 0.05rem;
+	overflow: hidden;
+}
+
+.mm-list .sjse-list .sjs-bottom ul li img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.mm-list .sjse-list .pinjia {
+	width: 100%;
+	height: 0.9rem;
+	font-size: 0.28rem;
+	padding-left: 0.2rem;
+}
+
+.mm-list .sjse-list .pinjia p {
+	float: left;
+	line-height: 0.9rem;
+	margin-left: 0.1rem;
+}
+
+.mm-list .sjse-list .pinjia p span {
+	margin-right: 0.1rem;
+}
+
+.mm-list .sjse-list .pinjia p span img {
+	width: 0.4rem;
+  height: 0.4rem;
+	vertical-align: middle;
+}
+
+.liuyan {
+	width: 100%;
+	padding-top: 0.1rem;
+	background: #F2F2F2;
+}
+
+.liuyan .lylist {
+	width: 100%;
+	background: white;
+	padding-bottom: 0.2rem;
+	border-bottom: 1px solid #F2F2F2;
+}
+
+.liuyan .lylist .lit-top {
+	width: 7.1rem;
+	height: 0.8rem;
+	line-height: 0.8rem;
+	margin: auto;
+	font-size: 0.28rem;
+}
+
+.liuyan .lylist .lit-top .left-tou {
+	float: left;
+}
+
+.liuyan .lylist .lit-top .left-tou span {
+	margin-right: 0.1rem;
+}
+
+.liuyan .lylist .lit-top .left-tou span img {
+  width:0.6rem;
+  height: 0.6rem;
+	display: inline-block;
+	vertical-align: middle;
+	border-radius: 50%;
+}
+
+.liuyan .lylist .lit-top .right-time {
+	float: right;
+	color: #999999;
+}
+
+.liuyan .lylist .list-bottom {
+	width: 100%;
+	font-size: 0.28rem;
+	color: #999999;
+}
+
+.liuyan .lylist .list-bottom .pj-neirong {
+	width: 6rem;
+	margin-left: 0.8rem;
+}
+
+
+/*# sourceMappingURL=miaomiao.css.map */

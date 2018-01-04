@@ -65,8 +65,28 @@ import minepinlun from '@/pages/my/mine-pinlun'
 import mineshouchang from '@/pages/my/mine-shouchang'
 import minewenda from '@/pages/my/mine-wenda'
 import uploadImg from '@/pages/designer/uploadImg'
-
-import pz from '@/pages/meow/pz'
+import fbmmq from '@/pages/meow/fbmmq'
+import bianjigongzuojinli from '@/pages/meow/bianjigongzuojinli'
+import chuangjianxiaoyouhui from '@/pages/meow/chuangjianxiaoyouhui'
+import ddsh from '@/pages/meow/ddsh'
+import dianzhan from '@/pages/meow/dianzhan'
+import gongzuojinli from '@/pages/meow/gongzuojinli'
+import fbwd from '@/pages/meow/fbwd'
+import miaomiaopaizhuan from '@/pages/meow/miaomiaopaizhuan'
+import pengyouquanxq from '@/pages/meow/pengyouquanxq'
+import pinlunxiangqing from '@/pages/meow/pinlunxiangqing'
+import qiwanggongzuo from '@/pages/meow/qiwanggongzuo'
+import shouchangjianli from '@/pages/meow/shouchang-jianli'
+import shouchangmxt from '@/pages/meow/shouchang-mxt'
+import shouchangweida from '@/pages/meow/shouchang-weida'
+import tianxiejianli from '@/pages/meow/tianxiejianli'
+import tongxunluhaoyou from '@/pages/meow/tongxunluhaoyou'
+import wdxq from '@/pages/meow/wdxq'
+import wzxq from '@/pages/meow/wzxq'
+import xiaoyouhui from '@/pages/meow/xiaoyouhui'
+import xuexiaoxiangqing from '@/pages/meow/xuexiaoxiangqing'
+import zuopinshangchuan from '@/pages/meow/zuopinshangchuan'
+import huodong from '@/pages/meow/huodong'
 Vue.use(Router)
 
 Router.prototype.goBack = function () {
@@ -158,9 +178,94 @@ const routeArray = [
     component: vuxswiper,
     meta: { keepAlive: true }
   },
-  { path: '/pz',
-    name: 'pz',
-    component: pz
+  //meow模块
+  { path: '/huodong',
+    name: 'huodong',
+    component: huodong
+  },
+  { path: '/xiaoyouhui',
+    name: 'xiaoyouhui',
+    component: xiaoyouhui
+  },
+  { path: '/xuexiaoxiangqing',
+    name: 'xuexiaoxiangqing',
+    component: xuexiaoxiangqing
+  },
+  { path: '/zuopinshangchuan',
+    name: 'zuopinshangchuan',
+    component: zuopinshangchuan
+  },
+  { path: '/tongxunluhaoyou',
+    name: 'tongxunluhaoyou',
+    component: tongxunluhaoyou
+  },
+  { path: '/wdxq',
+    name: 'wdxq',
+    component: wdxq
+  },
+  { path: '/wzxq',
+    name: 'wzxq',
+    component: wzxq
+  },
+  { path: '/tianxiejianli',
+    name: 'tianxiejianli',
+    component: tianxiejianli
+  },
+  { path: '/shouchangweida',
+    name: 'shouchangweida',
+    component: shouchangweida
+  },
+  { path: '/shouchangmxt',
+    name: 'shouchangmxt',
+    component: shouchangmxt
+  },
+  { path: '/shouchangjianli',
+    name: 'shouchangjianli',
+    component: shouchangjianli
+  },
+  { path: '/qiwanggongzuo',
+    name: 'qiwanggongzuo',
+    component: qiwanggongzuo
+  },
+  { path: '/pinlunxiangqing',
+    name: 'pinlunxiangqing',
+    component: pinlunxiangqing
+  },
+  { path: '/pengyouquanxq',
+    name: 'pengyouquanxq',
+    component: pengyouquanxq
+  },
+  { path: '/miaomiaopaizhuan',
+    name: 'miaomiaopaizhuan',
+    component: miaomiaopaizhuan
+  },
+  { path: '/fbwd',
+    name: 'fbwd',
+    component: fbwd
+  },
+  { path: '/gongzuojinli',
+    name: 'gongzuojinli',
+    component: gongzuojinli
+  },
+  { path: '/dianzhan',
+    name: 'dianzhan',
+    component: dianzhan
+  },
+  { path: '/ddsh',
+    name: 'ddsh',
+    component: ddsh
+  },
+  { path: '/chuangjianxiaoyouhui',
+    name: 'chuangjianxiaoyouhui',
+    component: chuangjianxiaoyouhui
+  },
+  { path: '/bianjigongzuojinli',
+    name: 'bianjigongzuojinli',
+    component: bianjigongzuojinli
+  },
+  { path: '/fbmmq',
+    name: 'fbmmq',
+    component: fbmmq
   },
   // my模块
   { path: '/mineguanyu',

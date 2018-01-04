@@ -1,0 +1,81 @@
+
+.pinglun {
+  width: 100%;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pinglun p {
+  font-size: 0.28rem;
+  margin-left: 0.2rem;
+}
+
+.pinglun .pinlunlist {
+  width: 7.1rem;
+  margin: 0.2rem;
+}
+
+.pinglun .pinlunlist .top-pinlun {
+  width: 100%;
+  height: 0.8rem;
+}
+
+.pinglun .pinlunlist .top-pinlun .tp-left {
+  float: left;
+  line-height: 0.8rem;
+  font-size: 0.28rem;
+}
+
+.pinglun .pinlunlist .top-pinlun .tp-left span {
+  margin: 0.1rem;
+}
+
+.pinglun .pinlunlist .top-pinlun .tp-left span img {
+  width:0.6rem;
+  height:0.6rem;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pinglun .pinlunlist .top-pinlun .tp-right {
+  float: right;
+  line-height: 0.8rem;
+  font-size: 0.28rem;
+}
+
+.pinglun .pinlunlist .top-pinlun .tp-right span {
+  margin: 0.1rem;
+}
+
+.pinglun .pinlunlist .top-pinlun .tp-right span img {
+  width:0.6rem;
+  height:0.6rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pinglun .pinlunlist .neirong {
+  font-size: 0.28rem;
+  margin-left: 0.8rem;
+  line-height: 0.4rem;
+  color: #999999;
+}
+
+.pinglun .pinlunlist .bottom {
+  font-size: 0.28rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
+}
+
+.pinglun .pinlunlist .bottom .left-bt {
+  float: left;
+  margin-left: 0.8rem;
+  color: #999999;
+}
+
+.pinglun .pinlunlist .bottom .right-bt {
+  float: right;
+}
+
+/*# sourceMappingURL=pinlunxiangqin.css.map */

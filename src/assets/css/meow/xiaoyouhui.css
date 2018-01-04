@@ -1,0 +1,60 @@
+.jl-list{
+  margin-top: 0.88rem;
+}
+.jl-list .jianli {
+  width: 7.5rem;
+  height: 1.6rem;
+}
+
+.jl-list .jianli .touxiang {
+  float: left;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: #CCCCCC;
+  margin: 0.2rem;
+  border-radius: 0.1rem;
+  overflow: hidden;
+}
+
+.jl-list .jianli .touxiang img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.jl-list .jianli .jieshao {
+  position: relative;
+  float: left;
+  width: 5.7rem;
+  height: 1.6rem;
+  border-bottom: 1px solid #F2F2F2;
+  font-size: 0.28rem;
+}
+
+.jl-list .jianli .jieshao p {
+  line-height: 0.5rem;
+}
+
+.jl-list .jianli .jieshao .name {
+  color: #000000;
+  margin-top: 0.24rem;
+}
+
+.jl-list .jianli .jieshao .xinge {
+  font-size: 0.24rem;
+  color: #d6d2d6;
+}
+
+.jl-list .jianli .jieshao .biaoqian {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.jl-list .jianli .jieshao .biaoqian img {
+  width: 100%;
+}
+
+/*# sourceMappingURL=xiaoyouhui.css.map */

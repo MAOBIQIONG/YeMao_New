@@ -27,10 +27,11 @@
 
 .sanxuan {
   width: 100%;
-  height: 1rem;
+  /*height: 1rem;*/
   background: #F2F2F2;
-  display: inline-block;
+  /*display: inline-block;*/
   position: relative;
+  padding-top: 0.001rem;
 }
 
 .sanxuan .sx-cont {
@@ -38,6 +39,7 @@
   height: 0.8rem;
   margin-top: 0.1rem;
   background: white;
+  /*display:inline-block;*/
   font-size: 0.28rem;
 }
 

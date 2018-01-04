@@ -1,0 +1,170 @@
+
+.content {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-size: 0.28rem;
+  background: #F2F2F2;
+  padding-bottom: 0.4rem;
+  top: 0.88rem;
+}
+
+.content .xxmc {
+  width: 100%;
+  height: 2rem;
+  background: white;
+  display: inline-block;
+}
+
+.content .xxmc .touxiang {
+  float: left;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin: 0.2rem;
+}
+
+.content .xxmc .touxiang img {
+  width: 100%;
+  height: 100%;
+}
+
+.content .xxmc .mingcheng {
+  float: left;
+}
+
+.content .xxmc .mingcheng .xuexiao {
+  font-size: 0.32rem;
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.content .xxmc .mingcheng .jrxs {
+  font-size: 0.24rem;
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.content .xxmc .mingcheng .jrxs span {
+  margin-right: 0.2rem;
+}
+
+.content .xxjj {
+  width: 100%;
+  height: 2.2rem;
+  background: white;
+}
+
+.content .xxjj p {
+  height: 0.8rem;
+  line-height: 0.8rem;
+  margin-left: 0.2rem;
+}
+
+.content .xxjj .jianjie {
+  width: 7.1rem;
+  margin-left: 0.2rem;
+  line-height: 0.4rem;
+}
+
+.liebiao {
+  width: 100%;
+  font-size: 0.28rem;
+  display: inline-block;
+  background: white;
+  margin-top: 0.05rem;
+}
+
+.liebiao .list {
+  width: 100%;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.liebiao .list .xycy {
+  float: left;
+  width: 5.3rem;
+  height: 0.8rem;
+}
+
+.liebiao .list .xycy .cylist {
+  float: right;
+  margin-right: 0.1rem;
+}
+
+.liebiao .list .xycy .cylist li {
+  width: 0.6rem;
+  height: 0.6rem;
+  float: left;
+  margin: 0.1rem 0;
+  margin-left: -0.1rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.liebiao .list .xycy .cylist li img {
+  width: 100%;
+  height: 100%;
+}
+
+.liebiao .list .xycy .renshu {
+  float: right;
+}
+
+.liebiao .list .tupiao {
+  float: left;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #CCCCCC;
+  margin: 0.1rem 0px;
+  margin-left: 0.3rem;
+}
+
+.liebiao .list .xingxi {
+  float: left;
+  margin-left: 0.2rem;
+}
+
+.liebiao .list .guanliyuan {
+  float: left;
+  width: 5.4rem;
+  height: 0.8rem;
+}
+
+.liebiao .list .guanliyuan .gly {
+  float: right;
+}
+
+.liebiao .list .guanliyuan .gly .touxiang {
+  float: left;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  margin: 0.1rem;
+  overflow: hidden;
+}
+
+.liebiao .list .guanliyuan .gly .touxiang img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.liebiao .list .guanliyuan .gly .nicheng {
+  float: left;
+}
+
+.liebiao .list .list-right {
+  float: right;
+  width: 0.8rem;
+  height: 0.8rem;
+  text-align: right;
+}
+
+.liebiao .list .list-right img {
+  width: 0.3rem;
+  margin-top: 0.25rem;
+  margin-right: 0.2rem;
+}
+
+/*# sourceMappingURL=xuexiaoxiangqing.css.map */

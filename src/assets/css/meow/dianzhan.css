@@ -1,0 +1,69 @@
+
+.content {
+  width: 100%;
+  margin-top: 0.88rem;
+}
+
+.content .dzlist {
+  width: 100%;
+  height: 1rem;
+  background: white;
+  font-size: 0.28rem;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.content .dzlist .left {
+  float: left;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: #CCCCCC;
+  margin-left: 0.2rem;
+  margin-top: 0.1rem;
+}
+
+.content .dzlist .right {
+  float: left;
+  line-height: 1rem;
+  margin-left: 0.1rem;
+}
+
+.content .dzlist .renzheng {
+  float: left;
+  height: 0rem;
+  margin-left: 0.2rem;
+  font-size: 0.2rem;
+  padding-top: 0.3rem;
+}
+
+.content .dzlist .renzheng .sb-qian {
+  border: 1px solid #ffe354;
+  background-color: #fff9d9;
+  border-radius: 0.08rem;
+  float: left;
+  text-align: center;
+  color: #cda566;
+  padding: 0.02rem 0.08rem;
+  margin-right: 0.14rem;
+}
+
+.content .dzlist .renzheng .sb-ysm {
+  float: left;
+  border: 1px solid #6ddacf;
+  color: #6ddacf;
+  text-align: center;
+  border-radius: 0.08rem;
+  margin-right: 0.14rem;
+  padding: 0.02rem 0.08rem;
+}
+
+.content .dzlist .renzheng .sb-yrz {
+  float: left;
+  border: 1px solid #142aa4;
+  color: #142aa4;
+  text-align: center;
+  border-radius: 0.08rem;
+  padding: 0.02rem 0.08rem;
+}
+
+/*# sourceMappingURL=dianzhan.css.map */
