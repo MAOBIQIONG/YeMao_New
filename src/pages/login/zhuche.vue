@@ -176,9 +176,9 @@
                 {key:"mobile_phone",value:_self.param.mobile_phone},
                 {key:"verifying_code",value:_self.param.verifying_code}
             ]
-//             let storage = common.op_localStorage().getStorage();
+             let storage = common.op_localStorage().getStorage();
             common.op_localStorage().setArray(param1);
-//             console.log(storage);
+             console.log(storage);
         }
     },
   }

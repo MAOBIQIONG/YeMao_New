@@ -190,6 +190,7 @@ const common = {
     getProjectDetail:'getProjectDetail',           // 查询订单详情
     getBidders:'getBidders',                       // 查询参与人
     competiteAnOrder:'competiteAnOrder',           // 抢单
+    getHotSearch:'getHotSearch',                   // 获取热门搜索内容
   }
 
 }

@@ -149,8 +149,24 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
           let _self = this;
           let user_name = common.op_localStorage().get('nickname');
           let phone = common.op_localStorage().get('mobile_phone');
-          let verifying_code = common.op_localStorage().get('verifying_code');
-          let data = {user_name,phone,verifying_code}
+          // let verifying_code = common.op_localStorage().get('verifying_code');
+          let data = {
+            // id:"",
+            // create_date:"创建时间",
+            user_name:user_name,
+            real_name:null,
+            password:null,
+            phone:phone,
+            gender:null,
+            birthday:null,
+            img:null,
+            user_type:null,
+            working_years:0,
+            composite_score:0,
+            authenticating_state:0,
+            hourly_wage:0,
+            description:null
+          }
           console.log("data:"+JSON.stringify(data))
           let params= {};
           params.data = data;

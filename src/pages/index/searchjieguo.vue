@@ -2,17 +2,19 @@
   <div class="">
     <div class="search">
       <div class="search-input">
-        <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
-        <input type="text" name="" id="search-inp" value=""class="search-inp" placeholder="搜索"/>
-        <span class="searchcha">×</span>
+        <form class="mission_search_form">
+          <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
+          <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
+          <span class="searchcha">×</span>
+        </form>
       </div>
       <span @click="toUrl('index')">取消</span>
     </div>
     <!--tab选项卡-->
     <div class="content">
-      <tab :line-width=2 active-color='#fc378c' prevent-default="true" v-model="index" class="tabs">
-        <tab-item class="vux-center"   key="0">设计师</tab-item>
-        <tab-item class="vux-center"   key="1">订单</tab-item>
+      <tab :line-width=2 active-color='#fc378c' v-model="index" class="tabs">
+        <tab-item class="vux-center" key="0">设计师</tab-item>
+        <tab-item class="vux-center" key="1">订单</tab-item>
       </tab>
       <swiper v-model="index" height="100%" :show-dots="false" class="swps">
         <swiper-item >
@@ -561,11 +563,13 @@
     data() {
       return {
         index: 0,
+        searchValue:''
       }
-
     },
-    mounted: function () {
-      this.qingchu();
+    created: function () {
+      this.historySearch = common.getObjStorage("historySearch") || [];
+      this.searchValue = common.getStorage("searchValue") || '';
+      // this.initData();
     },
     methods: {
       goback() {
@@ -598,26 +602,28 @@
       onCancel() {
         console.log('on cancel')
       },
-      //清空搜索框里的值
-      qingchu (){
-        $(".searchcha").click(function(){
-          $("#search-inp").val('');
-        });
-      }
+      //搜索框
+      key(e){
+        var _self=this;
+        if(e.keyCode=='13'){
+          if( common.isNull(_self.searchValue) == true ){
+            _self.showToast("请输入搜索内容！");
+            return;
+          }
+          _self.search({value:_self.searchValue});
+        }
+      },
+      search:function (param) {
+        var _self = this;
+        if( _self.historySearch.indexOf(param.value) < 0 ){
+          _self.historySearch.push(param.value);
+          common.setStorage("historySearch",_self.historySearch);
+        }
+      },
     },
 
   }
 </script>
-<style>
-  /*.vux-slider > .vux-swiper{*/
-    /*height: 100% !important;*/
-    /*overflow:auto !important;*/
-  /*}*/
-  /*.vux-swiper-item{*/
-    /*height:auto !important;*/
-    /*background: #f2f2f2 !important;*/
-  /*}*/
-</style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
   @import "../../assets/css/index/search-jieguo.css";
@@ -630,8 +636,8 @@
   }
 
   .swps{
-      margin-top: 1.65rem;
-      height:14rem !important;
-      overflow:auto !important;
+    margin-top: 1.65rem;
+    height:14rem !important;
+    overflow:auto !important;
   }
 </style>
