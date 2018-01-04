@@ -241,6 +241,13 @@
         index: 0,
       }
     },
+    activated: function () {
+      console.log("sjszxxq activated:")
+    },
+    created: function () {
+      console.log("sjszxxq created:")
+      console.log("id:"+this.$route.query.id);
+    },
     methods: {
       goback(){
         this.$router.goBack();

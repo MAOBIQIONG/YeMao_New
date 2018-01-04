@@ -4,7 +4,7 @@
     <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
         <div class="content" style="margin-top: 0rem;padding-top: 0rem;">
-          <div class="sjs-list" v-for="item in designers">
+          <div class="sjs-list" v-for="item in designers" v-tap="{methods:toDetails, id:item._id}">
             <div class="sjs-top">
               <div class="st-touxiang">
                 <img :src="checkAvatar(item.img)" />
@@ -70,14 +70,14 @@
       }
     },
     activated: function () {
-      console.log("designer activated:")
+      console.log("designers activated:")
     },
     created: function () {
-      console.log("designer created:")
+      console.log("designers created:")
       this.loadMore()
     },
     mounted: function () {
-      console.log("designer mounted:")
+      console.log("designers mounted:")
       this.$nextTick(() => {
         this.$refs.scrollerBottom.reset({top: 0})
       })
@@ -87,8 +87,9 @@
         this.$router.push({name: params.pagename})
       },
       // 详情页
-      toDetails (id) {
-        this.$router.push({name: 'emporder', query: {id: id}})
+      toDetails (param) {
+        console.log("param.id:"+param.id)
+        this.$router.push({name: 'sjszxxq', query: {id: param.id}})
       },
       /*******************************************************/
       // 项目类型名称
@@ -135,7 +136,6 @@
         // 排序标识
         params.sort = {create_date:-1};
         var sortMark = common.checkInt(_self.sortMark);
-        console.log("sortMark:"+sortMark)
         if( sortMark == 1 ){
           params.sort = {composite_score:-1} ;
         }else if( sortMark == 4 ){
@@ -153,7 +153,6 @@
         }else if( sortMark == 11 ){
           params.where.authenticating_state = 6;
         }
-        console.log("params:"+JSON.stringify(params))
         //上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;

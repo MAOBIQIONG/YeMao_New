@@ -17,7 +17,7 @@
         <tab-item class="vux-center" key="1">订单</tab-item>
       </tab>
     </div>
-    <prince :is="index==0?'designers':'orders'" :value="searchValue"></prince> <!-- keep-alive -->
+    <designers :is="index==0?'designers':'orders'" :value="searchValue"></designers> <!-- keep-alive -->
   </div>
 </template>
 
