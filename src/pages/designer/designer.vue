@@ -80,50 +80,52 @@
       </div>
     </div>
     <!--设计师列表-->
-    <div class="content">
-      <scroller lock-x height="-44" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">
-        <div>
-          <div class="sjs-list" v-for="order in orderList" @click="toUrl('sjszxxq')">
-            <div class="sjs-top">
-              <div class="st-touxiang">
-                <img src="../../../static/images/bj.jpg" />
-              </div>
-              <div class="st-neirong">
-                <div class="sn-top">
-                  <div class="st-nicheng">设计师小a</div>
-                  <div class="st-pingxin"></div>
-                </div>
-                <div class="sn-bottom">
-                  <div class="sb-nianling">5年</div>
-                  <div class="sb-qian">签</div>
-                  <div class="sb-ysm">已实名</div>
-                  <div class="sb-yrz">已认证</div>
-                </div>
-              </div>
-              <div class="st-jiageleixin">
-                <div class="st-jiage"><span>￥</span><span>100</span>/时</div>
-                <div class="st-leixin"><span>景观设计</span></div>
-              </div>
-            </div>
-            <div class="sjs-content">
-              <div class="sc-jiesao">
-                已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成
-              </div>
-            </div>
-            <div class="sjs-bottom">
-              <div class="sjs-yysj">应邀设计</div>
-              <div class="sjs-mmlt">喵喵聊天</div>
-            </div>
-          </div>
-          <load-more :show-loading="sliderFlag" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 50px"></load-more>
-        </div>
-      </scroller>
+    <designers></designers>
+    <!--<div class="content">-->
+      <!--<scroller lock-x height="-44" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="200">-->
+        <!--<div>-->
+          <!--<div class="sjs-list" v-for="order in orderList" @click="toUrl('sjszxxq')">-->
+            <!--<div class="sjs-top">-->
+              <!--<div class="st-touxiang">-->
+                <!--<img src="../../../static/images/bj.jpg" />-->
+              <!--</div>-->
+              <!--<div class="st-neirong">-->
+                <!--<div class="sn-top">-->
+                  <!--<div class="st-nicheng">设计师小a</div>-->
+                  <!--<div class="st-pingxin"></div>-->
+                <!--</div>-->
+                <!--<div class="sn-bottom">-->
+                  <!--<div class="sb-nianling">5年</div>-->
+                  <!--<div class="sb-qian">签</div>-->
+                  <!--<div class="sb-ysm">已实名</div>-->
+                  <!--<div class="sb-yrz">已认证</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="st-jiageleixin">-->
+                <!--<div class="st-jiage"><span>￥</span><span>100</span>/时</div>-->
+                <!--<div class="st-leixin"><span>景观设计</span></div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="sjs-content">-->
+              <!--<div class="sc-jiesao">-->
+                <!--已有多年建筑设计工作经验，从事建筑方案到效果图，再到建筑施工图都可以完成-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="sjs-bottom">-->
+              <!--<div class="sjs-yysj">应邀设计</div>-->
+              <!--<div class="sjs-mmlt">喵喵聊天</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<load-more :show-loading="sliderFlag" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 50px"></load-more>-->
+        <!--</div>-->
+      <!--</scroller>-->
     </div>
   </div>
 </template>
 
 <script>
   import { Scroller, Divider, Spinner, LoadMore,Datetime,} from 'vux'
+  import designers from '../../components/designers/designers.vue'
   export default {
     components: {
       Scroller,
@@ -131,6 +133,7 @@
       Spinner,
       LoadMore,
       Datetime,
+      designers
     },
     data() {
       return {
@@ -239,6 +242,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/css/designer/designer.css';
+  .designers{
+    background-color: #f2f2f2;
+  }
   .header .header-right .hongdian{
     width: 0.1rem;
     height: 0.1rem;

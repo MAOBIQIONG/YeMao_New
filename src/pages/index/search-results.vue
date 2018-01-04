@@ -1,21 +1,22 @@
 <template>
   <div class="bg">
-    <div class="search">
-      <div class="search-input">
-        <form class="mission_search_form">
-          <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
-          <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
-          <span class="searchcha">×</span>
-        </form>
+    <div style="height: 1.6rem">
+      <div class="search">
+        <div class="search-input">
+          <form class="mission_search_form">
+            <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
+            <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
+            <span class="searchcha">×</span>
+          </form>
+        </div>
+        <span @click="toUrl('index')">取消</span>
       </div>
-      <span @click="toUrl('index')">取消</span>
+      <!--tab选项卡-->
+      <tab :line-width=2 active-color='#fc378c'  v-model="index" class="tabs">
+        <tab-item class="vux-center" key="0">设计师</tab-item>
+        <tab-item class="vux-center" key="1">订单</tab-item>
+      </tab>
     </div>
-
-    <!--tab选项卡-->
-    <tab :line-width=2 active-color='#fc378c'  v-model="index" class="tabs">
-      <tab-item class="vux-center" key="0">设计师</tab-item>
-      <tab-item class="vux-center" key="1">订单</tab-item>
-    </tab>
     <prince :is="index==0?'designers':'orders'" :value="searchValue" keep-alive></prince>
   </div>
 </template>

@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- 上拉加载 -->
-    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: .6rem">
+    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
         <!--雇主列表-->
-        <div class="content" style="padding-top: 0.88rem;margin-top: 0.88rem">
+        <div class="content" style="margin-top: 0rem;padding-top: 0rem;">
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
               <div class="gz-touxiang">

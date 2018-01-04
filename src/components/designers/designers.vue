@@ -1,9 +1,9 @@
 <template>
   <div class="">
     <!-- 上拉加载 -->
-    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: .6rem">
+    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
-        <div class="content" style="padding-top: 0.88rem">
+        <div class="content" style="margin-top: 0rem;padding-top: 0rem;">
           <div class="sjs-list" v-for="item in designers">
             <div class="sjs-top">
               <div class="st-touxiang">
