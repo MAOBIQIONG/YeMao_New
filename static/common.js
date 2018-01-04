@@ -191,6 +191,8 @@ const common = {
     getBidders:'getBidders',                       // 查询参与人
     competiteAnOrder:'competiteAnOrder',           // 抢单
     getHotSearch:'getHotSearch',                   // 获取热门搜索内容
+    getDesigners:'getDesigners',                   // 设计师列表
+    getSearchData:'getSearchData',                 // 搜索结果页面：设搜索结果页面：设计师、订单列表
   }
 
 }
