@@ -34,10 +34,12 @@
 
 .zfcg-content .zfcg-top .zt-right .zr-box {
   height: 1rem;
-  line-height: 0.5rem;
-  margin-bottom: 0.5rem;
+  line-height: 1rem;
+  margin-bottom: 0.45rem;
 }
-
+.zfcg-content .zfcg-top .zt-right .zr-zh{
+  line-height: 0.7rem;
+}
 .zfcg-content .zfcg-top .zt-right .zr-box .first-p {
   font-size: 0.36rem;
 }

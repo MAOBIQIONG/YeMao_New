@@ -57,9 +57,11 @@
 }
 
 .content .list-paizuan .zan .left-zan span img {
-  display: inline-block;
+  /*display: inline-block;*/
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-bottom: 0.1rem;
   vertical-align: middle;
-  width: 0.3rem;
 }
 
 .content .list-paizuan .zan .right-time {

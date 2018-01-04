@@ -63,8 +63,8 @@
           </ul>
         </div>
         <div class="pinjia">
-          <p><span></span><span>100</span></p>
-          <p><span></span><span>100</span></p>
+          <p><span> <img src="../../../static/images/collect.png"/></span><span>100</span></p>
+          <p><span> <img src="../../../static/images/liulan.png"/></span><span>100</span></p>
         </div>
       </div>
     </div>

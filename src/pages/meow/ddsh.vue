@@ -7,7 +7,7 @@
     </div>
     <div class="zfcg-content">
       <div class="zfcg-top">
-        <div class="zt-left"><img src="images/zfcg.png"/></div>
+        <div class="zt-left"><img src="../../../static/images/zfcg.png"/></div>
         <div class="zt-right">
           <div class="zr-box">
             <p>等待审核中</p>
@@ -15,7 +15,7 @@
           <div class="zr-box">
             <p>已提交申请</p>
           </div>
-          <div class="zr-box">
+          <div class="zr-box zr-zh">
             <p>审核提交人信息</p>
           </div>
         </div>

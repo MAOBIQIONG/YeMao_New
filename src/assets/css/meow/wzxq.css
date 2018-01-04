@@ -183,8 +183,9 @@
 }
 
 .pinglun .pinlunlist .top-pinlun .tp-right span img {
-  width:0.6rem;
-  height: 0.6rem;
+  width:0.4rem;
+  height: 0.4rem;
+  margin-bottom: 0.1rem;
   display: inline-block;
   vertical-align: middle;
 }
@@ -238,8 +239,9 @@
 }
 
 .sr-bottom .shurukuang .srk-tupiao img {
-  width: 0.6rem;
-  margin: 0.1rem;
+  width: 0.4rem;
+  margin: 0 0.2rem;
+  margin-top: 0.13rem;
   display: block;
 }
 
@@ -272,6 +274,7 @@
 .sr-bottom .xiaoxi span img {
   width: 0.6rem;
   height: 0.6rem;
+  margin-bottom: 0.1rem;
   display: inline-block;
   vertical-align: middle;
 }

@@ -18,7 +18,7 @@
       <!--图片上传-->
       <div class="sctp">
         <div class="st-bottom">
-
+          <img src="../../../static/images/employer/j.png" />
         </div>
       </div>
     </div>

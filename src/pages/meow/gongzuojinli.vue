@@ -14,7 +14,7 @@
             <span>2017.02</span>-<span>2017.10</span>
           </div>
           <div class="rzsj-right"@click="toUrl('bianjigongzuojinli')">
-            <span><img src="../../../static/images/bj.jpg"></span><span>编辑</span>
+            <span><img src="../../../static/images/sx1.png"></span><span>编辑</span>
           </div>
         </div>
         <div class="zwmc">

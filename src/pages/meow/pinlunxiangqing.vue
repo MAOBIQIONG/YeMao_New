@@ -13,7 +13,7 @@
             <span><img src="../../../static/images/bj.jpg"/></span><span>用户昵称</span>
           </div>
           <div class="tp-right">
-            <span>100</span><span><img src="../../../static/images/bj.jpg"/></span>
+            <span>100</span><span><img src="../../../static/images/zan.png"/></span>
           </div>
         </div>
         <div class="neirong">
@@ -27,7 +27,7 @@
             <span><img src="../../../static/images/bj.jpg"/></span><span>用户昵称</span>
           </div>
           <div class="tp-right">
-            <span>100</span><span><img src="../../../static/images/bj.jpg"/></span>
+            <span>100</span><span><img src="../../../static/images/zan.png"/></span>
           </div>
         </div>
         <div class="neirong">

@@ -49,8 +49,9 @@
 }
 
 .pinglun .pinlunlist .top-pinlun .tp-right span img {
-  width:0.6rem;
-  height:0.6rem;
+  width:0.4rem;
+  height:0.4rem;
+  margin-bottom: 0.1rem;
   display: inline-block;
   vertical-align: middle;
 }

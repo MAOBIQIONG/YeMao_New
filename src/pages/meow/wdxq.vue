@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
-      <div class="header-right">确定</div>
+      <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
     </div>
     <!--文章详情-->
     <div class="content">
@@ -24,10 +24,10 @@
         <p>根据12321网络不良与垃圾信息举报受理中心(www.12321.cn)接到网民举报的短信、邮件、网站等信息，2017年8月，被举报最多的是假冒苹果公司的钓鱼诈骗网站，举报量达192件次，比7月份增加了3.1%。排名第二的是假冒奔跑吧兄弟的钓鱼诈骗网站，比7月份增加了264.3%。</p>
         <div class="bottom">
           <div class="bottom-zan">
-            <span><img src="../../../static/images/bj.jpg"/></span><span>100</span>
+            <span><img src="../../../static/images/zan.png"/></span><span>100</span>
           </div>
           <div class="bottom-sz">
-            <span><img src="../../../static/images/bj.jpg"/></span><span>收藏</span>
+            <span><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
             <span><img src="../../../static/images/bj.jpg"/></span><span>用户昵称</span>
           </div>
           <div class="tp-right">
-            <span>100</span><span><img src="../../../static/images/bj.jpg"/></span>
+            <span>100</span><span><img src="../../../static/images/zan.png"/></span>
           </div>
         </div>
         <div class="neirong">
@@ -77,7 +77,7 @@
             <span><img src="../../../static/images/bj.jpg"/></span><span>用户昵称</span>
           </div>
           <div class="tp-right">
-            <span>100</span><span><img src="../../../static/images/bj.jpg"/></span>
+            <span>100</span><span><img src="../../../static/images/zan.png"/></span>
           </div>
         </div>
         <div class="neirong">
