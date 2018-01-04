@@ -89,7 +89,7 @@
           common.setStorage("historySearch",_self.historySearch);
         }
         common.setStorage("searchValue",param.value);
-        _self.toUrl({pagename:'searchjieguo'})
+        _self.toUrl({pagename:'searchresults'})// searchjieguo
       },
       clearHistory(param){
         var _self = this;

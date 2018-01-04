@@ -22,6 +22,7 @@ import leibie from '@/pages/index/leibie'
 import message from '@/pages/index/message'
 import search from '@/pages/index/search'
 import searchjieguo from '@/pages/index/searchjieguo'
+import searchresults from '@/pages/index/search-results'
 import daichulixq from '@/pages/employer/daichulixq'
 import fabudingdan from '@/pages/employer/fabudingdan'
 import myorderchuli from '@/pages/employer/myorderchuli'
@@ -362,6 +363,10 @@ const routeArray = [
   { path: '/searchjieguo',
     name: 'searchjieguo',
     component: searchjieguo
+  },
+  { path: '/searchresults',
+    name: 'searchresults',
+    component: searchresults
   },
   // 登录模块
   { path: '/login',
