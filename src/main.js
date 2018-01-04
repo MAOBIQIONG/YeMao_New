@@ -11,6 +11,8 @@ import store from './vuex/store'
 import common from '../static/common.js'
 // 引用API文件
 import api from './api/api.js'
+// 全局引入iconfont.css
+import '../static/fonts/iconfont.css'
 
 Vue.config.productionTip = false
 

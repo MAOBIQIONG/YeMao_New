@@ -4,7 +4,7 @@
     <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: .6rem">
       <div>
         <!--雇主列表-->
-        <div class="content" style="margin-top: 1.75rem;">
+        <div class="content" style="padding-top: 0.88rem;margin-top: 0.88rem">
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
               <div class="gz-touxiang">
@@ -45,11 +45,9 @@
 </template>
 
 <script>
-  import {LoadMore, Scroller, Swiper, SwiperItem } from 'vux'
+  import {LoadMore, Scroller } from 'vux'
   export default {
     components: {
-      Swiper,
-      SwiperItem,
       Scroller,
       LoadMore
     },
@@ -155,17 +153,15 @@
         // 排序
         params.sort = {create_date:-1};
         if( !common.isNull(_self.value) ){
-          var re = new RegExp('上海','i');
-          params.where = { project_title:re };
+          params.where ={project_title : {$regex : _self.value}};
         }
-        console.log("params:"+JSON.stringify(params))
         //上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
+          // console.log(response)
           var data = response.data
           if ( data ) {
             _self.setOrderData(data);

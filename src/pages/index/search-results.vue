@@ -22,9 +22,8 @@
 
 <script>
   import { Tab, TabItem} from 'vux'
-  // import designers from '../../components/designers/designers.vue'
+  import designers from '../../components/designers/designers.vue'
   import orders from '../../components/index/orders.vue'
-  import designers from '../../components/index/orders.vue'
   export default {
     components: { // 声明子组件
       Tab,
