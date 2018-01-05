@@ -55,6 +55,7 @@ import anliexq from '@/pages/designer/anliexq'
 import tixianchenggong from '@/pages/designer/tixianchenggong'
 import renzhengchenggong from '@/pages/designer/renzhengchenggong'
 import competiteSuccess from '@/pages/designer/competiteSuccess'
+import anlielist from '@/pages/designer/anlielist'
 import set from '@/pages/my/set'
 import setnicheng from '@/pages/my/set-nicheng'
 import setnum from '@/pages/my/set-num'
@@ -310,6 +311,10 @@ const routeArray = [
     component: set
   },
   // 设计师模块
+  { path: '/anlielist',
+    name: 'anlielist',
+    component: anlielist
+  },
   { path: '/renzhengchenggong',
     name: 'renzhengchenggong',
     component: renzhengchenggong
