@@ -4,7 +4,7 @@
     <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
         <div class="content" style="margin-top: 0rem;padding-top: 0rem;">
-          <div class="sjs-list" v-for="item in designers">
+          <div class="sjs-list" v-for="item in designers" v-tap="{methods:toDetails, id:item._id}">
             <div class="sjs-top">
               <div class="st-touxiang">
                 <img :src="checkAvatar(item.img)" />
@@ -52,10 +52,12 @@
       Rater
     },
     props:{
-      value: String
+      value: String,              // 模糊查询字符串
+      // sortMark: Number,           // 排序标识
     },
     data() {
       return {
+        sortMark:0,
         designers: [],
         pageNo: 0,
         pageSize: 10,
@@ -67,10 +69,15 @@
         loadnomore: '没有更多数据了'
       }
     },
+    activated: function () {
+      console.log("designers activated:")
+    },
     created: function () {
+      console.log("designers created:")
       this.loadMore()
     },
     mounted: function () {
+      console.log("designers mounted:")
       this.$nextTick(() => {
         this.$refs.scrollerBottom.reset({top: 0})
       })
@@ -80,8 +87,9 @@
         this.$router.push({name: params.pagename})
       },
       // 详情页
-      toDetails (id) {
-        this.$router.push({name: 'emporder', query: {id: id}})
+      toDetails (param) {
+        console.log("param.id:"+param.id)
+        this.$router.push({name: 'sjszxxq', query: {id: param.id}})
       },
       /*******************************************************/
       // 项目类型名称
@@ -119,10 +127,31 @@
           pageNo: _self.pageNo,
           pageSize: _self.pageSize
         }
-        // 排序
-        params.sort = {create_date:-1};
+        //条件查询
+        params.where = {};
+        // 模糊查询
         if( !common.isNull(_self.value) ){
-          params.where ={user_name : {$regex : _self.value}};
+          params.where.user_name = {$regex : _self.value};
+        }
+        // 排序标识
+        params.sort = {create_date:-1};
+        var sortMark = common.checkInt(_self.sortMark);
+        if( sortMark == 1 ){
+          params.sort = {composite_score:-1} ;
+        }else if( sortMark == 4 ){
+          params.where.working_years = {$lte:1};
+        }else if( sortMark == 5 ){
+          params.where.working_years = {$lte:3, $gt:1};
+        }else if( sortMark == 6 ){
+          params.where.working_years = {$lte:5, $gt:3};
+        }else if( sortMark == 7 ){
+          params.where.working_years = {$gt:5};
+        }else if( sortMark == 9 ){
+          params.where.authenticating_state = {$gte:2};
+        }else if( sortMark == 10 ){
+          params.where.authenticating_state = {$gte:4};
+        }else if( sortMark == 11 ){
+          params.where.authenticating_state = 6;
         }
         //上拉加载
         _self.loadtext = _self.loadrefresh;
@@ -162,7 +191,15 @@
           _self.onFetching = false
           _self.pageNo++;
         }
-      }
+      },
+
+      // 重新加载数据
+      refreshData(mark){
+        var _self = this;
+        _self.pageNo = 0;
+        _self.sortMark = mark;
+        _self.loadMore();
+      },
 
     }
   }

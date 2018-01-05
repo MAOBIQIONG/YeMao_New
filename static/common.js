@@ -1,17 +1,40 @@
 var root = 'http://47.100.34.193:3000/';
 const common = {
-  /*****************1、验证*******************/
-  //1.1、验证是否为空：返回boolean
+  /*****************1、验证(返回值:boolean)*******************/
+  /**
+   *1.1、判断对象是否是字符串
+   * */
+  isString:function (obj){
+    return Object.prototype.toString.call(obj) === "[object String]";
+  },
+
+  //1.2、验证是否为空：
   isNull:function (str){
     if( str=="" || str=="null" || str == null || str == undefined || str == "undefined" ){
       return true;
     } return false;
   },
-  /**
-   *1.2、判断对象是否是字符串
-   * */
-  isString:function (obj){
-    return Object.prototype.toString.call(obj) === "[object String]";
+
+  /*****************1.1、验证(返回值:对应类型)*******************/
+  //1.1、验证是否为空：返回String
+  checkNull:function (str){
+    if( str=="" || str=="null" || str == null || str == undefined || str == "undefined" ){
+      return "";
+    } return str;
+  },
+
+  //1.2、验证是否为int：返回int
+  checkInt:function (str){
+    if( str=="" || str=="null" || str == null || str == undefined || str == "undefined" ){
+      return 0;
+    } return parseInt(str);
+  },
+
+  //1.3、验证是否为Float：返回Float
+  checkFloat:function (str){
+    if(str==""||str=="null"||str==null||!checkNum(str)||str==undefined){
+      return 0;
+    } return parseFloat(str);
   },
 
   /*****************2、localStorage*******************/
@@ -192,7 +215,6 @@ const common = {
     competiteAnOrder:'competiteAnOrder',           // 抢单
     getHotSearch:'getHotSearch',                   // 获取热门搜索内容
     getDesigners:'getDesigners',                   // 设计师列表
-    getSearchData:'getSearchData',                 // 搜索结果页面：设搜索结果页面：设计师、订单列表
   }
 
 }

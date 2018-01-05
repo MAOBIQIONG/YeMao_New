@@ -42,38 +42,39 @@
       <div class="sanxuan">
         <div class="sx-cont">
           <ul>
-            <li class="znpx-1">
-              <p class="znpx">智能排序</p>
+            <li v-tap="{ methods:showArea, areaMark:0 }" :class="areaMark==0&&showMark==true ? 'up' : ''">
+              <p>{{sortName0}}</p>
             </li>
-            <li class="nx-1">
-              <p class="nx">年限</p>
+            <li v-tap="{ methods:showArea, areaMark:1 }" :class="areaMark==1&&showMark==true ? 'up' : ''">
+              <p>{{sortName1}}</p>
             </li>
-            <li class="rz-1">
-              <p class="rz">认证</p>
+            <li v-tap="{ methods:showArea, areaMark:2 }" :class="areaMark==2&&showMark==true ? 'up' : ''">
+              <p style="border-right: none;">{{sortName2}}</p>
             </li>
           </ul>
           <div class="sort-filter">
-            <div class="area on">
+            <div class="area" :class="areaMark==0&&showMark==true ? 'on' : ''">
               <ul>
-                <li class="bg_click">人气最高</li>
-                <li class="bg">最新发布</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:0 }" :class="sortMark==0||sortMark>2?'active':''">智能排序</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:1 }" :class="sortMark==1?'active':''">人气最高</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:2 }" :class="sortMark==2?'active':''">最新发布</li>
               </ul>
             </div>
-            <div class="areanx on">
+            <div class="area" :class="areaMark==1&&showMark==true ? 'on' : ''">
               <ul>
-                <li class="bg_click">不限</li>
-                <li class="bg">一年以下</li>
-                <li class="bg">1-3年</li>
-                <li class="bg">3-5年</li>
-                <li class="bg">5年以上</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:3 }" :class="sortMark<=3||sortMark>7?'active':''">不限</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:4 }" :class="sortMark==4?'active':''">一年以下</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:5 }" :class="sortMark==5?'active':''">1-3年</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:6 }" :class="sortMark==6?'active':''">3-5年</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:7 }" :class="sortMark==7?'active':''">5年以上</li>
               </ul>
             </div>
-            <div class="arearz on">
+            <div class="area" :class="areaMark==2&&showMark==true ? 'on' : ''">
               <ul>
-                <li class="bg_click">不限</li>
-                <li class="bg">已实名</li>
-                <li class="bg">已认证</li>
-                <li class="bg">已签约</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:8 }" :class="sortMark<=8?'active':''">不限</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:9 }" :class="sortMark==9?'active':''">已实名</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:10 }" :class="sortMark==10?'active':''">已认证</li>
+                <li class="bg" v-tap="{ methods:chooseSortType, sortMark:11 }" :class="sortMark==11?'active':''">已签约</li>
               </ul>
             </div>
           </div>
@@ -81,46 +82,25 @@
       </div>
     </div>
     <!--设计师列表-->
-    <designers></designers>
+    <designers ref="design"></designers>
   </div>
 </template>
 
 <script>
-  import { Scroller, Divider, Spinner, LoadMore,Datetime,} from 'vux'
   import designers from '../../components/designers/designers.vue'
   export default {
     components: {
-      Scroller,
-      Divider,
-      Spinner,
-      LoadMore,
-      Datetime,
       designers
     },
     data() {
       return {
-        orderList: [
-          {"signInSituationId":"1001",},
-          {"signInSituationId":"1002",},
-          {"signInSituationId":"1003",},
-          {"signInSituationId":"1004",},
-          {"signInSituationId":"1005",},
-          {"signInSituationId":"1006",},
-          {"signInSituationId":"1007",},
-          {"signInSituationId":"1008",},
-        ],
-        index:4,
-        isSlider:false,
-        sliderFlag:true,
-        loadtext:"正在加载...",
-        loadrefresh: '正在加载...',
-        loadnomore: '没有更多数据了',
+        areaMark: 0,               // 选择显示排序区域
+        showMark: false,           // 排序区域显示标识
+        sortName0: '智能排序',      // 排序名称
+        sortName1: '年限',         // 排序名称
+        sortName2: '认证',         // 排序名称
+        sortMark: 0,               // 排序标识
       }
-    },
-    mounted: function () {
-      this.znpx('.znpx-1','.area','.area ul li');
-      this.znpx('.nx-1','.areanx','.areanx ul li');
-      this.znpx('.rz-1','.arearz','.arearz ul li');
     },
     methods: {
       goback(){
@@ -129,74 +109,37 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      //智能排序
-      znpx(obj,zj,zjj){
-        $(obj).click(function() {
-          var $t = $(obj);
-          var $other = $(obj).siblings();
-          var $otherz = $(zj).siblings();
-          if($t.hasClass('up')) {
-            $(obj).removeClass('up').addClass('st');
-            $(zj).removeClass('off').addClass('on');
-          } else {
-            $(obj).removeClass('st').addClass('up');
-            $(zj).removeClass('on').addClass('off');
-          }
-          $other.addClass('st').removeClass('up')
-          $otherz.addClass('on').removeClass('off')
-        });
-        $(zjj).on('click',function(){
-
-          var $div = $(this);
-
-          var $others = $div.siblings();
-
-          if($div.hasClass('bg')){
-
-            $div.removeClass('bg').addClass('bg_click')
-
-          }else {
-
-            $div.removeClass('bg_click').addClass('bg')
-
-          }
-          $others.addClass('bg').removeClass('bg_click')
-        });
-      },
-      //上拉加载
-      onScrollBottom () {
-        var obj = this;
-        if( obj.isSlider == true ) return;
-        obj.isSlider = true;
-
-        if( obj.index == 0 ){
-          obj.loadtext = obj.loadnomore;
-          obj.sliderFlag = false;
-          return;
+      showArea(param){
+        var _self = this;
+        var mark = param.areaMark;
+        if( mark == _self.areaMark ){
+          _self.showMark = _self.showMark==false ? true : false;
+        }else{
+          _self.areaMark = mark;
+          _self.showMark = true;
         }
-        obj.index--;
-        obj.loadtext = obj.loadrefresh;
-        obj.sliderFlag = true;
-        if (this.onFetching) {
-          // do nothing
-        } else {
-          this.onFetching = true
-          setTimeout(() => {
-            for (let i=0;i<10;i++){
-              let jia = {"id":"",};
-              obj. orderList.push(jia);
-            }
-            this.$nextTick(() => {
-              this.$refs.scrollerBottom.reset()
-            })
-            this.onFetching = false
-          }, 2000)
-        }
-
-        setTimeout(() => {
-          obj.isSlider = false;
-        }, 2500)
       },
+      chooseSortType(param){
+        var _self = this;
+        _self.showMark = _self.showMark==false ? true : false;
+        var mark = param.sortMark
+        if( _self.sortMark != mark ){
+          _self.sortMark = mark;
+          var name = event.target.innerText;
+          _self.sortName0 = '智能排序';
+          _self.sortName1 = '年限';
+          _self.sortName2 = '认证';
+          if( mark < 3 ){
+            _self.sortName0 = name;
+          }else if( mark > 7 ){
+            _self.sortName2 = name;
+          }else{
+            _self.sortName1 = name;
+          }
+          this.$refs.design.refreshData(_self.sortMark);
+        }
+      },
+
     }
   }
 </script>
@@ -219,15 +162,16 @@
     right: 0;
     top: 0.1rem;
   }
-  .sx-cont .area,.areanx,.arearz {
+  .sx-cont .area {
     position: absolute;
     width: 100%;
     top: 0.9rem;
     left: 0;
     background: #fefefe;
     z-index: 999;
+    display: none;
   }
-  .sx-cont .area ul li,.sx-cont .areanx ul li,.sx-cont .arearz ul li {
+  .sx-cont .area ul li{
     width: 100%;
     height: 0.8rem;
     line-height: 0.8rem;
@@ -238,7 +182,7 @@
   .bg{
     background:#fefefe;
   }
-  .bg_click {
+  .bg.active {
     background:#f3f3f3;
   }
   .sanxuan .sx-cont ul .up p:after {
@@ -249,10 +193,7 @@
     margin-top: -0.1rem;
     -webkit-transform: rotate(135deg);
   }
-  .off{
-    display: block;
-  }
   .on{
-    display: none;
+    display: block !important;
   }
 </style>
