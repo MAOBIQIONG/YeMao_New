@@ -1,16 +1,5 @@
 <template>
-  <div >
-    <!--导航栏-->
-    <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
-      <div class="hd-cont">
-        <ul>
-          <li @click="toUrl('meow')">喵喵圈</li>
-          <li @click="toUrl('miaomiaopaizhuan')">喵喵拍砖</li>
-          <li @click="toUrl('huodong')">活动</li>
-        </ul>
-      </div>
-    </div>
+  <div class="huodong">
     <!--活动列表-->
     <div class="content">
       <div class="hd-list">

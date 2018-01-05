@@ -74,7 +74,6 @@ import ddsh from '@/pages/meow/ddsh'
 import dianzhan from '@/pages/meow/dianzhan'
 import gongzuojinli from '@/pages/meow/gongzuojinli'
 import fbwd from '@/pages/meow/fbwd'
-import miaomiaopaizhuan from '@/pages/meow/miaomiaopaizhuan'
 import pengyouquanxq from '@/pages/meow/pengyouquanxq'
 import pinlunxiangqing from '@/pages/meow/pinlunxiangqing'
 import qiwanggongzuo from '@/pages/meow/qiwanggongzuo'
@@ -88,7 +87,6 @@ import wzxq from '@/pages/meow/wzxq'
 import xiaoyouhui from '@/pages/meow/xiaoyouhui'
 import xuexiaoxiangqing from '@/pages/meow/xuexiaoxiangqing'
 import zuopinshangchuan from '@/pages/meow/zuopinshangchuan'
-import huodong from '@/pages/meow/huodong'
 Vue.use(Router)
 
 Router.prototype.goBack = function () {
@@ -181,10 +179,6 @@ const routeArray = [
     meta: { keepAlive: true }
   },
   //meow模块
-  { path: '/huodong',
-    name: 'huodong',
-    component: huodong
-  },
   { path: '/xiaoyouhui',
     name: 'xiaoyouhui',
     component: xiaoyouhui
@@ -236,10 +230,6 @@ const routeArray = [
   { path: '/pengyouquanxq',
     name: 'pengyouquanxq',
     component: pengyouquanxq
-  },
-  { path: '/miaomiaopaizhuan',
-    name: 'miaomiaopaizhuan',
-    component: miaomiaopaizhuan
   },
   { path: '/fbwd',
     name: 'fbwd',

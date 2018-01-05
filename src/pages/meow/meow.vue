@@ -4,166 +4,31 @@
     <div class="header">
       <div class="hd-cont">
         <ul>
-          <li @click="toUrl('meow')">喵喵圈</li>
-          <li @click="toUrl('miaomiaopaizhuan')">喵喵拍砖</li>
-          <li @click="toUrl('huodong')">活动</li>
+          <li class="tab miaomiao" @click="toggleTab(0)"ref="miaomiao">喵喵圈</li>
+          <li class="tab miaomiaopaizhuan " @click="toggleTab(1)"ref="miaomiaopaizhuan">喵喵拍砖</li>
+          <li class="tab huodong" @click="toggleTab(2)"ref="huodong">活动</li>
         </ul>
       </div>
     </div>
-    <!-- 板块-->
-    <div class="bankuai">
-      <ul>
-        <li @click="toUrl('shouchangmxt')">
-          <img src="../../../static/images/meow/01_miaoxuetang.png">
-          <div class="wenzhi"> 喵学堂</div>
-        </li>
-        <li @click="toUrl('shouchangweida')">
-          <img src="../../../static/images/meow/02_wenda.png">
-          <div class="wenzhi"> 问答</div>
-        </li>
-        <li @click="toUrl('shouchangjianli')">
-          <img src="../../../static/images/meow/03_rencai.png">
-          <div class="wenzhi"> 人才</div>
-        </li>
-        <li @click="toUrl('xiaoyouhui')">
-          <img src="../../../static/images/meow/04_xiaoyouhui.png">
-          <div class="wenzhi">校友会</div>
-        </li>
-      </ul>
-    </div>
-    <!--  喵喵列表-->
-    <div class="mm-list miao">
-      <div class="sjse-list"@click="toUrl('pengyouquanxq')">
-        <div class="sjs-top">
-          <div class="st-touxiang">
-            <img src="../../../static/images/bj.jpg"/>
-          </div>
-          <div class="st-neirong">
-            <div class="sn-top">
-              <div class="st-nicheng">设计师小a</div>
-              <div class="st-pingxin"></div>
-            </div>
-            <div class="sn-bottom">
-              <div class="sb-qian">签</div>
-              <div class="sb-ysm">已实名</div>
-              <div class="sb-yrz">已认证</div>
-            </div>
-          </div>
-          <div class="st-jiageleixin">
-            <div class="st-jiage">2017-10-19</div>
-          </div>
-        </div>
-        <div class="sjs-content">
-          <div class="sc-jiesao">
-            如果你无法简洁的表达你的想法，那只说明你还不够如果你无法简洁的表达你的想法，那只说明你还不够了解它,你需要去了解它。
-          </div>
-        </div>
-        <div class="sjs-bottom">
-          <ul>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-          </ul>
-        </div>
-        <div class="pinjia">
-          <p><span> <img src="../../../static/images/collect.png"/></span><span>100</span></p>
-          <p><span> <img src="../../../static/images/liulan.png"/></span><span>100</span></p>
-        </div>
-      </div>
-      <div class="sjse-list"@click="toUrl('pengyouquanxq')">
-        <div class="sjs-top">
-          <div class="st-touxiang">
-            <img src="../../../static/images/bj.jpg"/>
-          </div>
-          <div class="st-neirong">
-            <div class="sn-top">
-              <div class="st-nicheng">设计师小a</div>
-              <div class="st-pingxin"></div>
-            </div>
-            <div class="sn-bottom">
-              <div class="sb-qian">签</div>
-              <div class="sb-ysm">已实名</div>
-              <div class="sb-yrz">已认证</div>
-            </div>
-          </div>
-          <div class="st-jiageleixin">
-            <div class="st-jiage">2017-10-19</div>
-          </div>
-        </div>
-        <div class="sjs-content">
-          <div class="sc-jiesao">
-            如果你无法简洁的表达你的想法，那只说明你还不够如果你无法简洁的表达你的想法，那只说明你还不够了解它,你需要去了解它。
-          </div>
-        </div>
-        <div class="sjs-bottom">
-          <ul>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg"/>
-            </li>
-          </ul>
-        </div>
-        <div class="pinjia">
-          <p><span> <img src="../../../static/images/collect.png"/></span><span>100</span></p>
-          <p><span> <img src="../../../static/images/liulan.png"/></span><span>100</span></p>
-        </div>
-      </div>
-    </div>
+    <!--内容-->
+    <miaomiao :is="currentTab" keep-alive></miaomiao>
   </div>
 </template>
 
 <script>
+  // 引入子组件
+  import miaomiao from '../../components/meow/miaomiao';
+  import miaomiaopaizhuan from '../../components/meow/miaomiaopaizhuan';
+  import huodong from '../../components/meow/huodong';
   export default {
+    components: {  // 声明子组件
+      miaomiao,
+      miaomiaopaizhuan,
+      huodong
+    },
     data() {
       return {
-
+        currentTab: 'miaomiao'  // currentTab 用于标识当前触发的子组件
       }
     },
     mounted: function () {
@@ -175,6 +40,16 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      toggleTab: function(index) {
+        // tab 为当前触发标签页的组件名
+        if(index==0){
+          this.currentTab='miaomiao';
+        }else if(index==1){
+          this.currentTab='miaomiaopaizhuan';
+        }else if(index==2){
+          this.currentTab='huodong';
+        }
       },
       //tab选择
       miao(){
