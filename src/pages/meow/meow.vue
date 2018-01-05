@@ -2,7 +2,6 @@
   <div class="meow">
     <!--导航栏-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <div class="hd-cont">
         <ul>
           <li @click="toUrl('meow')">喵喵圈</li>
@@ -167,12 +166,21 @@
 
       }
     },
+    mounted: function () {
+      this.miao();
+    },
     methods: {
       goback () {
         this.$router.goBack()
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      //tab选择
+      miao(){
+      $(".hd-cont li").click(function(){
+          $(".hd-cont li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
+      });
       },
     }
   }
@@ -181,4 +189,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/css/meow/miaomiao.css';
+  .cur{
+    border-bottom: 1px solid #f65aa6;
+  }
 </style>

@@ -63,7 +63,7 @@
       <div class="lunpo">
         <swiper v-model="index" height="100%" :show-dots="false" class="swps">
           <swiper-item key="0">
-            <div class="alzs-list"@click="toUrl('anliexq')">
+            <div class="alzs-list"@click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
                   <img src="../../../static/images/bj.jpg" />
@@ -87,7 +87,7 @@
                 </div>
               </div>
             </div>
-            <div class="alzs-list"@click="toUrl('anliexq')">
+            <div class="alzs-list"@click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
                   <img src="../../../static/images/bj.jpg" />
@@ -113,7 +113,7 @@
             </div>
           </swiper-item>
           <swiper-item key="1">
-            <div class="alzs-list"@click="toUrl('anliexq')">
+            <div class="alzs-list"@click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
                   <img src="../../../static/images/bj.jpg" />
@@ -137,7 +137,7 @@
                 </div>
               </div>
             </div>
-            <div class="alzs-list"@click="toUrl('anliexq')">
+            <div class="alzs-list"@click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
                   <img src="../../../static/images/bj.jpg" />
@@ -163,7 +163,7 @@
             </div>
           </swiper-item>
           <swiper-item key="2">
-            <div class="alzs-list"@click="toUrl('anliexq')">
+            <div class="alzs-list"@click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
                   <img src="../../../static/images/bj.jpg" />
@@ -187,7 +187,7 @@
                 </div>
               </div>
             </div>
-            <div class="alzs-list"@click="toUrl('anliexq')">
+            <div class="alzs-list"@click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
                   <img src="../../../static/images/bj.jpg" />

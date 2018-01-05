@@ -17,14 +17,14 @@
             <input type="text"placeholder="名字" />
           </div>
         </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>手机号码</span>
-          </div>
-          <div class="qdtime-right">
-            <input type="text"placeholder="请输入手机号" />
-          </div>
-        </div>
+        <!--<div class="qdtime">-->
+          <!--<div class="qdtime-left">-->
+            <!--<span>手机号码</span>-->
+          <!--</div>-->
+          <!--<div class="qdtime-right">-->
+            <!--<input type="text"placeholder="请输入手机号" />-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="qdtime">
           <div class="qdtime-left">
             <span>身份证号码</span>
