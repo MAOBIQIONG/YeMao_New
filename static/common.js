@@ -256,7 +256,15 @@ common.op_localStorage = function() {
     var getStorage = function(){
         return storage
     }
-    return {set,get,remove,setArray,show,getStorage,clear}
+    return {
+        set:this.set,
+        get:this.get,
+        remove:tis.remove,
+        setArray:this.setArray,
+        show:this.show,
+        getStorage:this.getStorage,
+        clear:this.clear
+    }
 }
 
 export default common;
