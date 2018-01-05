@@ -12,8 +12,8 @@
             <tab-item class="vux-center" key="2">待交付</tab-item>
             <tab-item class="vux-center" key="3">已完成</tab-item>
         </tab>
-        <!-- <designers :is="'designers'" :value="searchValue"></designers> -->
-
+        <designers :is="'designers'" :value="searchValue"></designers>
+<!-- <div style="height:400px;background:red;margin-top:180px">{{massage}}</div> -->
   </div>
 </template>
 
@@ -35,7 +35,8 @@
         index: 0,
         myOrderList:{},
         pageNo:0,
-        pageSize:10
+        pageSize:10,
+        massage:'11111'
       }
     },
     created(){
@@ -54,6 +55,8 @@
             params
         },(response)=>{
             console.log(response);
+            console.log(response.message    );
+            _self.massage=response.msg;
         })
         console.log("myorderComponent created");
     },
@@ -86,7 +89,7 @@
       },
 
     setVueData(data){
-        
+
     }
 
     }
