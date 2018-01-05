@@ -1,6 +1,6 @@
 <template>
   <div class="header-box">
-    <x-header :left-options="{backText: '',preventGoBack:true}" @on-click-back="goback" :title="title"><a slot="right" :class="flag==0?right_class:right_hover_class" v-tap="{ methods:setHover }"></a></x-header>
+    <x-header :left-options="{backText: '',preventGoBack:true}" @on-click-back="goback" :title="title"><a slot="right" :class="collectFlag==0?right_class:right_hover_class" v-tap="{ methods:setHover }"></a></x-header>
   </div>
 </template>
 
@@ -20,14 +20,17 @@
       rightClass: String,
       collectFlag: Number
     },
+    activated: function () {
+      // console.log("2 activated:")
+    },
     created: function () {
-      this.flag = this.collectFlag;
+      // console.log("2 created:")
+      this.collectFlag = this.collectFlag;
       this.right_class = this.rightClass;
       this.right_hover_class = this.rightClass + ' hover';
     },
     data () {
       return {
-        flag: 0,
         right_class: '',
         right_hover_class: ''
       }
@@ -37,15 +40,9 @@
         this.$router.goBack()
       },
       setHover: function () {
-        if ( this.flag == 0 ) {
-          this.flag = 1;
-          // this.$emit('upup', '0')// 主动触发upup方法，'hehe'为向父组件传递的数据
-          // $ ('.tisi').html(' 收藏成功').show ().delay (1000).fadeOut ();
-        } else {
-          this.flag = 0;
-          // this.$emit('upup', '1')// 主动触发upup方法，'hehe'为向父组件传递的数据
-          // $ ('.tisi').html('取消收藏').show ().delay (1000).fadeOut ();
-        }
+        var _self = this;
+        var flag = _self.collectFlag == 0 ? 1 : 0;
+        _self.$emit('upup', flag)// 主动触发upup方法，'hehe'为向父组件传递的数据
       }
     }
   }

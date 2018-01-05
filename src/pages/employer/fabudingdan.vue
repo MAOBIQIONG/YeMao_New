@@ -165,6 +165,7 @@
           project_endTime:"",
           project_participants:0,
           project_winBidder:"",
+          project_state:0,
           imgs:[]
         },
         showMark:false,

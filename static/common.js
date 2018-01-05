@@ -163,6 +163,7 @@ const common = {
                   { "_id" : "5a4248b1160048792cd9d366", "type_name" : "审图", "img":"../../../static/images/index/c_shentu_13_03.png" }];
     return types;
   },
+
   getNameByTypeId(id){
     var name = "";
     var types = common.getProjectTypes();
@@ -175,7 +176,16 @@ const common = {
     return name;
   },
 
-  //
+  getProjectStateName(state) {
+    var name = '';
+    name = state==0 ? '抢单中' : state==1 ? '待完善' : state==2 ? '完善中' :
+      state==3 ? '待支付' : state==4 ? '代交付' : state==5 ? '交付中' :
+        state==6 ? '审核中' : state==7 ? '已完成' : state==8 ? '已结束' :
+          state==9 ? '已取消' :  '';
+    return name;
+  },
+
+  // 用户头像验证
   getAvatar(path,local){
     if( common.isNull(local) == true ){
       local = './static/images/bj.jpg';
@@ -215,7 +225,8 @@ const common = {
     competiteAnOrder:'competiteAnOrder',           // 抢单
     getHotSearch:'getHotSearch',                   // 获取热门搜索内容
     getDesigners:'getDesigners',                   // 设计师列表
-  }
+    collect:'collect',                             // 收藏
+  },
 
 }
 

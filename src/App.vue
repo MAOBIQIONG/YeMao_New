@@ -86,4 +86,8 @@
   *{
     margin:0;
   }
+  /**confirm**/
+  .weui-dialog__hd{
+    padding: 0rem 1.6rem !important;
+  }
 </style>
