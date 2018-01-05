@@ -12,7 +12,7 @@
             <tab-item class="vux-center" key="2">待交付</tab-item>
             <tab-item class="vux-center" key="3">已完成</tab-item>
         </tab>
-        <designers :is="'designers'" :value="searchValue"></designers>
+        <!-- <designers :is="'designers'" :value="searchValue"></designers> -->
 
   </div>
 </template>
@@ -33,7 +33,29 @@
     data() {
       return {
         index: 0,
+        myOrderList:{},
+        pageNo:0,
+        pageSize:10
       }
+    },
+    created(){
+        let _self = this;
+        let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
+        let user_id = user_info._id;
+        let params = {
+            interfaceId:common.interfaceIds.getOrderList,
+            user_id,
+            pageNo: _self.pageNo,
+            pageSize: _self.pageSize
+        }
+        console.log("user_id",user_id);
+        console.log("user_info",user_info);
+        this.$axios.post('/mongoApi',{
+            params
+        },(response)=>{
+            console.log(response);
+        })
+        console.log("myorderComponent created");
     },
     mounted: function () {
     },
@@ -61,7 +83,12 @@
                 console.log(3);
                 return "order"
           }
-      }
+      },
+
+    setVueData(data){
+        
+    }
+
     }
   }
 </script>
