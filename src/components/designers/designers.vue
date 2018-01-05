@@ -4,8 +4,8 @@
     <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
         <div class="content" style="margin-top: 0rem;padding-top: 0rem;">
-          <div class="sjs-list" v-for="item in designers" v-tap="{methods:toDetails, id:item._id}">
-            <div class="sjs-top">
+          <div class="sjs-list" v-for="item in designers">
+            <div class="sjs-top" v-tap="{methods:toDetails, id:item._id}">
               <div class="st-touxiang">
                 <img :src="checkAvatar(item.img)" />
               </div>
@@ -28,7 +28,7 @@
                 <div class="st-leixin"><span>{{getNameById(item.user_type)}}</span></div>
               </div>
             </div>
-            <div class="sjs-content">
+            <div class="sjs-content" v-tap="{methods:toDetails, id:item._id}">
               <div class="sc-jiesao">{{item.description}}</div>
             </div>
             <div class="sjs-bottom">
