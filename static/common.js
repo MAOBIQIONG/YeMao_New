@@ -257,13 +257,13 @@ common.op_localStorage = function() {
         return storage
     }
     return {
-        set:this.set,
-        get:this.get,
-        remove:this.remove,
-        setArray:this.setArray,
-        show:this.show,
-        getStorage:this.getStorage,
-        clear:this.clear
+        set:set,
+        get:get,
+        remove:remove,
+        setArray:setArray,
+        show:show,
+        getStorage:getStorage,
+        clear:clear
     }
 }
 

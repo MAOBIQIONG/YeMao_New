@@ -41,6 +41,7 @@
     },
     created(){
         let _self = this;
+        console.log(common.op_localStorage().get);
         let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
         let user_id = user_info._id;
         let params = {
