@@ -147,7 +147,7 @@ const common = {
 
   /*****************5、字典表数据转换*******************/
   //1、项目类型
-  getProjectTypes(){
+  getProjectTypes: function (){
     var types = [ { "_id" : "5a4248b1160048792cd9d35a", "type_name" : "策划设计", "img":"../../../static/images/index/c_cehua_01_03.png" },
                   { "_id" : "5a4248b1160048792cd9d35b", "type_name" : "规划设计", "img":"../../../static/images/index/c_guihua_02_03.png" },
                   { "_id" : "5a4248b1160048792cd9d35c", "type_name" : "建筑设计", "img":"../../../static/images/index/c_jianzhu_03_03.png" },
@@ -164,7 +164,7 @@ const common = {
     return types;
   },
 
-  getNameByTypeId(id){
+  getNameByTypeId: function (id){
     var name = "";
     var types = common.getProjectTypes();
     var i=0,len=types.length;
@@ -176,7 +176,7 @@ const common = {
     return name;
   },
 
-  getProjectStateName(state) {
+  getProjectStateName: function (state) {
     var name = '';
     name = state==0 ? '抢单中' : state==1 ? '待完善' : state==2 ? '完善中' :
       state==3 ? '待支付' : state==4 ? '代交付' : state==5 ? '交付中' :
@@ -186,7 +186,7 @@ const common = {
   },
 
   // 用户头像验证
-  getAvatar(path,local){
+  getAvatar: function (path,local){
     if( common.isNull(local) == true ){
       local = './static/images/bj.jpg';
     }
