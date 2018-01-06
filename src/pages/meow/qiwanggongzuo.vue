@@ -84,6 +84,23 @@
           }
         })
       },
+      // 地区
+      logHide (str) {
+        var obj = this;
+        console.log('on-hide', str)
+        if( str == true ){
+          console.log('value', obj.value3)
+          if( obj.value3[0] == '110000' || obj.value3[0] == '120000' ||
+            obj.value3[0] == '310000' || obj.value3[0] == '500000' ){
+            obj.value3[1] = '--';
+          }else{
+            obj.value3[0] = '--';
+          }
+        }
+      },
+      logShow (str) {
+        console.log('on-show',str)
+      },
     }
   }
 </script>
