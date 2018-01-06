@@ -12,23 +12,27 @@
             <tab-item class="vux-center" key="2">待交付</tab-item>
             <tab-item class="vux-center" key="3">已完成</tab-item>
         </tab>
-        <designers :is="'designers'" :value="searchValue"></designers>
+        <component :is="getCurrentView" ></component>
+        <!-- <div>
+            {{getCurrentView}}
+        </div> -->
+        
  
   </div>
 </template>
 
 <script>
   import {Tab, TabItem, Swiper, SwiperItem} from 'vux'
-  import designers from '../../components/designers/designers.vue'
-  import orders from '../../components/index/orders.vue'
+  import MyOrder from '../../components/MyOrder.vue'
+  import Designer from '../../components/designers/designers.vue'
   export default {
     components: {
       Tab,
       TabItem,
       Swiper,
       SwiperItem,
-      designers,
-      orders
+      MyOrder,
+      Designer
     },
     data() {
       return {
@@ -36,7 +40,8 @@
         myOrderList:{},
         pageNo:0,
         pageSize:10,
-        orderList:[]
+        orderList:[],
+        currentView:''
       }
     },
     created(){
@@ -52,22 +57,19 @@
       toUrl(name) {
         this.$router.push({name: name});
       },
-      switchList(){
-          switch(this.index) {
-            case 0:
-                console.log(0);
-                return "order";
-            case 1:
-                console.log(1);
-                return "order";
-            case 2:
-                console.log(2);
-                return "order"
-            case 3:
-                console.log(3);
-                return "order"
-          }
-      },
+        getCurrentView(){
+            console.log(this.index);
+            switch(this.index){
+                case 0:
+                    return "MyOrder";
+                case 1:
+                    return "Designer";
+                case 2:
+                    return "MyOrder";
+                case 3:
+                    return "Designer";
+            }
+        },
 
     setData(data){
         this.orderList = data;
