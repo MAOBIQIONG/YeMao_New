@@ -13,7 +13,7 @@
             <tab-item class="vux-center" key="3">已完成</tab-item>
         </tab>
         <designers :is="'designers'" :value="searchValue"></designers>
-<!-- <div style="height:400px;background:red;margin-top:180px">{{massage}}</div> -->
+ 
   </div>
 </template>
 
@@ -36,32 +36,12 @@
         myOrderList:{},
         pageNo:0,
         pageSize:10,
-        massage:'11111'
+        orderList:[]
       }
     },
     created(){
-        let _self = this;
-        console.log(common.op_localStorage().get);
-        let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
-        let user_id = user_info._id;
-        let params = {
-            interfaceId:common.interfaceIds.getOrderList,
-            user_id,
-            pageNo: _self.pageNo,
-            pageSize: _self.pageSize
-        }
-        console.log("user_id",user_id);
-        console.log("user_info",user_info);
-        this.$axios.post('/mongoApi',{
-            params
-        },(response)=>{
-            console.log(response);
-            console.log(response.message    );
-            _self.massage=response.msg;
-        })
+        this.initData();
         console.log("myorderComponent created");
-    },
-    mounted: function () {
     },
     methods: {
       goback() {
@@ -89,9 +69,32 @@
           }
       },
 
-    setVueData(data){
-
-    }
+    setData(data){
+        this.orderList = data;
+    },
+    initData(){
+        let _self = this;
+        let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
+        let user_id = user_info._id;
+        let params = {
+            interfaceId:common.interfaceIds.getOrderList,
+            user_id,
+            pageNo: _self.pageNo,
+            pageSize: _self.pageSize
+        }
+        // console.log("user_id",user_id);
+        // console.log("user_info",user_info);
+        this.$axios.post('/mongoApi',{
+            params
+        },(response)=>{
+            console.log("+++++++++++++");
+            console.log(response);
+            console.log("=============");
+            _self.setData(response.data.orderList)
+            console.log("-------------");
+            
+        })
+    },
 
     }
   }
@@ -108,17 +111,20 @@
 <!--</style>-->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .header{
+      position:static;
+  }
   .content{
     background: #F2F2F2;
     margin-top: 0.8rem;
   }
   .tabs{
     width: 100%;
-    position: fixed;
+    /* position: fixed;
     top: 0.88rem;
-    left: 0;
+    left: 0; */
     background: white;
-    z-index: 99999;
+    z-index: 999;
   }
   .swps{
     margin-top: 1.74rem;
