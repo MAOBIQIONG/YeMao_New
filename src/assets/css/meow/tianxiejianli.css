@@ -38,7 +38,17 @@
   outline: medium;
   text-align: right;
 }
-
+ .xmlx-kuang{
+  /*width: 2.9rem;*/
+  height: 0.8rem;
+  border: none;
+  display: block;
+  border: none;
+  font-size: 0.28rem;
+  color: #999999;
+  background: white;
+  outline: medium;
+}
 .content .ys-time .qdtime:last-child {
   border: none;
 }
@@ -62,5 +72,11 @@
   outline: medium;
   resize: none;
 }
-
+.content .pc-shuru .xianzhi {
+  position: absolute;
+  font-size: 0.24rem;
+  background: white;
+  right: 0.1rem;
+  bottom: 0.1rem;
+}
 /*# sourceMappingURL=tianxiejianli.css.map */

@@ -51,7 +51,7 @@
             <span>抢单截止日期</span>
           </div>
           <div class="qdtime-right">
-              <datetime v-model="subParams.project_deadLine"></datetime>
+              <datetime v-model="subParams.project_deadLine"class="shijian"></datetime>
           </div>
         </div>
       </div>
@@ -317,13 +317,14 @@
   }
   .weui-cell_access {
     padding:0 !important;
-    width: 2.9rem;
+    /*width: 1.8rem;*/
     height: 0.8rem;
     display:inline-block!important;
   }
   .weui-cell_access .weui-cell__ft{
     position: static !important;
     line-height: 0.8rem;
+    padding-right: 0 !important;
   }
   .vux-cell-value{
     color: #999999;
@@ -348,7 +349,7 @@
 <style scoped>
   @import '../../assets/css/employer/fabudingdan.css';
   .shijian{
-    width: 1.8rem;
+    width: 1.6rem;
   }
   .demo5-item-selected {
     background: #f65aa6;

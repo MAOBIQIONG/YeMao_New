@@ -4,7 +4,7 @@
     <div class="header">
       <div class="hd-cont">
         <ul>
-          <li class="tab miaomiao" @click="toggleTab(0)"ref="miaomiao">喵喵圈</li>
+          <li class="tab miaomiao cur" @click="toggleTab(0)"ref="miaomiao">喵喵圈</li>
           <li class="tab miaomiaopaizhuan " @click="toggleTab(1)"ref="miaomiaopaizhuan">喵喵拍砖</li>
           <li class="tab huodong" @click="toggleTab(2)"ref="huodong">活动</li>
         </ul>

@@ -22,7 +22,9 @@
             <span>选择学校地区</span>
           </div>
           <div class="qdtime-right">
-
+            <group class="xmlx-kuang">
+              <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="subParams.project_region"></x-address>
+            </group>
           </div>
         </div>
       </div>
@@ -35,10 +37,18 @@
 </template>
 
 <script>
+  import { XAddress, ChinaAddressV4Data,Group,} from 'vux'
   export default {
+    components: {
+      XAddress,
+      Group,
+    },
     data: function () {
       return {
-
+        addressData: ChinaAddressV4Data,
+        subParams:{
+          project_region:['上海市'],
+        },
       }
     },
     methods: {

@@ -30,13 +30,14 @@
             <span>在职时间</span>
           </div>
           <div class="qdtime-right">
-            <input type="text"placeholder="在职时间" />
+            <span><datetime v-model="value2" class="shijian"></datetime></span> / <span><datetime v-model="value4"class="shijian"></datetime></span>
           </div>
         </div>
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea class="area" placeholder="工作内容"></textarea>
+        <textarea class="area" maxlength="300" placeholder="请输入问题描述"></textarea>
+        <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
       </div>
       <div class="tjgzjl">
         删除此工作经历
@@ -46,11 +47,19 @@
 </template>
 
 <script>
+  import {Datetime,} from 'vux'
   export default {
+    components: {
+      Datetime,
+    },
     data: function () {
       return {
-
+        value2: '2015-10-12',
+        value4: '2025-10-12',
       }
+    },
+    mounted: function () {
+      this. wzxz()
     },
     methods: {
       goback () {
@@ -59,9 +68,26 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
+      //留言字数限制
+      wzxz(){
+        $(".area").bind("input propertychange",function(){
+          var curlength=$(".area").val().length;
+          if(curlength>300){
+            var num=$(".area").val().substr(0,300);
+            $('.area').val(num);
+            alert("您输入的字数已超出");
+          }
+          else{
+            $(".zs").text(300-$(".area").val().length)
+          }
+        })
+      },
     }
   }
 </script>
 <style scoped>
   @import '../../assets/css/meow/bianjigongzuojinli.css';
+  .shijian{
+    width: 1.6rem;
+  }
 </style>
