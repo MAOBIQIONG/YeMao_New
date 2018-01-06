@@ -2,10 +2,10 @@
   <div class="huodong">
     <!--活动列表-->
     <div class="content">
-      <div class="hd-list">
+      <div class="hd-list"@click="toUrl('haibao')">
         <img src="../../../static/images/bj.jpg">
       </div>
-      <div class="hd-list">
+      <div class="hd-list"@click="toUrl('haibao')">
         <img src="../../../static/images/bj.jpg">
       </div>
     </div>

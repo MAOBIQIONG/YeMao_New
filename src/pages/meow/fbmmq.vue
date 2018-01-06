@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
-      <span>发表文字</span>
+      <span>发表动态</span>
       <div class="header-right">发布</div>
     </div>
     <div class="set-content">

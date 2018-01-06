@@ -87,6 +87,8 @@ import wzxq from '@/pages/meow/wzxq'
 import xiaoyouhui from '@/pages/meow/xiaoyouhui'
 import xuexiaoxiangqing from '@/pages/meow/xuexiaoxiangqing'
 import zuopinshangchuan from '@/pages/meow/zuopinshangchuan'
+import haibao from '@/pages/meow/haibao'
+import haibaoxq from '@/pages/meow/haibaoxq'
 Vue.use(Router)
 
 Router.prototype.goBack = function () {
@@ -179,6 +181,14 @@ const routeArray = [
     meta: { keepAlive: true }
   },
   //meow模块
+  { path: '/haibao',
+    name: 'haibao',
+    component: haibao
+  },
+  { path: '/haibaoxq',
+    name: 'haibaoxq',
+    component: haibaoxq
+  },
   { path: '/xiaoyouhui',
     name: 'xiaoyouhui',
     component: xiaoyouhui

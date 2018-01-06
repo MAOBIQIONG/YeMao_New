@@ -24,7 +24,7 @@
 
 .jl-list .jianli .jieshao {
   float: left;
-  width: 5.5rem;
+  width: 5.3rem;
   height: 2rem;
   border-bottom: 1px solid #F2F2F2;
   font-size: 0.28rem;
@@ -47,6 +47,10 @@
 .jl-list .jianli .jieshao .xinge {
   font-size: 0.24rem;
   color: #d6d2d6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=shouchang-jianli.css.map */

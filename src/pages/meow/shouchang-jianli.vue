@@ -15,7 +15,7 @@
         <div class="jieshao">
           <p class="name"><span>王思靓</span>/<span>助理设计师</span></p>
           <p class="qiwan"><span>朝阳区</span>&nbsp;<span>3</span>年工作经验&nbsp;<span>本科</span>&nbsp;<span>8K-10K</span></p>
-          <p class="xinge">温和、顽强、高品位的法归设计师</p>
+          <p class="xinge">温和、顽强、高品位的法归设计师温和、顽强、高品位的法归设计师</p>
         </div>
       </div>
       <div class="jianli"@click="toUrl('minejianli')">

@@ -7,8 +7,8 @@
 
 .content .piaoti {
   width: 7.1rem;
-  height: 1rem;
   font-size: 0.36rem;
+  padding-top: 0.1rem;
   margin: auto;
   line-height: 0.5rem;
 }
@@ -59,22 +59,22 @@
 
 .content .neirongshijian .bottom .bottom-zan {
   width: 2rem;
-  height: 0.8rem;
-  line-height: 0.8rem;
+  height: 0.7rem;
+  line-height: 0.7rem;
   text-align: center;
   background: #bbbbbb;
-  border-radius: 0.8rem;
+  border-radius: 0.7rem;
   float: left;
   margin-left: 1.1rem;
 }
 
 .content .neirongshijian .bottom .bottom-zan span {
-  margin: 0.1rem;
+  margin: 0 0.1rem;
+  margin-top: -0.1rem;
 }
 
 .content .neirongshijian .bottom .bottom-zan span img {
-  width:0.6rem;
-  height: 0.6rem;
+  width:0.5rem;
   display: inline-block;
   vertical-align: middle;
 }
@@ -82,10 +82,10 @@
 .content .neirongshijian .bottom .bottom-sz {
   width: 2rem;
   text-align: center;
-  height: 0.8rem;
-  line-height: 0.8rem;
+  height: 0.7rem;
+  line-height: 0.7rem;
   background: #bbbbbb;
-  border-radius: 0.8rem;
+  border-radius: 0.7rem;
   float: right;
   margin-right: 1.1rem;
 }
@@ -95,8 +95,8 @@
 }
 
 .content .neirongshijian .bottom .bottom-sz span img {
-  width:0.6rem;
-  height: 0.6rem;
+  width:0.5rem;
+  height: 0.5rem;
   display: inline-block;
   vertical-align: middle;
 }
@@ -146,6 +146,7 @@
 .pinglun .pinlunlist {
   width: 7.1rem;
   margin: 0.2rem;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .pinglun .pinlunlist .top-pinlun {
@@ -199,8 +200,8 @@
 
 .pinglun .pinlunlist .bottom {
   font-size: 0.28rem;
-  height: 0.4rem;
-  line-height: 0.4rem;
+  height: 0.6rem;
+  line-height: 0.6rem;
 }
 
 .pinglun .pinlunlist .bottom .left-bt {

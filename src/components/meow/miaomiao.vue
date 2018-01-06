@@ -23,9 +23,9 @@
     </div>
     <!--  喵喵列表-->
     <div class="mm-list miao">
-      <div class="sjse-list"@click="toUrl('pengyouquanxq')">
+      <div class="sjse-list"@click.stop="toUrl('pengyouquanxq')">
         <div class="sjs-top">
-          <div class="st-touxiang">
+          <div class="st-touxiang"@click.stop="toUrl('sjszxxq')">
             <img src="../../../static/images/bj.jpg"/>
           </div>
           <div class="st-neirong">
@@ -50,40 +50,43 @@
         </div>
         <div class="sjs-bottom">
           <ul>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
-            <li>
+            <li @click.stop="toUrl('emporderimgs')">
 
             </li>
           </ul>
         </div>
         <div class="pinjia">
-          <p><span> <img src="../../../static/images/collect.png"/></span><span>100</span></p>
+          <p class="dz"@click.stop="dianzan()"><span>100</span></p>
           <p><span> <img src="../../../static/images/liulan.png"/></span><span>100</span></p>
         </div>
       </div>
+    </div>
+    <div class="tianjia"@click="toUrl('fbmmq')">
+
     </div>
   </div>
 </template>
@@ -111,6 +114,20 @@
           $(".hd-cont li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
       });
       },
+      //      点赞效果
+      dianzan(){
+        var lr=true
+        $(".dz").click(function(){
+          if(lr==true){
+            $(".dz").addClass("dzh");
+            lr=false
+          }else if(lr==false){
+            $(".dz").removeClass("dzh");
+            lr=true
+          }
+
+        });
+      },
     }
   }
 </script>
@@ -129,6 +146,38 @@
     margin: 0.05rem;
     overflow: hidden;
     background: url("../../../static/images/bj.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  .dz{
+    height: 0.9rem;
+    line-height: 0.9;
+    display: inline-block;
+    background: url("../../../static/images/collect.png") no-repeat;
+    background-size: 0.4rem 0.4rem;
+    background-position-y:0.25rem;
+  }
+  .dzh{
+    height: 0.9rem;
+    line-height: 0.9;
+    display: inline-block;
+    background: url("../../../static/images/collect-hover.png") no-repeat;
+    background-size: 0.4rem 0.4rem;
+    background-position-y:0.25rem;
+  }
+  .dz span{
+    padding-left: 0.5rem;
+  }
+  .tianjia{
+    position: fixed;
+    width:1rem;
+    height: 1rem;
+    bottom: 1.3rem;
+    right: 0.2rem;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    background: url("../../../static/images/employer/j.png");
+    background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
   }

@@ -62,5 +62,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/shouchang-mxt.css';
+  @import '../../assets/css/meow/shouchang-wenda.css';
 </style>

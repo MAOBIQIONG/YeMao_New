@@ -3,12 +3,14 @@
 	width: 7.5rem;
 	font-size: 0.28rem;
   margin-top:1rem;
+  background-color: #f2f2f2;
 	color: #666666;
 }
 
 .weida-list .weida {
-	width: 7.2rem;
-	margin: 0 0.15rem;
+	padding: 0 0.15rem;
+  background: white;
+  margin-bottom: 0.1rem;
 }
 
 .weida-list .weida .wd-top {
@@ -39,7 +41,7 @@
 
 .weida-list .weida .tupian {
 	width: 7.2rem;
-	height: 2.6rem;
+	height: 3rem;
 	background: #CCCCCC;
 	margin-bottom: 0.2rem;
 	overflow: hidden;
