@@ -49,6 +49,7 @@
 .fx img{
   margin-left: 0;
   margin-bottom: 0.05rem;
+  margin-top: 0;
 }
 .content{
   position: fixed;
