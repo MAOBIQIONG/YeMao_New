@@ -304,4 +304,4 @@ const uploadImg ={
 
 }
 
-export default common;
+export default uploadImg;
