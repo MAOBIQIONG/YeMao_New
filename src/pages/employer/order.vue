@@ -57,16 +57,16 @@
               <span><img src="../../../static/images/employer/06.png"/></span><span>地区：</span>
             </div>
             <div class="box-right">
-              <span>{{getCityName(order.project_region)}}</span>
+              <span>{{order.project_region}}</span>
             </div>
           </div>
         </div>
         <div class="ddxq-bottom">
           <div class="biaoqi">订单详情</div>
           <div class="neirong">
-            <span>{{order.project_describe}}</span>
+            <span ref="project_describe">{{getMaxlen(order.project_describe)}}</span>
           </div>
-          <div class="chakangengduo">点击查看更多</div>
+          <div class="chakangengduo" v-tap="{methods:viewMoreFun}">{{viewText}}</div>
         </div>
       </div>
       <!--抢单列表设计师-->
@@ -151,7 +151,6 @@
         cover: {
           backgroundImage: 'url(' + require('../../../static/images/bj.jpg') + ')'
         },
-
         order_id: null,
         user_id: null,
         isInit: false,
@@ -160,7 +159,8 @@
         order: {},
         bidders: [],
         imgSize: 0,
-
+        viewMore:false,
+        viewText:'点击查看更多',
         showMark:false,
         showMsg:"",
         show: false,
@@ -182,7 +182,6 @@
       _self.order_id = _self.$route.query.id;
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.user_id = _self.userInfo._id || null;
-      _self.zhishu();
       _self.initData();
     },
     methods: {
@@ -231,13 +230,6 @@
           this.$router.push({name: 'orderqiangdan', query: {id: this.order_id}});
         }
       },
-      getCityName(region){
-        var name = "";
-        if( region && region.length > 0 ){
-          name = region[0];
-        }
-        return name;
-      },
       // 时间戳转字符串
       getStringDate(date,id){
         return common.timeStamp2String(date,id)
@@ -260,34 +252,22 @@
       },
 
       // 订单详情字数限制
-      zhishu () {
-       var neirong = $(".neirong").text();
-          $(".neirong").each(function() {
-            var maxwidth = 80;
-            if($(this).text().length > maxwidth) {
-              $(this).text($(this).text().substring(0, maxwidth));
-              $(this).html($(this).html() + '...');
-            }
-          });
-        //点击查看更多
-        var flag = true
-        $('.ddxq-bottom .chakangengduo').click(function() {
-          if(flag == true) {
-            $(this).html('点击查看更多')
-            $(".neirong").each(function() {
-             let maxwidth = 80;
-              if($(this).text().length > maxwidth) {
-                $(this).text($(this).text().substring(0, maxwidth));
-                $(this).html($(this).html() + '...');
-              }
-            });
-            flag = false;
-          } else {
-            $(this).html('收起')
-            $(".neirong").html(neirong)
-            flag = true;
-          }
-        });
+      getMaxlen(text){
+        var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
+        var num = common.getMaxlenInlineNum(width,fontSize,lines);
+        if( text && text.length > num ){
+          text = text.substring(0,num-2) + '...';
+        }
+        return text;
+      },
+
+      // 订单详情查看\收起
+      viewMoreFun () {
+        var _self = this;
+        _self.viewMore = _self.viewMore==false ? true : false;
+        _self.viewText = _self.viewMore==false ? '点击查看更多' : '收起';
+        var desc = _self.viewMore==false ? _self.getMaxlen(_self.order.project_describe) : _self.order.project_describe;
+        _self.$refs.project_describe.innerHTML = desc;
       },
       // 项目深度
       collectFun(flag){
