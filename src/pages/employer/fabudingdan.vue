@@ -176,16 +176,23 @@
     },
     created: function () {
       console.log("fbdd created:")
+      // 用户信息
       this.userInfo = common.getObjStorage("userInfo");
       this.subParams.user_id = this.userInfo._id;
-
+      // 初始化日期
       var timeStamp = common.getCurrentTimeStamp();
       var dateStr = common.timeStamp2String(timeStamp,"ymd");
       this.subParams.project_deadLine=dateStr;
       this.subParams.project_startTime=dateStr;
       this.subParams.project_endTime=dateStr;
-
+      // 项目类型
       this.typeList = common.getProjectTypes();
+
+      window.alert("deviceready:")
+      document.addEventListener("deviceready", function(){
+        window.alert("ready:")
+        console.log(navigator.camera);
+      }, false);
     },
     methods: {
       goback(){
