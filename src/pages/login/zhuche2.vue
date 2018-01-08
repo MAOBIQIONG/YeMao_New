@@ -154,23 +154,31 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
             // id:"",
             // create_date:"创建时间",
             user_name:user_name,
-            real_name:null,
-            password:null,
+            real_name:"",
+            password:"123456",
             phone:phone,
-            gender:null,
-            birthday:null,
-            img:null,
-            user_type:null,
+            gender:"",
+            birthday:"",
+            img:"",
+            user_type:"",
             working_years:0,
             composite_score:0,
             authenticating_state:0,
             hourly_wage:0,
-            description:null
+            description:"",
+            real_name:"",
+            id_number:"",
+            school_name:"",
+            certificate_name:"",
+            city:"",
+            email:"",
+            orders_number:0,
+            working_hours:0,
           }
           console.log("data:"+JSON.stringify(data))
           let params= {};
           params.data = data;
-          params.data.password = _self.param.password;
+          // params.data.password = _self.param.password;
 
           params.interfaceId = common.interfaceIds.insertData;
           params.coll= "users";

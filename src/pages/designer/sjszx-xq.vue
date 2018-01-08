@@ -9,54 +9,46 @@
       <div class="xinximokuai">
         <div class="ximk-top">
           <div class="touxiang">
-            <img src="../../../static/images/bj.jpg" />
+            <img :src="checkAvatar(user.img)" />
           </div>
           <div class="xiright">
             <div class="nicheng">
-              <span class="name">设计师小A</span><span class="leixin">建筑设计</span>
+              <span class="name">{{user.user_name}}</span><span class="leixin">{{getNameById(user.user_type)}}</span>
             </div>
             <div class="nianxian">
-              <span class="nian">7</span>年 &nbsp;<span class="xuexiao">上海交通大学</span><span class="pinxin">☆ ☆ ☆ ☆</span>
+              <span class="nian">{{user.working_years}}</span>年 &nbsp;<span class="xuexiao">{{user.school_name}}</span>
             </div>
             <div class="zhicheng">
-              <div class="zc">高级工程师</div>
-              <div class="sb-qian">签</div>
-              <div class="sb-ysm">已实名</div>
-              <div class="sb-yrz">已认证</div>
+              <span class="zc">{{user.certificate_name}}</span>&nbsp;&nbsp;
+              <!--<span class="pinxin">☆ ☆ ☆ ☆</span>-->
+              <rater v-model="user.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
             </div>
           </div>
         </div>
-        <div class="nenrong">
-          已有年多建筑设计工作经验，从建筑方案到效果图，在到建筑施工图都可独立完成
-        </div>
+        <div class="nenrong">{{user.description}}</div>
         <div class="danshu">
           <ul>
             <li>
-              <p class="shumu">162</p>
+              <p class="shumu">{{user.orders_number}}</p>
               <p>接单数</p>
             </li>
             <li>
-              <p class="shumu">162</p>
+              <p class="shumu">{{user.working_hours}}</p>
               <p>总工时</p>
             </li>
             <li>
-              <p class="shumu">162</p>
+              <p class="shumu">{{user.hourly_wage}}</p>
               <p>时薪</p>
             </li>
           </ul>
-        </div>
-        <div class="scsjs">
-          收藏设计师
-        </div>
-        <div class="xiaoxi">
-          <img src="../../../static/images/designer/xiangqing_liaotian.png" />
         </div>
       </div>
       <!--日历选取-->
       <div class="rili">
         <inline-calendar
           ref="calendar"
-          class="inline-calendar-demo">
+          class="inline-calendar-demo"
+          :disable-date-function="disableDateFunction">
         </inline-calendar>
       </div>
       <!--滑动轮播-->
@@ -68,166 +60,75 @@
         </tab>
       </div>
       <div class="lunpo">
-        <swiper v-model="index" height="100%" :show-dots="false" class="swps">
+        <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
-            <div class="alzs-list"@click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in cases" @click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
-                  <img src="../../../static/images/bj.jpg" />
+                  <img :src="getDefultImg(item.cover)" />
                 </div>
                 <div class="al-right">
-                  <div class="ar-top">
-                    案列名称
-                  </div>
-                  <div class="nenrong">
-                    案例简介如果你无法简洁的表达你的想法，那只
-                  </div>
+                  <div class="ar-top">{{item.title}}</div>
+                  <div class="nenrong">{{item.description}}</div>
                 </div>
               </div>
               <div class="al-bottom">
                 <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>33</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>44</span></p>
+                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
-                <div class="al-right">
-                  2017-12-26
-                </div>
-              </div>
-            </div>
-            <div class="alzs-list"@click="toUrl('anlielist')">
-              <div class="al-top">
-                <div class="touxiang">
-                  <img src="../../../static/images/bj.jpg" />
-                </div>
-                <div class="al-right">
-                  <div class="ar-top">
-                    案列名称
-                  </div>
-                  <div class="nenrong">
-                    案例简介如果你无法简洁的表达你的想法，那只
-                  </div>
-                </div>
-              </div>
-              <div class="al-bottom">
-                <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>33</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>44</span></p>
-                </div>
-                <div class="al-right">
-                  2017-12-26
-                </div>
+                <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
           </swiper-item>
           <swiper-item key="1">
-            <div class="alzs-list"@click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in honors" @click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
-                  <img src="../../../static/images/bj.jpg" />
+                  <img :src="getDefultImg(item.cover)" />
                 </div>
                 <div class="al-right">
-                  <div class="ar-top">
-                    案列名称
-                  </div>
-                  <div class="nenrong">
-                    案例简介如果你无法简洁的表达你的想法，那只
-                  </div>
+                  <div class="ar-top">{{item.title}}</div>
+                  <div class="nenrong">{{item.description}}</div>
                 </div>
               </div>
               <div class="al-bottom">
                 <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>33</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>44</span></p>
+                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
-                <div class="al-right">
-                  2017-12-26
-                </div>
-              </div>
-            </div>
-            <div class="alzs-list"@click="toUrl('anlielist')">
-              <div class="al-top">
-                <div class="touxiang">
-                  <img src="../../../static/images/bj.jpg" />
-                </div>
-                <div class="al-right">
-                  <div class="ar-top">
-                    案列名称
-                  </div>
-                  <div class="nenrong">
-                    案例简介如果你无法简洁的表达你的想法，那只
-                  </div>
-                </div>
-              </div>
-              <div class="al-bottom">
-                <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>33</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>44</span></p>
-                </div>
-                <div class="al-right">
-                  2017-12-26
-                </div>
+                <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
           </swiper-item>
           <swiper-item key="2">
-            <div class="alzs-list"@click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in works" @click="toUrl('anlielist')">
               <div class="al-top">
                 <div class="touxiang">
-                  <img src="../../../static/images/bj.jpg" />
+                  <img :src="getDefultImg(item.cover)" />
                 </div>
                 <div class="al-right">
-                  <div class="ar-top">
-                    案列名称
-                  </div>
-                  <div class="nenrong">
-                    案例简介如果你无法简洁的表达你的想法，那只
-                  </div>
+                  <div class="ar-top">{{item.title}}</div>
+                  <div class="nenrong">{{item.description}}</div>
                 </div>
               </div>
               <div class="al-bottom">
                 <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>33</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>44</span></p>
+                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
-                <div class="al-right">
-                  2017-12-26
-                </div>
-              </div>
-            </div>
-            <div class="alzs-list"@click="toUrl('anlielist')">
-              <div class="al-top">
-                <div class="touxiang">
-                  <img src="../../../static/images/bj.jpg" />
-                </div>
-                <div class="al-right">
-                  <div class="ar-top">
-                    案列名称
-                  </div>
-                  <div class="nenrong">
-                    案例简介如果你无法简洁的表达你的想法，那只
-                  </div>
-                </div>
-              </div>
-              <div class="al-bottom">
-                <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>33</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>44</span></p>
-                </div>
-                <div class="al-right">
-                  2017-12-26
-                </div>
+                <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
           </swiper-item>
         </swiper>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {Tab, TabItem, Swiper, SwiperItem, InlineCalendar,} from 'vux'
+  import {Tab, TabItem, Swiper, SwiperItem, InlineCalendar, Rater } from 'vux'
   export default {
     components: {
       InlineCalendar,
@@ -235,18 +136,23 @@
       TabItem,
       Swiper,
       SwiperItem,
+      Rater
     },
     data () {
       return {
         index: 0,
+        user:{},
+        loadMark:1,
+        cases: [],
+        honors: [],
+        works: []
       }
     },
-    activated: function () {
-      console.log("sjszxxq activated:")
-    },
     created: function () {
-      console.log("sjszxxq created:")
-      console.log("id:"+this.$route.query.id);
+      console.log("created:")
+      var _self = this;
+      _self.user_id = this.$route.query.id;
+      _self.initData();
     },
     methods: {
       goback(){
@@ -254,6 +160,94 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      // 项目类型名称
+      getNameById (id) {
+        return common.getNameByTypeId(id)
+      },
+      // 头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      // 默认图片
+      getDefultImg (path) {
+        return common.getAvatar(path,'./static/images/bj.jpg')
+      },
+      // 时间戳转字符串
+      getStringDate(date,id){
+        return common.timeStamp2String(date,id)
+      },
+      /*******************************************************/
+      // 日历
+      disableDateFunction (date) {
+        // console.log("date:"+date)
+        if (date.formatedDate === '2017-12-28') {
+          return true
+        }
+      },
+
+      // swiper
+      onIndexChange (index) {
+        console.log("index:"+index)
+        var _self = this;
+        if( index == _self.loadMark ){
+          console.log("getChw:")
+          _self.getChw();
+        }
+      },
+
+      /*************************************************/
+      // 初始化首页
+      initData () {
+        var _self = this;
+        if( common.isNull(_self.user_id) ){
+          return;
+        }
+        var params = {
+          interfaceId: common.interfaceIds.prsonalCenter,
+          user_id: _self.user_id
+        }
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          // console.log(response);
+          var data = response.data
+          if ( data ) {
+            _self.user = data.user || {};
+            _self.cases = data.cases || [];
+          }
+        })
+      },
+
+      // 获取personalChw:
+      getChw () {
+        var _self = this;
+        if( common.isNull(_self.user_id) ){
+          return;
+        }
+        var params = {
+          interfaceId: common.interfaceIds.getPersonalChw,
+          pageNo:0,
+          pageSize:3,
+          where:{
+            user_id: _self.user_id,
+            type: _self.loadMark
+          }
+        }
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          console.log(response);
+          var data = response.data
+          if ( data ) {
+            if( _self.loadMark == 1 ){
+              _self.honors = data.chws;
+            }else if( _self.loadMark == 2 ){
+              _self.works = data.chws;
+            }
+            _self.loadMark++;
+          }
+        })
       },
     }
   }
@@ -269,7 +263,7 @@
     margin-top: 0.6rem !important;
   }
   .swps{
-    height:13rem !important;
+    height:8rem !important;
     overflow:auto !important;
   }
 </style>

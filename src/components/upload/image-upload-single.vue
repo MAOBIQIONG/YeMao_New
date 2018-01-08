@@ -18,12 +18,12 @@
   export default {
     data () {
       return {
-        // base64Data:'',
+        base64Data:'',
         picValue:''
       }
     },
     props:{
-      base64Data:String,
+      // base64Data:String,
     },
     mounted () {
     },
@@ -69,6 +69,8 @@
         }
       },
       postImg () {
+        let _self = this;
+        _self.$emit('upup', _self.base64Data)
         //这里写接口
       },
       rotateImg (img, direction,canvas) {
