@@ -9,6 +9,7 @@ import $ from '../static/jquery-3.2.1.min'
 // import axios from 'axios'
 import store from './vuex/store'
 import common from '../static/common.js'
+import uploadImg from '../static/uploadImg.js'
 // 引用API文件
 import api from './api/api.js'
 // 全局引入iconfont.css
@@ -27,6 +28,7 @@ Vue.component(Group.name, Group)
 window.jQuery = $
 window.$ = $
 window.common = common
+window.uploadImg = uploadImg
 
 router.beforeEach(function (to, from, next) {
   // 如果isBack为true时，证明是用户点击了回退，执行slide-right动画

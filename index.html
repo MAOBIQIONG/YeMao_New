@@ -19,8 +19,7 @@
   <script>
     // 扩展API加载完毕，现在可以正常调用扩展API
     function onPlusReady() {
-      window.alert('plusready');
-      common.setStorage('plusready',true);
+      // 监听返回键
     }
     // 扩展API加载完毕后调用onPlusReady回调函数
     document.addEventListener( "plusready", onPlusReady, false );

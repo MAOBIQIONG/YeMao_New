@@ -199,8 +199,7 @@
       triggerFile(){
         console.log("trigger:")
         // document.getElementById("img-upload").click();
-        var cmr = plus.camera.getCamera();
-        alert( "Camera supperted image resolutions: " + cmr.supportedImageResolutions );
+        uploadImg.init();
       },
       /**************************************/
       showToast(msg){
