@@ -40,10 +40,17 @@
 
 .liebiao .list .list-right {
 	float: right;
-	width: 0.8rem;
+	width: 2rem;
 	height: 0.8rem;
 	text-align: right;
 	margin-right: 0.3rem;
+  background: url("/static/images/jiangou.png") center right no-repeat;
+  background-size: .3rem .3rem;
+}
+
+.liebiao .list .list-right span {
+  padding-right: .35rem;
+  color: #666;
 }
 
 .liebiao .list .list-right img {

@@ -24,7 +24,7 @@
         </div>
         <div class="xmlx-right">
           <group class="xmlx-kuang">
-            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="subParams.project_region"></x-address>
+            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
           </group>
         </div>
       </div>
@@ -129,7 +129,7 @@
 
 <script>
   import imageUpload from '../../components/upload/image-upload.vue'
-  import { XAddress, ChinaAddressV4Data, Datetime, Group, Checker, CheckerItem, Toast } from 'vux'
+  import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast } from 'vux'
   import store from '@/vuex/store'
 
   export default {
@@ -149,10 +149,11 @@
         imgList:[],
         isShow:true,
         typeList:[],
+        city:['上海市'],
         subParams:{
           user_id:"",
           project_type:"",
-          project_region:['上海市'],
+          project_region:"上海市",
           project_title:"",
           project_describe:"",
           project_budget:"",
@@ -194,17 +195,22 @@
         this.$router.push({name: pagename})
       },
       // 地区
+      getName (value) {
+        return value2name(value, ChinaAddressV4Data)
+      },
       logHide (str) {
-        var obj = this;
+        var _self = this;
         console.log('on-hide', str)
         if( str == true ){
-          console.log('value', obj.subParams.project_region)
-          if( obj.subParams.project_region[0] == '110000' || obj.subParams.project_region[0] == '120000' ||
-            obj.subParams.project_region[0] == '310000' || obj.subParams.project_region[0] == '500000' ){
-            obj.subParams.project_region[1] = '--';
+          if( _self.city[0] == '110000' || _self.city[0] == '120000' ||
+            _self.city[0] == '310000' || _self.city[0] == '500000' ){
+            _self.city[1] = '--';
           }else{
-            obj.subParams.project_region[0] = '--';
+            _self.city[0] = '--';
           }
+          var city = _self.getName(_self.city);
+          _self.subParams.project_region = city.trim();
+          // console.log('project_region', _self.subParams.project_region)
         }
       },
       logShow (str) {
@@ -237,11 +243,9 @@
           _self.showToast("请选择项目类型!");
           return
         }
-        if( _self.subParams.project_region.length < 2 ){
+        if( common.isNull(_self.subParams.project_region) == true ){
           _self.showToast("请选择项目地区!");
           return
-        }else{
-
         }
         if( common.isNull(_self.subParams.project_title) == true ){
           _self.showToast("请输入项目标题!");

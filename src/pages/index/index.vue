@@ -7,7 +7,7 @@
         <!--地区选择-->
         <div class="crity">
           <group>
-            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="value3"></x-address>
+            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="value"></x-address>
           </group>
         </div>
         <div class="id-xiaoxi" v-tap="{ methods:toUrl , pagename:'message' }">
@@ -153,8 +153,9 @@
 </template>
 
 <script>
-  import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data} from 'vux'
+  import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name} from 'vux'
   import store from '@/vuex/store'
+  import common from "../../../static/common";
 
   export default {
     components: {
@@ -177,7 +178,8 @@
         sortMark: 0,
         znpxMark: false,
         addressData: ChinaAddressV4Data,
-        value3: ['上海市'],
+        value: ['上海市'],
+        city: '上海市',
 
         pageNo: 0,
         pageSize: 10,
@@ -286,17 +288,26 @@
         this.imgIndex = index
       },
       // 地区
+      getName (value) {
+        return value2name(value, ChinaAddressV4Data)
+      },
       logHide (str) {
-        var obj = this
+        var _self = this
         console.log('on-hide', str)
         if ( str == true ) {
-          console.log('value', obj.value3)
-          if (obj.value3[0] == '110000' || obj.value3[0] == '120000' ||
-            obj.value3[0] == '310000' || obj.value3[0] == '500000') {
-            obj.value3[1] = '--'
+          console.log('value', _self.value)
+          if (_self.value[0] == '110000' || _self.value[0] == '120000' ||
+            _self.value[0] == '310000' || _self.value[0] == '500000') {
+            _self.value[1] = '--'
           } else {
-            obj.value3[0] = '--'
+            _self.value[0] = '--'
           }
+          var city = _self.getName(_self.value);
+          _self.city = city.trim();
+          // console.log('city', _self.city)
+          // 按城市查询订单
+          _self.pageNo = 0;
+          _self.loadMore();
         }
       },
       logShow (str) {
@@ -349,10 +360,15 @@
         var params = {
           interfaceId: common.interfaceIds.getOrderList,
           pageNo: _self.pageNo,
-          pageSize: _self.pageSize
+          pageSize: _self.pageSize,
+          where:{}
         }
         // 排序
         params.sort = _self.sortMark==1?{project_participants:-1}:{create_date:-1};
+        // 条件
+        if( !common.isNull(_self.city) ){
+          params.where.project_region = _self.city;
+        }
         //上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;

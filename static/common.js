@@ -1,14 +1,14 @@
 var root = 'http://47.100.34.193:3000/';
 const common = {
-  /*****************1、验证(返回值:boolean)*******************/
+  /*****************1.0、验证(返回值:boolean)*******************/
   /**
-   *1.1、判断对象是否是字符串
+   *1.0.1、判断对象是否是字符串
    * */
   isString:function (obj){
     return Object.prototype.toString.call(obj) === "[object String]";
   },
 
-  //1.2、验证是否为空：
+  //1.0.2、验证是否为空：
   isNull:function (str){
     if( str=="" || str=="null" || str == null || str == undefined || str == "undefined" ){
       return true;
@@ -16,25 +16,68 @@ const common = {
   },
 
   /*****************1.1、验证(返回值:对应类型)*******************/
-  //1.1、验证是否为空：返回String
+  //1.1.1、验证是否为空：返回String
   checkNull:function (str){
     if( str=="" || str=="null" || str == null || str == undefined || str == "undefined" ){
       return "";
     } return str;
   },
 
-  //1.2、验证是否为int：返回int
+  //1.1.2、验证是否为int：返回int
   checkInt:function (str){
     if( str=="" || str=="null" || str == null || str == undefined || str == "undefined" ){
       return 0;
     } return parseInt(str);
   },
 
-  //1.3、验证是否为Float：返回Float
+  //1.1.3、验证是否为Float：返回Float
   checkFloat:function (str){
     if(str==""||str=="null"||str==null||!checkNum(str)||str==undefined){
       return 0;
     } return parseFloat(str);
+  },
+
+  /*****************1.2、验证(返回值:对应类型)*******************/
+  // 1.2.1、验证身份证号码
+  checkIdNumber: function(idNo){
+    var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    if(!regIdNo.test(idNo)){
+      return false;
+    } return true;
+  },
+
+
+  //1.1.2、验证是否为汉字：
+  isChn:function (str) {
+    var reg = /^[\u4E00-\u9FA5]+$/;
+    if (!reg.test(str)) {
+      return false;
+    } return true;
+  },
+
+  /**
+   * 1.1.3、注册验证
+   * */
+  checkReg:function (val,index){
+    var reg;
+    switch(index){
+      case 0:
+        reg = /^[A-Za-z0-9]{5,20}$/;//字母、数字、5-25（账号）
+        break;
+      case 1:
+        reg = /^[A-Za-z0-9]{6,16}$/;//字母、数字、6-16（密码）
+        break;
+      case 2:
+        reg = /^[\u4E00-\u9FA5A-Za-z]{2,10}$/;//中英文、2-5（真实姓名）
+        break;
+      case 3:
+        reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;//email
+        break;
+      case 4:
+        reg = /^1[34578]\d{9}$/;//手机号码
+        break;
+    }
+    return reg.test(val);
   },
 
   /*****************2、localStorage*******************/
@@ -144,6 +187,19 @@ const common = {
       this.addClass(ele, cls)
     }
   },
+  //14、计算行内文字最大个数
+  /**
+   * 计算行内文字个数 =（屏幕宽度-（行宽+内外边框））/ 文字尺码
+   * param：
+   * 1、width：行宽+内外边框
+   * 2、size：文字尺码
+   * 3、lines：行数
+   * */
+  getMaxlenInlineNum:function (width,size,lines) {
+    var maxWith = 7.5; // 最大宽度7.5rem
+    var num = (maxWith-width)/size;
+    return common.isNull(lines) ? Math.floor(num) : Math.floor(num)*lines;
+  },
 
   /*****************5、字典表数据转换*******************/
   //1、项目类型
@@ -192,7 +248,7 @@ const common = {
     }
     if( common.isNull(path) == true ){
       path = local;
-    }else if( path.indexOf("http") < 0 ) {
+    }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0  ) {
       path = root + path;
     }
     return path;
@@ -206,7 +262,9 @@ const common = {
     orderList:'orderList',                         // 订单列表
     orderParts:'orderParts',                       // 订单参与人
     collects:'collects',                           // 收藏
-    projectTypes:'projectTypes'                    // 项目类型(字典表)
+    projectTypes:'projectTypes',                   // 项目类型(字典表)
+    userCertificates:'userCertificates',           // 用户证件图片
+    personalChw:'',                                // 案例展示、个人荣誉、我的作品(personalChw:personal、Case, honor, work)
   },
 
   // 接口
@@ -226,6 +284,10 @@ const common = {
     getHotSearch:'getHotSearch',                   // 获取热门搜索内容
     getDesigners:'getDesigners',                   // 设计师列表
     collect:'collect',                             // 收藏
+    setCertification:'setCertification',           // 认证
+    getCertification:'getCertification',           // 查询认证
+    getPersonalChw:'getPersonalChw',               // 获取personalChw
+    prsonalCenter:'prsonalCenter',                 // 个人中心
   },
 
 }

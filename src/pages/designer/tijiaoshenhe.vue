@@ -2,9 +2,9 @@
   <div >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>平台认证</span>
-      <div class="header-right">完成</div>
+      <div class="header-right" v-tap="{methods:goback}">完成</div>
     </div>
     <div class="content">
       <!--流程-->
@@ -35,7 +35,7 @@
     },
     methods: {
       goback(){
-        this.$router.goBack();
+        this.$router.go(-3);
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
