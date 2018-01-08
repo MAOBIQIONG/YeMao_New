@@ -187,12 +187,6 @@
       this.subParams.project_endTime=dateStr;
       // 项目类型
       this.typeList = common.getProjectTypes();
-
-      window.alert("deviceready:")
-      document.addEventListener("deviceready", function(){
-        window.alert("ready:")
-        console.log(navigator.camera);
-      }, false);
     },
     methods: {
       goback(){
@@ -200,6 +194,16 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      //上传图片
+      triggerFile(){
+        console.log("trigger:")
+        document.getElementById("img-upload").click();
+      },
+      /**************************************/
+      showToast(msg){
+        this.showMark = true;
+        this.showMsg = msg;
       },
       // 地区
       getName (value) {
@@ -223,18 +227,7 @@
       logShow (str) {
         console.log('on-show',str)
       },
-
-      /**************************************/
-      showToast(msg){
-        this.showMark = true;
-        this.showMsg = msg;
-      },
-      //上传图片
-      triggerFile(){
-        console.log("trigger:")
-        document.getElementById("img-upload").click();
-      },
-
+      // 设计深度
       onChange(val){
         console.log("onChange："+val)
       },

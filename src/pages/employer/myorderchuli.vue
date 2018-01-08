@@ -1,18 +1,21 @@
 <template>
-  <div class="">
+  <div class="myorder-employer">
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
       <span>我的订单</span>
-      <div class="header-right"@click="toUrl('fabudingdan')"><img src="../../../static/images/employer/jiahao.png"></div>
+      <div class="header-right" @click="toUrl('fabudingdan')"><img src="../../../static/images/employer/jiahao.png"></div>
     </div>
     <!--tab选项卡-->
         <tab :line-width=2 active-color='#fc378c' v-model="index" class="tabs">
-            <tab-item class="vux-center" key="0">待处理</tab-item>
-            <tab-item class="vux-center" key="1">待支付</tab-item>
-            <tab-item class="vux-center" key="2">待交付</tab-item>
-            <tab-item class="vux-center" key="3">已完成</tab-item>
+            <tab-item 
+                v-for="item in tabItems" 
+                :key="item.id"
+                @on-item-click="changeList"
+            >
+                {{item.title}}
+            </tab-item>
         </tab>
-        <component :is="getCurrentView" ></component>
+        <component :is="currentView" ></component>
         <!-- <div>
             {{getCurrentView}}
         </div> -->
@@ -22,17 +25,19 @@
 </template>
 
 <script>
-  import {Tab, TabItem, Swiper, SwiperItem} from 'vux'
-  import MyOrder from '../../components/MyOrder.vue'
-  import Designer from '../../components/designers/designers.vue'
+  import {Tab, TabItem} from 'vux'
+  import MyOrder_dcl from '../../components/employer/myorder_dcl'
+  import MyOrder_dzf from '../../components/employer/myorder_dzf'
+  import MyOrder_djf from '../../components/employer/myorder_djf'
+  import MyOrder_ywc from '../../components/employer/myorder_ywc'
   export default {
     components: {
       Tab,
       TabItem,
-      Swiper,
-      SwiperItem,
-      MyOrder,
-      Designer
+      MyOrder_dcl,
+      MyOrder_dzf,
+      MyOrder_djf,
+      MyOrder_ywc
     },
     data() {
       return {
@@ -41,11 +46,17 @@
         pageNo:0,
         pageSize:10,
         orderList:[],
-        currentView:''
+        currentView:'MyOrder_dcl',
+        tabItems:[
+            {id:0,title:'待处理'},
+            {id:1,title:'待支付'},
+            {id:2,title:'待交付'},
+            {id:3,title:'已完成'},
+        ],
+        viewArray:['MyOrder_dcl','MyOrder_dzf','MyOrder_djf','MyOrder_ywc']
       }
     },
     created(){
-        this.initData();
         console.log("myorderComponent created");
     },
     methods: {
@@ -57,46 +68,35 @@
       toUrl(name) {
         this.$router.push({name: name});
       },
-        getCurrentView(){
-            console.log(this.index);
-            switch(this.index){
-                case 0:
-                    return "MyOrder";
-                case 1:
-                    return "Designer";
-                case 2:
-                    return "MyOrder";
-                case 3:
-                    return "Designer";
-            }
-        },
 
     setData(data){
         this.orderList = data;
     },
-    initData(){
-        let _self = this;
-        let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
-        let user_id = user_info._id;
-        let params = {
-            interfaceId:common.interfaceIds.getOrderList,
-            user_id,
-            pageNo: _self.pageNo,
-            pageSize: _self.pageSize
-        }
-        // console.log("user_id",user_id);
-        // console.log("user_info",user_info);
-        this.$axios.post('/mongoApi',{
-            params
-        },(response)=>{
-            console.log("+++++++++++++");
-            console.log(response);
-            console.log("=============");
-            _self.setData(response.data.orderList)
-            console.log("-------------");
-            
-        })
-    },
+    // initData(){
+    //     let _self = this;
+    //     let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
+    //     let user_id = user_info._id;
+    //     let params = {
+    //         interfaceId:common.interfaceIds.getOrderList,
+    //         user_id,
+    //         pageNo: _self.pageNo,
+    //         pageSize: _self.pageSize
+    //     }
+    //     // console.log("user_id",user_id);
+    //     // console.log("user_info",user_info);
+    //     this.$axios.post('/mongoApi',{
+    //         params
+    //     },(response)=>{
+    //         console.log("+++++++++++++");
+    //         console.log(response);
+    //         console.log("=============");
+    //         _self.setData(response.data.orderList)
+    //         console.log("-------------");   
+    //     })
+    // },
+    changeList(){
+        this.currentView = this.viewArray[this.index]
+    }
 
     }
   }
@@ -113,6 +113,9 @@
 <!--</style>-->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .myorder-employer{
+    font-size:16px;
+  }
   .header{
       position:static;
   }
