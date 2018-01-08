@@ -115,5 +115,4 @@
 </script>
 <style scoped>
   @import '../../assets/css/meow/wzxq.css';
-  @import '../../assets/css/meow/dianzan.css';
 </style>
