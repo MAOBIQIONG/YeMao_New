@@ -198,7 +198,9 @@
       //上传图片
       triggerFile(){
         console.log("trigger:")
-        document.getElementById("img-upload").click();
+        // document.getElementById("img-upload").click();
+        var cmr = plus.camera.getCamera();
+        alert( "Camera supperted image resolutions: " + cmr.supportedImageResolutions );
       },
       /**************************************/
       showToast(msg){
