@@ -122,7 +122,7 @@
           var praise_txt = $("#praise-txt");
           var num=parseInt(praise_txt.text());
           if(praise_img.attr("src") == ("../../../static/images/zan.png")){
-            $(this).html("<img src='../../../static/images/zan1.png' id='praise-img' class='animation' />");
+            $(this).html("<img src='../../../static/images/zan1.png' id='praise-img' class='animation'style='width: 0.4rem'/>");
             praise_txt.removeClass("hover");
             text_box.show().html("<em class='add-animation'>-1</em>");
             $(".add-animation").removeClass("hover");
