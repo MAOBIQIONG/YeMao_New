@@ -24,7 +24,7 @@
         <p>根据12321网络不良与垃圾信息举报受理中心(www.12321.cn)接到网民举报的短信、邮件、网站等信息，2017年8月，被举报最多的是假冒苹果公司的钓鱼诈骗网站，举报量达192件次，比7月份增加了3.1%。排名第二的是假冒奔跑吧兄弟的钓鱼诈骗网站，比7月份增加了264.3%。</p>
         <div class="bottom">
           <div class="bottom-zan">
-            <span><img src="../../../static/images/zan.png"/></span><span>100</span>
+            <span><img src="../../../static/images/zan1.png"/></span><span>100</span>
           </div>
           <div class="bottom-sz">
             <span><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
@@ -115,4 +115,5 @@
 </script>
 <style scoped>
   @import '../../assets/css/meow/wzxq.css';
+  @import '../../assets/css/meow/dianzan.css';
 </style>

@@ -33,33 +33,12 @@
         </div>
         <div class="sjs-bottom sjs-bottom1">
           <ul>
-            <li>
-
+            <li v-for="(item, index) in list"@click.stop="show(index)">
+              <img class="previewer-demo-img":src="item.src"width="100%">
             </li>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
-            <li>
-
-            </li>
+            <div v-transfer-dom>
+              <previewer :list="list" ref="previewer" :options="options"></previewer>
+            </div>
           </ul>
         </div>
         <div class="pinjia">
@@ -105,10 +84,62 @@
 </template>
 
 <script>
+  import { Previewer, TransferDom } from 'vux'
   export default {
+    directives: {
+      TransferDom
+    },
+    components: {
+      Previewer
+    },
     data: function () {
       return {
-
+        list:[
+          {
+            src: 'https://ooo.0o0.ooo/2017/05/17/591c271ab71b1.jpg',
+            w: 1200,
+            h: 700,
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/05/17/591c271acea7c.jpg'
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+          },
+          {
+            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+          },
+        ],
+        options: {
+          getThumbBoundsFn(index) {
+            // find thumbnail element
+            let thumbnail = document.querySelectorAll('.previewer-demo-img')[index]
+            // get window scroll Y
+            let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
+            // optionally get horizontal scroll
+            // get position of element relative to viewport
+            let rect = thumbnail.getBoundingClientRect()
+            // w = width
+            return {x: rect.left, y: rect.top + pageYScroll, w: rect.width}
+            // Good guide on how to get element coordinates:
+            // http://javascript.info/tutorial/coordinates
+          }
+        }
       }
     },
     mounted: function () {
@@ -120,6 +151,9 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      show (index) {
+        this.$refs.previewer.show(index)
       },
 //      点赞效果
       dianzan(){
@@ -146,9 +180,12 @@
     background: #CCCCCC;
     margin: 0.05rem;
     overflow: hidden;
-    background: url("../../../static/images/bj.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
+    /*background: url("../../../static/images/bj.jpg");*/
+    /*background-position: center center;*/
+    /*background-repeat: no-repeat;*/
+  }
+  .sjs-bottom ul li img{
+    height: 100%;
   }
   .sc-jieshao1{
     width: 7rem;

@@ -132,7 +132,7 @@
           </div>
           个人作品
         </div>
-        <div class="fanhui">
+        <div class="fanhui"@click="toUrl('gerenzuoping')">
           <img src="../../../static/images/youhui.png" />
         </div>
         <div class="gzzp-content">
@@ -167,12 +167,28 @@
 
       }
     },
+    mounted: function () {
+      this.dianzan();
+    },
     methods: {
       goback(){
         this.$router.goBack();
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      // 收藏效果
+      dianzan(){
+        var lr=true
+        $(".header-right").click(function(){
+          if(lr==true){
+            $(".header-right").addClass("hr-hover");
+            lr=false
+          }else if(lr==false){
+            $(".header-right").removeClass("hr-hover");
+            lr=true
+          }
+        });
       },
     }
   }
