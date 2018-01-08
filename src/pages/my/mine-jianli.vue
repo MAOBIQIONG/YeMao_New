@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>人才详情</span>
-      <div class="header-right">编辑</div>
+      <div class="header-right"></div>
     </div>
     <div class="content">
       <!--基本信息-->
@@ -181,4 +181,19 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/css/my/mine-jianli.css';
+  .header-right{
+    width: 0.88rem;
+    height: 0.88rem;
+    background: url("../../../static/images/xin.png") no-repeat;
+    background-size: 0.6rem 0.6rem;
+    background-position: center right;
+
+  }
+  .hr-hover{
+    width: 0.88rem;
+    height: 0.88rem;
+    background: url("../../../static/images/xinghove.png") no-repeat;
+    background-size: 0.6rem 0.6rem;
+    background-position: center right;
+  }
 </style>
