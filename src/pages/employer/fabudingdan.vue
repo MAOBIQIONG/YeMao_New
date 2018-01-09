@@ -198,8 +198,12 @@
       //上传图片
       triggerFile(){
         console.log("trigger:")
-        // document.getElementById("img-upload").click();
-        uploadImg.init();
+        var _self = this;
+        uploadImg.init({
+          callback:function (path) {
+            _self.imgList.push(path);
+          }
+        });
       },
       /**************************************/
       showToast(msg){
