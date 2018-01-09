@@ -19,8 +19,6 @@
         <!-- <div>
             {{getCurrentView}}
         </div> -->
-        
- 
   </div>
 </template>
 
@@ -29,7 +27,7 @@
   import MyOrder_dcl from '../../components/employer/myorder_dcl'
   import MyOrder_dzf from '../../components/employer/myorder_dzf'
   import MyOrder_djf from '../../components/employer/myorder_djf'
-  import MyOrder_ywc from '../../components/employer/myorder_ywc'
+  import MyOrder_ywc from '../../componen ts/employer/myorder_ywc'
   export default {
     components: {
       Tab,
@@ -51,7 +49,7 @@
             {id:0,title:'待处理'},
             {id:1,title:'待支付'},
             {id:2,title:'待交付'},
-            {id:3,title:'已完成'},
+            {id:3,title:'已完成'}, 
         ],
         viewArray:['MyOrder_dcl','MyOrder_dzf','MyOrder_djf','MyOrder_ywc']
       }
@@ -72,28 +70,6 @@
     setData(data){
         this.orderList = data;
     },
-    // initData(){
-    //     let _self = this;
-    //     let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
-    //     let user_id = user_info._id;
-    //     let params = {
-    //         interfaceId:common.interfaceIds.getOrderList,
-    //         user_id,
-    //         pageNo: _self.pageNo,
-    //         pageSize: _self.pageSize
-    //     }
-    //     // console.log("user_id",user_id);
-    //     // console.log("user_info",user_info);
-    //     this.$axios.post('/mongoApi',{
-    //         params
-    //     },(response)=>{
-    //         console.log("+++++++++++++");
-    //         console.log(response);
-    //         console.log("=============");
-    //         _self.setData(response.data.orderList)
-    //         console.log("-------------");   
-    //     })
-    // },
     changeList(){
         this.currentView = this.viewArray[this.index]
     }
@@ -136,4 +112,15 @@
     height:14rem !important;
     overflow:auto !important;
   }
+</style>
+
+<style>
+.xs-plugin-pullup-container{
+    line-height:60px!important;
+    font-size:14px;
+}
+.xs-plugin-pulldown-container{
+    font-size:14px;
+    margin-top:-0.21rem;
+}
 </style>

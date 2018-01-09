@@ -106,8 +106,15 @@
   export default {
     data () {
       return {
-
+          order_id:null
       }
+    },
+    created(){
+      var _self = this;
+      _self.order_id = _self.$route.query.id;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
+      _self.user_id = _self.userInfo._id || null;
+      _self.initData();
     },
     mounted: function () {
       this.zhishu();
@@ -148,6 +155,18 @@
             flag = true;
           }
         });
+      },
+      //数据初始化
+      initData(){
+        let _self = this;
+        if( common.isNull(_self.order_id) == true ){
+          return;
+        }
+        var params = {
+            interfaceId:common.interfaceIds.getProjectDetail,
+            order_id:_self.order_id,
+            user_id:_self.user_id
+        }
       }
     }
   }

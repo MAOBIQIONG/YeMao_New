@@ -18,19 +18,19 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toUrl('daichulixq')">
+                <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
-                        <img src="../../../static/images/bj.jpg">
+                        <img src=item.imgs[0]>
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
-                        已有多年建筑设计工作经验{{item._id}}
+                            {{item.project_describe}}
                         </div>
                         <div class="jianjie-bottom">
                             <div class="db-leixin">
-                                <span>建筑设计</span> <span class="yuan">￥</span><span class="yuan">50000</span>
+                                <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <div class="db-djs">7天后截止报名</div>
+                            <div class="db-djs">{{item.project_deadLine | dateDiff}}</div>
                         </div>
                     </div>
                 </div>
@@ -38,15 +38,16 @@
                     <div class="db-right">
                         <div class="db-qxdd">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
-                        <div class="db-qrdd">确认订单</div>
+                        <div class="db-qrdd">选择设计师</div>
                     </div>
                 </div>
             </div>
             <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
-
     </scroller>
-
+    <!-- <div class="noOrder">
+        您还没有相关订单
+    </div> -->
 
   </div>
 </template>
@@ -60,7 +61,7 @@ export default {
     },
     created(){
         console.log('created');
-        setTimeout(()=>{this.loadData()},1);
+        this.loadData();
     },
     mounted(){
         console.log('mounted');
@@ -68,7 +69,7 @@ export default {
             ()=>{
                 this.$refs.scroller.disablePullup();
                 this.$refs.scroller.reset({top:0});
-                this.dealDom();
+                // this.dealDom();
             }
         );
         
@@ -84,7 +85,7 @@ export default {
         },
         height:{
             type:String,
-            default:"-96"
+            default:"-90"
         }
     },
     data(){
@@ -92,7 +93,7 @@ export default {
             orderList: [],
             pagination: {
                 pageNo: 0,
-                pageSize: 3
+                pageSize: 6
             },
             pullUpDownStatus: {
                 pulldownStatus: 'default',
@@ -141,10 +142,38 @@ export default {
             }
         }
     },
+    filters:{
+        dateDiff(date){
+            let today = `${new Date().getUTCFullYear()}-${new Date().getUTCMonth()+1}-${new Date().getUTCDate()}`
+            //计算天数差的函数，通用  
+            let DateDiff=function(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式  
+                var  aDate,  oDate1,  oDate2,  iDays  
+                aDate  =  sDate1.split("-")  
+                oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式  
+                aDate  =  sDate2.split("-")  
+                oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])  
+                iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)
+                if (iDays == 0) return '抢单结束'    //把相差的毫秒数转换为天数  
+                return  iDays + "天后截止报名"  
+            }
+            return DateDiff(date,today);
+        },
+        designType(id){
+            for (let item of common.getProjectTypes()){
+                if (id == item._id) {
+                    return item.type_name
+                }
+            }
+        }
+    },
     methods:{
         toUrl: function (params) {
-            // this.$router.push({name: params.pagename})
+            this.$router.push({name: params})
             console.log("toUrl",params);
+        },
+         // 详情页
+        toDetails (id) {
+            this.$router.push({name: 'daichulixq', query: {id: id}})
         },
         dealDom(){         
             let scroller = $('div[id^="vux-scroller-"]');
@@ -166,11 +195,14 @@ export default {
             let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
             let user_id = user_info._id;
             let params = {
-                interfaceId:common.interfaceIds.getOrderList,
-                user_id,
+                interfaceId:common.interfaceIds.getOrderList,        
                 pageNo: _self.pagination.pageNo,
                 pageSize: _self.pagination.pageSize
-            }
+            };
+            params.where = {
+                user_id,
+                project_state:{$lt :3, $gte : 0}
+            };
             // console.log("user_id",user_id);
             // console.log("user_info",user_info);
             this.$axios.post('/mongoApi',{
@@ -178,10 +210,9 @@ export default {
             },(response)=>{
                 let data = response.data;
                 _self.setData(data);
-                console.log("+++++++++++++");
-                console.log(response);
-                console.log("=============");
-                console.log("-------------");   
+                // console.log("+++++++++++++");
+                // console.log(response);
+                // console.log("=============");
             })
         },
         setData(data){
@@ -214,18 +245,13 @@ export default {
             _self.pagination.pageNo = 0;
             _self.hasMore = true;
             _self.loadMoreStatus.show=false;
-            _self.$refs.scroller.enablePullup();
             _self.$refs.scroller.donePullup();   
-            setTimeout(()=>{
-                _self.loadData();
-                },1000);  
+            _self.loadData();
         },
         //上拉加载
         loadMore(){
             let _self = this;
-            setTimeout(()=>{
-                _self.loadData()
-                },1000);  
+            _self.loadData();
         },
         scroll(position){
             // console.log("on-scroll",position);
@@ -247,16 +273,4 @@ export default {
     }
 }
 </script>
-<style>
-.xs-plugin-pullup-container{
-    line-height:60px!important;
-}
-/* .loadMore{
-    border:2px solid rgb(120, 120, 190);
-    height:60px;
-} */
-/* .scroller{
-    border:2px solid red;
-} */
-</style>
 
