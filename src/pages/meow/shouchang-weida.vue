@@ -52,7 +52,6 @@
           <span>100</span>赞同 · <span>100</span>评论
         </div>
       </div>
-
     </div>
   </div>
 </template>

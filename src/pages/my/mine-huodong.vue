@@ -8,10 +8,26 @@
     <!--活动列表-->
     <div class="content">
       <div class="hd-list"@click="toUrl('haibao')">
-        <img src="../../../static/images/bj.jpg">
+        <div class="hd-top">
+          <img src="../../../static/images/bj.jpg">
+          <div class="hd-top-title">
+            <p>已结束</p>
+          </div>
+        </div>
+        <div class="hd-bottom">
+          <div class="hb-title">室内设计</div>
+        </div>
       </div>
       <div class="hd-list"@click="toUrl('haibao')">
-        <img src="../../../static/images/bj.jpg">
+        <div class="hd-top">
+          <img src="../../../static/images/bj.jpg">
+          <div class="hd-top-title">
+            <p>已结束</p>
+          </div>
+        </div>
+        <div class="hd-bottom">
+          <div class="hb-title">室内设计</div>
+        </div>
       </div>
     </div>
   </div>

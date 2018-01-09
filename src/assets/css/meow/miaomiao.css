@@ -41,8 +41,8 @@
   height: 100%;
   left: 0;
   top: 0;
-  font-size: 0.28rem;
-  color: #bbbbbb;
+  font-size: 0.32rem;
+  color: #ffffff;
   text-align: center;
   line-height: 1.4rem;
 }
@@ -198,7 +198,7 @@
 /*}*/
 
 .mm-list .sjse-list .pinjia {
-  display: block;
+  display:inline-block;
 	width: 100%;
 	height: 0.9rem;
 	font-size: 0.28rem;
