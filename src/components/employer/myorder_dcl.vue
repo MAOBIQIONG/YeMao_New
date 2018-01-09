@@ -20,7 +20,7 @@
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
-                        <img src=item.imgs[0]>
+                        <img src=item.imgs[0] v-if="item.imgs.length>0">
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -60,11 +60,11 @@ export default {
         LoadMore
     },
     created(){
-        console.log('created');
+        // console.log('created');
         this.loadData();
     },
     mounted(){
-        console.log('mounted');
+        // console.log('mounted');
         this.$nextTick(
             ()=>{
                 this.$refs.scroller.disablePullup();
@@ -190,7 +190,7 @@ export default {
         //获取数据
         loadData(){      
             let _self = this;
-            console.log(_self.pagination.pageNo,_self.pagination.pageSize);
+            // console.log(_self.pagination.pageNo,_self.pagination.pageSize);
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
             let user_id = user_info._id;

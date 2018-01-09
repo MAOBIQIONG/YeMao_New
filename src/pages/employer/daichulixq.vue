@@ -106,7 +106,13 @@
   export default {
     data () {
       return {
-          order_id:null
+          order_id:null,
+          user_id:null,
+          userInfo:null,
+          order:{},
+          hasBidder:false,
+          bidders:[],
+          imgSize
       }
     },
     created(){
@@ -115,6 +121,7 @@
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.user_id = _self.userInfo._id || null;
       _self.initData();
+      console.log(_self.userInfo);
     },
     mounted: function () {
       this.zhishu();
@@ -157,17 +164,42 @@
         });
       },
       //数据初始化
-      initData(){
-        let _self = this;
-        if( common.isNull(_self.order_id) == true ){
-          return;
+        initData(){
+            let _self = this;
+            if( common.isNull(_self.order_id) == true ){
+            return;
+            }
+            var params = {
+                interfaceId:common.interfaceIds.getProjectDetail,
+                order_id:_self.order_id,
+                user_id:_self.user_id
+            }
+            _self.$axios.post('/mongoApi', {
+                    params: params
+                }, response => {
+                    let data = response.data;
+                    if(!data) return;
+                    let order = data.order || {};
+                    let orderBidders = data.orderBidders || [];
+                    let bidders = data.bidders || [];
+                    for(let m1 of orderBidders){
+                        if(_self.user_id == m1.user_id){
+                            _self.hasBidder = true;
+                        }
+                        for(let m2 of bidders) {
+                            if(m1._id == m2._id){
+                                m1.user_name = m2.user_name;
+                                m1.img = m2.img
+                            }
+                        }
+                    }
+                    _self.bidder = orderBidders;
+                    _self.order = order;
+                    if( _self.order.imgs ){
+                        _self.imgSize = _self.order.imgs.length;
+                    }
+                });
         }
-        var params = {
-            interfaceId:common.interfaceIds.getProjectDetail,
-            order_id:_self.order_id,
-            user_id:_self.user_id
-        }
-      }
     }
   }
 </script>

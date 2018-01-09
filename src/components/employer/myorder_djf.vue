@@ -190,7 +190,7 @@ export default {
         //获取数据
         loadData(){      
             let _self = this;
-            console.log(_self.pagination.pageNo,_self.pagination.pageSize);
+            // console.log(_self.pagination.pageNo,_self.pagination.pageSize);
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
             let user_id = user_info._id;
