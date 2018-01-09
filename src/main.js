@@ -14,7 +14,6 @@ import uploadImg from '../static/uploadImg.js'
 import api from './api/api.js'
 // 全局引入iconfont.css
 import '../static/fonts/iconfont.css'
-
 Vue.config.productionTip = false
 
 // v-tap

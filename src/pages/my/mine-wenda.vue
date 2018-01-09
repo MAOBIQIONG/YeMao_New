@@ -14,26 +14,47 @@
       <div class="tab_box">
         <!--消息列表-->
         <div class="xiaoxi">
-          <div class="tiwen-list">
-            <div class="tl-top">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor…
+          <div class="weida">
+            <div class="wd-top">
+              <div class="touxiang">
+                <img src="../../../static/images/bj.jpg"/>
+              </div>
+              <p class="nicheng">昵称</p>
             </div>
-            <div class="tl-bottom">
-              1个月前
+            <div class="tupian">
+              <img src="../../../static/images/bj.jpg"/>
             </div>
-          </div>
-          <div class="tiwen-list">
-            <div class="tl-top">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor…
+            <div class="neirong">
+              <div class="piapti">
+                如果你无法简洁的表达你的想法，那只说明你还不够了解它。- 阿尔伯特·爱因斯坦?
+              </div>
+              <div class="jieshao">
+                如果你无法简洁的表达你的想法，那只说明你还不够了解它阿尔伯特·爱因斯坦如果你无法简洁的表达你的想法，那只说明你还不够了解它。- 阿尔伯特·爱因斯坦阿尔伯特
+              </div>
             </div>
-            <div class="tl-bottom">
-              1个月前
+            <div class="pingjia">
+              <span>100</span>赞同 · <span>100</span>评论
             </div>
           </div>
         </div>
         <!--通知列表-->
         <div class="tongzhi hide">
-
+          <div class="tiwen-list">
+            <div class="tl-top">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor…
+            </div>
+            <div class="tl-bottom">
+              1个月前
+            </div>
+          </div>
+          <div class="tiwen-list">
+            <div class="tl-top">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor…
+            </div>
+            <div class="tl-bottom">
+              1个月前
+            </div>
+          </div>
         </div>
       </div>
     </div>
