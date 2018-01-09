@@ -34,7 +34,7 @@
           </p>
           <p>评论中心</p>
         </li>
-        <li @click="toUrl('minepinlun')">
+        <li @click="toUrl('meow')">
           <p>
             <img src="../../../static/images/my/miaomiao.png" />
           </p>
@@ -65,12 +65,12 @@
     <!--意见反馈-->
     <div class="yijian">
       <div class="liebiao">
-        <div class="list"@click="toUrl('l')">
+        <div class="list"@click="toUrl('liaotian')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">客服中心</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
         </div>
-        <div class="list">
+        <div class="list"@click="toUrl('yijian')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">意见反馈</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
