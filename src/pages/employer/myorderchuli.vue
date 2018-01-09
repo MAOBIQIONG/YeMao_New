@@ -27,7 +27,7 @@
   import MyOrder_dcl from '../../components/employer/myorder_dcl'
   import MyOrder_dzf from '../../components/employer/myorder_dzf'
   import MyOrder_djf from '../../components/employer/myorder_djf'
-  import MyOrder_ywc from '../../componen ts/employer/myorder_ywc'
+  import MyOrder_ywc from '../../components/employer/myorder_ywc'
   export default {
     components: {
       Tab,
