@@ -18,25 +18,25 @@
       <ul>
         <li @click="toUrl('message')">
           <p>
-            <img src="../../../static/images/designer/jianzhusheji.png" />
+            <img src="../../../static/images/my/xiaoxi.png" />
           </p>
           <p>消息</p>
         </li>
         <li @click="toUrl('mineshouchang')">
           <p>
-            <img src="../../../static/images/designer/jianzhusheji.png" />
+            <img src="../../../static/images/my/shouchang.png" />
           </p>
           <p>收藏</p>
         </li>
         <li @click="toUrl('minepinlun')">
           <p>
-            <img src="../../../static/images/designer/jianzhusheji.png" />
+            <img src="../../../static/images/my/pinglun.png" />
           </p>
           <p>评论中心</p>
         </li>
         <li @click="toUrl('minepinlun')">
           <p>
-            <img src="../../../static/images/designer/jianzhusheji.png" />
+            <img src="../../../static/images/my/miaomiao.png" />
           </p>
           <p>喵喵圈</p>
         </li>
@@ -65,12 +65,12 @@
     <!--意见反馈-->
     <div class="yijian">
       <div class="liebiao">
-        <div class="list"@click="toUrl('liaotian')">
+        <div class="list"@click="toUrl('l')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">客服中心</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
         </div>
-        <div class="list"@click="toUrl('yijian')">
+        <div class="list">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">意见反馈</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>

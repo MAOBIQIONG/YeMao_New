@@ -28,7 +28,7 @@
             <span id="praise-txt">100</span>
           </div>
           <div class="bottom-sz">
-            <span><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
+            <span id="xinxin"><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
           </div>
         </div>
       </div>
@@ -115,27 +115,23 @@
         this.$router.push({name: pagename})
       },
       dianzan (){
-//        $("#praise").click(function(){
-//          var praise_img = $("#praise-img");
-//          var text_box = $("#add-num");
-//          var praise_txt = $("#praise-txt");
-//          var num=parseInt(praise_txt.text());
-//          if(praise_img.attr("src") == ("images/yizan.png")){
-//            $(this).html("<img src='images/zan.png' id='praise-img' class='animation' />");
-//            praise_txt.removeClass("hover");
-//            text_box.show().html("<em class='add-animation'>-1</em>");
-//            $(".add-animation").removeClass("hover");
-//            num -=1;
-//            praise_txt.text(num)
-//          }else{
-//            $(this).html("<img src='images/yizan.png' id='praise-img' class='animation' />");
-//            praise_txt.addClass("hover");
-//            text_box.show().html("<em class='add-animation'>+1</em>");
-//            $(".add-animation").addClass("hover");
-//            num +=1;
-//            praise_txt.text(num)
-//          }
-//        });
+        var off=true;
+        $("#praise").click(function(){
+          var praise_txt = $("#praise-txt");
+          var num=parseInt(praise_txt.text());
+          if(off==true){
+            $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+            praise_txt.css('color','#f65aa6')
+            num +=1;
+            praise_txt.text(num)
+          }
+        });
+        $("#xinxin").click(function(){
+          if(off==true){
+            $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+            $(".bottom-sz").css('color','#f65aa6')
+          }
+        });
       }
     }
   }

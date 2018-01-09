@@ -24,10 +24,11 @@
         <p>根据12321网络不良与垃圾信息举报受理中心(www.12321.cn)接到网民举报的短信、邮件、网站等信息，2017年8月，被举报最多的是假冒苹果公司的钓鱼诈骗网站，举报量达192件次，比7月份增加了3.1%。排名第二的是假冒奔跑吧兄弟的钓鱼诈骗网站，比7月份增加了264.3%。</p>
         <div class="bottom">
           <div class="bottom-zan">
-            <span><img src="../../../static/images/zan1.png"/></span><span>100</span>
+            <span id="praise"><img src="../../../static/images/zan1.png"/></span>
+            <span id="praise-txt">100</span>
           </div>
           <div class="bottom-sz">
-            <span><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
+            <span id="xinxin"><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
           </div>
         </div>
       </div>
@@ -103,6 +104,9 @@
 
       }
     },
+    mounted: function () {
+      this.dianzan();
+    },
     methods: {
       goback () {
         this.$router.goBack()
@@ -110,6 +114,25 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
+      dianzan (){
+        var off=true;
+        $("#praise").click(function(){
+          var praise_txt = $("#praise-txt");
+          var num=parseInt(praise_txt.text());
+          if(off==true){
+            $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+            praise_txt.css('color','#f65aa6')
+            num +=1;
+            praise_txt.text(num)
+          }
+        });
+        $("#xinxin").click(function(){
+          if(off==true){
+            $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+            $(".bottom-sz").css('color','#f65aa6')
+          }
+        });
+      }
     }
   }
 </script>

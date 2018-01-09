@@ -204,9 +204,8 @@
     height: 1rem;
     bottom: 1.3rem;
     right: 0.2rem;
-    border: 1px solid #ccc;
     border-radius: 50%;
-    background: url("../../../static/images/employer/j.png");
+    background: url("../../../static/images/meow/jiah.png");
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
