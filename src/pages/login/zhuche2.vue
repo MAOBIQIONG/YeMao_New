@@ -9,17 +9,17 @@
     <div class="login-shuru">
       <p class="tishi"></p>
       <div class="ls-shouji">
-        <input type="password"class="shouji mima" placeholder="密码"/>
+        <input type="password"class="shouji mima" placeholder="密码" v-model="param.password"/>
         <span class="del">×</span>
       </div>
       <div class="ls-shouji">
-        <input type="password"class="shouji qrmm" placeholder="确认密码"/>
+        <input type="password"class="shouji qrmm" placeholder="确认密码" v-model="param.passwordConfirm"/>
         <span class="del">×</span>
       </div>
     </div>
     <div class="log-btn" @click="register()"><span>完成</span></div>
     <!-- <toast v-model="showPositionValue" type="text" :time="800" is-show-mask text="注册成功" :position="position" width="3em">注册成功</toast> -->
-    <toast v-model="show" type="text" width="3em" :text="toastText"></toast>
+    <toast v-model="show" type="text" width="4em" :text="toastText"></toast>
   </div>
 </template>
 
@@ -29,7 +29,8 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
     data () {
       return {
         param:{
-            password:null
+            password:null,
+            passwordConfirm:null
         },
         position: 'default',
         show:false,
@@ -115,10 +116,7 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
             if (v == "") {
               $('.tishi').text("输入框不能为空");
 
-            } else if (!myreg.test($(shouji).val())) {
-              $('.tishi').text('请输入有效的手机号码！');
-              return false;
-            } else if (!mima.test($(valp).val())) {
+            }  else if (!mima.test($(valp).val())) {
               $('.tishi').text('密码为6-16位的数字或字母！');
               return false;
             } else {
@@ -151,24 +149,31 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
         })
       },
       register(){
+          let _self = this;
           let regpwd =/^[0-9a-zA-Z_#]{6,16}$/;
 
-          if(!regpwd.test(this.param.password)){
-            this.show=true;
-            console.log('cannot go');
+          if(!regpwd.test(_self.param.password)){
+            _self.toastText = _self.toastNotReg;
+            _self.show=true;
             return;
           }
-          let _self = this;
+          if(_self.param.password != _self.param.passwordConfirm) {
+                _self.toastText = _self.toastNotSame;
+                _self.show=true;
+                return;
+          }
+         
           let user_name = common.op_localStorage().get('nickname');
           let phone = common.op_localStorage().get('mobile_phone');
           let user_type =common.op_localStorage().get('user_typee');
+          let password = _self.param.password;
           // let verifying_code = common.op_localStorage().get('verifying_code');
           let data = {
             // id:"",
             // create_date:"创建时间",
             user_name:user_name,
             real_name:"",
-            password:"123456",
+            password:password,
             phone:phone,
             gender:"",
             birthday:"",
@@ -206,7 +211,7 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
             // 显示
             _self.toastText=_self.toastSuccess;
             _self.show=true;
-            setTimeout(_self.toUrl('login'), 200)
+            setTimeout(()=>{_self.toUrl('login')}, 1200)
           }
         })
       }

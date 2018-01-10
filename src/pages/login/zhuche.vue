@@ -17,9 +17,9 @@
           <!--<span>类型</span>-->
         <!--</div>-->
         <div class="xmlx-right">
-          <select class="xmlx-kuang" v-model="param.user_type" select="类型">
-            <option value="volvo">类型</option>
-            <option value="item._id" v-for="item in typeList">{{item.type_name}}</option>
+          <select class="xmlx-kuang" v-model="param.user_type">
+            <option value="null" selected="selected">类型</option>
+            <option v-for="(item,index) in typeList" :key="index" :value="item._id">{{item.type_name}}</option>
             <!-- <option value="opel">规划设计</option>
             <option value="audi">建筑设计</option>
             <option value="audi">结构设计</option>
@@ -42,12 +42,12 @@
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
-        <input type="text"class="yanzheng"maxlength="8" placeholder="验证码"  v-model="param.verifying_code"/>
+        <input type="text" class="yanzheng" maxlength="8" placeholder="验证码"  v-model="param.verifying_code"/>
         <div class="dj-shuru"><span class="msgs">点击获取验证码</span></div>
       </div>
     </div>
     <div class="log-btn" @click="nextStep()"><span>下一步</span></div>
-    <toast v-model="show" type="text" width="3em">请正确填写信息</toast>
+    <toast v-model="show" type="text" width="4em" :text="showText"></toast>
   </div>
 </template>
 
@@ -63,9 +63,14 @@
           nickname:'',
           mobile_phone:'',
           verifying_code:'',
-          user_type:''
+          user_type:null
         },
         show:false,
+        showText:"请正确填写信息",
+        showTextNoType:"请选择设计类型",
+        showTextNoPhone:"请输入手机号",
+        showTextWrongName:"昵称为4到10位（字母，数字，下划线，减号）",
+        showTextWrongPhone:"请输入有效的手机号码",
         typeList:common.getProjectTypes()
       }
     },
@@ -181,6 +186,27 @@
             let _self = this;
             let regNickname = /^[a-zA-Z0-9_-]{4,10}$/;
             let regMobilePhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(!regNickname.test(_self.param.nickname)){
+                _self.showText = _self.showTextWrongName
+                _self.show = true;
+                return;
+            }
+            if(common.isNull(_self.param.user_type)){
+                _self.showText = _self.showTextNoType
+                _self.show = true;
+                return;
+            }
+            if(common.isNull(_self.param.mobile_phone)){
+                _self.showText = _self.showTextNoPhone;
+                _self.show = true;
+                return;
+            }
+            if(!regMobilePhone.test(_self.param.mobile_phone)){
+                _self.showText = _self.showTextWrongPhone;
+                _self.show = true;
+                return;
+            }
+
             let param1 = [
                 {key:"nickname",value:_self.param.nickname},
                 {key:"mobile_phone",value:_self.param.mobile_phone},
@@ -190,11 +216,8 @@
             let storage = common.op_localStorage().getStorage();
             common.op_localStorage().setArray(param1);
             console.log(storage);
-            if(!regNickname.test(_self.param.nickname) || !regMobilePhone.test(_self.param.mobile_phone)){
-                this.show = true;
-                return
-            }
-            this.toUrl('zhuche2');
+
+            _self.toUrl('zhuche2');
 
         }
     },
