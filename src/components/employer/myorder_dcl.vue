@@ -38,7 +38,7 @@
                     <div class="db-right">
                         <div class="db-qxdd">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
-                        <div class="db-qrdd">选择设计师</div>
+                        <div class="db-qrdd" v-tap="{ methods:toParts, id: item._id, uid: item.user_id }">选择设计师</div>
                     </div>
                 </div>
             </div>
@@ -175,6 +175,9 @@ export default {
         toDetails (id) {
             this.$router.push({name: 'daichulixq', query: {id: id}})
         },
+         toParts: function (param) {
+            this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
+        },
         dealDom(){         
             let scroller = $('div[id^="vux-scroller-"]');
             // console.log(scroller)
@@ -187,6 +190,7 @@ export default {
 
             });
         },
+        
         //获取数据
         loadData(){      
             let _self = this;

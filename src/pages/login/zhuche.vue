@@ -17,10 +17,10 @@
           <!--<span>类型</span>-->
         <!--</div>-->
         <div class="xmlx-right">
-          <select class="xmlx-kuang">
+          <select class="xmlx-kuang" v-model="param.user_type" select="类型">
             <option value="volvo">类型</option>
-            <option value="saab">策划设计</option>
-            <option value="opel">规划设计</option>
+            <option value="item._id" v-for="item in typeList">{{item.type_name}}</option>
+            <!-- <option value="opel">规划设计</option>
             <option value="audi">建筑设计</option>
             <option value="audi">结构设计</option>
 
@@ -33,12 +33,12 @@
             <option value="opel">软装设计</option>
             <option value="audi">项目经理</option>
             <option value="audi">概预算</option>
-            <option value="audi">审图</option>
+            <option value="audi">审图</option> -->
           </select>
         </div>
       </div>
       <div class="ls-shouji">
-        <input type="text"class="shouji sjh" placeholder="手机号" v-model="param.mobile_phone"/>
+        <input type="text" class="shouji sjh" placeholder="手机号" v-model="param.mobile_phone"/>
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
@@ -47,18 +47,26 @@
       </div>
     </div>
     <div class="log-btn" @click="nextStep()"><span>下一步</span></div>
+    <toast v-model="show" type="text" width="3em">请正确填写信息</toast>
   </div>
 </template>
 
 <script>
+    import  { Toast } from 'vux'
   export default {
+      components:{
+          Toast
+      },
     data () {
       return {
         param:{
           nickname:'',
           mobile_phone:'',
-          verifying_code:''
-        }
+          verifying_code:'',
+          user_type:''
+        },
+        show:false,
+        typeList:common.getProjectTypes()
       }
     },
     mounted: function () {
@@ -152,7 +160,7 @@
               $('.tishi').text("输入框不能为空");
             } else {
               $('.tishi').text("");
-              obj.toUrl('zhuche2');
+            //   obj.toUrl('zhuche2');
             }
           })
         })
@@ -170,15 +178,24 @@
       },
 
         nextStep(){
-            var _self = this;
+            let _self = this;
+            let regNickname = /^[a-zA-Z0-9_-]{4,10}$/;
+            let regMobilePhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             let param1 = [
                 {key:"nickname",value:_self.param.nickname},
                 {key:"mobile_phone",value:_self.param.mobile_phone},
-                {key:"verifying_code",value:_self.param.verifying_code}
+                {key:"verifying_code",value:_self.param.verifying_code},
+                {key:"user_type",value:_self.param.user_type}
             ]
-             let storage = common.op_localStorage().getStorage();
+            let storage = common.op_localStorage().getStorage();
             common.op_localStorage().setArray(param1);
-             console.log(storage);
+            console.log(storage);
+            if(!regNickname.test(_self.param.nickname) || !regMobilePhone.test(_self.param.mobile_phone)){
+                this.show = true;
+                return
+            }
+            this.toUrl('zhuche2');
+
         }
     },
   }
