@@ -36,5 +36,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/zuopinshangchuan.css';
+  @import '../../../static/css/meow/zuopinshangchuan.css';
 </style>

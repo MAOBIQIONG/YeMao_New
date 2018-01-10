@@ -106,7 +106,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/designer/my-money.css';
+  @import '../../../static/css/designer/my-money.css';
   .eyes_closed{
     background: url(../../../static/images/designer/q_01.png) no-repeat;
   }

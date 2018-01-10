@@ -194,7 +194,7 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/tianxiejianli.css';
+  @import '../../../static/css/meow/tianxiejianli.css';
   .shijian{
     width: 1.6rem;
   }

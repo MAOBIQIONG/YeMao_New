@@ -4,7 +4,7 @@
       <div class="search-input">
         <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
         <input type="text" name="" id="search-inp" value=""class="search-inp" placeholder="搜索"/>
-        <span class="searchcha">×</span>
+        <!--<span class="searchcha">×</span>-->
       </div>
       <span @click="toUrl('index')">取消</span>
     </div>
@@ -620,7 +620,7 @@
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-  @import "../../assets/css/index/search-jieguo.css";
+  @import "../../../static/css/index/search-jieguo.css";
   .tabs{
     position: fixed;
     top: 0.8rem;

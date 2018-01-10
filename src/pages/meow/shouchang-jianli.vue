@@ -60,5 +60,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/shouchang-jianli.css';
+  @import '../../../static/css/meow/shouchang-jianli.css';
 </style>

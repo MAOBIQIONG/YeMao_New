@@ -196,7 +196,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/my/mine-jianli.css';
+  @import '../../../static/css/my/mine-jianli.css';
   .header-right{
     width: 0.88rem;
     height: 0.88rem;

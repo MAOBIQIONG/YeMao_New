@@ -51,5 +51,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/gongzuojingli.css';
+  @import '../../../static/css/meow/gongzuojingli.css';
 </style>

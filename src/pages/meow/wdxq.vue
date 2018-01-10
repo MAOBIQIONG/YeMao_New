@@ -137,5 +137,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/wzxq.css';
+  @import '../../../static/css/meow/wzxq.css';
 </style>

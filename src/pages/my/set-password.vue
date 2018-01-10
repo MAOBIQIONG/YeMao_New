@@ -46,5 +46,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/my/set-password.css';
+  @import '../../../static/css/my/set-password.css';
 </style>

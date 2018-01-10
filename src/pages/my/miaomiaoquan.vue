@@ -141,7 +141,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/meow/miaomiao.css';
+  @import '../../../static/css/meow/miaomiao.css';
   .miao{
     margin-top: 1rem;
   }

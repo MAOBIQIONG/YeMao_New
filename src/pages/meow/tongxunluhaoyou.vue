@@ -79,5 +79,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/tongxunluhaoyou.css';
+  @import '../../../static/css/meow/tongxunluhaoyou.css';
 </style>

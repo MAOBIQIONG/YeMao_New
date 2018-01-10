@@ -201,5 +201,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/designer/anliexq.css';
+  @import '../../../static/css/designer/anliexq.css';
 </style>

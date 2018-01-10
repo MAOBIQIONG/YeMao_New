@@ -48,5 +48,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/my/mine-huodong.css';
+  @import '../../../static/css/my/mine-huodong.css';
 </style>

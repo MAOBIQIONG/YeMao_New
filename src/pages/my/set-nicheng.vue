@@ -35,5 +35,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/my/set-nichen.css';
+  @import '../../../static/css/my/set-nichen.css';
 </style>

@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-  import EXIF from '../../../static/exif'
+  import EXIF from '../../../static/js/exif'
   export default{
     name:"image-upload",
     props:{

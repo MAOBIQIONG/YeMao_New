@@ -105,5 +105,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/bianjigongzuojinli.css';
+  @import '../../../static/css/meow/bianjigongzuojinli.css';
 </style>

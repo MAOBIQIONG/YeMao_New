@@ -89,7 +89,7 @@
         <div class="ddxq-bottom">
           <div class="biaoqi">订单详情</div>
           <div class="neirong">
-            <span ref="project_describe">{{getMaxlen(order.project_describe)}}</span> 
+            <span ref="project_describe">{{getMaxlen(order.project_describe)}}</span>
           </div>
           <div class="chakangengduo" v-tap="{methods:viewMoreFun}">{{viewText}}</div>
         </div>
@@ -257,5 +257,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/employer/daichulixq.css';
+  @import '../../../static/css/employer/daichulixq.css';
 </style>

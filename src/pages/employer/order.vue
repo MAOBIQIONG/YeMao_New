@@ -416,7 +416,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/employer/order.css';
+  @import '../../../static/css/employer/order.css';
   .od-condent .od-renshu .tu {
     background: url('../../../static/images/timer.png') left center no-repeat;
     background-size: .5rem .5rem;

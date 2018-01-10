@@ -172,7 +172,7 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/miaomiao.css';
+  @import '../../../static/css/meow/miaomiao.css';
   .sjs-bottom ul li {
     float: left;
     width: 2.4rem;
