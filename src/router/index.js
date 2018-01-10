@@ -67,6 +67,7 @@ import minepinlun from '@/pages/my/mine-pinlun'
 import mineshouchang from '@/pages/my/mine-shouchang'
 import minewenda from '@/pages/my/mine-wenda'
 import yijian from '@/pages/my/yijian'
+import miaomiaoquan from '@/pages/my/miaomiaoquan'
 import uploadImg from '@/pages/designer/uploadImg'
 import fbmmq from '@/pages/meow/fbmmq'
 import bianjigongzuojinli from '@/pages/meow/bianjigongzuojinli'
@@ -276,6 +277,10 @@ const routeArray = [
     component: fbmmq
   },
   // my模块
+  { path: '/miaomiaoquan',
+    name: 'miaomiaoquan',
+    component: miaomiaoquan
+  },
   { path: '/yijian',
     name: 'yijian',
     component: yijian
