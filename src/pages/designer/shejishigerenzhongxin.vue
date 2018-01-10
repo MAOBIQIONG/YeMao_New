@@ -2,8 +2,8 @@
   <div >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
-      <div class="header-right" @click="toUrl('xiugaigerenxinxi')">设置</div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
+      <div class="header-right" v-tap="{methods:toUrl, pagename:'xiugaigerenxinxi'}">设置</div>
     </div>
     <div class="content">
       <!--设计师基本信息模块-->
@@ -63,7 +63,7 @@
       <div class="lunpo">
         <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
-            <div class="alzs-list" v-for="item in cases" @click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in cases">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -81,9 +81,10 @@
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
+            <div class="more" v-if="cases.length==3" v-tap="{methods:toChws, flag:0}">查看更多</div>
           </swiper-item>
           <swiper-item key="1">
-            <div class="alzs-list" v-for="item in honors" @click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in honors">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -101,9 +102,10 @@
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
+            <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
           </swiper-item>
           <swiper-item key="2">
-            <div class="alzs-list" v-for="item in works" @click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in works">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -121,6 +123,7 @@
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
+            <div class="more" v-if="works.length==3" v-tap="{methods:toChws, flag:2}">查看更多</div>
           </swiper-item>
         </swiper>
       </div>
@@ -162,8 +165,12 @@
       goback(){
         this.$router.goBack();
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
+      },
+      toChws: function (params) {
+        var _self = this;
+        _self.$router.push({name: 'anlielist', query:{flag:params.flag}})
       },
       // 项目类型名称
       getNameById (id) {
@@ -263,5 +270,11 @@
   .swps{
     height:8rem !important;
     overflow:auto !important;
+  }
+  .more{
+    font-size: .3rem;
+    color: #999;
+    text-align: center;
+    padding: .25rem;
   }
 </style>

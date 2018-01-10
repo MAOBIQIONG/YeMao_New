@@ -2,31 +2,27 @@
   <div >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="toUrl('designer')"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>我的钱包</span>
-      <div class="header-right"@click="toUrl('tixian')">提现</div>
+      <div class="header-right "@click="toUrl('tixian')">提现</div>
     </div>
     <div class="content">
       <div class="jinge-top">
         <div class="biaoti">
           <div class="duoshao">钱包余额（元）</div>
-          <div class="yanjin">
-
-          </div>
+          <div class="yanjin" :class="eyes==false ? 'eyes_closed' : 'eyes_open'" v-tap="{methods: eyesFun}"></div>
         </div>
-        <div class="shumu">
-          0.00
-        </div>
+        <div class="shumu">{{account_money}}</div>
       </div>
       <div class="srqk">
         <ul>
           <li>
             <p class="timu">近30天收入</p>
-            <p>0.00</p>
+            <p>{{toMoney(income)}}</p>
           </li>
           <li>
             <p class="timu">累计收入</p>
-            <p>0.00</p>
+            <p>{{toMoney(user.cumulative_income)}}</p>
           </li>
         </ul>
       </div>
@@ -43,11 +39,22 @@
   export default {
     data () {
       return {
-
+        user_id: '',
+        eyes: false,
+        account_money: '******',
+        income: '',
+        user: {
+          account_balance: '',
+          cumulative_income: ''
+        }
       }
     },
-    mounted: function () {
-      this. yanjing();
+    created: function () {
+      console.log("created:")
+      // 用户信息
+      var user = common.getObjStorage("userInfo");
+      this.user_id = user._id;
+      this.initData();
     },
     methods: {
       goback(){
@@ -56,22 +63,43 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-//      眼睛显示
-      yanjing(){
-        var falg=true;
-        var neirong = $(".shumu").text();
-        $(".yanjin").click(function(){
-          if(falg==true){
-            $(".yanjin").css('background-image','url(../../../static/images/designer/q_01.png)')
-            $(".shumu").html('******')
-            falg=false
-          }else if(falg==false){
-            $(".yanjin").css('background-image','url(../../../static/images/designer/q_02.png)')
-            $(".shumu").html(neirong)
-            falg=true
+      // 获取某天
+      getSomeday: function (num) {
+        return common.getSomeday(num);
+      },
+      toMoney: function(money){
+        return money;
+      },
+      // 眼睛显示
+      eyesFun: function () {
+        var _self = this;
+        _self.eyes = _self.eyes == false ? true : false;
+        _self.account_money = _self.eyes == false ? '******' : _self.user.account_balance;
+      },
+
+      /**
+       * interface
+       * */
+      // 初始化
+      initData () {
+        var _self = this
+        var params = {
+          interfaceId: common.interfaceIds.getMyPurse,
+          user_id: _self.user_id,
+        }
+        console.log("params:"+JSON.stringify(params))
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          console.log(response);
+          var data = response.data;
+          if ( data ) {
+            _self.user = data.user || {};
+            _self.income = data.income;
           }
-        });
-      }
+        })
+      },
+
     }
   }
 </script>
@@ -79,7 +107,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/css/designer/my-money.css';
-  .yanjin{
+  .eyes_closed{
+    background: url(../../../static/images/designer/q_01.png) no-repeat;
+  }
+  .eyes_open{
     background: url(../../../static/images/designer/q_02.png) no-repeat;
   }
 </style>

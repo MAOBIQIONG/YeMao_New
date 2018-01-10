@@ -71,6 +71,14 @@
     },
     activated: function () {
       console.log("designers activated:")
+      var drm = this.$store.state.designerRefreshMark;
+      if ( drm > 0 ) {
+        this.$store.state.designerRefreshMark = 0;
+        this.pageNo = 0;
+        this.pageSize = 10;
+        this.onFetching = true;
+        this.loadMore()
+      }
     },
     created: function () {
       console.log("designers created:")
@@ -88,7 +96,7 @@
       },
       // 详情页
       toDetails (param) {
-        console.log("param.id:"+param.id)
+        // console.log("param.id:"+param.id)
         this.$router.push({name: 'sjszxxq', query: {id: param.id}})
       },
       /*******************************************************/
@@ -159,7 +167,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
+          // console.log(response)
           var data = response.data
           if ( data ) {
             _self.setUserData(data);

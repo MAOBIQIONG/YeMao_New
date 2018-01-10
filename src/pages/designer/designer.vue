@@ -1,36 +1,36 @@
 <template>
   <div class="designer">
-    <div class="top">
-      <!--头部导航-->
-      <div class="header">
-        <span>设计师</span>
-        <div class="header-right" @click="toUrl('message')">
-          <span><img src="../../../static/images/designer/ling.png" /></span>
-          <div class="hongdian"></div>
-        </div>
+    <!--头部导航-->
+    <div class="header">
+      <span>设计师</span>
+      <div class="header-right" v-tap="{methods:toWhere,pagename:'message'}">
+        <span><img src="../../../static/images/designer/ling.png" /></span>
+        <div class="hongdian"></div>
       </div>
+    </div>
+    <div class="top-menu">
       <!--模块-->
       <div class="mokuai">
         <ul>
-          <li @click="toUrl('shejishigerenzhongxin')">
+          <li v-tap="{methods:toWhere,pagename:'shejishigerenzhongxin'}">
             <p>
               <img src="../../../static/images/designer/geren.png" />
             </p>
             <p>个人中心</p>
           </li>
-          <li @click="toUrl('mymoney')">
+          <li v-tap="{methods:toWhere,pagename:'mymoney'}">
             <p>
               <img src="../../../static/images/designer/qianbao.png" />
             </p>
             <p>钱包</p>
           </li>
-          <li @click="toUrl('renzheng')">
+          <li v-tap="{methods:toWhere,pagename:'renzheng'}">
             <p>
               <img src="../../../static/images/designer/renzhen.png" />
             </p>
             <p>认证中心</p>
           </li>
-          <li @click="toUrl('myorderchuli')">
+          <li v-tap="{methods:toWhere,pagename:'myorderchuli'}">
             <p>
               <img src="../../../static/images/designer/dingdan.png" />
             </p>
@@ -82,7 +82,7 @@
       </div>
     </div>
     <!--设计师列表-->
-    <designers ref="design"></designers>
+    <designers ref="design" style="padding-top: 3.6rem;"></designers>
   </div>
 </template>
 
@@ -108,6 +108,14 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      toWhere: function (params) {
+        var user = common.getObjStorage('userInfo') || {};
+        if ( common.isNull(user._id) == true ) {
+          this.$router.push({name: 'login'})
+        } else {
+          this.$router.push({name: params.pagename})
+        }
       },
       showArea(param){
         var _self = this;
@@ -149,9 +157,6 @@
   @import '../../assets/css/designer/designer.css';
   .designer{
     background-color: #f2f2f2;
-  }
-  .top{
-    height: 2.75rem;
   }
   .header .header-right .hongdian{
     width: 0.1rem;
@@ -195,5 +200,17 @@
   }
   .on{
     display: block !important;
+  }
+
+  /**定位**/
+  .top-menu{
+    width: 100%;
+    background-color: #F2F2F2;
+    position: fixed;
+    top: 0.88rem;
+    z-index: 2;
+  }
+  .mokuai{
+    margin-top: 0rem;
   }
 </style>

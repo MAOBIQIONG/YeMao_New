@@ -15,6 +15,14 @@ const common = {
     } return false;
   },
 
+  //1.0.3、验证数字：
+  isNumber: function (nubmer){
+    var text = /^[0-9]+.?[0-9]*$/;
+    if (!text.test(nubmer)){
+      return false;
+    } return true;
+  },
+
   /*****************1.1、验证(返回值:对应类型)*******************/
   //1.1.1、验证是否为空：返回String
   checkNull:function (str){
@@ -32,7 +40,7 @@ const common = {
 
   //1.1.3、验证是否为Float：返回Float
   checkFloat:function (str){
-    if(str==""||str=="null"||str==null||!checkNum(str)||str==undefined){
+    if(str==""||str=="null"||str==null||!common.isNumber(str)||str==undefined){
       return 0;
     } return parseFloat(str);
   },
@@ -162,6 +170,16 @@ const common = {
       return false;
     }
   },
+  //3.4、根据指定数获取日期：0或不传值：当天，-1：明天，1：昨天
+  getSomeday:function (num){
+    if( common.isNull(num) ){
+      num = common.checkInt(num);
+    }
+    var timeStamp = 1000 * 60 * 60 * 24 * num;
+    var currdate = new Date();
+    var resultdate = new Date(currdate-timeStamp);
+    return common.timeStamp2String(resultdate.getTime(),"ymd");
+  },
 
   /*****************4、原生js操作方法*******************/
   //4.1、检测是否有某class
@@ -276,7 +294,9 @@ const common = {
     collects:'collects',                           // 收藏
     projectTypes:'projectTypes',                   // 项目类型(字典表)
     userCertificates:'userCertificates',           // 用户证件图片
-    personalChw:'',                                // 案例展示、个人荣誉、我的作品(personalChw:personal、Case, honor, work)
+    personalChw:'personalChw',                     // 案例展示、个人荣誉、我的作品(personalChw:personal、Case, honor, work)
+    balancePayments:'balancePayments',             // 收支记录
+
   },
 
   // 接口
@@ -300,6 +320,8 @@ const common = {
     getCertification:'getCertification',           // 查询认证
     getPersonalChw:'getPersonalChw',               // 获取personalChw
     prsonalCenter:'prsonalCenter',                 // 个人中心
+    getMyPurse:'getMyPurse',                       // 我的钱包
+
   },
 
 }
