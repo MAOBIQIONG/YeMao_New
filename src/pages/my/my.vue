@@ -34,7 +34,7 @@
           </p>
           <p>评论中心</p>
         </li>
-        <li @click="toUrl('meow')">
+        <li @click="toUrl('miaomiaoquan')">
           <p>
             <img src="../../../static/images/my/miaomiao.png" />
           </p>
