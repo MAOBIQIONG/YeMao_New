@@ -8,31 +8,37 @@
         <div class="hongdian"></div>
       </div>
     </div>
-    <!--状态模块-->
-    <div class="gu-mokuai">
-      <div class="dingdan" v-tap="{ methods:toUrl, pagename:'fabudingdan', flag:true }">
-        发 布 项 目
-      </div>
-      <div class="shouchang" v-tap="{ methods:toUrl, pagename:'myorderchuli', flag:true }">
-        我 的 订 单
-      </div>
-    </div>
-    <!--智能排序-->
-    <div class="id-znpx">
-      <div class="xian" v-tap="{ methods:znbx }">
-        <p :class="znpxMark==true ? 'up' : ''" v-text="sortName"></p>
-      </div>
-      <div class="area" v-if="znpxMark">
-        <ul>
-          <li v-tap="{ methods:sort, value:0 }">智能排序</li>
-          <li v-tap="{ methods:sort, value:1 }">人气最高</li>
-          <li v-tap="{ methods:sort, value:2 }">最新发布</li>
-        </ul>
+
+    <!--定位-->
+    <div class="top">
+      <div class="top-menu">
+        <!--状态模块-->
+        <div class="gu-mokuai">
+          <div class="dingdan" v-tap="{ methods:toUrl, pagename:'fabudingdan', flag:true }">
+            发 布 项 目
+          </div>
+          <div class="shouchang" v-tap="{ methods:toUrl, pagename:'myorderchuli', flag:true }">
+            我 的 订 单
+          </div>
+        </div>
+        <!--智能排序-->
+        <div class="id-znpx">
+          <div class="xian" v-tap="{ methods:znbx }">
+            <p :class="znpxMark==true ? 'up' : ''" v-text="sortName"></p>
+          </div>
+          <div class="area" v-if="znpxMark">
+            <ul>
+              <li v-tap="{ methods:sort, value:0 }">智能排序</li>
+              <li v-tap="{ methods:sort, value:1 }">人气最高</li>
+              <li v-tap="{ methods:sort, value:2 }">最新发布</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     <div class="content">
       <!-- 上拉加载 -->
-      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: rem;">
+      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: 3.2rem;">
         <div>
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
@@ -311,6 +317,22 @@
   }
   .bg_click {
     background:#f3f3f3;
+  }
+
+  /**定位**/
+  .top{
+    height: 3.2rem;
+  }
+  .top-menu{
+    width: 100%;
+    background-color: #F2F2F2;
+
+    position: fixed;
+    top: 0.88rem;
+    z-index: 2;
+  }
+  .gu-mokuai{
+    margin-top: 0rem;
   }
 
 </style>
