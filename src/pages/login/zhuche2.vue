@@ -211,7 +211,7 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
             // 显示
             _self.toastText=_self.toastSuccess;
             _self.show=true;
-            setTimeout(_self.toUrl('login'), 200)
+            setTimeout(()=>{_self.toUrl('login')}, 1200)
           }
         })
       }
