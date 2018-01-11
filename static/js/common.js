@@ -135,7 +135,9 @@ const common = {
       return year;
     } else if (id == "ym") {
       return year + "-" + month;
-    } else if (id == "ymd") {
+    } else if (id == "ym2") {
+      return year + "年" + month + "月";
+    }else if (id == "ymd") {
       return year + "-" + month + "-" + date;
     }  else if (id == "ymd2") {
       return year + "年" + month + "月" + date + "日";
@@ -179,6 +181,44 @@ const common = {
     var currdate = new Date();
     var resultdate = new Date(currdate-timeStamp);
     return common.timeStamp2String(resultdate.getTime(),"ymd");
+  },
+
+  //6.3、根据时间戳获取发布时间
+  getDateDiff: function (dateTimeStamp){
+    var result = '';
+    var minute = 1000 * 60;
+    var hour = minute * 60;
+    var day = hour * 24;
+    var halfamonth = day * 15;
+    var month = day * 30;
+    var now = new Date().getTime();
+    var diffValue = now - dateTimeStamp;
+    if(diffValue < 0){return;}
+    var monthC =diffValue/month;
+    var weekC =diffValue/(7*day);
+    var dayC =diffValue/day;
+    var hourC =diffValue/hour;
+    var minC =diffValue/minute;
+    //if(monthC>=1){
+    //  result="" + parseInt(monthC) + "月前";
+    //}
+    //else if(weekC>=1){
+    //  result="" + parseInt(weekC) + "周前";
+    //}
+    //else if(dayC>=1){
+    //  result=""+ parseInt(dayC) +"天前";
+    //}
+    if(dayC>=1){
+      result= common.timeStamp2String(dateTimeStamp,'ymd');
+    }
+    else if(hourC>=1){
+      result=""+ parseInt(hourC) +"小时前";
+    }
+    else if(minC>=1){
+      result=""+ parseInt(minC) +"分钟前";
+    }else
+      result="刚刚";
+    return result;
   },
 
   /*****************4、原生js操作方法*******************/
@@ -296,6 +336,7 @@ const common = {
     userCertificates:'userCertificates',           // 用户证件图片
     personalChw:'personalChw',                     // 案例展示、个人荣誉、我的作品(personalChw:personal、Case, honor, work)
     balancePayments:'balancePayments',             // 收支记录
+    withdrawalsRecords:'withdrawalsRecords',       // 提现记录
 
   },
 
@@ -321,6 +362,8 @@ const common = {
     getPersonalChw:'getPersonalChw',               // 获取personalChw
     prsonalCenter:'prsonalCenter',                 // 个人中心
     getMyPurse:'getMyPurse',                       // 我的钱包
+    getPayments:'getPayments',                     // 收支明细
+    addWithdrawalsRecord:'addWithdrawalsRecord',   //
 
   },
 

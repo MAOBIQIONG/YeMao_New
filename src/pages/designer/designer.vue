@@ -30,7 +30,7 @@
             </p>
             <p>认证中心</p>
           </li>
-          <li v-tap="{methods:toWhere,pagename:'myorderchuli'}">
+          <li v-tap="{methods:toWhere,pagename:'myorderdesigner'}">
             <p>
               <img src="../../../static/images/designer/dingdan.png" />
             </p>

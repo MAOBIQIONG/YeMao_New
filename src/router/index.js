@@ -37,6 +37,7 @@ import yiwancheng from '@/pages/employer/yiwancheng'
 import yijianhuisheng from '@/pages/employer/yijianhuisheng'
 import releaseSuccess from '@/pages/employer/releaseSuccess'
 import sjszxxq from '@/pages/designer/sjszx-xq'
+import myorderdesigner from '@/pages/designer/myorder-designer'
 import shejishigerenzhongxin from '@/pages/designer/shejishigerenzhongxin'
 import xiugaigerenxinxi from '@/pages/designer/xiugaigerenxinxi'
 import jianjiexiugai from '@/pages/designer/jianjiexiugai'
@@ -326,6 +327,11 @@ const routeArray = [
     component: set
   },
   // 设计师模块
+  {
+    path: '/myorderdesigner',
+    name: 'myorderdesigner',
+    component:myorderdesigner
+  },
   { path: '/anlielist',
     name: 'anlielist',
     component: anlielist

@@ -247,7 +247,7 @@ export default {
                 pageSize: _self.pagination.pageSize
             };
             params.where = {
-                user_id,
+                project_winBidder:user_id,
                 project_state:{$lt :3, $gte : 0}
             };
             // console.log("user_id",user_id);
@@ -314,7 +314,7 @@ export default {
             } else {
                 _self.pagination.pageNo++
             }
-            console.log(_self.orderList);
+            // console.log(_self.orderList);
         },
         //下拉刷新
         refreshPageDate(){
