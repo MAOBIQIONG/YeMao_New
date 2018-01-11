@@ -42,5 +42,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import "../../assets/css/index/inform-xitong.css";
+  @import "../../../static/css/index/inform-xitong.css";
 </style>

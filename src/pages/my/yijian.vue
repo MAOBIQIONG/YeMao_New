@@ -58,5 +58,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import "../../assets/css/my/yijian.css";
+  @import "../../../static/css/my/yijian.css";
 </style>

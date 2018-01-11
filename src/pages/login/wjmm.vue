@@ -140,5 +140,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/login/wjmm.css';
+  @import '../../../static/css/login/wjmm.css';
 </style>

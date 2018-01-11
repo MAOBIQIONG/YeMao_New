@@ -57,5 +57,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/pinlunxiangqin.css';
+  @import '../../../static/css/meow/pinlunxiangqin.css';
 </style>

@@ -75,5 +75,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/xuexiaoxiangqing.css';
+  @import '../../../static/css/meow/xuexiaoxiangqing.css';
 </style>

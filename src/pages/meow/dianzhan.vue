@@ -55,5 +55,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/dianzhan.css';
+  @import '../../../static/css/meow/dianzhan.css';
 </style>

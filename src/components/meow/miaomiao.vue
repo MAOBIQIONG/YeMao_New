@@ -160,7 +160,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/meow/miaomiao.css';
+  @import '../../../static/css/meow/miaomiao.css';
   .cur{
     border-bottom: 1px solid #f65aa6;
   }

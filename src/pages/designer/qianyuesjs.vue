@@ -154,7 +154,7 @@
 
 </style>
 <style scoped>
-  @import '../../assets/css/designer/qianyuesjs.css';
+  @import '../../../static/css/designer/qianyuesjs.css';
   .xmlx-kuang{
     height: 0.8rem;
     border: none;

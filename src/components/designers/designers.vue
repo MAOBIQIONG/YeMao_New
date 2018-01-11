@@ -214,5 +214,5 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-  @import "../../assets/css/index/search-jieguo.css";
+  @import "../../../static/css/index/search-jieguo.css";
 </style>

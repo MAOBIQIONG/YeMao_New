@@ -155,7 +155,7 @@
 <script>
   import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name} from 'vux'
   import store from '@/vuex/store'
-  import common from "../../../static/common";
+  import common from "../../../static/js/common";
 
   export default {
     components: {
@@ -498,7 +498,7 @@
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/index/index.css';
+  @import '../../../static/css/index/index.css';
   .bg{
     background:#fefefe;
   }

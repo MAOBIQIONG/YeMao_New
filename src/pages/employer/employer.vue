@@ -291,7 +291,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/employer/guzhu.css';
+  @import '../../../static/css/employer/guzhu.css';
   .employer{
     background-color: #F2F2F2;
   }

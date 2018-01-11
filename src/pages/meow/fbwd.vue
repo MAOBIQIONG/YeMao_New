@@ -60,5 +60,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/fbwd.css';
+  @import '../../../static/css/meow/fbwd.css';
 </style>

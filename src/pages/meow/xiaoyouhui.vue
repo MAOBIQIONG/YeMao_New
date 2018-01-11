@@ -60,5 +60,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/xiaoyouhui.css';
+  @import '../../../static/css/meow/xiaoyouhui.css';
 </style>

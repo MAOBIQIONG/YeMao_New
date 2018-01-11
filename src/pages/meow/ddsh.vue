@@ -42,5 +42,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/ddsh.css';
+  @import '../../../static/css/meow/ddsh.css';
 </style>

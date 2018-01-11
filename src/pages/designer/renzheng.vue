@@ -106,5 +106,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/designer/renzheng.css';
+  @import '../../../static/css/designer/renzheng.css';
 </style>

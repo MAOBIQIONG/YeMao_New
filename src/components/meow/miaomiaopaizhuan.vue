@@ -76,5 +76,5 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/meow/miaomiaopaizuan.css';
+  @import '../../../static/css/meow/miaomiaopaizuan.css';
 </style>

@@ -6,7 +6,7 @@
           <form class="mission_search_form">
             <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
             <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
-            <span class="searchcha">×</span>
+            <!--<span class="searchcha">×</span>-->
           </form>
         </div>
         <span @click="toUrl('index')">取消</span>
@@ -72,7 +72,7 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-  @import "../../assets/css/index/search-jieguo.css";
+  @import "../../../static/css/index/search-jieguo.css";
   .top{
     height: 1.6rem;
   }

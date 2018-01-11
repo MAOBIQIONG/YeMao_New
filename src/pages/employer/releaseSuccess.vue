@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import common from '../../../static/common';
+  import common from '../../../static/js/common';
   import store from '@/vuex/store'
   export default {
     // 引入组件
@@ -61,5 +61,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/designer/tixianchenggong.css';
+  @import '../../../static/css/designer/tixianchenggong.css';
 </style>

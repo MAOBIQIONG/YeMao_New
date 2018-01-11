@@ -154,7 +154,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/designer/designer.css';
+  @import '../../../static/css/designer/designer.css';
   .designer{
     background-color: #f2f2f2;
   }

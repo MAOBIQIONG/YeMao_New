@@ -266,7 +266,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/designer/sjsgeren.css';
+  @import '../../../static/css/designer/sjsgeren.css';
   .swps{
     height:8rem !important;
     overflow:auto !important;

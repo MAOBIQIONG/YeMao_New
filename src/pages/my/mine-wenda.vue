@@ -98,5 +98,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../assets/css/my/mine-wenda.css';
+  @import '../../../static/css/my/mine-wenda.css';
 </style>
