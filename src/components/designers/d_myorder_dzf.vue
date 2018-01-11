@@ -20,7 +20,7 @@
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
-                        <img src=item.imgs[0] v-if="item.imgs.length>0">
+                        <img src=item.imgs[0]>
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -34,23 +34,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="od-renshu myorder">
-                    <div class="tu"></div>
-                    <p v-if="item.bidders.length>0"><span style="color:red">{{item.bidders.length}}</span>位设计师抢单</p>
-                    <p v-if="item.bidders.length==0">还没有设计师抢单</p>
-                </div> -->
                 <div class="ds-bottom">
                     <div class="db-right">
-                        <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <div class="db-qxdd" @click="cancelOrder({id:item._id})">取消订单</div>
+                        <div class="db-qxdd">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
-                        <div v-if="item.bidders.length>0" class="db-qrdd" v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" >选择设计师</div>
-                        <div v-else class="db-qrdd">待抢单</div>
+                        <div class="db-qrdd">选择设计师</div>
                     </div>
                 </div>
             </div>
             <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
-        <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
         </div>
     </scroller>
     <!-- <div class="noOrder">
@@ -60,20 +52,19 @@
   </div>
 </template>
 <script>
-import {Scroller,LoadMore,Toast} from 'vux'
+import {Scroller,LoadMore} from 'vux'
 export default {
     name:"scroll-list",
     components:{
         Scroller,
-        LoadMore,
-        Toast
+        LoadMore
     },
     created(){
-        // console.log('created');
+        console.log('created');
         this.loadData();
     },
     mounted(){
-        // console.log('mounted');
+        console.log('mounted');
         this.$nextTick(
             ()=>{
                 this.$refs.scroller.disablePullup();
@@ -134,9 +125,7 @@ export default {
                 showLoading:true,
                 show:true,
             },
-            hasMore:true,
-            showMark:false,
-            showMsg:"",
+            hasMore:true
         }
     },
     watch:{
@@ -182,44 +171,9 @@ export default {
             this.$router.push({name: params})
             console.log("toUrl",params);
         },
-        showToast(msg){
-            this.showMark = true;
-            this.showMsg = msg;
-        },
          // 详情页
         toDetails (id) {
             this.$router.push({name: 'daichulixq', query: {id: id}})
-        },
-        cancelOrder(p){
-            console.log(p.id,p);
-            let _self = this;
-            var params = {
-                interfaceId:common.interfaceIds.updateData,
-                coll:common.collections.orderList,
-                wheredata:{
-                    _id:p.id.toString()
-                },
-                data:{
-                    $set: {
-                        project_state: 9, // 取消
-                    }
-                }
-            };
-            console.log(params);
-            _self.$axios.post('/mongoApi', {
-                params: params
-                }, response => {
-                    console.log(response)
-                    var data = response.data;
-                    if( data.ok > 0 ){
-                        _self.showToast('已取消！');
-                    } else {
-                        _self.showToast('取消失败联系管理员');
-                    }
-                })
-        },
-        toParts: function (param) {
-            this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
         },
         dealDom(){         
             let scroller = $('div[id^="vux-scroller-"]');
@@ -233,7 +187,6 @@ export default {
 
             });
         },
-        
         //获取数据
         loadData(){      
             let _self = this;
@@ -248,7 +201,7 @@ export default {
             };
             params.where = {
                 user_id,
-                project_state:{$lt :3, $gte : 0}
+                project_state:3
             };
             // console.log("user_id",user_id);
             // console.log("user_info",user_info);
@@ -260,41 +213,13 @@ export default {
                 // console.log("+++++++++++++");
                 // console.log(response);
                 // console.log("=============");
+                // console.log("-------------");   
             })
         },
         setData(data){
             let _self = this;
             _self.$refs.scroller.enablePullup();
-            // 订单
-            let orderBidders = data.orderBidders || [];
-            let bidders = data.bidders || [];
-            let orderList = data.orderList || [];
-            let orderUsers = data.orderUsers || [];
-            orderBidders.forEach(function (b, j) {
-            bidders.forEach(function (u, j) {
-                if ( b.user_id == u._id ) {
-                b.user_name = u.user_name;
-                b.img = u.img;
-                }
-            })
-            })
-            orderList.forEach(function (item, index) {
-            // 雇主
-            item.user = {};
-            orderUsers.forEach(function (u, j) {
-                if ( item.user_id == u._id ) {
-                item.user = u;
-                }
-            })
-            // 参与人
-            item.bidders = [];
-            orderBidders.forEach(function (b, j) {
-                if ( item._id == b.order_id ) {
-                item.bidders.push(b);
-                }
-            })
-            });
-            //判断页码是否为0
+            let orderList = data.orderList;
             if(_self.pagination.pageNo == 0) {
                 _self.orderList = orderList;
             } else {
@@ -314,7 +239,6 @@ export default {
             } else {
                 _self.pagination.pageNo++
             }
-            console.log(_self.orderList);
         },
         //下拉刷新
         refreshPageDate(){
@@ -350,5 +274,4 @@ export default {
     }
 }
 </script>
-
 

@@ -24,10 +24,10 @@
 
 <script>
   import {Tab, TabItem} from 'vux'
-  import MyOrder_dcl from '../../components/employer/myorder_dcl'
-  import MyOrder_dzf from '../../components/employer/myorder_dzf'
-  import MyOrder_djf from '../../components/employer/myorder_djf'
-  import MyOrder_ywc from '../../components/employer/myorder_ywc'
+  import MyOrder_dcl from '../../components/designers/d_myorder_dcl'
+  import MyOrder_dzf from '../../components/designers/d_myorder_dzf'
+  import MyOrder_djf from '../../components/designers/d_myorder_djf'
+  import MyOrder_ywc from '../../components/designers/d_myorder_ywc'
   export default {
     components: {
       Tab,
