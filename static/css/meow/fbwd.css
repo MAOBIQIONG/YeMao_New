@@ -68,5 +68,7 @@
   border: 1px dashed #F2F2F2;
   margin-left: 0.1rem;
 }
-
+.set-content .sctp .st-bottom img{
+  width: 100%;
+}
 /*# sourceMappingURL=fbwd.css.map */

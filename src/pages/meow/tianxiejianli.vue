@@ -196,6 +196,6 @@
 <style scoped>
   @import '../../../static/css/meow/tianxiejianli.css';
   .shijian{
-    width: 1.6rem;
+    width: 1.9rem;
   }
 </style>
