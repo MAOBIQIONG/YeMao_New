@@ -314,7 +314,7 @@ export default {
             } else {
                 _self.pagination.pageNo++
             }
-            console.log(_self.orderList);
+            // console.log(_self.orderList);
         },
         //下拉刷新
         refreshPageDate(){

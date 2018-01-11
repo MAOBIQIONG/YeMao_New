@@ -51,7 +51,8 @@
         <div class="sjs-bottom">
           <ul>
            <li v-for="(item, index) in list"@click.stop="show(index)">
-             <img class="previewer-demo-img":src="item.src"width="100%">
+             <!-- <img class="previewer-demo-img":src="item.src"> -->
+                <div class="previewer-img" :style="`background-image:url(${item.src}`"></div>
            </li>
             <div v-transfer-dom>
               <previewer :list="list" ref="previewer" :options="options"></previewer>
@@ -81,6 +82,7 @@
     },
     data() {
       return {
+        imgs:[],
         list: [
           {
             src: 'https://ooo.0o0.ooo/2017/05/17/591c271ab71b1.jpg',
@@ -94,7 +96,7 @@
             src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
           },
           {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
+            src: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2925141724,2164083845&fm=200&gp=0.jpg'
           },
           {
             src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
@@ -115,7 +117,7 @@
         options: {
           getThumbBoundsFn(index) {
             // find thumbnail element
-            let thumbnail = document.querySelectorAll('.previewer-demo-img')[index]
+            let thumbnail = document.querySelectorAll('.previewer-img')[index]
             // get window scroll Y
             let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
             // optionally get horizontal scroll
@@ -129,8 +131,12 @@
         }
       }
     },
+    created(){
+        this.preLoadImgs();
+    },
     mounted: function () {
       this.miao();
+      console.log(this.imgs);
     },
     methods: {
       goback () {
@@ -209,5 +215,12 @@
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
+  }
+  .previewer-img{
+      width:100%;
+      height:100%;
+      background-repeat: no-repeat;
+      background-position:center center;
+      background-size: cover
   }
 </style>
