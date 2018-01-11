@@ -132,7 +132,6 @@
       }
     },
     created(){
-        this.preLoadImgs();
     },
     mounted: function () {
       this.miao();
