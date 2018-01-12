@@ -34,7 +34,8 @@
         <div class="sjs-bottom sjs-bottom1">
           <ul>
             <li v-for="(item, index) in list"@click.stop="show(index)">
-              <img class="previewer-demo-img":src="item.src"width="100%">
+              <!-- <img class="previewer-demo-img":src="item.src"width="100%"> -->
+              <div class="previewer-img" :style="`background-image:url(${item.src}`"></div>
             </li>
             <div v-transfer-dom>
               <previewer :list="list" ref="previewer" :options="options"></previewer>
@@ -128,7 +129,7 @@
         options: {
           getThumbBoundsFn(index) {
             // find thumbnail element
-            let thumbnail = document.querySelectorAll('.previewer-demo-img')[index]
+            let thumbnail = document.querySelectorAll('.previewer-img')[index]
             // get window scroll Y
             let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
             // optionally get horizontal scroll
@@ -215,5 +216,12 @@
   }
   .dz span{
     padding-left: 0.5rem;
+  }
+  .previewer-img{
+      width:100%;
+      height:100%;
+      background-repeat: no-repeat;
+      background-position:center center;
+      background-size: cover
   }
 </style>

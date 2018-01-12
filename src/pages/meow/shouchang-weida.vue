@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="pingjia">
-          <span>100</span>赞同 · <span>100</span>评论
+          <span v-if="item.like">{{item.like}}</span><span v-else>0</span>赞同 · <span v-if="item.comments">{{item.comments}}</span><span v-else>0</span>评论
         </div>
       </div>
     </div>
@@ -66,6 +66,10 @@
           user_id:null,
           QAList:[],
           user:null,
+          pagination:{
+              pageNo:0,
+              pageSize:2,
+          }
       }
     },
     methods: {
@@ -102,6 +106,30 @@
                     }
                 });
         },
+        setData(data){
+            let _self = this;
+            //判断页码是否为0
+            if(_self.pagination.pageNo == 0) {
+                _self.orderList = orderList;
+            } else {
+                _self.orderList.push(...data.orderList);
+            }
+            _self.loadMoreStatus.show=false;
+            _self.loadMoreStatus.showLoading=false;                  
+            _self.$refs.scroller.donePulldown();
+            _self.$refs.scroller.donePullup();   
+            //判断数据是否有一页
+            if(orderList.length < _self.pagination.pageSize){
+                _self.hasMore = false;
+                _self.loadMoreStatus.show=true;
+                _self.loadMoreStatus.showLoading=false;
+                _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+                _self.$refs.scroller.disablePullup();
+            } else {
+                _self.pagination.pageNo++
+            }
+            // console.log(_self.orderList);
+        }
 
     },
     created(){
