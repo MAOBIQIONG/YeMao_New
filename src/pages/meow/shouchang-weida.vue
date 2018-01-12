@@ -100,7 +100,7 @@
                 }, response => {
                     console.log(response);
                     var data = response.data
-                    if (data) {
+                    if (data) { 
                         _self.QAList = data.chws;
                         console.log(data);
                     }
@@ -110,9 +110,9 @@
             let _self = this;
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
-                _self.orderList = orderList;
+                _self.QAList = QAList;
             } else {
-                _self.orderList.push(...data.orderList);
+                _self.QAList.push(...data.chws);
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;                  
@@ -120,7 +120,6 @@
             _self.$refs.scroller.donePullup();   
             //判断数据是否有一页
             if(orderList.length < _self.pagination.pageSize){
-                _self.hasMore = false;
                 _self.loadMoreStatus.show=true;
                 _self.loadMoreStatus.showLoading=false;
                 _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
