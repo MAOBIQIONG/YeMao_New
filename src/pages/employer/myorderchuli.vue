@@ -7,8 +7,8 @@
     </div>
     <!--tab选项卡-->
         <tab :line-width=2 active-color='#fc378c' v-model="index" class="tabs">
-            <tab-item 
-                v-for="item in tabItems" 
+            <tab-item
+                v-for="item in tabItems"
                 :key="item.id"
                 @on-item-click="changeList"
             >
@@ -49,7 +49,7 @@
             {id:0,title:'待处理'},
             {id:1,title:'待支付'},
             {id:2,title:'待交付'},
-            {id:3,title:'已完成'}, 
+            {id:3,title:'已完成'},
         ],
         viewArray:['MyOrder_dcl','MyOrder_dzf','MyOrder_djf','MyOrder_ywc']
       }

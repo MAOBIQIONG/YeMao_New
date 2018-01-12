@@ -102,4 +102,8 @@
   .weui-dialog__hd{
     padding: 0rem 1.6rem !important;
   }
+
+  .xs-plugin-pulldown-container{
+    font-size: 14px !important;
+  }
 </style>

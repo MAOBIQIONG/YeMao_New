@@ -189,12 +189,12 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(JSON.stringify(response))
+          // console.log(JSON.stringify(response))
           var data = response.data;
           if( data && data.code == 200 && data.code1 == 200 ){
             setTimeout(function () {
               _self.toUrl('tixianchenggong');
-            },1000)
+          },1000)
           }else{
             _self.showToast("提现失败！");
           }
