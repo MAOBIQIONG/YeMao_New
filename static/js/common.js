@@ -406,4 +406,16 @@ common.op_localStorage = function() {
     }
 }
 
+// isType方法: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
+var names = ['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'];
+for (var i = 0; i < names.length; i++) {
+	common['is' + names[i]] = function(obj) {
+		return toString.call(obj) == '[object ' + names[i] + ']';
+	};
+}
+common['isArray'] =  Array.isArray || function(obj) {
+    return toString.call(obj) == '[object Array]';
+};
+
+
 export default common;

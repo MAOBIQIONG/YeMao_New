@@ -7,13 +7,38 @@
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->
-    <div class="weida-list" v-for="item in QAList" :key="common.uuid()">
+    <div class="weida-list" v-for="(item,index) in QAList" :key="index">
+      <div class="weida" @click="toUrl('wdxq')">
+        <div class="wd-top">
+          <div class="touxiang">
+            <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
+            <img v-else src="../../../static/images/bj.jpg"/>
+          </div>
+          <p class="nicheng">{{item.user.user_name}}</p>
+        </div>
+        <div class="tupian" v-if="item.imgs">        
+          <img :src="item.imgs[0]"/>
+        </div>
+        <div class="neirong">
+          <div class="piapti">
+            {{item.title}}
+          </div>
+          <div class="jieshao">
+            {{item.description}}
+          </div>
+        </div>
+        <div class="pingjia">
+          <span>100</span>赞同 · <span>100</span>评论
+        </div>
+      </div>
+    </div>
+    <!-- <div class="weida-list" >
       <div class="weida" @click="toUrl('wdxq')">
         <div class="wd-top">
           <div class="touxiang">
             <img src="../../../static/images/bj.jpg"/>
           </div>
-          <p class="nicheng">item.</p>
+          <p class="nicheng">昵称</p>
         </div>
         <div class="tupian">
           <img src="../../../static/images/bj.jpg"/>
@@ -30,7 +55,7 @@
           <span>100</span>赞同 · <span>100</span>评论
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -39,7 +64,8 @@
     data: function () {
       return {
           user_id:null,
-          QAList:[]
+          QAList:[],
+          user:null,
       }
     },
     methods: {
@@ -50,10 +76,10 @@
             this.$router.push({name: pagename})
         },
         loadData(){
-            console.log('this is  loadData');
+            console.log('this is loadData');
             let _self = this;
             if( common.isNull(_self.user_id) ){
-                alert(1);
+                throw new Error('请先登录');
                 return;
             }
             let params = {
@@ -75,18 +101,16 @@
                         console.log(data);
                     }
                 });
-        }
+        },
+
     },
     created(){
         var _slef = this;
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
-            _slef.userInfo = user;
             _slef.user_id = user._id;
         }
-        // this.loadData();
-        const obj = Object.create({},{p:{value:42}});
-        console.log(Object.values(obj));
+        this.loadData();
     }
   }
 </script>
