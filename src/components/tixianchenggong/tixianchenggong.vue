@@ -27,11 +27,13 @@
 </template>
 
 <script>
+  import store from '@/vuex/store'
   export default {
     props:[
       'heading',
       'tixianchenggong',
     ],
+    store,
     data () {
       return {
 
@@ -44,6 +46,7 @@
         this.$router.goBack();
       },
       toUrl: function (pagename) {
+        this.$store.state.pageIndex = 0;
         this.$router.push({name: pagename})
       },
     }

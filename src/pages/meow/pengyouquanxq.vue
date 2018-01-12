@@ -127,6 +127,7 @@
         ],
         options: {
           getThumbBoundsFn(index) {
+            console.log("getThumbBoundsFn:"+index)
             // find thumbnail element
             let thumbnail = document.querySelectorAll('.previewer-demo-img')[index]
             // get window scroll Y

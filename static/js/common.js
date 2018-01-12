@@ -320,7 +320,7 @@ const common = {
         s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
         s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
         s[8] = s[13] = s[18] = s[23] = "-";
-    
+
         var uuid = s.join("");
         return uuid;
     },
@@ -337,6 +337,9 @@ const common = {
     personalChw:'personalChw',                     // 案例展示、个人荣誉、我的作品(personalChw:personal、Case, honor, work)
     balancePayments:'balancePayments',             // 收支记录
     withdrawalsRecords:'withdrawalsRecords',       // 提现记录
+    meowCircle:'meowCircle',                       // 喵喵圈
+    comments:'comments',                           // 评论
+    likes:'likes',                                 // 点赞
 
   },
 
@@ -363,7 +366,13 @@ const common = {
     prsonalCenter:'prsonalCenter',                 // 个人中心
     getMyPurse:'getMyPurse',                       // 我的钱包
     getPayments:'getPayments',                     // 收支明细
-    addWithdrawalsRecord:'addWithdrawalsRecord',   //
+    addWithdrawalsRecord:'addWithdrawalsRecord',   // 添加提现记录
+    getMeowList:'getMeowList',                     // 获取喵喵圈信息
+    getMeowDetails:'getMeowDetails',               // 获取喵喵圈动态详情
+    getComments:'getComments',                     // 获取评论列表
+    getLikes:'getLikes',                           // 获取点赞列表
+    like:'like'                                    // 点赞
+
 
   },
 
