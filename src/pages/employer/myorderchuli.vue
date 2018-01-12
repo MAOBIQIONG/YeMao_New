@@ -16,9 +16,6 @@
             </tab-item>
         </tab>
         <component :is="currentView" ></component>
-        <!-- <div>
-            {{getCurrentView}}
-        </div> -->
   </div>
 </template>
 
@@ -58,22 +55,21 @@
         console.log("myorderComponent created");
     },
     methods: {
-      goback() {
-        // this.$router.goBack();
-        if(common.op_localStorage().get("fromRS")){common.op_localStorage().remove("fromRS"); this.$router.push({name:"index"});}
-        else{this.$router.goBack();}
-      },
-      toUrl(name) {
-        this.$router.push({name: name});
-      },
+        goback() {
+            // this.$router.goBack();
+            if(common.op_localStorage().get("fromRS")){common.op_localStorage().remove("fromRS"); this.$router.push({name:"index"});}
+            else{this.$router.goBack();}
+        },
+        toUrl(name) {
+            this.$router.push({name: name});
+        },
 
-    setData(data){
-        this.orderList = data;
-    },
-    changeList(){
-        this.currentView = this.viewArray[this.index]
-    }
-
+        setData(data){
+            this.orderList = data;
+        },
+        changeList(){
+            this.currentView = this.viewArray[this.index]
+        }
     }
   }
 </script>

@@ -66,7 +66,7 @@
               <span><img src="../../../static/images/employer/02.png"/></span><span>设计深度：</span>
             </div>
             <div class="box-right">
-              <span :key="uuid" v-for="item in order.project_depth">{{item | getDepthName}}</span>
+              <span :key="index" v-for="(item,index) in order.project_depth">{{item | getDepthName}}</span>
             </div>
           </div>
           <div class="ddxq-box">
