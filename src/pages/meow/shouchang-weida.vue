@@ -25,7 +25,7 @@
     >
     <div>
         <div class="weida-list" v-for="(item,index) in QAList" :key="index">
-        <div class="weida" @click="toUrl('wdxq')">
+        <div class="weida" @click="toDetails('wdxq')">
             <div class="wd-top">
             <div class="touxiang">
                 <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
@@ -105,6 +105,7 @@
             return {
                 user_id:null,
                 QAList:[],
+                QAId:null,
                 user:null,
                 pagination:{
                     pageNo:0,
@@ -162,6 +163,9 @@
             },
             toUrl: function (pagename) {
                 this.$router.push({name: pagename})
+            },
+            toDetails (id) {
+                this.$router.push({name: 'wdxq', query: {id: id}})
             },
             loadData(){
                 console.log('this is loadData');
