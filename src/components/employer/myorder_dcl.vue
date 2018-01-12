@@ -102,7 +102,7 @@ export default {
             orderList: [],
             pagination: {
                 pageNo: 0,
-                pageSize: 6
+                pageSize: 10
             },
             pullUpDownStatus: {
                 pulldownStatus: 'default',
