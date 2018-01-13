@@ -176,7 +176,7 @@
                     pageNo:_self.pagination.pageNo,
                     pageSize:_self.pagination.pageSize,
                     where:{
-                        user_id: _self.user_id,
+                        // user_id: _self.user_id,
                         type: 5//问答
                     }
                 }
