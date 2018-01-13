@@ -42,7 +42,7 @@
                 <div class="ds-bottom">
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <div class="db-qxdd" @click="cancelOrder({id:item._id})">取消订单</div>
+                        <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
                         <div v-if="item.bidders.length>0" class="db-qrdd" v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" >选择设计师</div>
                         <div v-else class="db-qrdd">待抢单</div>
@@ -50,7 +50,14 @@
                 </div>
             </div>
             <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
-        <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+            <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+            <div v-transfer-dom>
+                <confirm v-model="confirmShow"
+                    @on-confirm = "cancelOrder()"
+                >
+                <p style="text-align:center;">{{confirmMsg}}</p>
+                </confirm>
+            </div>
         </div>
     </scroller>
     <!-- <div class="noOrder">
@@ -60,13 +67,18 @@
   </div>
 </template>
 <script>
-import {Scroller,LoadMore,Toast} from 'vux'
+import {Scroller,LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
 export default {
     name:"scroll-list",
+    directives: {
+        TransferDom 
+    },
     components:{
         Scroller,
         LoadMore,
-        Toast
+        Toast,
+        Confirm,
+        Confirm,
     },
     created(){
         // console.log('created');
@@ -80,8 +92,7 @@ export default {
                 this.$refs.scroller.reset({top:0});
                 // this.dealDom();
             }
-        );
-        
+        );       
     },
     props:{
         lockX:{
@@ -99,6 +110,7 @@ export default {
     },
     data(){
         return {
+            cancel_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -137,6 +149,8 @@ export default {
             hasMore:true,
             showMark:false,
             showMsg:"",
+            confirmShow:false,
+            confirmMsg:"确定要取消该订单吗",
         }
     },
     watch:{
@@ -190,14 +204,13 @@ export default {
         toDetails (id) {
             this.$router.push({name: 'daichulixq', query: {id: id}})
         },
-        cancelOrder(p){
-            console.log(p.id,p);
+        cancelOrder(){
             let _self = this;
             var params = {
                 interfaceId:common.interfaceIds.updateData,
                 coll:common.collections.orderList,
                 wheredata:{
-                    _id:p.id.toString()
+                    _id:_self.cancel_id
                 },
                 data:{
                     $set: {
@@ -213,6 +226,7 @@ export default {
                     var data = response.data;
                     if( data.ok > 0 ){
                         _self.showToast('已取消！');
+                        _self.renderAfterCanceled();
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
@@ -345,8 +359,23 @@ export default {
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
+        },
+        showConfirm(params){
+            this.confirmShow = true;
+            this.cancel_id = params;
+            console.log(this.cancel_id);
+        },
+        renderAfterCanceled(){
+            let _self = this;
+            let index = 0;
+            for (let r of _self.orderList) {
+                console.log(_self.orderList[index]);
+                if(r._id == _self.cancel_id){
+                    _self.orderList.splice(index,1);
+                }
+                index++
+            }
         }
-
     }
 }
 </script>
