@@ -44,7 +44,18 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
-                        <div v-if="item.bidders.length>0" class="db-qrdd" v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" >选择设计师</div>
+                        <template v-if="item.bidders.length>0">
+                            <div v-if="isNull(item.project_winBidder)"
+                                 class="db-qrdd" 
+                                 v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" >
+                                 选择设计师
+                            </div>
+                            <div v-else
+                                 class="db-qrdd" >
+                                 等待完善订单
+                            </div>
+                        </template>
+                        
                         <div v-else class="db-qrdd">待抢单</div>
                     </div>
                 </div>
@@ -204,6 +215,9 @@ export default {
         toDetails (id) {
             this.$router.push({name: 'daichulixq', query: {id: id}})
         },
+        isNull(data){
+            return common.isNull(data);
+        },
         cancelOrder(){
             let _self = this;
             var params = {
@@ -233,7 +247,7 @@ export default {
                 })
         },
         toParts: function (param) {
-            this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
+            this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid,}})
         },
         dealDom(){         
             let scroller = $('div[id^="vux-scroller-"]');

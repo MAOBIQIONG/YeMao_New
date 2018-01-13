@@ -101,8 +101,12 @@
   export default {
     data: function () {
       return {
-
+          QAId:null,
       }
+    },
+    created(){
+        this.QAId = this.$route.query.id;
+        // console.log(this.QAId,this.$route.query);
     },
     mounted: function () {
       this.dianzan();

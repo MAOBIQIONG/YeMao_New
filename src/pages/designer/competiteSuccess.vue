@@ -46,7 +46,7 @@
       toMyOrder:function(){
         common.op_localStorage().set("fromRS",1);
         console.log(localStorage);
-        this.toUrl('myorderchuli');
+        this.toUrl('myorderdesigner');
       }
     }
   }

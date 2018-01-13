@@ -25,7 +25,7 @@
     >
     <div>
         <div class="weida-list" v-for="(item,index) in QAList" :key="index">
-        <div class="weida" @click="toDetails('wdxq')">
+        <div class="weida" @click="toDetails(item._id)">
             <div class="wd-top">
             <div class="touxiang">
                 <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
@@ -105,7 +105,6 @@
             return {
                 user_id:null,
                 QAList:[],
-                QAId:null,
                 user:null,
                 pagination:{
                     pageNo:0,
@@ -280,8 +279,8 @@
                     this.$refs.scroller.disablePullup();
                     this.$refs.scroller.reset({top:0});
                 }
-        );      
-    },
+            );      
+        },
     }
 </script>
 <style scoped>

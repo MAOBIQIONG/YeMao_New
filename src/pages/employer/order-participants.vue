@@ -118,7 +118,7 @@
       // 选择设计师
       confirmFun(param){
         this.show = true;
-        this.project_winBidder = param.id; // 项目中标人
+        this.project_winBidder = param.uid; // 项目中标人
       },
 
       /**************************************/
