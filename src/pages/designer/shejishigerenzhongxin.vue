@@ -63,7 +63,7 @@
       <div class="lunpo">
         <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
-            <div class="alzs-list" v-for="item in cases">
+            <div class="alzs-list" v-for="item in cases" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -84,7 +84,7 @@
             <div class="more" v-if="cases.length==3" v-tap="{methods:toChws, flag:0}">查看更多</div>
           </swiper-item>
           <swiper-item key="1">
-            <div class="alzs-list" v-for="item in honors">
+            <div class="alzs-list" v-for="item in honors" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -105,7 +105,7 @@
             <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
           </swiper-item>
           <swiper-item key="2">
-            <div class="alzs-list" v-for="item in works">
+            <div class="alzs-list" v-for="item in works" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -152,6 +152,22 @@
         works: []
       }
     },
+    activated: function () {
+      var _self = this;
+      if( _self.isInit == true  ){
+        var userInfo = common.getObjStorage("userInfo") || {};
+        if( common.isNull(userInfo._id) != true ){
+          _self.user_id = userInfo._id;
+        }
+        _self.index=0;
+        _self.loadMark=1;
+        _self.cases=[];
+        _self.honors=[];
+        _self.works=[];
+        _self.initData();
+      }
+      _self.isInit = true;
+    },
     created: function () {
       console.log("created:")
       var _self = this;
@@ -166,11 +182,10 @@
         this.$router.goBack();
       },
       toUrl: function (params) {
-        this.$router.push({name: params.pagename})
+        this.$router.push({name: params.pagename,query:{id:params.id}})
       },
       toChws: function (params) {
-        var _self = this;
-        _self.$router.push({name: 'anlielist', query:{flag:params.flag}})
+        this.$router.push({name: 'anlielist', query:{flag:params.flag}})
       },
       // 项目类型名称
       getNameById (id) {
@@ -248,7 +263,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response);
+          // console.log(response);
           var data = response.data
           if ( data ) {
             if( _self.loadMark == 1 ){

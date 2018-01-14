@@ -62,7 +62,7 @@
       <div class="lunpo">
         <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
-            <div class="alzs-list" v-for="item in cases" @click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in cases" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -80,9 +80,10 @@
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
+            <div class="more" v-if="cases.length==3" v-tap="{methods:toChws, flag:0}">查看更多</div>
           </swiper-item>
           <swiper-item key="1">
-            <div class="alzs-list" v-for="item in honors" @click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in honors" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -100,9 +101,10 @@
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
+            <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
           </swiper-item>
           <swiper-item key="2">
-            <div class="alzs-list" v-for="item in works" @click="toUrl('anlielist')">
+            <div class="alzs-list" v-for="item in works" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)" />
@@ -120,6 +122,7 @@
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
             </div>
+            <div class="more" v-if="works.length==3" v-tap="{methods:toChws, flag:2}">查看更多</div>
           </swiper-item>
         </swiper>
       </div>
@@ -148,6 +151,19 @@
         works: []
       }
     },
+    activated: function () {
+      var _self = this;
+      if( _self.isInit == true  ){
+        _self.user_id = this.$route.query.id;
+        _self.index=0;
+        _self.loadMark=1;
+        _self.cases=[];
+        _self.honors=[];
+        _self.works=[];
+        _self.initData();
+      }
+      _self.isInit = true;
+    },
     created: function () {
       console.log("created:")
       var _self = this;
@@ -158,8 +174,12 @@
       goback(){
         this.$router.goBack();
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:{id:param.id}})
+      },
+      toChws: function (params) {
+        var _self = this;
+        _self.$router.push({name: 'anlielist', query:{flag:params.flag}})
       },
       // 项目类型名称
       getNameById (id) {
@@ -265,5 +285,11 @@
   .swps{
     height:8rem !important;
     overflow:auto !important;
+  }
+  .more{
+    font-size: .3rem;
+    color: #999;
+    text-align: center;
+    padding: .25rem;
   }
 </style>

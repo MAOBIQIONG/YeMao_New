@@ -7,169 +7,175 @@
       <div class="header-right">删除</div>
     </div>
     <!--详情内容-->
-    <div class="content">
-      <div class="xc-top">
-        <div class="touxiang">
-          <img src="../../../static/images/bj.jpg"/>
-        </div>
-        <p>工作室</p>
-        <div class="shijian">
-          2017-01-01
-        </div>
-      </div>
-      <div class="xc-banner">
-        <!--轮播-->
-        <swiper height="4.8rem" :list="demo01_list"
-                @on-index-change="demo01_onIndexChange"></swiper>
-      </div>
-      <div class="gkrs">
-        <div class="zhan">
-          <span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>800</span>
-        </div>
-        <div class="guankan">
-          <span><img src="../../../static/images/designer/anli_liulan.png"></span><span>200</span>
-        </div>
-      </div>
-      <div class="xqjs">
-        <div class="smjs">
-          Westmoreland公园凉亭，美国达拉斯 / Murray Legge Architecture
-        </div>
-      </div>
-      <!--评价内容-->
-      <div class="pingjia-list">
-        <div class="gzpj-list">
-          <div class="pl-top">
+    <scroller
+      v-model="pullUpDownStatus"
+      :height="height"
+      :lock-x="lockX"
+      :lock-y="lockY"
+      :use-pullup="true"
+      :pullup-config = "pullupConfig"
+      @on-scroll="scroll"
+      @on-scroll-bottom="onScrollBottom"
+      @on-pullup-loading="pullUpLoading"
+      ref="scroller"
+    >
+      <div>
+        <div class="content">
+          <div class="xc-top">
             <div class="touxiang">
-              <img src="../../../static/images/bj.jpg"/>
+              <img :src="checkAvatar(chw.user.img)"/>
             </div>
-            <p>雇主昵称</p>
+            <p>{{chw.user.user_name}}</p>
+            <div class="shijian">{{timeStamp2String(chw.create_date)}}</div>
           </div>
-          <div class="pl-content">
-            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它。
+          <div class="xc-banner">
+            <!--轮播-->
+            <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
           </div>
-          <div class="pl-bottom">
-            <div class="shijian">
-              2017-12-23 8:35
+          <div class="gkrs">
+            <div class="zhan">
+              <span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{chw.like}}</span>
             </div>
-            <div class="pingfen">
-
+            <div class="guankan">
+              <span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{chw.comments}}</span>
+            </div>
+          </div>
+          <div class="xqjs">
+            <div class="smjs">{{chw.description}}</div>
+          </div>
+          <!--评价内容-->
+          <div class="pingjia-list">
+            <div class="gzpj-list" v-for="item in comments">
+              <div class="pl-top">
+                <div class="touxiang">
+                  <img :src="checkAvatar(item.user.img)"/>
+                </div>
+                <p>{{item.user.user_name}}</p>
+              </div>
+              <div class="pl-content">{{item.content}}</div>
+              <div class="pl-bottom">
+                <div class="shijian">{{getDateDiff(item.create_date)}}</div>
+                <div class="pingfen"></div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="ygpj-list">
-          <div class="ygpj-top">
-            <div class="touxiang">
-              <img src="../../../static/images/bj.jpg"/>
-            </div>
-            <p>游客昵称</p>
-            <div class="shijian">
-              2017-12-23 08:23
-            </div>
-          </div>
-          <div class="ygpj-content">
-            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它。
-          </div>
-        </div>
-        <div class="ygpj-list">
-          <div class="ygpj-top">
-            <div class="touxiang">
-              <img src="../../../static/images/bj.jpg"/>
-            </div>
-            <p>游客昵称</p>
-            <div class="shijian">
-              2017-12-23 08:23
-            </div>
-          </div>
-          <div class="ygpj-content">
-            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它。
-          </div>
-        </div>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
       </div>
-    </div>
-    <!--弹窗-->
-    <div class="tanchuang">
-      <div class="tisi">
-        <!--<div class="ts-top">-->
-          <!--标题行-->
-        <!--</div>-->
-        <div class="nr">
-          你要删除这个案列吗?
-        </div>
-        <div class="ts-bottom">
-          <div class="bt-left quxiao">
-            取消
-          </div>
-          <div class="bt-right">
-            确定
-          </div>
-
-        </div>
+    </scroller>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+    <!-- 评论输入框 -->
+    <div class="input-box">
+      <div class="input">
+        <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
+      </div>
+      <div class="send-btn" :class="is_submit?'hover':''">
+        <div class="btn" v-tap="{methods:commentchw}">发送</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {Swiper, SwiperItem,} from 'vux'
-
-  const baseList = [
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/1.jpg',
-    },
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/2.jpg',
-    },
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/1.jpg',
-    },
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/1.jpg',
-    },
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/1.jpg',
-    },
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/1.jpg',
-    },
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/1.jpg',
-    },
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/1.jpg',
-    },
-
-    {
-      url: 'javascript:',
-      img: 'https://static.vux.li/demo/3.jpg',
-      fallbackImg: 'https://static.vux.li/demo/3.jpg'
-    }
-  ]
-  const urlList = baseList.map((item, index) => ({
-    url: 'http://m.baidu.com',
-    img: item.img,
-    fallbackImg: item.fallbackImg,
-  }))
+  import { Swiper, SwiperItem, Previewer, TransferDom, Scroller, LoadMore, Toast } from 'vux'
+  import store from '@/vuex/store'
   export default {
+    directives: {
+      TransferDom
+    },
     components: {
       Swiper,
       SwiperItem,
+      Previewer,
+      Scroller,
+      LoadMore,
+      Toast
     },
+    store,
     data() {
       return {
-        demo01_list: urlList,
-        demo01_index: 0,
+        index: 0,
+        userInfo:{},
+        chw:{
+          user:{}
+        },
+        imgs:[],
+        comments:[],
+        // 评论
+        is_submit:false,
+        comment_placeholder:'填写评论',
+        comment_text:'',
+
+        // 上拉加载
+        lockX:true,
+        lockY:false,
+        height:"",
+        pagination: {
+          pageNo: 0,
+          pageSize: 10
+        },
+        pullUpDownStatus: {
+          pullupStatus: 'default'
+        },
+        pullupConfig:{
+          content: '上拉加载',
+          pullUpHeight: 60,
+          height: 40,
+          autoRefresh: false,
+          downContent: '放开加载',
+          upContent: '上拉加载',
+          loadingContent: '',
+          clsPrefix: 'xs-plugin-pullup-'
+        },
+        loadMoreStatus:{
+          tip:"正在加载",
+          tipNoData:"没有更多数据了",
+          tipLoading:"正在加载",
+          showLoading:true,
+          show:true,
+        },
+        hasMore:true,
+        showMark:false,
+        showMsg:"",
       }
     },
-    mounted: function () {
-      this.tanchuang();
+    created(){
+      var _self = this;
+      _self.chw_id = _self.$route.query.id;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
+      _self.initData();
+    },
+    mounted(){
+      this.$nextTick(
+        ()=>{
+          this.$refs.scroller.disablePullup();
+          this.$refs.scroller.reset({top:0});
+        }
+      );
+    },
+    watch:{
+      pullUpDownStatus:{
+        handler:function(val,oldval){
+          if(val.pullupStatus=="loading"){
+            this.loadMoreStatus.show=true;
+            if(this.hasMore == false){
+              this.loadMoreStatus.showLoading=false;
+            } else {
+              this.loadMoreStatus.showLoading=true;
+            }
+          }
+        }
+      },
+      comment_text:{
+        handler:function(val,oldval){
+          var _self = this;
+          if( _self.is_submit==false && val.length > 0 ){
+            _self.is_submit = true;
+          }else if( val.length == 0 ){
+            _self.is_submit = false;
+          }
+        }
+      }
     },
     methods: {
       goback() {
@@ -178,22 +184,233 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      demo01_onIndexChange(index) {
-        this.demo01_index = index
+      onIndexChange(index) {
+        this.index = index
       },
-      getThisHeight(ele) {
-        var id1 = document.getElementById('id1')
-        var id2 = document.getElementById('id2')
-        alert(id1.offsetHeight + '<>' + id2.offsetHeight)
+      showToast(msg){
+        this.showMark = true;
+        this.showMsg = msg;
       },
-      //		弹窗
-      tanchuang(){
-        $(".header-right").click(function(){
-          $(".tanchuang").show();
-        });
-        $(".quxiao").click(function(){
-          $(".tanchuang").hide();
-        });
+      // 头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      // 时间戳转日期
+      timeStamp2String(time,id){
+        if( common.isNull(id) ){ id = 'ymd'; }
+        return common.timeStamp2String(time,id);
+      },
+      // 时间戳转发布时长
+      getDateDiff(time){
+        return common.getDateDiff(time);
+      },
+      show (index) {
+        this.$refs.previewer.show(index)
+      },
+      //点赞
+      dianzan(){
+        var _self = this;
+        if( common.isNull(_self.userInfo._id) ){
+          _self.$router.push({name: 'login'});
+        }else{
+          _self.like();
+        }
+      },
+
+      //点赞效果
+      commentchw(){
+        var _self = this;
+        if( !_self.is_submit ){
+        }else if( common.isNull(_self.userInfo._id) ){
+          _self.$router.push({name: 'login'});
+        }else {
+          _self.addComment();
+        }
+      },
+
+      //下拉刷新
+      refreshPageDate(){
+        let _self = this
+        _self.pagination.pageNo = 0;
+        _self.hasMore = true;
+        _self.loadMoreStatus.show=false;
+        _self.$refs.scroller.donePullup();
+        _self.loadData();
+      },
+      //上拉加载
+      loadMore(){
+        let _self = this;
+        _self.loadData();
+      },
+      scroll(position){
+        // console.log("on-scroll",position);
+      },
+      pullUpLoading(){
+        console.log('on-pull-up-loading');
+        this.loadMore();
+      },
+      onScrollBottom(){
+        // console.log('on-scroll-bottom');
+      },
+      //获取数据
+      initData(){
+        let _self = this;
+        let params = {
+          interfaceId:common.interfaceIds.getPChwDetails,
+          where:{
+            _id: _self.chw_id
+          }
+        };
+        if( !common.isNull(_self.userInfo._id) ){
+          params.user_id = _self.userInfo._id;
+        }
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          console.log(response)
+          let data = response.data;
+          _self.setInitData(data);
+        })
+      },
+
+      setInitData(data){
+        let _self = this;
+        _self.$refs.scroller.enablePullup();
+        _self.loadMoreStatus.show=false;
+        _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePullup();
+        // 数据处理
+        _self.chw = data.chw || {};
+        var imgs = _self.chw.imgs || [];// 图片
+        imgs.forEach(function (item,index) {
+          _self.imgs.push({img:item});
+        })
+        // 评论
+        _self.comments = data.comments || [];
+        if(_self.comments.length < _self.pagination.pageSize){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.showLoading=false;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.$refs.scroller.disablePullup();
+        } else {
+          _self.pagination.pageNo++
+        }
+      },
+
+      //获取数据
+      loadData(){
+        let _self = this;
+        _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
+        let params = {
+          interfaceId:common.interfaceIds.getComments,
+          pageNo: _self.pagination.pageNo,
+          pageSize: _self.pagination.pageSize,
+          where:{
+            comment_id: _self.chw_id
+          }
+        };
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          // console.log(response);
+          let data = response.data;
+          _self.setData(data);
+        })
+      },
+
+      setData(data){
+        let _self = this;
+        _self.$refs.scroller.enablePullup();
+        // 订单
+        let comments = data.comments || [];
+        //判断页码是否为0
+        if(_self.pagination.pageNo == 0) {
+          _self.comments = comments;
+        } else {
+          _self.comments.push(...data.comments);
+        }
+        _self.loadMoreStatus.show=false;
+        _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePullup();
+        //判断数据是否有一页
+        if(comments.length < _self.pagination.pageSize){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.showLoading=false;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.$refs.scroller.disablePullup();
+        } else {
+          _self.pagination.pageNo++
+        }
+      },
+
+      //点赞
+      like(){
+        let _self = this;
+        let params = {
+          interfaceId:common.interfaceIds.like,
+          data: {
+            like_id: _self.chw_id,
+            user_id: _self.userInfo._id,
+            like_type: 0
+          }
+        };
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          // console.log(response)
+          let data = response.data;
+          if( data.code == 200 ){
+            _self.showToast("点赞成功!")
+          }else{
+            _self.showToast("点赞失败!")
+          }
+        })
+      },
+
+      //评论
+      addComment(){
+        let _self = this;
+        let params = {
+          interfaceId:common.interfaceIds.addComments,
+          data: {
+            user_id: _self.userInfo._id,          // 评论人
+            comment_id: _self.chw_id,             // 评论对象ID
+            content: _self.comment_text,          // 评论内容
+            comment_type: 1,                      // 评论类型：0、喵喵圈，1、案例展示、个人荣誉、我的作品、喵学堂、问答。
+          }
+        };
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          console.log(response)
+          let data = response.data;
+          if( data.code == 200 ){
+            _self.showToast("评论成功!")
+            _self.addCommentHmtl(params.data);
+          }else{
+            _self.showToast("评论失败!")
+          }
+        })
+      },
+
+      // 添加评论html
+      addCommentHmtl(data){
+        var _self = this;
+        // 修改评论数量
+        _self.chw.comments += 1;
+        // 添加评论记录
+        data.user = {
+          authenticating_state: _self.userInfo.authenticating_state,
+          img: _self.userInfo.img,
+          user_name: _self.userInfo.user_name,
+          _id: _self.userInfo._id
+        };
+        data.create_date = new Date().getTime();
+        _self.comments.unshift(data);
+        // 重置评论框内容
+        _self.comment_text = '';
       }
     }
   }
