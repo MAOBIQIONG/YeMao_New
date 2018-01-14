@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
       <span>案列详情</span>
-      <div class="header-right">删除</div>
+      <div class="header-right" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
     </div>
     <!--详情内容-->
     <scroller
@@ -32,15 +32,11 @@
             <!--轮播-->
             <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
           </div>
-          <div class="gkrs">
-            <div class="zhan">
-              <span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{chw.like}}</span>
-            </div>
-            <div class="guankan">
-              <span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{chw.comments}}</span>
-            </div>
+          <div class="gkrs" style="height: 0.9rem;">
+            <div class="zhan dz" :class="chw.likeFlag==1?'hover':''" v-tap="{methods:dianzan}">{{chw.like}}</div>
+            <div class="guankan comments">{{chw.comments}}</div>
           </div>
-          <div class="xqjs">
+          <div class="xqjs" style="padding-bottom: .25rem">
             <div class="smjs">{{chw.description}}</div>
           </div>
           <!--评价内容-->
@@ -353,7 +349,7 @@
           data: {
             like_id: _self.chw_id,
             user_id: _self.userInfo._id,
-            like_type: 0
+            like_type: 1
           }
         };
         this.$axios.post('/mongoApi',{
@@ -362,7 +358,8 @@
           // console.log(response)
           let data = response.data;
           if( data.code == 200 ){
-            _self.showToast("点赞成功!")
+            _self.chw.likeFlag = _self.chw.likeFlag==1? 0 : 1;
+            _self.chw.like += _self.chw.likeFlag==1? 1 : -1;
           }else{
             _self.showToast("点赞失败!")
           }
@@ -419,4 +416,28 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/anliexq.css';
+  .dz{
+    height: 0.9rem;
+    line-height: 0.9rem;
+    display: inline-block;
+    background-image: url("../../../static/images/collect.png");
+    background-size: 0.4rem 0.4rem;
+    background-position-y:0.25rem;
+    background-repeat: no-repeat;
+    padding-left: 0.5rem;
+    padding-right: 0.25rem;
+  }
+  .dz.hover{
+    background-image: url("../../../static/images/collect-hover.png");
+  }
+  .comments{
+    height: 0.9rem;
+    line-height: 0.9rem;
+    display: inline-block;
+    background: url("../../../static/images/liulan.png") no-repeat;
+    background-size: 0.4rem 0.4rem;
+    background-position-y:0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.25rem;
+  }
 </style>

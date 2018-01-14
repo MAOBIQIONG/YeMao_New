@@ -18,7 +18,7 @@
     >
       <div>
         <div class="content">
-          <div class="list-paizuan" v-for="(item,index) in chws">
+          <div class="list-paizuan" v-for="(item,index) in chws" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
             <div class="tu">
               <img :src="item.cover"/>
             </div>
@@ -122,8 +122,8 @@
       goback () {
         this.$router.goBack()
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:{id:param.id}})
       },
       // 检测图片路径,设置默认图
       checkImg (path) {

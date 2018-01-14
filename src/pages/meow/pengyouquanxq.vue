@@ -56,7 +56,7 @@
               </ul>
             </div>
             <div class="pinjia">
-              <p class="dz" :class="meow.likeFlag==0?'hover':''" v-tap="{methods:dianzan}"><span>{{meow.like}}</span></p>
+              <p class="dz" :class="meow.likeFlag==1?'hover':''" v-tap="{methods:dianzan}"><span>{{meow.like}}</span></p>
               <p class="comments"><span></span><span>{{meow.comments}}</span></p>
             </div>
           </div>
@@ -394,7 +394,7 @@
             // 刷新喵喵圈首页
             _self.$store.state.meowRefreshMark = 1;
             _self.meow.likeFlag = _self.meow.likeFlag==1? 0 : 1;
-            _self.meow.like += _self.meow.likeFlag==0? 1 : -1;
+            _self.meow.like += _self.meow.likeFlag==1? 1 : -1;
           }else{
             _self.showToast("点赞失败!")
           }
@@ -477,7 +477,7 @@
   }
   .dz{
     height: 0.9rem;
-    line-height: 0.9;
+    line-height: 0.9rem;
     display: inline-block;
     background-image: url("../../../static/images/collect.png");
     background-size: 0.4rem 0.4rem;
@@ -490,7 +490,7 @@
   }
   .comments{
     height: 0.9rem;
-    line-height: 0.9;
+    line-height: 0.9rem;
     display: inline-block;
     background: url("../../../static/images/liulan.png") no-repeat;
     background-size: 0.4rem 0.4rem;

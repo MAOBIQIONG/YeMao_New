@@ -72,7 +72,7 @@
               </ul>
             </div>
             <div class="pinjia">
-              <p class="dz" :class="item.likeFlag==0?'hover':''" v-tap="{methods:dianzan,index:index,id:item._id}"><span>{{item.like}}</span></p>
+              <p class="dz" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,index:index,id:item._id}"><span>{{item.like}}</span></p>
               <p class="comments"><span></span><span>{{item.comments}}</span></p>
             </div>
           </div>
@@ -301,7 +301,7 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          // console.log(response);
+          console.log(response);
           let data = response.data;
           _self.setData(data);
         })
@@ -352,7 +352,7 @@
           let data = response.data;
           if( data.code == 200 ){
             _self.meows[index].likeFlag = _self.meows[index].likeFlag==1? 0 : 1;
-            _self.meows[index].like += _self.meows[index].likeFlag==0? 1 : -1;
+            _self.meows[index].like += _self.meows[index].likeFlag==1? 1 : -1;
           }else{
             _self.showToast("操作失败!")
           }
