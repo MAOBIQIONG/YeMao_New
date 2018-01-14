@@ -61,11 +61,13 @@
           title: '',
           description: '',
           date: '',
+          like:0,
           collection: 0,
           comments: 0,
           type: 1,
           cover: "./static/images/img/1.jpg",
-          imgs: ["./static/images/img/1.jpg","./static/images/img/2.jpg","./static/images/img/3.jpg"]
+          imgs: ["./static/images/img/1.jpg","./static/images/img/2.jpg","./static/images/img/3.jpg"],
+          is_del:0
         },
         curr_date:'',
         showMark:false,

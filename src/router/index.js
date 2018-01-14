@@ -334,7 +334,8 @@ const routeArray = [
   },
   { path: '/anlielist',
     name: 'anlielist',
-    component: anlielist
+    component: anlielist,
+    meta: { keepAlive: true }
   },
   { path: '/renzhengchenggong',
     name: 'renzhengchenggong',
@@ -390,11 +391,13 @@ const routeArray = [
   },
   { path: '/shejishigerenzhongxin',
     name: 'shejishigerenzhongxin',
-    component: shejishigerenzhongxin
+    component: shejishigerenzhongxin,
+    meta: { keepAlive: true }
   },
   { path: '/sjszxxq',
     name: 'sjszxxq',
-    component: sjszxxq
+    component: sjszxxq,
+    meta: { keepAlive: true }
   },
   { path: '/xiugaigerenxinxi',
     name: 'xiugaigerenxinxi',

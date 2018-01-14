@@ -10,7 +10,7 @@
       <!-- 上拉加载 -->
       <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
         <div>
-          <div class="alzs-list" v-for="item in chws" @click="toUrl('anliexq')">
+          <div class="alzs-list" v-for="item in chws" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
             <div class="al-top">
               <div class="touxiang">
                 <img :src="getDefultImg(item.cover)" />
@@ -37,6 +37,7 @@
 
 <script>
   import { LoadMore, Scroller } from 'vux'
+  import common from "../../../static/js/common";
   export default {
     components: {
       Scroller,
@@ -64,8 +65,22 @@
         this.$refs.scrollerBottom.reset({top: 0})
       })
     },
+    activated: function () {
+      console.log("anlielist activated:")
+      var _self = this;
+      if( _self.isInit == true  ){
+        var userInfo = common.getObjStorage("userInfo") || {};
+        if( common.isNull(userInfo._id) != true ){
+          _self.user_id = userInfo._id;
+        }
+        _self.type = _self.$route.query.flag;
+        _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
+        _self.initData();
+      }
+      _self.isInit = true;
+    },
     created: function () {
-      console.log("created:")
+      console.log("anlielist created:")
       var _self = this;
       var userInfo = common.getObjStorage("userInfo") || {};
       if( common.isNull(userInfo._id) != true ){
@@ -79,8 +94,8 @@
       goback(){
         this.$router.goBack();
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:{id:param.id}})
       },
       // 默认图片
       getDefultImg (path) {
@@ -118,7 +133,7 @@
           coll: common.collections.personalChw,
           where: {
             user_id: _self.user_id,
-            type: _self.type
+            type: common.checkInt(_self.type)
           },
           other: {
             skip: _self.pageNo*_self.pageSize,
@@ -128,7 +143,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response);
+          // console.log(response);
           var data = response.data
           if ( data ) {
             //判断页码是否为0

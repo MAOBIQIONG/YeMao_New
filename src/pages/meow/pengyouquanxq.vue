@@ -446,7 +446,6 @@
         // 重置评论框内容
         _self.comment_text = '';
       }
-
     }
   }
 </script>
@@ -505,61 +504,5 @@
       background-repeat: no-repeat;
       background-position:center center;
       background-size: cover
-  }
-
-  /**评论输入框**/
-  .input-box{
-    height: 1rem;
-    width:100%;
-    font-size: 0.32rem;
-    background: #fff;
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
-    border-top: 0.55px solid #F2F2F2;
-  }
-  .input-box .input{
-    height: 1rem;
-    width: 80%;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    -webkit-box-flex:1;
-  }
-  .input-box .input input{
-    height: 0.6rem;
-    width: 90%;
-    margin: 0.25rem 5%;
-    text-indent: 0.2rem;
-    background: #f3f3f3;
-    border-radius: 0.3rem;
-    color: #333;
-    display: block;
-    border: none;
-    outline: none;
-  }
-  .input-box .input input::-webkit-input-placeholder{
-    color: #ccc;
-  }
-  .input-box .send-btn{
-    height: 1rem;
-    width: 20%;
-    text-align: center;
-    color: #ccc;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
-  .input-box .send-btn .btn{
-    height: 0.6rem;
-    line-height: 0.6rem;
-    width: 1rem;
-    margin: 0.25rem auto;
-    font-size: 0.28rem;
-    text-align: center;
-    background: #fff;
-  }
-  .input-box .send-btn.hover{
-    color: #f65aa6;
   }
 </style>

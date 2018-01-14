@@ -363,6 +363,7 @@ const common = {
     setCertification:'setCertification',           // 认证
     getCertification:'getCertification',           // 查询认证
     getPersonalChw:'getPersonalChw',               // 获取personalChw
+    getPChwDetails:'getPChwDetails',               // 获取personalChw详情
     prsonalCenter:'prsonalCenter',                 // 个人中心
     getMyPurse:'getMyPurse',                       // 我的钱包
     getPayments:'getPayments',                     // 收支明细
