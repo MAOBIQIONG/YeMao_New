@@ -41,7 +41,7 @@ ul {
   line-height: 0.88rem;
   text-align: center;
   background: white;
-  z-index: 99999;
+  z-index: 999;
 }
 .header .header-left {
   position: absolute;

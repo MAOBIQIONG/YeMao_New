@@ -371,8 +371,8 @@ const common = {
     getMeowDetails:'getMeowDetails',               // 获取喵喵圈动态详情
     getComments:'getComments',                     // 获取评论列表
     getLikes:'getLikes',                           // 获取点赞列表
-    like:'like'                                    // 点赞
-
+    like:'like',                                   // 点赞
+    addComments:'addComments',                     // 评论
 
   },
 

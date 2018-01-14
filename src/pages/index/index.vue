@@ -155,7 +155,6 @@
 <script>
   import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name} from 'vux'
   import store from '@/vuex/store'
-  import common from "../../../static/js/common";
 
   export default {
     components: {

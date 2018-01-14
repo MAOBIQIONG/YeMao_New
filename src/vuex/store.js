@@ -15,6 +15,8 @@ const state = {
   detailRefreshMark: 0,
   // 雇主首页刷新状态
   employerRefreshMark: 0,
+  // 喵喵圈首页刷新状态
+  meowRefreshMark: 0,
   // 设计师首页刷新状态
   designerRefreshMark: 0
 

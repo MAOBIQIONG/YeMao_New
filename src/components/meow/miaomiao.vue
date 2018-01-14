@@ -90,7 +90,7 @@
 
 <script>
   import { Previewer, TransferDom, Scroller, LoadMore, Toast } from 'vux'
-  import common from "../../../static/js/common";
+  import store from '@/vuex/store'
   export default {
     directives: {
       TransferDom
@@ -101,6 +101,7 @@
       LoadMore,
       Toast
     },
+    store,
     data() {
       return {
         userInfo:{},
@@ -166,10 +167,22 @@
         showMsg:"",
       }
     },
+    activated: function () {
+      var mrm = this.$store.state.meowRefreshMark;
+      if ( mrm > 0 ) {
+        this.$store.state.meowRefreshMark = 0;
+        this.pagination.pageNo = 0;
+        this.pagination.pageSize = 10;
+        this.loadData()
+      }
+    },
     created(){
       var _self = this;
       _self.userIfo = common.getObjStorage("userInfo") || {};
-      _self.loadData();
+      var path = _self.$route.path;
+      if( path.indexOf('/home/meow') >= 0 ){
+        _self.loadData();
+      }
     },
     mounted(){
       this.$nextTick(
@@ -237,7 +250,7 @@
         _self.options.previewer = '.previewer'+param.index;
         var imgs = _self.meows[param.index].imgs || [];
         imgs.forEach(function (img, j) {
-          _self.list.push({src:img})
+          _self.list.push({src:img,w:1200,h:700})
         })
         _self.$refs.previewer.show(param.i)
         param.event.cancelBubble = true;
