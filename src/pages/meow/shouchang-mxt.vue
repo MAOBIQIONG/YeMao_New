@@ -237,10 +237,10 @@ export default {
 
     },
     created(){
-        var _slef = this;
+        var _self = this;
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
-            _slef.user_id = user._id;
+            _self.user_id = user._id;
         }
         this.loadData();
     },

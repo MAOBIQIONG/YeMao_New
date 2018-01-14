@@ -2,26 +2,27 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
     </div>
     <!--文章详情-->
     <div class="content">
       <div class="piaoti">
-        桥梁建筑大师邓文中：城市环境是吸引人才的重点
+        {{chw.title}}
       </div>
+        <!-- <div class="xc-banner">
+            <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
+        </div> -->
       <div class="nichengshijian">
         <div class="ns-left">
-          <span><img src="../../../static/images/bj.jpg"/></span><span>设计师昵称</span>
+          <span><img :src="checkAvatar(null)"/></span><span>{{chw.user.user_name}}</span>
         </div>
         <div class="tm-right">
-          <span>发布时间</span> <span>2017-08-12</span>
+          <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
         </div>
       </div>
       <div class="neirongshijian">
-        <p>本报讯(记者 任笑元)工信部官微昨日援引12321网络不良与垃圾信息举报受理中心的统计情况，公布2017年8月，12321举报中心收到钓鱼网站前十名，提醒用户警惕钓鱼网站假冒知名品牌及网站的可能性，包括：假冒苹果公司、奔跑吧兄弟、中国新歌声、爸爸去哪儿、10086、工商银行、建设银行、农业银行、民生银行、交通银行的钓鱼信息</p>
-
-        <p>根据12321网络不良与垃圾信息举报受理中心(www.12321.cn)接到网民举报的短信、邮件、网站等信息，2017年8月，被举报最多的是假冒苹果公司的钓鱼诈骗网站，举报量达192件次，比7月份增加了3.1%。排名第二的是假冒奔跑吧兄弟的钓鱼诈骗网站，比7月份增加了264.3%。</p>
+          {{chw.description}}
         <div class="bottom">
           <div class="bottom-zan">
             <span id="praise"><img src="../../../static/images/zan1.png"/></span>
@@ -98,47 +99,125 @@
 </template>
 
 <script>
-  export default {
+import {Swiper,Scroller,LoadMore,Toast} from 'vux'
+export default {
+    components: {
+        Swiper,
+        Scroller,
+        LoadMore,
+        Toast
+    },
     data: function () {
-      return {
-          QAId:null,
-      }
+        return {
+            item_id:null,
+            chw:{},
+            comments:[],
+            user_id:null,
+            imgs:[],
+            index:0
+        }
+    },
+    filters:{
+        //eg:2018-12-12
+        dateToString(data){
+            let d = new Date(data);
+            // console.log(d.toISOString());
+            // return d.toISOString().replace(/T[\w:.]+/,'');
+            let rs = /[\w-]+(?=T)/.exec(d.toISOString())
+            return rs[0];
+        }
     },
     created(){
-        this.QAId = this.$route.query.id;
-        // console.log(this.QAId,this.$route.query);
+        let _self = this;
+        let userInfo = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(userInfo._id) ){
+            _self.user_id = userInfo._id;
+        }
+        _self.item_id = _self.$route.query.id;
+        _self.initData();
+        
     },
     mounted: function () {
-      this.dianzan();
+        this.dianzan();
+        this.$nextTick(()=>{
+            
+        });
     },
     methods: {
-      goback () {
-        this.$router.goBack()
-      },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
-      },
-      dianzan (){
-        var off=true;
-        $("#praise").click(function(){
-          var praise_txt = $("#praise-txt");
-          var num=parseInt(praise_txt.text());
-          if(off==true){
-            $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-            praise_txt.css('color','#f65aa6')
-            num +=1;
-            praise_txt.text(num)
-          }
-        });
-        $("#xinxin").click(function(){
-          if(off==true){
-            $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-            $(".bottom-sz").css('color','#f65aa6')
-          }
-        });
-      }
+        goback () {
+            this.$router.goBack()
+        },
+        toUrl: function (pagename) {
+            this.$router.push({name: pagename})
+        },
+        dianzan (){
+            var off=true;
+            $("#praise").click(function(){
+            var praise_txt = $("#praise-txt");
+            var num=parseInt(praise_txt.text());
+            if(off==true){
+                $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+                praise_txt.css('color','#f65aa6')
+                num +=1;
+                praise_txt.text(num)
+            }
+            });
+            $("#xinxin").click(function(){
+            if(off==true){
+                $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+                $(".bottom-sz").css('color','#f65aa6')
+            }
+            });
+        },
+        onIndexChange(index) {
+            this.index = index
+        },
+        // 头像
+        checkAvatar (path) {
+            console.log(path);
+            return common.getAvatar(path)
+        },
+        //数据初始化
+        initData(){
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.getPChwDetails,
+                user_id:_self.user_id,
+                where:{
+                    _id: _self.item_id
+                }
+            };
+            this.$axios.post('/mongoApi',{
+                params
+            },(response)=>{
+                console.log(response)
+                let data = response.data;
+                _self.setInitData(data);
+                console.log(data);
+            })
+        },
+        setInitData(data){
+            let _self = this;
+            _self.chw = data.chw || {};
+            var imgs = _self.chw.imgs || [];// 图片
+            imgs.forEach(function (item,index) {
+            _self.imgs.push({img:item});
+            })
+
+            // // 评论
+            // _self.comments = data.comments || [];
+            // if(_self.comments.length < _self.pagination.pageSize){
+            // _self.hasMore = false;
+            // _self.loadMoreStatus.show=true;
+            // _self.loadMoreStatus.showLoading=false;
+            // _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+            // _self.$refs.scroller.disablePullup();
+            // } else {
+            // _self.pagination.pageNo++
+            // }
+        },
     }
-  }
+}
 </script>
 <style scoped>
   @import '../../../static/css/meow/wzxq.css';
