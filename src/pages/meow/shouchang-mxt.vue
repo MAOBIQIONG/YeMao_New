@@ -69,7 +69,7 @@ export default {
         },
         height:{
             type:String,
-            default:"-50"
+            default:"-44"
         }
     },
     data: function () {
@@ -152,7 +152,7 @@ export default {
                 pageSize:_self.pagination.pageSize,
                 where:{
                     // user_id: _self.user_id,
-                    type: 4//问答
+                    type: 4//喵学堂
                 }
             }
             _self.$axios.post('/mongoApi', {
@@ -209,14 +209,14 @@ export default {
             _self.pagination.pageNo = 0;
             _self.loadMoreStatus.show=false;
             _self.$refs.scroller.donePullup();  
-            setTimeout(()=>{_self.loadData()},1000); 
+            setTimeout(()=>{_self.loadData()},100); 
             
         },
         //上拉加载
         loadMore(){
             let _self = this;
             // _self.loadData();
-            setTimeout(()=>{_self.loadData()},1000); 
+            setTimeout(()=>{_self.loadData()},1); 
         },
         scroll(position){
             // console.log("on-scroll",position);
