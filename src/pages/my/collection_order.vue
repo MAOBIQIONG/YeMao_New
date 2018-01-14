@@ -152,7 +152,7 @@ export default {
                 pageSize:_self.pagination.pageSize,
                 data:{
                     // user_id: _self.user_id,
-                    type: 4//问答
+                    // type: 4//问答
                 }
             }
             _self.$axios.post('/mongoApi', {
