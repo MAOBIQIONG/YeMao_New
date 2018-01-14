@@ -11,37 +11,7 @@
         <div class="sjszj-top">
           <span>设计师专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan">
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-            <p class="nicheng">昵称</p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-            <p class="nicheng">昵称</p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-            <p class="nicheng">昵称</p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-            <p class="nicheng">昵称</p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-            <p class="nicheng">昵称</p>
-          </li>
+        <ul class="renyuan" @click="toUrl('collectionDesigner')">
           <li>
             <p class="touxiang">
               <img src="../../../static/images/bj.jpg" />
@@ -55,7 +25,7 @@
         <div class="xm-top">
           <span>项目专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan">
+        <ul class="renyuan" @click="toUrl('collectionOrder')">
           <li>
             <img src="../../../static/images/bj.jpg" />
           </li>
@@ -75,7 +45,7 @@
         <div class="xm-top">
           <span>问答专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan">
+        <ul class="renyuan"  @click="toUrl('collectionQa')">
           <li>
             <img src="../../../static/images/bj.jpg" />
           </li>
@@ -95,7 +65,7 @@
         <div class="xm-top">
           <span>喵学堂专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan">
+        <ul class="renyuan"  @click="toUrl('collectionMxt')">
           <li>
             <img src="../../../static/images/bj.jpg" />
           </li>
@@ -115,7 +85,7 @@
         <div class="sjszj-top">
           <span>简历专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan">
+        <ul class="renyuan"  @click="toUrl('collectionResume')">
           <li>
             <p class="touxiang">
               <img src="../../../static/images/bj.jpg" />

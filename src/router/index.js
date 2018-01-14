@@ -67,6 +67,11 @@ import minejianli from '@/pages/my/mine-jianli'
 import minepinlun from '@/pages/my/mine-pinlun'
 import mineshouchang from '@/pages/my/mine-shouchang'
 import minewenda from '@/pages/my/mine-wenda'
+import collectionDesigner from '@/pages/my/collection_designer'
+import collectionMxt from '@/pages/my/collection_mxt'
+import collectionOrder from '@/pages/my/collection_order'
+import collectionQa from '@/pages/my/collection_qa'
+import collectionResume from '@/pages/my/collection_resume'
 import yijian from '@/pages/my/yijian'
 import miaomiaoquan from '@/pages/my/miaomiaoquan'
 import uploadImg from '@/pages/designer/uploadImg'
@@ -520,6 +525,31 @@ const routeArray = [
     name: 'zhuche2',
     component: zhuche2
   },
+    { 
+        path: '/collectionDesigner',
+        name: 'collectionDesigner',
+        component: collectionDesigner  
+    },
+    { 
+        path: '/collectionMxt',
+        name: 'collectionMxt',
+        component: collectionMxt  
+    },
+    { 
+        path: '/collectionOrder',
+        name: 'collectionOrder',
+        component: collectionOrder  
+    },
+    { 
+        path: '/collectionQa',
+        name: 'collectionQa',
+        component: collectionQa  
+    },
+    { 
+        path: '/collectionResume',
+        name: 'collectionResume',
+        component: collectionResume  
+    },
   //其他url重定向
   {
     path:'*',
