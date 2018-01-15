@@ -178,7 +178,7 @@
     },
     created(){
       var _self = this;
-      _self.userIfo = common.getObjStorage("userInfo") || {};
+      _self.userInfo = common.getObjStorage("userInfo") || {};
       var path = _self.$route.path;
       if( path.indexOf('/home/meow') >= 0 ){
         _self.loadData();
@@ -234,7 +234,7 @@
       dianzan(param){
         var _self = this;
         var index = param.index;
-        if( common.isNull(_self.userIfo._id) ){
+        if( common.isNull(_self.userInfo._id) ){
           _self.$router.push({name: 'login'});
         }else{
           _self.like(param.id,param.index);
@@ -295,13 +295,13 @@
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
         };
-        if( !common.isNull(_self.userIfo._id) ){
-          params.user_id = _self.userIfo._id;
+        if( !common.isNull(_self.userInfo._id) ){
+          params.user_id = _self.userInfo._id;
         }
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response);
+          // console.log(response);
           let data = response.data;
           _self.setData(data);
         })
@@ -341,7 +341,7 @@
           interfaceId:common.interfaceIds.like,
           data: {
             like_id: id,
-            user_id: _self.userIfo._id,
+            user_id: _self.userInfo._id,
             like_type: 0
           }
         };

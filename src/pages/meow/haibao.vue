@@ -2,35 +2,130 @@
   <div>
     <!--头部导航-->
     <div class="header header1">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <div class="header-right fx"><img src="../../../static/images/fx.png" /></div>
     </div>
-    <div class="content">
+    <div class="content" :style="'background-image:url('+checkImg(activity.poster_img)+')'">
       <div class="bottom">
-        <div class="anniu">
-          已结束
-        </div>
-        <p class="ckxq"@click="toUrl('haibaoxq')"><a>查看详情></a></p>
-        <p><span>0</span>人已报名</p>
+        <div class="anniu" :class="activity.state<2 ? 'hover' : ''" v-tap="{methods:canyu}">{{getActivityStateName(activity.state)}}</div>
+        <p class="ckxq" v-tap="{methods:toUrl,pagename:'haibaoxq',id:activity._id}"><a>查看详情></a></p>
+        <p><span>{{activity.participants.length}}</span>人已报名</p>
       </div>
     </div>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
+  import { Toast } from 'vux'
   export default {
+    components: {
+      Toast
+    },
     data: function () {
       return {
-
+        userInfo:{},
+        activity:{
+          participants:[]
+        },
+        showMark:false,
+        showMsg:"",
       }
+    },
+    created(){
+      var _self = this;
+      _self.act_id = this.$route.query.id;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
+      _self.initData();
     },
     methods: {
       goback () {
         this.$router.goBack()
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:{id:param.id}})
       },
+      showToast(msg){
+        this.showMark = true;
+        this.showMsg = msg;
+      },
+      // 检测图片路径,设置默认图
+      checkImg (path) {
+        return common.getAvatar(path)
+      },
+      // 获取活动状态
+      getActivityStateName(state){
+        var str = state==0 ? '立即报名' : state==1 ? '取消报名' : state==2 ? '已截止' : state==3 ? '已结束' : ''
+        return str;
+      },
+
+      // 参与
+      canyu(){
+        var _self = this;
+        if( common.isNull(_self.userInfo._id) ){
+          _self.$router.push({name: 'login'});
+        }else{
+          _self.partIn();
+        }
+      },
+
+      //获取数据
+      initData(){
+        let _self = this;
+        if( common.isNull(_self.act_id) ){
+          return;
+        }
+        let params = {
+          interfaceId:common.interfaceIds.getActDetails,
+          where:{
+            _id:_self.act_id
+          }
+        };
+        if( !common.isNull(_self.userInfo._id) ){
+          params.user_id = _self.userInfo._id;
+        }
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          console.log(response)
+          let data = response.data;
+          _self.activity = data.activity || {};
+        })
+      },
+
+      //获取数据
+      partIn(){
+        let _self = this;
+        let params = {
+          interfaceId:common.interfaceIds.partInActivity,
+          where:{
+            _id:_self.act_id
+          }
+        };
+        if( !common.isNull(_self.userInfo._id) ){
+          params.user_id = _self.userInfo._id;
+        }
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          var data = response.data;
+          if( data && data.code == 200 ){
+            var index = _self.activity.participants.indexOf(_self.userInfo._id);
+            if( index < 0 ){
+              _self.showToast("报名成功！");
+              _self.activity.participants.push(_self.userInfo._id);
+              _self.activity.state = 1;
+            }else{
+              _self.showToast("取消成功！");
+              _self.activity.participants.splice(index,1);
+              _self.activity.state = 0;
+            }
+          }else{
+            _self.showToast("报名失败！");
+          }
+        })
+      },
+
     }
   }
 </script>
@@ -57,10 +152,9 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background: url("../../../static/images/bj.jpg");
-  background-size: 100% 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
 }
 .bottom{
   position: fixed;
@@ -78,8 +172,13 @@
   height: 0.6rem;
   border-radius: 0.1rem;
   line-height: 0.6rem;
-  background-color: #ececec;
-  margin:0.3rem auto;
+  background-color: #ddd;
+  margin: 0.3rem auto;
+  opacity: 0.8;
+}
+.anniu.hover{
+  background-color: #f65aa6;
+  opacity: 1;
 }
 .ckxq a{
   text-decoration:underline ;
