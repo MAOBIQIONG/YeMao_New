@@ -93,7 +93,7 @@
     },
     created(){
       var _self = this;
-      _self.userIfo = common.getObjStorage("userInfo") || {};
+      _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.loadData();
     },
     mounted(){
@@ -136,7 +136,7 @@
       // 点赞效果
       dianzan(param){
         var _self = this;
-        if( common.isNull(_self.userIfo._id) ){
+        if( common.isNull(_self.userInfo._id) ){
           _self.$router.push({name: 'login'});
         }else{
           _self.like(param.id,param.index);
@@ -186,8 +186,8 @@
             type:0
           }
         };
-        if( !common.isNull(_self.userIfo._id) ){
-          params.user_id = _self.userIfo._id;
+        if( !common.isNull(_self.userInfo._id) ){
+          params.user_id = _self.userInfo._id;
         }
         this.$axios.post('/mongoApi',{
           params
@@ -232,7 +232,7 @@
           interfaceId:common.interfaceIds.like,
           data: {
             like_id: id,
-            user_id: _self.userIfo._id,
+            user_id: _self.userInfo._id,
             like_type: 1
           }
         };

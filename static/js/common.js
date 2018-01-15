@@ -378,6 +378,9 @@ const common = {
     addComments:'addComments',                     // 评论
     getCollects:'getCollects',                     // 收藏列表
     getCollectsPage:'getCollectsPage',             // 我的收藏
+    getActivitys:'getActivitys',                   // 活动
+    getActDetails:'getActivityDetails',            // 活动详情
+    partInActivity:'partInActivity',               // 参加活动
 
   },
 

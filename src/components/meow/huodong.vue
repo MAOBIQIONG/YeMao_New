@@ -18,26 +18,15 @@
     >
       <div>
         <div class="content">
-          <div class="hd-list" v-tap="{methods:toUrl,pagename:'haibao'}">
-            <div class="hd-top">
-              <img src="../../../static/images/bj.jpg">
-              <div class="hd-top-title">
-                <p>已结束</p>
+          <div class="hd-list" v-for="item in activitys" v-tap="{methods:toUrl,pagename:'haibao',id:item._id}">
+            <div class="hd-top" :style="'background-image:url('+checkImg(item.cover)+')'">
+              <!--<img :src="checkImg(item.cover)">-->
+              <div class="hd-top-title" :class="item.state<2 ? 'hover' : ''">
+                <p>{{getActivityStateName(item.state)}}</p>
               </div>
             </div>
             <div class="hd-bottom">
-              <div class="hb-title">室内设计</div>
-            </div>
-          </div>
-          <div class="hd-list"v-tap="{methods:toUrl,pagename:'haibao'}">
-            <div class="hd-top">
-              <img src="../../../static/images/bj.jpg">
-              <div class="hd-top-title">
-                <p>已结束</p>
-              </div>
-            </div>
-            <div class="hd-bottom">
-              <div class="hb-title">室内设计</div>
+              <div class="hb-title">{{item.title}}</div>
             </div>
           </div>
         </div>
@@ -104,8 +93,8 @@
     },
     created(){
       var _self = this;
-      _self.userIfo = common.getObjStorage("userInfo") || {};
-      // _self.loadData();
+      _self.userInfo = common.getObjStorage("userInfo") || {};
+      _self.loadData();
     },
     mounted(){
       this.$nextTick(
@@ -140,23 +129,15 @@
       checkImg (path) {
         return common.getAvatar(path)
       },
-      //
+      // 时间戳转日期
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
       },
-      // 点赞效果
-      dianzan(param){
-        var _self = this;
-        if( common.isNull(_self.userIfo._id) ){
-          _self.$router.push({name: 'login'});
-        }else{
-          _self.like(param.id,param.index);
-        }
-        param.event.cancelBubble = true;//阻止冒泡（原声方法）
-        param.event.stop;//阻止冒泡（原声方法）
-        return false
+      // 获取活动状态
+      getActivityStateName(state){
+        var str = state==0 ? '报名中' : state==1 ? '已报名' : state==2 ? '已截止' : state==3 ? '已结束' : ''
+        return str;
       },
-
       //下拉刷新
       refreshPageDate(){
         let _self = this
@@ -190,20 +171,16 @@
         let _self = this;
         _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
         let params = {
-          interfaceId:common.interfaceIds.getPersonalChw,
+          interfaceId:common.interfaceIds.getActivitys,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
-          where:{
-            type:0
-          }
         };
-        if( !common.isNull(_self.userIfo._id) ){
-          params.user_id = _self.userIfo._id;
+        if( !common.isNull(_self.userInfo._id) ){
+          params.user_id = _self.userInfo._id;
         }
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response);
           let data = response.data;
           _self.setData(data);
         })
@@ -234,31 +211,6 @@
         } else {
           _self.pagination.pageNo++
         }
-      },
-
-      //点赞
-      like(id,index){
-        let _self = this;
-        let params = {
-          interfaceId:common.interfaceIds.like,
-          data: {
-            like_id: id,
-            user_id: _self.userIfo._id,
-            like_type: 1
-          }
-        };
-        this.$axios.post('/mongoApi',{
-          params
-        },(response)=>{
-          // console.log(response)
-          let data = response.data;
-          if( data.code == 200 ){
-            _self.activitys[index].likeFlag = _self.activitys[index].likeFlag==1? 0 : 1;
-            _self.activitys[index].like += _self.activitys[index].likeFlag==0? -1 : 1;
-          }else{
-            _self.showToast("操作失败!")
-          }
-        })
       },
     }
   }
