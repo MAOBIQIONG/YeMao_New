@@ -5,29 +5,50 @@
       <span>收藏订单</span>
     </div>
     <!--收藏设计师-->
-    <div class="sc-content">
-          <div class="gz-list" v-for="(order,index) in orderList" @click="toDetails(order._id)" :key="index">
-            <div class="gz-top">
-              <div class="gz-touxiang">
-                <img :src="checkAvatar(order.user.img)" />
-              </div>
-              <div class="gz-nicheng">{{order.user.user_name}}</div>
-              <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
-              <div class="gz-time"><span>{{order.project_deadLine}}过期</span></div>
+    <scroller 
+        v-model="pullUpDownStatus"
+        :height="height"
+        :lock-x="lockX"
+        :lock-y="lockY"
+        :use-pulldown="true" 
+        :use-pullup="true" 
+        :pulldown-config="pulldownConfig"
+        :pullup-config = "pullupConfig"
+        @on-scroll="scroll"
+        @on-scroll-bottom="onScrollBottom"
+        @on-pulldown-loading="pullDownLoading"
+        @on-pullup-loading="pullUpLoading"
+        ref="scroller"
+        :class="{scroller:true}"
+    >
+    <div>
+        <div class="sc-content">
+            <div class="gz-list" v-for="(order,index) in collects" @click="toDetails(order._id)" :key="index">
+                <div class="gz-top">
+                <div class="gz-touxiang">
+                    <img :src="checkAvatar(order.user.img)" />
+                </div>
+                <div class="gz-nicheng">{{order.user.user_name}}</div>
+                <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
+                <div class="gz-time"><span>{{order.project_deadLine}}过期</span></div>
+                </div>
+                <div class="gz-content">
+                <div class="wenzhi">{{order.project_describe}}</div>
+                </div>
+                <div class="gz-bottom">
+                <div class="gb-left">
+                    <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
+                </div>
+                <div class="gb-right">
+                    <div class="gb-ljqd" @click.stop="grabOrder(order._id)">立即抢单</div>
+                </div>
+                </div>
             </div>
-            <div class="gz-content">
-              <div class="wenzhi">{{order.project_describe}}</div>
-            </div>
-            <div class="gz-bottom">
-              <div class="gb-left">
-                <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
-              </div>
-              <div class="gb-right">
-                <div class="gb-ljqd" @click.stop="grabOrder(order._id)">立即抢单</div>
-              </div>
-            </div>
-          </div>
+        </div>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
     </div>
+    </scroller>
+    <toast v-model="toast.show" :time="1000" type="text" width="5rem">{{toast.msg}}</toast>
   </div>
 </template>
 
@@ -55,13 +76,17 @@ export default {
     },
     data(){
         return {
+            collects:[],
             user_id:null,
-            list:[],
-            list_id:null,
+            collects_id:null,
             user:null,
+            toast:{
+                show:false,
+                msg:''
+            },
             pagination:{
                 pageNo:0,
-                pageSize:10,
+                pageSize:1,
             },
             pullUpDownStatus: {
                 pulldownStatus: 'default',
@@ -99,12 +124,10 @@ export default {
         pullUpDownStatus:{
             handler:function(val,oldval){
                 if(val.pullupStatus=="loading"){
-                    this.loadMoreStatus.show=true;
-                    if(this.hasMore == false){                      
-                        this.loadMoreStatus.showLoading=false; 
-                    } else {
-                        this.loadMoreStatus.showLoading=true; 
-                    }
+                    this.loadMoreStatus.show=true;                  
+                    this.loadMoreStatus.showLoading=false; 
+                    this.loadMoreStatus.showLoading=true; 
+
                 }
             }
         }
@@ -147,14 +170,14 @@ export default {
             }
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let params = {
-                interfaceId: common.interfaceIds.collects,
-                pageNo:_self.pagination.pageNo,
-                pageSize:_self.pagination.pageSize,
-                data:{
-                    // user_id: _self.user_id,
-                    // type: 4//问答
+                    interfaceId: 'getCollects',                    
+                    pageNo:_self.pagination.pageNo,
+                    pageSize:_self.pagination.pageSize,
+                    where:{
+                        user_id: _self.user_id,
+                        collect_type: 0
+                    }
                 }
-            }
             _self.$axios.post('/mongoApi', {
                 params: params
                 }, response => {
@@ -171,29 +194,30 @@ export default {
         setData(data){
             let _self = this;
             _self.$refs.scroller.enablePullup();
-            let list = data.chws || [];
+            let collects = data.collects || [];
+            console.log("赋值collects完成");
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
-                _self.list = list;
-                console.log("setData页码为0，list", list);
+                _self.collects = collects;
+                console.log("setData页码为0，collects", collects);
             } else {
-                console.log("setData页码为不为0，_self.list",_self.list);
+                console.log("setData页码为不为0，_self.collects",_self.collects);
                 //返回数据可能为空
-                if(!data.chws) {
+                if(!data.collects) {
                     _self.loadMoreStatus.show=true;
                     _self.loadMoreStatus.showLoading=false;
                     _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
                     _self.$refs.scroller.disablePullup();
                     return
                 }
-                _self.list.push(...data.chws);                   
+                _self.collects.push(...data.collects);                   
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;
             _self.$refs.scroller.donePulldown();
             _self.$refs.scroller.donePullup();   
             //判断数据是否有一页
-            if(list.length < _self.pagination.pageSize){
+            if(collects.length < _self.pagination.pageSize){
                 _self.loadMoreStatus.show=true;
                 _self.loadMoreStatus.showLoading=false;
                 _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
@@ -201,7 +225,7 @@ export default {
             } else {
                 _self.pagination.pageNo++
             }
-            // console.log(_self.list);
+            // console.log(_self.collects);
         },
         //下拉刷新
         refreshPageDate(){
@@ -227,9 +251,7 @@ export default {
         },
         pullUpLoading(){
             console.log('on-pull-up-loading');
-            this.loadMore();
-
-            
+            this.loadMore();   
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
@@ -245,7 +267,7 @@ export default {
         this.loadData();
     },
     mounted(){
-        // console.log('mounted');
+        console.log('mounted');
         this.$nextTick(
             ()=>{
                 this.$refs.scroller.disablePullup();
