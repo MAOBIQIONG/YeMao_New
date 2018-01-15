@@ -292,10 +292,10 @@
           order_id:_self.order_id,
           user_id:_self.user_id
         }
-        // console.log("params:"+JSON.stringify(params))
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
+          console.log(response)
           var data = response.data;
           if( data ){
             _self.collectFlag = data.collectFlag;
@@ -361,7 +361,7 @@
             collect_type: 0,
             collect_id: _self.order_id,
             user_id: _self.user_id,
-            isdel: _self.collectFlag
+            is_del: _self.collectFlag
           }
         }
         _self.$axios.post('/mongoApi', {
