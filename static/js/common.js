@@ -342,7 +342,6 @@ const common = {
     likes:'likes',                                 // 点赞
     resumeList:'resumeList',                       // 人才简历
     activitys:'activitys',                         // 活动
-    activity_users:'activity_users',               // 活动参与人
 
   },
 
