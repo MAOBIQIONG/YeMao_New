@@ -43,7 +43,8 @@
                     comments:0,
                     collection:0,
                     like:0,
-                    type:4//问答,
+                    type:4,//问答,
+                    is_del:0
                 },
             }
         },

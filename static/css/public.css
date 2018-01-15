@@ -952,5 +952,13 @@ ul {
 .input-box .send-btn.hover{
   color: #f65aa6;
 }
-
+.xs-plugin-pullup-container,.xs-plugin-pulldown-container,.loadMore{
+    color:#999;
+}
+.xs-plugin-pullup-container{
+    line-height:60px!important;
+}
+.scroller{
+    background:#F2F2F2;
+}
 

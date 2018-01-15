@@ -98,7 +98,7 @@
             },
             height:{
                 type:String,
-                default:"-50"
+                default:"-44"
             }
         },
         data: function () {
@@ -147,11 +147,7 @@
                 handler:function(val,oldval){
                     if(val.pullupStatus=="loading"){
                         this.loadMoreStatus.show=true;
-                        if(this.hasMore == false){                      
-                            this.loadMoreStatus.showLoading=false; 
-                        } else {
-                            this.loadMoreStatus.showLoading=true; 
-                        }
+                        this.loadMoreStatus.showLoading=true; 
                     }
                 }
             }
@@ -237,14 +233,14 @@
                 _self.pagination.pageNo = 0;
                 _self.loadMoreStatus.show=false;
                 _self.$refs.scroller.donePullup();  
-                setTimeout(()=>{_self.loadData()},1000); 
+                _self.loadData()
                 
             },
             //上拉加载
             loadMore(){
                 let _self = this;
                 // _self.loadData();
-                setTimeout(()=>{_self.loadData()},1000); 
+                _self.loadData(); 
             },
             scroll(position){
                 // console.log("on-scroll",position);
@@ -289,7 +285,7 @@
       position:static;
   }
   .weida-list{
-      margin-top:0rem;
+      margin-top:0.2rem;
   }
 </style>
 <style>

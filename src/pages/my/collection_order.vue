@@ -1,52 +1,33 @@
 <template>
-  <div>
-    <!--头部导航-->
+  <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
-      <span>喵学堂</span>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+      <span>收藏订单</span>
     </div>
-    <!--问答专辑-->
-        <scroller 
-            v-model="pullUpDownStatus"
-            :height="height"
-            :lock-x="lockX"
-            :lock-y="lockY"
-            :use-pulldown="true" 
-            :use-pullup="true" 
-            :pulldown-config="pulldownConfig"
-            :pullup-config = "pullupConfig"
-            @on-scroll="scroll"
-            @on-scroll-bottom="onScrollBottom"
-            @on-pulldown-loading="pullDownLoading"
-            @on-pullup-loading="pullUpLoading"
-            ref="scroller"
-            :class="{scroller:true}"
-        >
-            <div>
-                <div class="weida-list" v-for="(item,index) in list" :key="index">
-                    <div class="weida" @click="toDetails(item._id)">
-                    <div class="neirong">
-                        <div class="piapti">
-                            {{item.title}}
-                        </div>
-                        <div class="tupian" v-if="item.imgs">        
-                            <img :src="item.imgs[0]"/>
-                        </div>
-                        <!-- <div class="tupian" v-else>                   
-                            <img src="../../../static/images/bj.jpg"/>
-                        </div> -->
-                        <div class="jieshao">
-                            {{item.description}}
-                        </div>
-                    </div>
-                    <div class="pingjia">
-                        <span>100</span>赞同 · <span>100</span>评论
-                    </div>
-                    </div>
-                </div>
-                <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
+    <!--收藏设计师-->
+    <div class="sc-content">
+          <div class="gz-list" v-for="(order,index) in orderList" @click="toDetails(order._id)" :key="index">
+            <div class="gz-top">
+              <div class="gz-touxiang">
+                <img :src="checkAvatar(order.user.img)" />
+              </div>
+              <div class="gz-nicheng">{{order.user.user_name}}</div>
+              <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
+              <div class="gz-time"><span>{{order.project_deadLine}}过期</span></div>
             </div>
-        </scroller>
+            <div class="gz-content">
+              <div class="wenzhi">{{order.project_describe}}</div>
+            </div>
+            <div class="gz-bottom">
+              <div class="gb-left">
+                <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
+              </div>
+              <div class="gb-right">
+                <div class="gb-ljqd" @click.stop="grabOrder(order._id)">立即抢单</div>
+              </div>
+            </div>
+          </div>
+    </div>
   </div>
 </template>
 
@@ -69,10 +50,10 @@ export default {
         },
         height:{
             type:String,
-            default:"-44"
+            default:"-50"
         }
     },
-    data: function () {
+    data(){
         return {
             user_id:null,
             list:[],
@@ -129,7 +110,7 @@ export default {
         }
     },
     methods: {
-        goback () {
+        goback(){
             this.$router.goBack()
         },
         toUrl: function (pagename) {
@@ -137,6 +118,25 @@ export default {
         },
         toDetails (id) {
             this.$router.push({name: 'wzxq', query: {id: id}})
+        },
+                // 头像
+        checkAvatar(path){
+            return common.getAvatar(path);
+        },
+        getNameByTypeId: function (id){
+            var name = "";
+            var types = common.getProjectTypes();
+            var i=0,len=types.length;
+            for(;i<len;i++){
+                if( id == types[i]._id ){
+                    name = types[i].type_name;
+                }
+            }
+            return name;
+        },
+        // 项目类型名称
+        getNameById(id){
+            return common.getNameByTypeId(id);
         },
         loadData(){
             console.log('this is loadData');
@@ -147,12 +147,12 @@ export default {
             }
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let params = {
-                interfaceId: common.interfaceIds.getPersonalChw,
+                interfaceId: common.interfaceIds.collects,
                 pageNo:_self.pagination.pageNo,
                 pageSize:_self.pagination.pageSize,
-                where:{
+                data:{
                     // user_id: _self.user_id,
-                    type: 4//喵学堂
+                    // type: 4//问答
                 }
             }
             _self.$axios.post('/mongoApi', {
@@ -209,14 +209,14 @@ export default {
             _self.pagination.pageNo = 0;
             _self.loadMoreStatus.show=false;
             _self.$refs.scroller.donePullup();  
-            setTimeout(()=>{_self.loadData()},100); 
+            setTimeout(()=>{_self.loadData()},1000); 
             
         },
         //上拉加载
         loadMore(){
             let _self = this;
             // _self.loadData();
-            setTimeout(()=>{_self.loadData()},1); 
+            setTimeout(()=>{_self.loadData()},1000); 
         },
         scroll(position){
             // console.log("on-scroll",position);
@@ -237,10 +237,10 @@ export default {
 
     },
     created(){
-        var _self = this;
+        var _slef = this;
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
-            _self.user_id = user._id;
+            _slef.user_id = user._id;
         }
         this.loadData();
     },
@@ -255,12 +255,32 @@ export default {
     },
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../../static/css/meow/shouchang-wenda.css';
-  .header{
-      position:static;
-  }
-  .weida-list{
-      margin-top:0.2rem;
-  }
+  @import "../../../static/css/employer/shoucangsjs.css";
+    .gz-jiage{
+        float:left;
+        height: 0.75rem;
+        line-height: 0.75rem;
+        font-size: 0.36rem;
+        color: #04c0ad;
+        margin-left: 0rem;
+    }
+    .gz-leixin{
+        float:left;
+        margin-left:0.1rem;
+        font-size:13px;
+        color:#9e9e9e;
+        line-height:0.9rem;
+        height:0.8rem;
+    }
+    .gz-time{
+        font-size:14px;
+        float:right;
+        height: 0.8rem;
+        line-height:0.9rem;
+        color:#9e9e9e;
+        margin-right:0.3rem;
+    }
 </style>
