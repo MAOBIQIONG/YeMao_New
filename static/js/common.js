@@ -340,6 +340,8 @@ const common = {
     meowCircle:'meowCircle',                       // 喵喵圈
     comments:'comments',                           // 评论
     likes:'likes',                                 // 点赞
+    resumeList:'resumeList',                       // 人才简历
+    activitys:'activitys',                         // 活动
 
   },
 
@@ -374,6 +376,8 @@ const common = {
     getLikes:'getLikes',                           // 获取点赞列表
     like:'like',                                   // 点赞
     addComments:'addComments',                     // 评论
+    getCollects:'getCollects',                     // 收藏列表
+    getCollectsPage:'getCollectsPage',             // 我的收藏
 
   },
 
