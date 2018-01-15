@@ -265,31 +265,6 @@ export default {
         onScrollBottom(){
             // console.log('on-scroll-bottom');
         },
-        // 收藏
-        collect(){
-            var _self = this;
-            var params = {
-                interfaceId:common.interfaceIds.collect,
-                data:{
-                    collect_type: 0,
-                    collect_id: _self.order_id,
-                    user_id: _self.user_id,
-                    isdel: _self.collectFlag
-                }
-            }
-            _self.$axios.post('/mongoApi', {
-                params: params
-            }, response => {
-                var data = response.data;
-                var tips = '';
-                if( data && data.code == 200 ){
-                tips = _self.collectFlag == 0 ? '取消成功！' : '收藏成功！';
-                }else{
-                tips = _self.collectFlag == 0 ? '取消失败！' : '收藏失败！';
-                }
-                _self.showToast(tips);
-            })
-        },
     },
     created(){
         var _slef = this;

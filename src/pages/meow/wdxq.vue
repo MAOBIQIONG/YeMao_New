@@ -41,12 +41,19 @@
             <div class="neirongshijian">
                 {{chw.description}}
                 <div class="bottom">
-                <div class="bottom-zan">
-                    <span id="praise"><img src="../../../static/images/zan1.png"/></span>
+                <div class="bottom-zan" :class="{confirmColor:!likeFlag}">
+                    <span id="praise" ref="like">
+                        <img v-if="likeFlag" src="../../../static/images/zan1.png"/>
+                        <img v-else src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                    </span>
                     <span id="praise-txt">100</span>
                 </div>
-                <div class="bottom-sz">
-                    <span id="xinxin"><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
+                <div class="bottom-sz" :class="{confirmColor:!collectFlag}" v-tap="{methods:collect_dom}">
+                    <span id="xinxin" ref="star">
+                        <img v-if="collectFlag" src="../../../static/images/xin1.png"/>
+                        <img v-else src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                    </span>
+                    <span>收藏</span>
                 </div>
                 </div>
             </div>
@@ -137,6 +144,8 @@ export default {
                 create_date:null,
                 user:{}
             },
+            likeFlag:1,
+            collectFlag:0,
             comments:[],
             user_id:null,
             imgs:[],
@@ -232,7 +241,7 @@ export default {
         
     },
     mounted: function () {
-        this.dianzan();
+        // this.dianzan();
         this.$nextTick(()=>{
             
         });
@@ -244,24 +253,61 @@ export default {
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
-        dianzan (){
-            var off=true;
-            $("#praise").click(function(){
-            var praise_txt = $("#praise-txt");
-            var num=parseInt(praise_txt.text());
-            if(off==true){
-                $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-                praise_txt.css('color','#f65aa6')
-                num +=1;
-                praise_txt.text(num)
+        // dianzan (){
+        //     var off=true;
+        //     $("#praise").click(function(){
+        //     var praise_txt = $("#praise-txt");
+        //     var num=parseInt(praise_txt.text());
+        //     if(off==true){
+        //         $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+        //         praise_txt.css('color','#f65aa6')
+        //         num +=1;
+        //         praise_txt.text(num)
+        //     }
+        //     });
+        //     $("#xinxin").click(function(){
+        //     if(off==true){
+        //         $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
+        //         $(".bottom-sz").css('color','#f65aa6')
+        //     }
+        //     });
+        // },
+        like_dom(param){
+            var _self = this;
+            console.log('this is collect_dom');
+            _self.likeFlag == 0 ? _self.likeFlag=1 : _self.collectFlag=0;
+            console.log(this.likeFlag);
+        },
+        // 收藏
+        collect_dom(param){
+            var _self = this;
+            console.log('this is collect_dom');
+            _self.collectFlag == 0 ? _self.collectFlag=1 : _self.collectFlag=0;
+            console.log(this.collectFlag);
+        },
+        collect(){
+            var _self = this;
+            var params = {
+                interfaceId:common.interfaceIds.collect,
+                data:{
+                    collect_type: 0,
+                    collect_id: _self.order_id,
+                    user_id: _self.user_id,
+                    isdel: _self.collectFlag
+                }
             }
-            });
-            $("#xinxin").click(function(){
-            if(off==true){
-                $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-                $(".bottom-sz").css('color','#f65aa6')
-            }
-            });
+            _self.$axios.post('/mongoApi', {
+                params: params
+            }, response => {
+                var data = response.data;
+                var tips = '';
+                if( data && data.code == 200 ){
+                tips = _self.collectFlag == true ? '取消成功！' : '收藏成功！';
+                }else{
+                tips = _self.collectFlag == true ? '取消失败！' : '收藏失败！';
+                }
+                _self.showToast(tips);
+            })
         },
         showToast(msg){
             this.showMark = true;
@@ -463,5 +509,8 @@ export default {
     }
     .pinglun{
         padding-bottom:0;
-    }  
+    }
+    .confirmColor{
+        color:#f65aa6
+    }
 </style>
