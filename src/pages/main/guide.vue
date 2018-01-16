@@ -49,12 +49,14 @@
     methods: {
       // Listener event
       slide (data) {
-        var pageda=data.currentPage
-        if(pageda>2){
-          this.$router.push('index')
-        }
-
+        console.log(data)
       },
+      onTap (data) {
+        console.log(data)
+      },
+      onInit (data) {
+        console.log(data)
+      }
     }
   }
 </script>

@@ -98,7 +98,7 @@ import zuopinshangchuan from '@/pages/meow/zuopinshangchuan'
 import haibao from '@/pages/meow/haibao'
 import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
-import yingdaoye from '@/pages/main/yingdaoye'
+import guide from '@/pages/main/guide'
 
 
 Vue.use(Router)
@@ -110,11 +110,6 @@ Router.prototype.goBack = function () {
 }
 
 const routeArray = [
-  {
-    path: '/yingdaoye',
-    name: 'yingdaoye',
-    component: yingdaoye,
-  },
   // 1、打包后，浏览器运行首页空白
   {
     path: '/dist/index.html',
@@ -127,6 +122,12 @@ const routeArray = [
   {
     path: '/',
     redirect: '/home/index'
+  },
+  // 引导页
+  {
+    path: '/guide',
+    name: 'guide',
+    component: guide,
   },
   // 嵌套路由(router-view)：配置子路由
   {
