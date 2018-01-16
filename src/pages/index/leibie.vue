@@ -32,7 +32,7 @@
             <div class="gz-bottom">
               <div class="gb-left">
                 <div class="gb-tu" v-for="bidder in order.bidders">
-                  <img :src="checkAvatar(bidder.img)" />
+                  <img :src="checkAvatar(bidder.user.img)" />
                 </div>
                 <div class="gb-wz"><span>{{order.bidders.length}}</span>人抢单</div>
               </div>
@@ -161,33 +161,20 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
+          console.log(response)
           var data = response.data;
           if ( data ) {
-            // console.log("loadMore:"+data);
             // 订单
-            var orderUsers = data.orderUsers || [];
             var orderBidders = data.orderBidders || [];
-            var bidders = data.bidders || [];
             var orderList = data.orderList || [];
             orderList.forEach(function (item, index) {
-              // 雇主
-              orderUsers.forEach(function (u, j) {
-                if ( item.user_id == u._id ) {
-                  item.user = u;
-                } else {
-                  item.user = {};
-                }
-              })
+              if( !item.user ){
+                item.user = {};
+              }
               // 参与人
               item.bidders = [];
               orderBidders.forEach(function (b, j) {
-                if ( item._id == b.order_id ) {
-                  bidders.forEach(function (u, j) {
-                    if ( b.user_id == u._id ) {
-                      b.user_name = u.user_name;
-                      b.img = u.img;
-                    }
-                  })
+                if ( item._id == b.order_id && b) {
                   item.bidders.push(b);
                 }
               })
