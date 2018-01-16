@@ -290,8 +290,7 @@
         }
         var params = {
         //批量添加
-        interfaceId:common.interfaceIds.insertData,
-          coll:common.collections.orderList,
+          interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
         }
         _self.$axios.post('/mongoApi', {
@@ -299,7 +298,7 @@
         }, response => {
           // console.log(JSON.stringify(response))
           var data = response.data;
-          if( data && response.code == '200' ){
+          if( data && data.code == 200 ){
             this.$store.state.indexRefreshMark = 1;
             this.$store.state.employerRefreshMark = 1;
             _self.showToast("发布成功！");

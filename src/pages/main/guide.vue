@@ -50,13 +50,13 @@
     methods: {
       // Listener event
       slide (data) {
-        console.log(data)
+        console.log("slide"+JSON.stringify(data))
       },
       onTap (data) {
-        console.log(data)
+        console.log("onTap"+JSON.stringify(data))
       },
       onInit (data) {
-        console.log(data)
+        console.log("onInit"+JSON.stringify(data))
       }
     }
   }
