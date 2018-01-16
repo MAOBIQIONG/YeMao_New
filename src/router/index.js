@@ -98,6 +98,9 @@ import zuopinshangchuan from '@/pages/meow/zuopinshangchuan'
 import haibao from '@/pages/meow/haibao'
 import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
+import yingdaoye from '@/pages/main/yingdaoye'
+
+
 Vue.use(Router)
 
 Router.prototype.goBack = function () {
@@ -107,6 +110,11 @@ Router.prototype.goBack = function () {
 }
 
 const routeArray = [
+  {
+    path: '/yingdaoye',
+    name: 'yingdaoye',
+    component: yingdaoye,
+  },
   // 1、打包后，浏览器运行首页空白
   {
     path: '/dist/index.html',
@@ -528,30 +536,30 @@ const routeArray = [
     name: 'zhuche2',
     component: zhuche2
   },
-    { 
+    {
         path: '/collectionDesigner',
         name: 'collectionDesigner',
-        component: collectionDesigner  
+        component: collectionDesigner
     },
-    { 
+    {
         path: '/collectionMxt',
         name: 'collectionMxt',
-        component: collectionMxt  
+        component: collectionMxt
     },
-    { 
+    {
         path: '/collectionOrder',
         name: 'collectionOrder',
-        component: collectionOrder  
+        component: collectionOrder
     },
-    { 
+    {
         path: '/collectionQa',
         name: 'collectionQa',
-        component: collectionQa  
+        component: collectionQa
     },
-    { 
+    {
         path: '/collectionResume',
         name: 'collectionResume',
-        component: collectionResume  
+        component: collectionResume
     },
   //其他url重定向
   {
