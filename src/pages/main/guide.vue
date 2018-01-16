@@ -2,7 +2,7 @@
   <!-- 制作一个框架包裹slider -->
   <div style="width:100%;height:100%">
     <!-- 配置slider组件 -->
-    <slider :pages="pages" :sliderinit="sliderinit" @slide='slide' @tap='onTap' @init='onInit'>
+    <slider :pages="pages" :sliderinit="sliderinit">
       <!-- 设置loading,可自定义 -->
       <div slot="loading">loading...</div>
     </slider>
@@ -11,7 +11,6 @@
 <script>
   import slider from 'vue-concise-slider'// import slider components
   export default {
-    el: '#app',
     data () {
       return {
         pages:[
@@ -28,11 +27,11 @@
             }
           },
           {
-            html: '',
+            html: '<div class="animate">立即体验</div>',
             style: {
               background:'url(../../../static/images/3.png)'
             }
-          }
+          },
         ],
         //Sliding configuration [obj]
         sliderinit: {
@@ -47,17 +46,20 @@
     components: {
       slider
     },
+    mounted:function(){
+      this.toUrl()
+    },
     methods: {
-      // Listener event
-      slide (data) {
-        console.log("slide"+JSON.stringify(data))
+      toUrl:function () {
+        var lod=true
+        var _self=this
+        $('.animate').on('touchstart',function () {
+          if (lod == true) {
+            _self.$router.push('index');
+            lod = false
+          }
+      })
       },
-      onTap (data) {
-        console.log("onTap"+JSON.stringify(data))
-      },
-      onInit (data) {
-        console.log("onInit"+JSON.stringify(data))
-      }
     }
   }
 </script>
@@ -65,5 +67,19 @@
   .slider-pagination-bullet-active {
     background: #000000 none repeat scroll 0 0;
     opacity: 1;
+  }
+  .animate{
+    width: 2.5rem;
+    height: 0.6rem;
+    line-height: 0.6rem;
+    text-align: center;
+    position:absolute;
+    bottom: 3.2rem;
+    left:2.5rem;
+    color: #ffffff;
+    border-radius: 0.05rem;
+    font-size: 0.24rem;
+    background: #f74f9c;
+    z-index: 999999999;
   }
 </style>

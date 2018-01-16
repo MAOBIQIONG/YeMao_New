@@ -40,7 +40,13 @@ router.beforeEach(function (to, from, next) {
   }
   // 做完回退动画后，要设置成前进动画，否则下次打开页面动画将还是回退
   router.isBack = false
-  next()
+
+  if( !common.getStorage("firstTime") ){
+    common.setStorage("firstTime",true)
+    next('/guide');
+  }else{
+    next();
+  }
 })
 
 // axios

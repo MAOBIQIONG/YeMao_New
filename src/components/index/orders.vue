@@ -156,7 +156,7 @@
           pageSize: _self.pageSize
         }
         // 排序
-        params.sort = {create_date:-1};
+        params.sort = {refresh_date:-1};
         if( !common.isNull(_self.value) ){
           params.where ={project_title : {$regex : _self.value}};
         }
