@@ -2,7 +2,7 @@
   <!-- 制作一个框架包裹slider -->
   <div style="width:100%;height:100%">
     <!-- 配置slider组件 -->
-    <slider :pages="pages" :sliderinit="sliderinit" @slide='slide'>
+    <slider :pages="pages" :sliderinit="sliderinit">
       <!-- 设置loading,可自定义 -->
       <div slot="loading">loading...</div>
     </slider>
@@ -46,17 +46,20 @@
     components: {
       slider
     },
+    mounted:function(){
+      this.toUrl()
+    },
     methods: {
-      // Listener event
-      slide (data) {
-        console.log(data)
+      toUrl:function () {
+        var lod=true
+        var _self=this
+        $('.animate').on('touchstart',function () {
+          if (lod == true) {
+            _self.$router.push('index');
+            lod = false
+          }
+      })
       },
-      onTap (data) {
-        console.log(data)
-      },
-      onInit (data) {
-        console.log(data)
-      }
     }
   }
 </script>
@@ -66,12 +69,17 @@
     opacity: 1;
   }
   .animate{
-    width: 2rem;
-    height: 0.5rem;
-    line-height: 0.5rem;
+    width: 2.5rem;
+    height: 0.6rem;
+    line-height: 0.6rem;
     text-align: center;
-    position: fixed;
-    bottom: 2rem;
-    left: auto;
+    position:absolute;
+    bottom: 3.2rem;
+    left:2.5rem;
+    color: #ffffff;
+    border-radius: 0.05rem;
+    font-size: 0.24rem;
+    background: #f74f9c;
+    z-index: 999999999;
   }
 </style>
