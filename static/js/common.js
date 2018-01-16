@@ -382,6 +382,9 @@ const common = {
     getActDetails:'getActivityDetails',            // 活动详情
     partInActivity:'partInActivity',               // 参加活动
     addOrders:'addOrders',                         // 发布订单
+    refreshOrders:'refreshOrders',                 // 刷新订单
+    getDesignerOrders:'getDesignerOrders',         // 查询设计师未处理订单
+
   },
 
 }
