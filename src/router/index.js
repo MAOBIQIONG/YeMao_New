@@ -98,6 +98,9 @@ import zuopinshangchuan from '@/pages/meow/zuopinshangchuan'
 import haibao from '@/pages/meow/haibao'
 import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
+import guide from '@/pages/main/guide'
+
+
 Vue.use(Router)
 
 Router.prototype.goBack = function () {
@@ -119,6 +122,12 @@ const routeArray = [
   {
     path: '/',
     redirect: '/home/index'
+  },
+  // 引导页
+  {
+    path: '/guide',
+    name: 'guide',
+    component: guide,
   },
   // 嵌套路由(router-view)：配置子路由
   {
@@ -528,30 +537,30 @@ const routeArray = [
     name: 'zhuche2',
     component: zhuche2
   },
-    { 
+    {
         path: '/collectionDesigner',
         name: 'collectionDesigner',
-        component: collectionDesigner  
+        component: collectionDesigner
     },
-    { 
+    {
         path: '/collectionMxt',
         name: 'collectionMxt',
-        component: collectionMxt  
+        component: collectionMxt
     },
-    { 
+    {
         path: '/collectionOrder',
         name: 'collectionOrder',
-        component: collectionOrder  
+        component: collectionOrder
     },
-    { 
+    {
         path: '/collectionQa',
         name: 'collectionQa',
-        component: collectionQa  
+        component: collectionQa
     },
-    { 
+    {
         path: '/collectionResume',
         name: 'collectionResume',
-        component: collectionResume  
+        component: collectionResume
     },
   //其他url重定向
   {

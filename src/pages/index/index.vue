@@ -92,7 +92,7 @@
         <div class="wzgd-box">
           <swiper loop auto height="45px" direction="vertical" :interval=1000 class="text-scroll" :show-dots="false">
             <swiper-item v-for="item in noticeList">
-              <div class="notice-img"><img :src="item.user_img" /></div>
+              <div class="notice-img"><img :src="item.user.img" /></div>
               <div class="notice-text">{{item.title}}</div>
             </swiper-item>
           </swiper>
@@ -136,7 +136,7 @@
             <div class="gz-bottom">
               <div class="gb-left">
                 <div class="gb-tu" v-for="bidder in order.bidders">
-                  <img :src="checkAvatar(bidder.img)" />
+                  <img :src="checkAvatar(bidder.user.img)" />
                 </div>
                 <div class="gb-wz"><span>{{order.bidders.length}}</span>人抢单</div>
               </div>
@@ -385,42 +385,19 @@
         var _self = this;
         // 轮播图
         _self.imgList = data.imgList || [];
-
         // 通知
         _self.noticeList = data.noticeList || [];
-        var noticeUsers = data.noticeUsers || [];
-        _self.noticeList.forEach(function (item, index) {
-          noticeUsers.forEach(function (obj, j) {
-            if ( item.user_id == obj._id ) {
-              item.user_img = obj.img;
-            }
-          })
-        });
       },
 
       setOrderData(data){
         var _self = this;
         // 订单
         var orderBidders = data.orderBidders || [];
-        var bidders = data.bidders || [];
         var orderList = data.orderList || [];
-        var orderUsers = data.orderUsers || [];
-        orderBidders.forEach(function (b, j) {
-          bidders.forEach(function (u, j) {
-            if ( b.user_id == u._id ) {
-              b.user_name = u.user_name;
-              b.img = u.img;
-            }
-          })
-        })
         orderList.forEach(function (item, index) {
-          // 雇主
-          item.user = {};
-          orderUsers.forEach(function (u, j) {
-            if ( item.user_id == u._id ) {
-              item.user = u;
-            }
-          })
+          if( !item.user ){
+            item.user = {};
+          }
           // 参与人
           item.bidders = [];
           orderBidders.forEach(function (b, j) {

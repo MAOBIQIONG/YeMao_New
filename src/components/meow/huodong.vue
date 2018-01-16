@@ -53,7 +53,7 @@
 
         lockX:true,
         lockY:false,
-        height:"-90",
+        height:"-60",
         pagination: {
           pageNo: 0,
           pageSize: 10

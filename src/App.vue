@@ -106,4 +106,5 @@
   .xs-plugin-pulldown-container,.xs-plugin-pullup-container{
     font-size: 14px !important;
   }
+
 </style>
