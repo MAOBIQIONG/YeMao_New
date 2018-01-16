@@ -141,10 +141,10 @@ export default {
         loadData(){
             console.log('this is loadData');
             let _self = this;
-            if( common.isNull(_self.user_id) ){
-                throw new Error('请先登录');
-                return;
-            }
+            // if( common.isNull(_self.user_id) ){
+            //     throw new Error('请先登录');
+            //     return;
+            // }
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let params = {
                 interfaceId: common.interfaceIds.getPersonalChw,

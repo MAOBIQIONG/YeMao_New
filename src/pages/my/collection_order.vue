@@ -86,7 +86,7 @@ export default {
             },
             pagination:{
                 pageNo:0,
-                pageSize:1,
+                pageSize:10,
             },
             pullUpDownStatus: {
                 pulldownStatus: 'default',
@@ -140,7 +140,7 @@ export default {
             this.$router.push({name: pagename})
         },
         toDetails (id) {
-            this.$router.push({name: 'wzxq', query: {id: id}})
+            this.$router.push({name: 'emporder', query: {id: id}})
         },
                 // 头像
         checkAvatar(path){

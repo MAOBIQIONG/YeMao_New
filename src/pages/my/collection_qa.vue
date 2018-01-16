@@ -172,7 +172,7 @@
             setData(data){
                 let _self = this;
                 _self.$refs.scroller.enablePullup();
-                let QAList = data.chws || [];
+                let QAList = data.collects || [];
                 //判断页码是否为0
                 if(_self.pagination.pageNo == 0) {
                     _self.QAList = QAList;
@@ -187,7 +187,7 @@
                         _self.$refs.scroller.disablePullup();
                         return
                     }
-                    _self.QAList.push(...data.chws);                   
+                    _self.QAList.push(...data.collects);                   
                 }
                 _self.loadMoreStatus.show=false;
                 _self.loadMoreStatus.showLoading=false;

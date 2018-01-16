@@ -174,10 +174,10 @@ export default {
         loadData(){
             console.log('this is loadData');
             let _self = this;
-            if( common.isNull(_self.user_id) ){
-                throw new Error('请先登录');
-                return;
-            }
+            // if( common.isNull(_self.user_id) ){
+            //     throw new Error('请先登录');
+            //     return;
+            // }
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let params = {
                 interfaceId: common.interfaceIds.getPersonalChw,
@@ -267,14 +267,14 @@ export default {
         },
     },
     created(){
-        var _slef = this;
-        var user = common.getObjStorage("userInfo") || {};
-        if( !common.isNull(user._id) ){
-            _slef.user_id = user._id;
-        } else {
-            console.log('user_id is null');
-            _self.$router.push({name:'login'});
-        }
+        var _self = this;
+        // var user = common.getObjStorage("userInfo") || {};
+        // if( !common.isNull(user._id) ){
+        //     _self.user_id = user._id;
+        // } else {
+        //     console.log('user_id is null');
+        //     _self.$router.push({name:'login'});
+        // }
         this.loadData();
     },
     mounted(){
