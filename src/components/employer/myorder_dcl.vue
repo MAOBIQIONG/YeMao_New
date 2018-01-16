@@ -44,7 +44,7 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
-                        <template v-if="item.bidders.length>0">
+                        <template v-if="item.sub.length>0">
                             <div v-if="isNull(item.project_winBidder)"
                                  class="db-qrdd" 
                                  v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" >
@@ -261,7 +261,7 @@ export default {
 
             });
         },
-                //混合两个对象返回新对象eg:let d = mix(protoObject).w(toObject)
+        //混合两个对象返回新对象eg:let d = mix(protoObject).w(toObject)
         mix(protoObject,ifNeedPropProto=false){
             let w =function(toObject){
                 //以protoObject为原型以toObject属性为自有属性创建新的对象
@@ -280,21 +280,23 @@ export default {
         },
         //两个对象数组根据字段合并，返回合并后数组
         //o1:{arr:[],field:''}
-        mergeData(o1,o2){
+        arryLeftJoin(o1,o2){
             console.log(o1,o2);
             let _self = this;
-            let rs = [];
+            let result = [];
             if(common.isArray(o1.arr) && common.isArray(o2.arr)){
-                for(let r1 of o1.arr){
-                    for(let r2 of o2.arr){
-                        console.log(r1[o1.field],r2[o2.field]);
+                for(let r1 of o1.arr){  
+                    r1.sub = new Array();
+                    for(let r2 of o2.arr){                
                         if(r1[o1.field]==r2[o2.field]){
-                            console.log(r1[o1.field],r2[o2.field]);
-                            rs.push(_self.mix(r1).w(r2));
+                            // console.log(r1[o1.field],r2[o2.field]);            
+                            r1.sub.push(r2);
                         }
                     }
+                    // console.log(r1.sub);
+                    result.push(r1);
                 }
-                return rs;
+                return result;
             } else {
                 throw new Error("参数格式mergeData(o1:{arr:[],field:''},o2:{arr:[],field:''})")
             }
@@ -335,65 +337,31 @@ export default {
             // 订单
             let orderBidders = data.orderBidders || [];//参与人记录
             let orderList = data.orderList || [];
-            // let arr1 = [
-            //     {_id:'1',name:'jj'},
-            //     {_id:'2',name:'gg'},
-            //     {_id:'3',name:'hh'},
-            //     {_id:'4',name:'nn'}
-            // ];
-            // let arr2 = [
-            //     {_id:'1',name:'jj',job:'worker'},
-            //     {_id:'2',name:'gg',job:'programmer'},
-            // ];
-            let d = _self.mergeData({arr:orderBidders,field:'order_id'},{arr:orderList,field:'_id'});
-            console.log(d);  
-            console.log('设置完成');        
-            // orderBidders.forEach(function (b, j) {
-            // bidders.forEach(function (u, j) {
-            //     if ( b.user_id == u._id ) {
-            //     b.user_name = u.user_name;
-            //     b.img = u.img;
-            //     }
-            // })
-            // })
-            // orderList.forEach(function (item, index) {
-            // // 雇主
-            // item.user = {};
-            // orderUsers.forEach(function (u, j) {
-            //     if ( item.user_id == u._id ) {
-            //     item.user = u;
-            //     }
-            // })
-            // 参与人
-            // item.bidders = [];
-            // orderBidders.forEach(function (b, j) {
-            //     if ( item._id == b.order_id ) {
-            //     item.bidders.push(b);
-            //     }
-            // })
-            // });
+
+            let list = _self.arryLeftJoin({arr:orderList,field:'_id'},{arr:orderBidders,field:'order_id'});
+            // console.log('mergeList',list);        
 
             //判断页码是否为0
-            // if(_self.pagination.pageNo == 0) {
-            //     _self.orderList = orderList;
-            // } else {
-            //     _self.orderList.push(...data.orderList);
-            // }
-            // _self.loadMoreStatus.show=false;
-            // _self.loadMoreStatus.showLoading=false;                  
-            // _self.$refs.scroller.donePulldown();
-            // _self.$refs.scroller.donePullup();   
-            // //判断数据是否有一页
-            // if(orderList.length < _self.pagination.pageSize){
-            //     _self.hasMore = false;
-            //     _self.loadMoreStatus.show=true;
-            //     _self.loadMoreStatus.showLoading=false;
-            //     _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-            //     _self.$refs.scroller.disablePullup();
-            // } else {
-            //     _self.pagination.pageNo++
-            // }
-            // console.log(_self.orderList);
+            if(_self.pagination.pageNo == 0) {
+                _self.orderList = list;
+            } else {
+                _self.orderList.push(...list);
+            }
+            _self.loadMoreStatus.show=false;
+            _self.loadMoreStatus.showLoading=false;                  
+            _self.$refs.scroller.donePulldown();
+            _self.$refs.scroller.donePullup();   
+            //判断数据是否有一页
+            if(orderList.length < _self.pagination.pageSize){
+                _self.hasMore = false;
+                _self.loadMoreStatus.show=true;
+                _self.loadMoreStatus.showLoading=false;
+                _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+                _self.$refs.scroller.disablePullup();
+            } else {
+                _self.pagination.pageNo++
+            }
+            console.log('设置完成');  
         },
         //下拉刷新
         refreshPageDate(){
