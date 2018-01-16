@@ -178,7 +178,7 @@
         znpxMark: false,
         addressData: ChinaAddressV4Data,
         value: ['上海市'],
-        city: '上海市',
+        city: '',
 
         pageNo: 0,
         pageSize: 10,
@@ -340,7 +340,7 @@
         var params = {
           interfaceId: common.interfaceIds.getIndexInfo
         }
-        params.sort = {create_date:-1};
+        params.sort = {refresh_date:-1};
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -363,7 +363,7 @@
           where:{}
         }
         // 排序
-        params.sort = _self.sortMark==1?{project_participants:-1}:{create_date:-1};
+        params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};
         // 条件
         if( !common.isNull(_self.city) ){
           params.where.project_region = _self.city;

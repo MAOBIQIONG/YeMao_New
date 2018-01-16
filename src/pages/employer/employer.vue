@@ -218,7 +218,7 @@
           pageSize: _self.pageSize,
         }
         // 排序
-        params.sort = _self.sortMark==1?{project_participants:-1}:{create_date:-1};
+        params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};
 　　　　　// 上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
