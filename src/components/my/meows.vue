@@ -255,15 +255,22 @@
       //获取数据
       loadData(){
         let _self = this;
+        if( common.isNull(_self.userInfo._id) ){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.showLoading=false;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          return;
+        }
         _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
         let params = {
           interfaceId:common.interfaceIds.getMeowList,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
+          where:{
+            user_id: _self.userInfo._id
+          }
         };
-        if( !common.isNull(_self.userInfo._id) ){
-          params.user_id = _self.userInfo._id;
-        }
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
