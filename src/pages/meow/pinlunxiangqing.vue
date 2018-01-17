@@ -20,6 +20,20 @@
           评论内容评论内容评论内容评论内容评论内容评
           评论内容评论内容评论内容评论内容评论内容评
         </div>
+        <div class="pinlunlist pinlunlist1">
+          <div class="top-pinlun">
+            <div class="tp-left tp-left2">
+              <span>用户昵称1</span>回复<span>用户昵称2</span>
+            </div>
+            <div class="tp-right">
+              <span>2017-12-21</span>
+            </div>
+          </div>
+          <div class="neirong neirong1">
+            评论内容评论内容评论内容评论内容评论内容评
+            评论内容评论内容评论内容评论内容评论内容评
+          </div>
+        </div>
       </div>
       <div class="pinlunlist">
         <div class="top-pinlun">
