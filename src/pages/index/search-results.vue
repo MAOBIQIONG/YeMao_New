@@ -39,7 +39,10 @@
       }
     },
     created: function () {
-      this.searchValue = common.getStorage("searchValue") || '';
+      var _self = this;
+      var historySearch = common.getObjStorage("historySearch") || [];
+      _self.searchValue = historySearch[0] || '';
+      console.log(_self.searchValue)
     },
     methods: {
       goback() {
