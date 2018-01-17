@@ -28,6 +28,12 @@ ul {
   padding: 0;
   list-style: none;
 }
+
+/**定位**/
+.p-fixed{ position: fixed !important;  }
+.p-absolute{ position: absolute !important;  }
+.p-static{ position: static !important;  }
+
 /*头部公共样式*/
 .header {
   position: fixed;
@@ -52,7 +58,13 @@ ul {
   text-align: center;
   left: 0;
   top: 0;
+
+  background-size: .3rem auto;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
+.img-back{ background-image: url("/static/images/back.png");  }
+.img-back2{background-image: url("/static/images/bj.jpg");  }
 .header .header-left img {
   height: 0.4rem;
   margin-top: 0.22rem;

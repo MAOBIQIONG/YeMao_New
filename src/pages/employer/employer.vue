@@ -1,7 +1,7 @@
 <template>
   <div class="employer">
     <!--头部导航-->
-    <div class="header">
+    <div class="header p-static">
       <span>雇主</span>
       <div class="header-right "@click="toUrl('message')">
         <img src="../../../static/images/employer/ling.png" />
@@ -11,7 +11,7 @@
 
     <!--定位-->
     <div class="top">
-      <div class="top-menu">
+      <div class="top-menu p-static">
         <!--状态模块-->
         <div class="gu-mokuai">
           <div class="dingdan" v-tap="{ methods:toUrl, pagename:'fabudingdan', flag:true }">
@@ -38,7 +38,7 @@
     </div>
     <div class="content">
       <!-- 上拉加载 -->
-      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: 3.2rem;">
+      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: 3.4rem;">
         <div>
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
@@ -203,7 +203,7 @@
         } else {
           _self.onFetching = true
           setTimeout(() => {
-              _self.loadMore()
+            _self.loadMore()
           }, 100)
         }
       },
@@ -219,7 +219,7 @@
         }
         // 排序
         params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};
-　　　　　// 上拉加载
+        // 上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
         _self.$axios.post('/mongoApi', {
@@ -280,7 +280,9 @@
 <style scoped>
   @import '../../../static/css/employer/guzhu.css';
   .employer{
+    width: 100%;
     background-color: #F2F2F2;
+    position: fixed;
   }
   .gu-mokuai .dingdan {
     background: url('../../../static/images/fabubj.png');
@@ -307,13 +309,9 @@
   }
 
   /**定位**/
-  .top{
-    height: 3.2rem;
-  }
   .top-menu{
     width: 100%;
     background-color: #F2F2F2;
-
     position: fixed;
     top: 0.88rem;
     z-index: 2;

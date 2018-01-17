@@ -15,17 +15,22 @@
       </div>
     </div>
     <!--退出登陆-->
-    <div class="tcdl">
+    <div class="tcdl" @click="submit">
       <span>提交</span>
     </div>
+    <toast v-model="showMark" type="text" text="提交成功"width="3rem"></toast>
   </div>
 </template>
 
 <script>
+  import { Toast} from 'vux'
   export default {
+    components: {
+      Toast,
+    },
     data () {
       return {
-
+        showMark: false,
       }
     },
     mounted: function () {
@@ -51,7 +56,15 @@
             $(".zs").text(200-$(".area").val().length)
           }
         })
-      }
+      },
+      //弹窗
+      submit(){
+        this.showMark = true;
+        var _self = this;
+        setTimeout(function () {
+          _self.toUrl('my');
+        },1000)
+      },
     }
   }
 </script>

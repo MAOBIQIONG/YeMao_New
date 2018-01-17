@@ -3,7 +3,7 @@
     <!-- 上拉加载 -->
     <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
-        <div class="content" style="margin-top: 0rem;padding-top: 0rem;">
+        <div class="content" style="margin-top: 0rem;padding-bottom: 4rem;">
           <div class="sjs-list" v-for="item in designers">
             <div class="sjs-top" v-tap="{methods:toDetails, id:item._id}">
               <div class="st-touxiang">
@@ -32,8 +32,8 @@
               <div class="sc-jiesao">{{item.description}}</div>
             </div>
             <div class="sjs-bottom">
-              <div class="sjs-yysj">应邀设计</div>
-              <div class="sjs-mmlt">喵喵聊天</div>
+              <div class="sjs-yysj"v-tap="{methods:toUrl,pagename:'maintain'}">应邀设计</div>
+              <div class="sjs-mmlt"v-tap="{methods:toUrl,pagename:'maintain'}">喵喵聊天</div>
             </div>
           </div>
         </div>

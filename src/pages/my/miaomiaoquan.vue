@@ -1,117 +1,26 @@
 <template>
   <div class="miaomiao">
     <!--头部导航-->
-    <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+    <div class="header p-static">
+      <div class="header-left img-back" v-tap="{methods:goback}"></div>
       <span>喵喵圈</span>
     </div>
     <!--  喵喵列表-->
-    <div class="mm-list miao">
-      <div class="sjse-list"@click.stop="toUrl('pengyouquanxq')">
-        <div class="sjs-top">
-          <div class="st-touxiang"@click.stop="toUrl('sjszxxq')">
-            <img src="../../../static/images/bj.jpg"/>
-          </div>
-          <div class="st-neirong">
-            <div class="sn-top">
-              <div class="st-nicheng">设计师小a</div>
-              <div class="st-pingxin"></div>
-            </div>
-            <div class="sn-bottom">
-              <div class="sb-qian">签</div>
-              <div class="sb-ysm">已实名</div>
-              <div class="sb-yrz">已认证</div>
-            </div>
-          </div>
-          <div class="st-jiageleixin">
-            <div class="st-jiage">2017-10-19</div>
-          </div>
-        </div>
-        <div class="sjs-content">
-          <div class="sc-jiesao">
-            如果你无法简洁的表达你的想法，那只说明你还不够如果你无法简洁的表达你的想法，那只说明你还不够了解它,你需要去了解它。
-          </div>
-        </div>
-        <div class="sjs-bottom">
-          <ul>
-           <li v-for="(item, index) in list"@click.stop="show(index)">
-             <img class="previewer-demo-img":src="item.src"width="100%">
-           </li>
-            <div v-transfer-dom>
-              <previewer :list="list" ref="previewer" :options="options"></previewer>
-            </div>
-          </ul>
-        </div>
-        <div class="pinjia">
-          <p class="dz"@click.stop="dianzan()"><span>100</span></p>
-          <p><span> <img src="../../../static/images/liulan.png"/></span><span>100</span></p>
-        </div>
-      </div>
-    </div>
+    <meows :height="height"></meows>
   </div>
 </template>
 
 <script>
-  import { Previewer, TransferDom } from 'vux'
+  // 引入子组件
+  import meows from '../../components/my/meows.vue';
   export default {
-    directives: {
-      TransferDom
-    },
     components: {
-      Previewer
+      meows,
     },
     data() {
       return {
-        list: [
-          {
-            src: 'https://ooo.0o0.ooo/2017/05/17/591c271ab71b1.jpg',
-            w: 1200,
-            h: 700,
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/05/17/591c271acea7c.jpg'
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
-          },
-          {
-            src: 'https://ooo.0o0.ooo/2017/06/15/59425a592b949.jpeg'
-          },
-        ],
-        options: {
-          getThumbBoundsFn(index) {
-            // find thumbnail element
-            let thumbnail = document.querySelectorAll('.previewer-demo-img')[index]
-            // get window scroll Y
-            let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
-            // optionally get horizontal scroll
-            // get position of element relative to viewport
-            let rect = thumbnail.getBoundingClientRect()
-            // w = width
-            return {x: rect.left, y: rect.top + pageYScroll, w: rect.width}
-            // Good guide on how to get element coordinates:
-            // http://javascript.info/tutorial/coordinates
-          }
-        }
+        height:'-40px'
       }
-    },
-    mounted: function () {
-      this.miao();
     },
     methods: {
       goback () {
@@ -119,21 +28,6 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
-      },
-      show (index) {
-        this.$refs.previewer.show(index)
-      },
-      //tab选择
-      miao(){
-      $(".hd-cont li").click(function(){
-          $(".hd-cont li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
-      });
-      },
-      //      点赞效果
-      dianzan(){
-        $(".dz").click(function(){
-            $(".dz").addClass("dzh");
-        });
       },
     }
   }

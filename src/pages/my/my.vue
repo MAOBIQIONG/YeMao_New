@@ -65,7 +65,7 @@
     <!--意见反馈-->
     <div class="yijian">
       <div class="liebiao">
-        <div class="list"@click="toUrl('liaotian')">
+        <div class="list"@click="toUrl('maintain')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">客服中心</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
@@ -90,7 +90,7 @@
     <!-- 清除缓存弹窗-->
     <div class="pop">
       <div class="pop-bottom">
-        <div class="anniu"><span>清除缓存</span></div>
+        <div id="qx1" class="anniu"><span>清除缓存</span></div>
         <div id="qx" class="anniu"><span style="color: #0076ff;">取消</span></div>
       </div>
     </div>
@@ -136,6 +136,9 @@
           $(".pop").show();
         });
         $("#qx").click(function(){
+          $(".pop").hide();
+        });
+        $("#qx1").click(function(){
           $(".pop").hide();
         });
       },

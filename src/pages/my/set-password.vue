@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>修改密码</span>
-      <div class="header-right">确定</div>
+      <div class="header-right"@click="submit">确定</div>
     </div>
     <div class="setp-content">
       <div class="ymm">
@@ -23,14 +23,19 @@
       </div>
       <div class="gunzhe">密码由6-20位字符组成区分大小写</div>
     </div>
+    <toast v-model="showMark" type="text" text="提交成功"width="3rem"></toast>
   </div>
 </template>
 
 <script>
+  import { Toast} from 'vux'
   export default {
+    components: {
+      Toast,
+    },
     data () {
       return {
-
+        showMark: false,
       }
     },
     methods: {
@@ -39,6 +44,14 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      //弹窗
+      submit(){
+        this.showMark = true;
+        var _self = this;
+        setTimeout(function () {
+          _self.toUrl('my');
+        },1000)
       },
     }
   }

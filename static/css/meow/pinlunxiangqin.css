@@ -10,29 +10,38 @@
   margin-left: 0.2rem;
 }
 
-.pinglun .pinlunlist {
+ .pinlunlist {
   width: 7.1rem;
   margin: 0.2rem;
   padding-bottom: 0.2rem;
   border-bottom: 1px solid #f2f2f2;
 }
-
-.pinglun .pinlunlist .top-pinlun {
+.pinlunlist1 {
+  width: 6.5rem;
+  margin: 0.1rem;
+  margin-left: 0.6rem;
+  padding-bottom: 0rem;
+  border-bottom:none;
+  background-color: #f2f2f2;
+}
+ .pinlunlist .top-pinlun {
   width: 100%;
   height: 0.8rem;
 }
 
-.pinglun .pinlunlist .top-pinlun .tp-left {
+ .pinlunlist .top-pinlun .tp-left {
   float: left;
   line-height: 0.8rem;
   font-size: 0.28rem;
 }
-
-.pinglun .pinlunlist .top-pinlun .tp-left span {
+.pinlunlist .top-pinlun .tp-left2 {
+  float: left;
+}
+ .pinlunlist .top-pinlun .tp-left span {
   margin: 0.1rem;
 }
 
-.pinglun .pinlunlist .top-pinlun .tp-left span img {
+ .pinlunlist .top-pinlun .tp-left span img {
   width:0.6rem;
   height:0.6rem;
   border-radius: 50%;
@@ -40,17 +49,17 @@
   vertical-align: middle;
 }
 
-.pinglun .pinlunlist .top-pinlun .tp-right {
+ .pinlunlist .top-pinlun .tp-right {
   float: right;
   line-height: 0.8rem;
   font-size: 0.28rem;
 }
 
-.pinglun .pinlunlist .top-pinlun .tp-right span {
+ .pinlunlist .top-pinlun .tp-right span {
   margin: 0.1rem;
 }
 
-.pinglun .pinlunlist .top-pinlun .tp-right span img {
+ .pinlunlist .top-pinlun .tp-right span img {
   width:0.4rem;
   height:0.4rem;
   margin-bottom: 0.1rem;
@@ -58,26 +67,28 @@
   vertical-align: middle;
 }
 
-.pinglun .pinlunlist .neirong {
+ .pinlunlist .neirong {
   font-size: 0.28rem;
   margin-left: 0.8rem;
   line-height: 0.4rem;
   color: #999999;
 }
-
-.pinglun .pinlunlist .bottom {
+.pinlunlist .neirong1{
+  margin-left: 0.1rem;
+}
+.pinlunlist .bottom {
   font-size: 0.28rem;
   height: 0.4rem;
   line-height: 0.4rem;
 }
 
-.pinglun .pinlunlist .bottom .left-bt {
+.pinlunlist .bottom .left-bt {
   float: left;
   margin-left: 0.8rem;
   color: #999999;
 }
 
-.pinglun .pinlunlist .bottom .right-bt {
+.pinlunlist .bottom .right-bt {
   float: right;
 }
 
