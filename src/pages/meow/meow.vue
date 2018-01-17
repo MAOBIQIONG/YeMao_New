@@ -67,4 +67,8 @@
   .cur{
     border-bottom: 1px solid #f65aa6;
   }
+  .meow{
+    width: 100%;
+    position: fixed;
+  }
 </style>
