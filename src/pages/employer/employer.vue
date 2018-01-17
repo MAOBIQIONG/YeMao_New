@@ -203,7 +203,7 @@
         } else {
           _self.onFetching = true
           setTimeout(() => {
-              _self.loadMore()
+            _self.loadMore()
           }, 100)
         }
       },
@@ -219,7 +219,7 @@
         }
         // 排序
         params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};
-　　　　　// 上拉加载
+        // 上拉加载
         _self.loadtext = _self.loadrefresh;
         _self.showLoading = true;
         _self.$axios.post('/mongoApi', {
