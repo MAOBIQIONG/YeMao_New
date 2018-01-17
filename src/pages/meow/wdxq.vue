@@ -41,14 +41,14 @@
             <div class="neirongshijian">
                 {{chw.description}}
                 <div class="bottom">
-                <div class="bottom-zan" :class="{confirmColor:!likeFlag}">
+                <div class="bottom-zan" :class="{confirmColor:!likeFlag}" v-tap={methods:like_dom}>
                     <span id="praise" ref="like">
                         <img v-if="likeFlag" src="../../../static/images/zan1.png"/>
                         <img v-else src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
                     </span>
                     <span id="praise-txt">100</span>
                 </div>
-                <div class="bottom-sz" :class="{confirmColor:!collectFlag}" v-tap="{methods:collect_dom}">
+                <div class="bottom-sz" :class="{confirmColor:!collectFlag}" v-tap="{methods:collect}">
                     <span id="xinxin" ref="star">
                         <img v-if="collectFlag" src="../../../static/images/xin1.png"/>
                         <img v-else src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
@@ -145,7 +145,7 @@ export default {
                 user:{}
             },
             likeFlag:1,
-            collectFlag:0,
+            collectFlag:1,
             comments:[],
             user_id:null,
             imgs:[],
@@ -274,24 +274,22 @@ export default {
         // },
         like_dom(param){
             var _self = this;
-            console.log('this is collect_dom');
-            _self.likeFlag == 0 ? _self.likeFlag=1 : _self.collectFlag=0;
-            console.log(this.likeFlag);
+            _self.likeFlag == 0 ? _self.likeFlag=1 : _self.likeFlag=0;
         },
         // 收藏
         collect_dom(param){
             var _self = this;
-            console.log('this is collect_dom');
             _self.collectFlag == 0 ? _self.collectFlag=1 : _self.collectFlag=0;
-            console.log(this.collectFlag);
         },
         collect(){
             var _self = this;
+            _self.collect_dom();
+            console.log(this.collectFlag);
             var params = {
                 interfaceId:common.interfaceIds.collect,
                 data:{
-                    collect_type: 0,
-                    collect_id: _self.order_id,
+                    collect_type: 3,
+                    collect_id: _self.chw_id,
                     user_id: _self.user_id,
                     isdel: _self.collectFlag
                 }

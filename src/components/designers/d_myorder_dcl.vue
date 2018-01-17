@@ -44,8 +44,7 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
-                        <div class="db-sxdd">刷新订单</div>
-                        <div class="db-qrdd" >待完善</div>
+                        <div class="db-qrdd">完善</div>
                     </div>
                 </div>
             </div>
@@ -114,7 +113,7 @@ export default {
             orderList: [],
             pagination: {
                 pageNo: 0,
-                pageSize: 10
+                pageSize: 1
             },
             pullUpDownStatus: {
                 pulldownStatus: 'default',

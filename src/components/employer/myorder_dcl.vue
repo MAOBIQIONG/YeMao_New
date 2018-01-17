@@ -44,7 +44,7 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
-                        <template v-if="item.bidders.length>0">
+                        <template v-if="item.sub.length>0">
                             <div v-if="isNull(item.project_winBidder)"
                                  class="db-qrdd" 
                                  v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" >
@@ -261,7 +261,46 @@ export default {
 
             });
         },
-        
+        //混合两个对象返回新对象eg:let d = mix(protoObject).w(toObject)
+        mix(protoObject,ifNeedPropProto=false){
+            let w =function(toObject){
+                //以protoObject为原型以toObject属性为自有属性创建新的对象
+                let d = Object.create(protoObject,Object.getOwnPropertyDescriptors(toObject))
+                //将原型属性赋值于自有属性
+                if(ifNeedPropProto){
+                    for (var k in d){
+                        d[k] = d[k]
+                    }
+                }              
+                return d;
+            };
+            return {
+                w
+            }
+        },
+        //两个对象数组根据字段合并，返回合并后数组
+        //o1:{arr:[],field:''}
+        arryLeftJoin(o1,o2){
+            console.log(o1,o2);
+            let _self = this;
+            let result = [];
+            if(common.isArray(o1.arr) && common.isArray(o2.arr)){
+                for(let r1 of o1.arr){  
+                    r1.sub = new Array();
+                    for(let r2 of o2.arr){                
+                        if(r1[o1.field]==r2[o2.field]){
+                            // console.log(r1[o1.field],r2[o2.field]);            
+                            r1.sub.push(r2);
+                        }
+                    }
+                    // console.log(r1.sub);
+                    result.push(r1);
+                }
+                return result;
+            } else {
+                throw new Error("参数格式mergeData(o1:{arr:[],field:''},o2:{arr:[],field:''})")
+            }
+        },
         //获取数据
         loadData(){      
             let _self = this;
@@ -284,6 +323,8 @@ export default {
                 params
             },(response)=>{
                 let data = response.data;
+                console.log(data);
+                console.log("开始设置数据");
                 _self.setData(data);
                 // console.log("+++++++++++++");
                 // console.log(response);
@@ -294,39 +335,17 @@ export default {
             let _self = this;
             _self.$refs.scroller.enablePullup();
             // 订单
-            let orderBidders = data.orderBidders || [];
-            let bidders = data.bidders || [];
+            let orderBidders = data.orderBidders || [];//参与人记录
             let orderList = data.orderList || [];
-            let orderUsers = data.orderUsers || [];
-            orderBidders.forEach(function (b, j) {
-            bidders.forEach(function (u, j) {
-                if ( b.user_id == u._id ) {
-                b.user_name = u.user_name;
-                b.img = u.img;
-                }
-            })
-            })
-            orderList.forEach(function (item, index) {
-            // 雇主
-            item.user = {};
-            orderUsers.forEach(function (u, j) {
-                if ( item.user_id == u._id ) {
-                item.user = u;
-                }
-            })
-            // 参与人
-            item.bidders = [];
-            orderBidders.forEach(function (b, j) {
-                if ( item._id == b.order_id ) {
-                item.bidders.push(b);
-                }
-            })
-            });
+
+            let list = _self.arryLeftJoin({arr:orderList,field:'_id'},{arr:orderBidders,field:'order_id'});
+            // console.log('mergeList',list);        
+
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
-                _self.orderList = orderList;
+                _self.orderList = list;
             } else {
-                _self.orderList.push(...data.orderList);
+                _self.orderList.push(...list);
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;                  
@@ -342,7 +361,7 @@ export default {
             } else {
                 _self.pagination.pageNo++
             }
-            // console.log(_self.orderList);
+            console.log('设置完成');  
         },
         //下拉刷新
         refreshPageDate(){
