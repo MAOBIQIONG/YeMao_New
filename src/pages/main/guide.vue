@@ -17,19 +17,19 @@
           {
             html: '',
             style: {
-              background:'url(../../../static/images/1.png)'
+              background:'url(./static/images/1.png)'
             }
           },
           {
             html: '',
             style: {
-              background:'url(../../../static/images/2.png)'
+              background:'url(./static/images/2.png)'
             }
           },
           {
             html: '<div class="animate">立即体验</div>',
             style: {
-              background:'url(../../../static/images/3.png)'
+              background:'url(./static/images/3.png)'
             }
           },
         ],
@@ -65,7 +65,7 @@
 </script>
 <style>
   .slider-pagination-bullet-active {
-    background: #000000 none repeat scroll 0 0;
+    background: #000000 none repeat scroll 0 0 !important;
     opacity: 1;
   }
   .animate{
