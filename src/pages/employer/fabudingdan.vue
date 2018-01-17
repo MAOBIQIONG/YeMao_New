@@ -311,6 +311,15 @@
         })
       }
 
+    },
+     //路由进入
+    beforeRouteLeave(to, from, next){
+        if(from.name=="")
+        console.log(to);
+        console.log(from);
+        console.log(next);
+        console.log(this.subParams);
+        next();
     }
   }
 </script>
