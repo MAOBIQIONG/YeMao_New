@@ -26,15 +26,20 @@
         </div>
       </div>
     </div>
-    <div class="gunzhe">确认修改</div>
+    <div class="gunzhe" @click="submit">确认修改</div>
+    <toast v-model="showMark" type="text" text="提交成功"width="3rem"></toast>
   </div>
 </template>
 
 <script>
+  import { Toast} from 'vux'
   export default {
+    components: {
+      Toast,
+    },
     data () {
       return {
-
+        showMark: false,
       }
     },
     methods: {
@@ -43,6 +48,14 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      //弹窗
+      submit(){
+        this.showMark = true;
+        var _self = this;
+        setTimeout(function () {
+          _self.toUrl('my');
+        },1000)
       },
     }
   }

@@ -32,8 +32,8 @@
               <div class="sc-jiesao">{{item.description}}</div>
             </div>
             <div class="sjs-bottom">
-              <div class="sjs-yysj">应邀设计</div>
-              <div class="sjs-mmlt">喵喵聊天</div>
+              <div class="sjs-yysj"v-tap="{methods:toUrl,pagename:'maintain'}">应邀设计</div>
+              <div class="sjs-mmlt"v-tap="{methods:toUrl,pagename:'maintain'}">喵喵聊天</div>
             </div>
           </div>
         </div>

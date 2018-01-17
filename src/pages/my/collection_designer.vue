@@ -24,7 +24,7 @@
           </div>
           <div class="szsjs-jiageleixin">
             <div class="st-leixin"><span>景观设计</span></div>
-            <div class="st-yaoqing">邀请TA</div>
+            <div class="st-yaoqing"@click="toUrl('maintain')">邀请TA</div>
           </div>
 
         </div>
@@ -47,7 +47,7 @@
           </div>
           <div class="szsjs-jiageleixin">
             <div class="st-leixin"><span>景观设计</span></div>
-            <div class="st-yaoqing">邀请TA</div>
+            <div class="st-yaoqing"@click="toUrl('maintain')">邀请TA</div>
 
           </div>
 

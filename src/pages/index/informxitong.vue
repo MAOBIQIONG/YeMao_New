@@ -12,7 +12,7 @@
           <div class="jianjia"></div>
           <div class="zf-jg">支付成功</div>
           <div class="zf-sm">文字说明</div>
-          <div class="ckxq">
+          <div class="ckxq"@click="toUrl('maintain')">
             <span>查看详情</span>
             <div class="ck-right">
               <img src="../../../static/images/index/jiangou.png">
