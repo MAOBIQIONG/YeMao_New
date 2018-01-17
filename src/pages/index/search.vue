@@ -133,7 +133,10 @@
 <style scoped>
   @import "../../../static/css/index/search.css";
   /**css1:**/
-  .f-ul{}
+  .f-ul{
+    display: block;
+    width: 100%;
+  }
   .f-ul ul{list-style:none;padding: 0 .25rem;margin: 0;line-height: .5rem; }
   .f-ul li{
     display:block;

@@ -262,19 +262,19 @@ const common = {
   /*****************5、字典表数据转换*******************/
   //1、项目类型
   getProjectTypes: function (){
-    var types = [ { "_id" : "5a4248b1160048792cd9d35a", "type_name" : "策划设计", "img":"../../../static/images/index/c_cehua_01_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d35b", "type_name" : "规划设计", "img":"../../../static/images/index/c_guihua_02_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d35c", "type_name" : "建筑设计", "img":"../../../static/images/index/c_jianzhu_03_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d35d", "type_name" : "结构设计", "img":"../../../static/images/index/c_jiegou_04_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d35e", "type_name" : "给排水设计", "img":"../../../static/images/index/c_jipaishui_05_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d35f", "type_name" : "电气设计", "img":"../../../static/images/index/c_dianqi_06_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d360", "type_name" : "暖通设计", "img":"../../../static/images/index/c_nuantong_07_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d361", "type_name" : "景观设计", "img":"../../../static/images/index/c_jingguan_08_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d362", "type_name" : "室内设计", "img":"../../../static/images/index/c_shinei_09_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d363", "type_name" : "软装设计", "img":"../../../static/images/index/c_ruanzhuang_10_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d364", "type_name" : "项目经理", "img":"../../../static/images/index/c_xiangmujingli_11_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d365", "type_name" : "概预算", "img":"../../../static/images/index/c_gaiyusuan_12_03.png" },
-                  { "_id" : "5a4248b1160048792cd9d366", "type_name" : "审图", "img":"../../../static/images/index/c_shentu_13_03.png" }];
+    var types = [ { "_id" : "5a4248b1160048792cd9d35a", "type_name" : "策划设计", "img":"./static/images/index/c_cehua_01_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d35b", "type_name" : "规划设计", "img":"./static/images/index/c_guihua_02_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d35c", "type_name" : "建筑设计", "img":"./static/images/index/c_jianzhu_03_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d35d", "type_name" : "结构设计", "img":"./static/images/index/c_jiegou_04_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d35e", "type_name" : "给排水设计", "img":"./static/images/index/c_jipaishui_05_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d35f", "type_name" : "电气设计", "img":"./static/images/index/c_dianqi_06_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d360", "type_name" : "暖通设计", "img":"./static/images/index/c_nuantong_07_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d361", "type_name" : "景观设计", "img":"./static/images/index/c_jingguan_08_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d362", "type_name" : "室内设计", "img":"./static/images/index/c_shinei_09_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d363", "type_name" : "软装设计", "img":"./static/images/index/c_ruanzhuang_10_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d364", "type_name" : "项目经理", "img":"./static/images/index/c_xiangmujingli_11_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d365", "type_name" : "概预算", "img":"./static/images/index/c_gaiyusuan_12_03.png" },
+                  { "_id" : "5a4248b1160048792cd9d366", "type_name" : "审图", "img":"./static/images/index/c_shentu_13_03.png" }];
     return types;
   },
 

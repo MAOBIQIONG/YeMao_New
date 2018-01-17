@@ -112,7 +112,7 @@
           </div>
         </div>
         <!--雇主列表-->
-        <div class="content">
+        <div class="content"style="padding-bottom:0.2rem">
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
               <div class="gz-touxiang">

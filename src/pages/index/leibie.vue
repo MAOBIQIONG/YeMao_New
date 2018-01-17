@@ -93,7 +93,7 @@
       },
       // 头像
       checkAvatar (path) {
-        var img = common.getAvatar(path, '../../../static/images/bj.jpg')
+        var img = common.getAvatar(path, './static/images/bj.jpg')
         return img
       },
       // 抢单
