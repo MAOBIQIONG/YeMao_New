@@ -183,6 +183,7 @@ export default {
                 interfaceId: common.interfaceIds.getPersonalChw,
                 pageNo:_self.pagination.pageNo,
                 pageSize:_self.pagination.pageSize,
+                user_id: _self.user_id,
                 where:{
                     // user_id: _self.user_id,
                     type: 5//问答
@@ -268,13 +269,13 @@ export default {
     },
     created(){
         var _self = this;
-        // var user = common.getObjStorage("userInfo") || {};
-        // if( !common.isNull(user._id) ){
-        //     _self.user_id = user._id;
-        // } else {
-        //     console.log('user_id is null');
-        //     _self.$router.push({name:'login'});
-        // }
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+            _self.user_id = user._id;
+        } else {
+            console.log('user_id is null');
+            _self.$router.push({name:'login'});
+        }
         this.loadData();
     },
     mounted(){

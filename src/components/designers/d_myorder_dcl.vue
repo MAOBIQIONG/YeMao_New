@@ -44,7 +44,11 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
-                        <div class="db-qrdd">完善</div>
+                        <div class="db-qrdd" v-if="isNull(item.project_winBidder)">抢单中</div>
+                        <template v-else>
+                            <div class="db-qrdd" v-if="item.project_winBidder == user_id" @click="">完善订单</div>
+                            <div class="db-qrdd" v-else>抢单失败</div>
+                        </template>              
                     </div>
                 </div>
             </div>
@@ -81,6 +85,13 @@ export default {
     },
     created(){
         // console.log('created');
+        var _self = this;
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+            _self.user_id = user._id;
+        } else {
+            console.log('user_id is null');
+        }
         this.loadData();
     },
     mounted(){
@@ -111,9 +122,10 @@ export default {
         return {
             cancel_id:null,
             orderList: [],
+            user_id:null,
             pagination: {
                 pageNo: 0,
-                pageSize: 1
+                pageSize: 10
             },
             pullUpDownStatus: {
                 pulldownStatus: 'default',
