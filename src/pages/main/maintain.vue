@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png"/></div>
     </div>
     <div class="page">
-      <img src="../../../static/images/weihu.png"/>
+      <img src="../../../static/images/shuju.png"/>
     </div>
   </div>
 </template>

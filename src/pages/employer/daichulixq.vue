@@ -155,7 +155,6 @@
       console.log(_self.userInfo);
     },
     mounted: function () {
-      this.zhishu();
     },
     methods: {
       goback(){
@@ -167,42 +166,12 @@
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
       },
-//      订单详情字数限制
-      zhishu () {
-        var neirong = $(".neirong").text();
-        $(".neirong").each(function() {
-          var maxwidth = 80;
-          if($(this).text().length > maxwidth) {
-            $(this).text($(this).text().substring(0, maxwidth));
-            $(this).html($(this).html() + '...');
-          }
-        });
-        //点击查看更多
-        var flag = true
-        $('.ddxq-bottom .chakangengduo').click(function() {
-          if(flag == true) {
-            $(this).html('点击查看更多')
-            $(".neirong").each(function() {
-              let maxwidth = 80;
-              if($(this).text().length > maxwidth) {
-                $(this).text($(this).text().substring(0, maxwidth));
-                $(this).html($(this).html() + '...');
-              }
-            });
-            flag = false;
-          } else {
-            $(this).html('收起')
-            $(".neirong").html(neirong)
-            flag = true;
-          }
-        });
-      },
         // 订单详情字数限制
         getMaxlen(text){
         var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
         var num = common.getMaxlenInlineNum(width,fontSize,lines);
         if( text && text.length > num ){
-            text = text.substring(0,num-2) + '...';
+            text = text.substring(0,num-6) + '...';
         }
         return text;
         },
