@@ -32,7 +32,11 @@
                             </div>
                             <template  v-if="item.sub.length>0">
                                 <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
-                                <div v-else class="db-djs">等待设计师完善订单</div>
+                                <template v-else>
+                                    <div v-if="item.project_state==2" class="db-djs">等待雇主确认订单</div>
+                                    <div v-else class="db-djs">等待设计师完善订单</div>
+                                </template>
+                               
                             </template>
                             
                             <div v-else class="db-djs">{{item.project_deadLine | dateDiff}}</div>
@@ -62,7 +66,10 @@
                                 <!-- <div class="db-sxdd">
                                     刷新订单
                                 </div> -->
-                                <div class="db-qrdd"  style="background:white">
+                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}">
+                                    确认完善信息
+                                </div>
+                                <div v-else class="db-qrdd"  style="background:white">
                                     <!-- 等待完善订单 -->
                                 </div>
                             </template>
@@ -135,6 +142,7 @@ export default {
     data(){
         return {
             cancel_id:null,
+            improve_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -230,6 +238,46 @@ export default {
         },
         isNull(data){
             return common.isNull(data);
+        },
+        updateOrderState(p){
+            // console.log(param.id);
+            var _self = this;
+            _self.improve_id = p.id;
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                coll:common.collections.orderList,
+                wheredata:{
+                    _id:_self.improve_id
+                },
+                data:{
+                    $set: {
+                        project_state: 3, // 取消
+                    }
+                }
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.ok > 0 ){
+                        _self.showToast('请前往支付！');
+                        _self.renderAfterConfirmImprove();
+                    } else {
+                        _self.showToast('取消失败联系管理员');
+                    }
+                })
+        },
+        renderAfterConfirmImprove(){
+            let _self = this;
+            let index = 0;
+            for (let r of _self.orderList) {
+                console.log(_self.orderList[index]);
+                if(r._id == _self.improve_id){
+                    _self.orderList.splice(index,1);
+                }
+                index++
+            }
         },
         cancelOrder(){
             let _self = this;
