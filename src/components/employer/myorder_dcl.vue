@@ -21,6 +21,7 @@
                 <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
                         <img src=item.imgs[0] v-if="item.imgs.length>0">
+                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0">
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -72,11 +73,13 @@
                                 <div v-else class="db-qrdd"  style="background:white">
                                     <!-- 等待完善订单 -->
                                 </div>
-                            </template>
-                            
+                            </template>                          
+                        </template>
+                        <template v-else>
+                            <div class="db-sxdd">刷新订单</div>
+                            <div class="db-qrdd" style="background:white"></div>
                         </template>
                         
-                        <div v-else class="db-qrdd" style="background:white"></div>
                     </div>
                 </div>
             </div>
@@ -142,6 +145,7 @@ export default {
     data(){
         return {
             cancel_id:null,
+            order_id:null,
             improve_id:null,
             orderList: [],
             pagination: {
@@ -238,6 +242,12 @@ export default {
         },
         isNull(data){
             return common.isNull(data);
+        },
+        refreshOrder(param){
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                order_id:param.id
+            };
         },
         updateOrderState(p){
             // console.log(param.id);
@@ -400,7 +410,7 @@ export default {
             let orderList = data.orderList || [];
 
             let list = _self.arryLeftJoin({arr:orderList,field:'_id'},{arr:orderBidders,field:'order_id'});
-            console.log('mergeList',list);        
+            // console.log('mergeList',list);        
 
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
@@ -457,6 +467,7 @@ export default {
         showConfirm(params){
             this.confirmShow = true;
             this.cancel_id = params;
+            this.order_id = params;
             console.log(this.cancel_id);
         },
         renderAfterCanceled(){
