@@ -47,7 +47,7 @@
                 <div class="ds-bottom">
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
+                        <!-- <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div> -->
                         <div class="db-qrdd" v-if="isNull(item.project_winBidder)">
                             <!-- 抢单中 -->
                         </div>

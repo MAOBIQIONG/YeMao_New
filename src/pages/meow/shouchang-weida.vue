@@ -186,7 +186,7 @@ export default {
                 user_id: _self.user_id,
                 where:{
                     // user_id: _self.user_id,
-                    type: 5//问答
+                    type: 4//问答
                 }
             }
             _self.$axios.post('/mongoApi', {

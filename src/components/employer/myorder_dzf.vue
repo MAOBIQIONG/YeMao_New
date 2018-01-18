@@ -51,31 +51,8 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
-                        <template v-if="item.sub.length>0">
-                            <template v-if="isNull(item.project_winBidder)">
-                                <div class="db-sxdd">刷新订单</div>
-                                <div class="db-qrdd" 
-                                    v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" 
-                                 >
-                                 选择设计师
-                                </div>
-                            </template>
-                            
-                            <template v-else>
-                                <!-- <div class="db-sxdd">
-                                    刷新订单
-                                </div> -->
-                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}">
-                                    确认完善信息
-                                </div>
-                                <div v-else class="db-qrdd"  style="background:white">
-                                    <!-- 等待完善订单 -->
-                                </div>
-                            </template>
-                            
-                        </template>
                         
-                        <div v-else class="db-qrdd" style="background:white"></div>
+                        <div class="db-qrdd">支付</div>
                     </div>
                 </div>
             </div>
