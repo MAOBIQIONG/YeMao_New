@@ -157,6 +157,8 @@
   @import '../../../static/css/designer/designer.css';
   .designer{
     background-color: #f2f2f2;
+    width: 100%;
+    position: fixed;
   }
   .header .header-right .hongdian{
     width: 0.1rem;

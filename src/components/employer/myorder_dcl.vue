@@ -21,6 +21,7 @@
                 <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
                         <img src=item.imgs[0] v-if="item.imgs.length>0">
+                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0">
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -30,7 +31,16 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <div class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                            <template  v-if="item.sub.length>0">
+                                <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
+                                <template v-else>
+                                    <div v-if="item.project_state==2" class="db-djs">等待雇主确认订单</div>
+                                    <div v-else class="db-djs">等待设计师完善订单</div>
+                                </template>
+                               
+                            </template>
+                            
+                            <div v-else class="db-djs">{{item.project_deadLine | dateDiff}}</div>
                         </div>
                     </div>
                 </div>
@@ -43,20 +53,33 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
-                        <div class="db-sxdd">刷新订单</div>
                         <template v-if="item.sub.length>0">
-                            <div v-if="isNull(item.project_winBidder)"
-                                 class="db-qrdd" 
-                                 v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" >
+                            <template v-if="isNull(item.project_winBidder)">
+                                <div class="db-sxdd">刷新订单</div>
+                                <div class="db-qrdd" 
+                                    v-tap="{ methods:toParts, id: item._id, uid: item.user_id }" 
+                                 >
                                  选择设计师
-                            </div>
-                            <div v-else
-                                 class="db-qrdd" >
-                                 等待完善订单
-                            </div>
+                                </div>
+                            </template>
+                            
+                            <template v-else>
+                                <!-- <div class="db-sxdd">
+                                    刷新订单
+                                </div> -->
+                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}">
+                                    确认完善信息
+                                </div>
+                                <div v-else class="db-qrdd"  style="background:white">
+                                    <!-- 等待完善订单 -->
+                                </div>
+                            </template>                          
+                        </template>
+                        <template v-else>
+                            <div class="db-sxdd">刷新订单</div>
+                            <div class="db-qrdd" style="background:white"></div>
                         </template>
                         
-                        <div v-else class="db-qrdd">待抢单</div>
                     </div>
                 </div>
             </div>
@@ -122,6 +145,8 @@ export default {
     data(){
         return {
             cancel_id:null,
+            order_id:null,
+            improve_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -218,6 +243,52 @@ export default {
         isNull(data){
             return common.isNull(data);
         },
+        refreshOrder(param){
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                order_id:param.id
+            };
+        },
+        updateOrderState(p){
+            // console.log(param.id);
+            var _self = this;
+            _self.improve_id = p.id;
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                coll:common.collections.orderList,
+                wheredata:{
+                    _id:_self.improve_id
+                },
+                data:{
+                    $set: {
+                        project_state: 3, // 取消
+                    }
+                }
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.ok > 0 ){
+                        _self.showToast('请前往支付！');
+                        _self.renderAfterConfirmImprove();
+                    } else {
+                        _self.showToast('取消失败联系管理员');
+                    }
+                })
+        },
+        renderAfterConfirmImprove(){
+            let _self = this;
+            let index = 0;
+            for (let r of _self.orderList) {
+                console.log(_self.orderList[index]);
+                if(r._id == _self.improve_id){
+                    _self.orderList.splice(index,1);
+                }
+                index++
+            }
+        },
         cancelOrder(){
             let _self = this;
             var params = {
@@ -281,7 +352,7 @@ export default {
         //两个对象数组根据字段合并，返回合并后数组
         //o1:{arr:[],field:''}
         arryLeftJoin(o1,o2){
-            console.log(o1,o2);
+            // console.log(o1,o2);
             let _self = this;
             let result = [];
             if(common.isArray(o1.arr) && common.isArray(o2.arr)){
@@ -396,6 +467,7 @@ export default {
         showConfirm(params){
             this.confirmShow = true;
             this.cancel_id = params;
+            this.order_id = params;
             console.log(this.cancel_id);
         },
         renderAfterCanceled(){

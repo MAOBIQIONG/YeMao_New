@@ -1,7 +1,7 @@
 <template>
   <div class="employer">
     <!--头部导航-->
-    <div class="header">
+    <div class="header p-static">
       <span>雇主</span>
       <div class="header-right "@click="toUrl('message')">
         <img src="../../../static/images/employer/ling.png" />
@@ -11,7 +11,7 @@
 
     <!--定位-->
     <div class="top">
-      <div class="top-menu">
+      <div class="top-menu p-static">
         <!--状态模块-->
         <div class="gu-mokuai">
           <div class="dingdan" v-tap="{ methods:toUrl, pagename:'fabudingdan', flag:true }">
@@ -280,7 +280,9 @@
 <style scoped>
   @import '../../../static/css/employer/guzhu.css';
   .employer{
+    width: 100%;
     background-color: #F2F2F2;
+    position: fixed;
   }
   .gu-mokuai .dingdan {
     background: url('../../../static/images/fabubj.png');
@@ -307,13 +309,9 @@
   }
 
   /**定位**/
-  .top{
-    height: 3.2rem;
-  }
   .top-menu{
     width: 100%;
     background-color: #F2F2F2;
-
     position: fixed;
     top: 0.88rem;
     z-index: 2;

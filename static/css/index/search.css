@@ -73,6 +73,7 @@
 
 .seach-lishi .searchls-list .ls-list .ll-left {
   -webkit-box-flex:1;
+  overflow: hidden;
 }
 
 .seach-lishi .searchls-list .ls-list .ll-right {

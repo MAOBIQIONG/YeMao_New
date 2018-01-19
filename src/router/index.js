@@ -99,6 +99,7 @@ import haibao from '@/pages/meow/haibao'
 import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
 import guide from '@/pages/main/guide'
+import maintain from '@/pages/main/maintain'
 
 
 Vue.use(Router)
@@ -128,6 +129,11 @@ const routeArray = [
     path: '/guide',
     name: 'guide',
     component: guide,
+  },
+  {
+    path: '/maintain',
+    name: 'maintain',
+    component: maintain,
   },
   // 嵌套路由(router-view)：配置子路由
   {

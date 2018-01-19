@@ -3,7 +3,8 @@
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
-      <div class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
+      <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
+      <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
     <!--发布订单内容-->
     <div class="fb-content">
@@ -146,6 +147,8 @@
     data () {
       return {
         userInfo:{},
+        improve:0,
+        order_id:null,
         imgList:[],
         isShow:true,
         typeList:[],
@@ -187,6 +190,12 @@
       this.subParams.project_endTime=dateStr;
       // 项目类型
       this.typeList = common.getProjectTypes();
+      //判断是否页面来自于设计师完善
+      this.order_id = this.$route.query.id;
+      this.improve = this.$route.query.improve;
+      if(this.$route.query.improve && !common.isNull(this.order_id)) {
+          this.loadData();
+      }
     },
     methods: {
       goback(){
@@ -236,58 +245,123 @@
       onChange(val){
         console.log("onChange："+val)
       },
-
-      submit(){
-        console.log("submit:")
+    loadData(){
         var _self = this;
-        if( common.isNull(_self.subParams.user_id) == true ){
-          _self.showToast("未成功获取用户信息!");
-          return
+        var params = {
+            interfaceId:common.interfaceIds.getProjectDetail,
+            order_id:this.order_id,
+            user_id:_self.subParams.user_id
         }
+        _self.$axios.post('/mongoApi', {
+            params: params
+        }, response => {
+            console.log(response)
+            var data = response.data;
+            if(data){
+                // this.subParams = data.order;
+                let objectKeys = Object.keys(_self.subParams);
+                objectKeys.reduce(
+                    (accumulator,currentValue,currentIndex,array)=>{
+                        console.log(currentValue,accumulator);
+                        _self.subParams[currentValue] = data.order[currentValue];
+                    },0
+                );
+                // _self.subParams.user_id = "5a55a3a3565a966d3b6a932e"
+                console.log(_self.subParams);
+            }
+        });
+    },
+    update(){
+        //updateData
+        var _self = this;
+        if(!_self.validate(1)) return;
+        console.log('完善验证完成');
+        // return;
+        _self.subParams.project_state=2;// 将状态置为待支付
+        var params = {
+            interfaceId:common.interfaceIds.updateData,
+            coll:common.collections.orderList,
+            data:_self.subParams,
+            wheredata:{
+                _id:_self.order_id,
+            },
+        };
+
+        // console.log('before improve');
+        // return;
+        _self.$axios.post('/mongoApi', {
+            params: params
+        }, response => {
+            console.log(response)
+            var data = response.data;
+        });
+    },
+    validate(improve){
+        var _self = this;
+        if(improve){
+            if( common.isNull(_self.userInfo) == true ){
+                _self.showToast("未成功获取用户信息!");
+                return false
+            }
+        }else {
+            if( common.isNull(_self.subParams.user_id) == true ){
+                _self.showToast("未成功获取用户信息!");
+                return false
+            }
+        }
+       
         if( common.isNull(_self.subParams.project_type) == true ){
           _self.showToast("请选择项目类型!");
-          return
+          return false
         }
         if( common.isNull(_self.subParams.project_region) == true ){
           _self.showToast("请选择项目地区!");
-          return
+          return false
         }
         if( common.isNull(_self.subParams.project_title) == true ){
           _self.showToast("请输入项目标题!");
-          return
+          return false
         }
         if( common.isNull(_self.subParams.project_describe) == true ){
           _self.showToast("请输入项目描述!");
-          return
+          return false
         }
         if( common.isNull(_self.subParams.project_budget) == true ){
           _self.showToast("请输入预算金额!");
-          return
+          return false
         }
         if( common.isNull(_self.subParams.project_unit) == true ){
           _self.showToast("请输入设计单位!");
-          return
+          return false
         }
         if( common.isNull(_self.subParams.project_area) == true ){
           _self.showToast("请选择设计面积!");
-          return
+          return false
         }
         if( _self.subParams.project_depth.length == 0 ){
           _self.showToast("请选择设计深度!");
-          return
+          return false
         }
         if( common.isNull(_self.subParams.project_workHours) == true ){
           _self.showToast("请输入工时!");
-          return
+          return false
         }
         if( common.dateCompare(_self.subParams.project_deadLine,_self.subParams.project_startTime) == false ){
           _self.showToast("开始时间不能小于抢单截止日期!");
-          return
+          return false
         }
         if( common.dateCompare(_self.subParams.project_startTime,_self.subParams.project_endTime) == false ){
           _self.showToast("截止时间不能小于开始日期!");
-          return
+          return false
         }
+        return true;
+    },
+      submit(){
+        console.log("submit:")
+        var _self = this;
+        //验证输入
+        if(!_self.validate()) return;
+
         var params = {
         //批量添加
           interfaceId:common.interfaceIds.addOrders,
@@ -311,7 +385,7 @@
         })
       }
 
-    }
+    },
   }
 </script>
 <style>
