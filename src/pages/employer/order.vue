@@ -298,7 +298,7 @@
           console.log(response)
           var data = response.data;
           if( data ){
-            _self.collectFlag = data.collectFlag;
+            _self.collectFlag = common.checkInt(data.collectFlag);
             //订单
             var order = data.order || {};
             var orderBidders = data.orderBidders || [];
