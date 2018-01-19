@@ -28,6 +28,9 @@ ul {
   padding: 0;
   list-style: none;
 }
+input{
+  -webkit-tap-highlight-color:transparent !important;
+}
 /*沉浸式样式*/
 .content-p{
   padding-top: 1.2rem;
