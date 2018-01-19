@@ -143,7 +143,7 @@ export default {
                 user:{}
             },
             //点赞人
-            likes_7:[], 
+            likes_7:[],
             likes:[],
             comments:[],
             user_id:null,
@@ -410,8 +410,8 @@ export default {
             //点赞人列表
             // console.log('data.chw.likes',data.likes);
             let likes = data.likes;
-            // _self.likes_7 = likes.splice(0,7);
-            _self.likes = data.likes;
+            common.setStorage('likes_chwdetail',likes);
+            _self.likes_7 = likes.splice(0,7);
             console.log(data.likes);
             console.log('初始化数据完成');
         },
