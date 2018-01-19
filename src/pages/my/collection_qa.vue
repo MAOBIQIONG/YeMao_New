@@ -152,7 +152,7 @@
                     pageSize:_self.pagination.pageSize,
                     where:{
                         user_id: _self.user_id,
-                        collect_type:4//问答
+                        collect_type:3// 收藏类型3问答
                     }
                 }
                 _self.$axios.post('/mongoApi', {

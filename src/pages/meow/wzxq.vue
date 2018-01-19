@@ -41,12 +41,19 @@
             <div class="neirongshijian">
                 {{chw.description}}
                 <div class="bottom">
-                <div class="bottom-zan">
-                    <span id="praise"><img src="../../../static/images/zan1.png"/></span>
-                    <span id="praise-txt">100</span>
+                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:like}">
+                    <span id="praise" ref="like">  
+                        <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                        <img v-else src="../../../static/images/zan1.png"/>
+                    </span>
+                    <span id="praise-txt">{{chw.like}}</span>
                 </div>
-                <div class="bottom-sz">
-                    <span id="xinxin"><img src="../../../static/images/xin1.png"/></span><span>收藏</span>
+                <div class="bottom-sz" :class="{confirmColor:chw.collectFlag == 1}" v-tap="{methods:collect}">
+                    <span id="xinxin" ref="star">         
+                        <img v-if="chw.collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                        <img v-else src="../../../static/images/xin1.png"/>
+                    </span>
+                    <span>收藏</span>
                 </div>
                 </div>
             </div>
@@ -120,6 +127,8 @@ export default {
         return {
             chw_id:null,
             chw:{
+                likeFlag:0,
+                collectFlag:0,
                 create_date:null,
                 user:{}
             },
@@ -230,24 +239,71 @@ export default {
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
-        dianzan (){
-            var off=true;
-            $("#praise").click(function(){
-            var praise_txt = $("#praise-txt");
-            var num=parseInt(praise_txt.text());
-            if(off==true){
-                $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-                praise_txt.css('color','#f65aa6')
-                num +=1;
-                praise_txt.text(num)
+        //点赞
+        like_dom(param){
+            var _self = this;
+            if(_self.chw.likeFlag==0) {
+                _self.chw.likeFlag = 1;
+                _self.chw.like++;
+            } else {
+                _self.chw.likeFlag = 0;
+                _self.chw.like--;
             }
-            });
-            $("#xinxin").click(function(){
-            if(off==true){
-                $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-                $(".bottom-sz").css('color','#f65aa6')
+        },
+        like(){
+            var _self = this;
+            _self.like_dom();
+            console.log(this.chw.collectFlag,this.chw.likeFlag);
+            var params = {
+                interfaceId:common.interfaceIds.like,
+                data:{  
+                    like_type: 1,//0、喵喵圈,1、personalChw,2、comments
+                    like_id: _self.chw_id,
+                    user_id: _self.user_id,
+                }
             }
-            });
+            _self.$axios.post('/mongoApi', {
+                params: params
+            }, response => {
+                var data = response.data;
+                var tips = '';
+                if( data && data.code == 200 ){
+                    tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                }else{
+                    tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                }
+                _self.showToast(tips);
+            })            
+        },
+                // 收藏
+        collect_dom(param){
+            var _self = this;
+            _self.chw.collectFlag == 0 ? _self.chw.collectFlag=1 : _self.chw.collectFlag=0;
+        },
+        collect(){
+            var _self = this;
+            _self.collect_dom();
+            console.log(this.chw.collectFlag,this.chw.likeFlag);
+            var params = {
+                interfaceId:common.interfaceIds.collect,
+                data:{
+                    collect_type: 2,//收藏type3：喵学堂
+                    collect_id: _self.chw_id,
+                    user_id: _self.user_id,
+                }
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+            }, response => {
+                var data = response.data;
+                var tips = '';
+                if( data && data.code == 200 ){
+                tips = _self.chw.collectFlag == 0 ? '取消成功！' : '收藏成功！';
+                }else{
+                tips = _self.chw.collectFlag == 0 ? '取消失败！' : '收藏失败！';
+                }
+                _self.showToast(tips);
+            })
         },
         showToast(msg){
             this.showMark = true;
@@ -450,4 +506,7 @@ export default {
     .pinglun{
         padding-bottom:0;
     }  
+    .confirmColor{
+        color:#f65aa6
+    }
 </style>

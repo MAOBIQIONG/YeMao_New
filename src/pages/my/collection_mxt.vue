@@ -152,7 +152,7 @@ export default {
                 pageSize:_self.pagination.pageSize,
                 where:{
                     user_id: _self.user_id,
-                    collect_type: 3//喵学堂
+                    collect_type: 2//收藏类型2喵学堂
                 }
             }
             _self.$axios.post('/mongoApi', {
@@ -171,7 +171,7 @@ export default {
         setData(data){
             let _self = this;
             _self.$refs.scroller.enablePullup();
-            let list = data.chws || [];
+            let list = data.collects || [];
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.list = list;

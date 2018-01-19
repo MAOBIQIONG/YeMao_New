@@ -41,17 +41,16 @@
             <div class="neirongshijian">
                 {{chw.description}}
                 <div class="bottom">
-                <div class="bottom-zan" :class="{confirmColor:likeFlag == 1}" v-tap={methods:like_dom}>
-                    <span id="praise" ref="like">
-                        
-                        <img v-if="likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:like}">
+                    <span id="praise" ref="like">                     
+                        <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
                         <img v-else src="../../../static/images/zan1.png"/>
                     </span>
-                    <span id="praise-txt">100</span>
+                    <span id="praise-txt">{{chw.like}}</span>
                 </div>
-                <div class="bottom-sz" :class="{confirmColor:collectFlag == 1}" v-tap="{methods:collect}">
+                <div class="bottom-sz" :class="{confirmColor:chw.collectFlag == 1}" v-tap="{methods:collect}">
                     <span id="xinxin" ref="star">         
-                        <img v-if="collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                        <img v-if="chw.collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
                         <img v-else src="../../../static/images/xin1.png"/>
                     </span>
                     <span>收藏</span>
@@ -64,16 +63,12 @@
             <div class="pinglun">
             <div class="dsr">
                 <ul>
-                <li><img src="../../../static/images/bj.jpg"/></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li v-for="(l,i) in likes" :key="i">
+                    <img src="../../../static/images/bj.jpg"/>
+                </li>
                 </ul>
                 <div class="dianzhan" @click="toUrl('dianzhan')">
-                <span></span>人点赞
+                <span v-if="likes.length">{{likes.length}}</span>人点赞
                 </div>
             </div>
             <p>热门评论</p>
@@ -142,11 +137,14 @@ export default {
         return {
             chw_id:null,
             chw:{
+                likeFlag:0,
+                collectFlag:0,
                 create_date:null,
                 user:{}
             },
-            likeFlag:0,
-            collectFlag:0,
+            //点赞人
+            likes_7:[], 
+            likes:[],
             comments:[],
             user_id:null,
             imgs:[],
@@ -254,42 +252,56 @@ export default {
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
-        // dianzan (){
-        //     var off=true;
-        //     $("#praise").click(function(){
-        //     var praise_txt = $("#praise-txt");
-        //     var num=parseInt(praise_txt.text());
-        //     if(off==true){
-        //         $(this).html("<img src='../../../static/images/zan2.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-        //         praise_txt.css('color','#f65aa6')
-        //         num +=1;
-        //         praise_txt.text(num)
-        //     }
-        //     });
-        //     $("#xinxin").click(function(){
-        //     if(off==true){
-        //         $(this).html("<img src='../../../static/images/xing.png'style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>");
-        //         $(".bottom-sz").css('color','#f65aa6')
-        //     }
-        //     });
-        // },
+
         like_dom(param){
             var _self = this;
-            _self.likeFlag == 0 ? _self.likeFlag=1 : _self.likeFlag=0;
+            // _self.chw.likeFlag == 0 ? _self.chw.likeFlag= 1 : _self.chw.likeFlag=0;
+            if(_self.chw.likeFlag==0) {
+                _self.chw.likeFlag = 1;
+                _self.chw.like++;
+            } else {
+                _self.chw.likeFlag = 0;
+                _self.chw.like--;
+            }
+        },
+        like(){
+            var _self = this;
+            _self.like_dom();
+            console.log(this.chw.collectFlag,this.chw.likeFlag);
+            var params = {
+                interfaceId:common.interfaceIds.like,
+                data:{  
+                    like_type: 1,//0、喵喵圈,1、personalChw,2、comments
+                    like_id: _self.chw_id,
+                    user_id: _self.user_id,
+                }
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+            }, response => {
+                var data = response.data;
+                var tips = '';
+                if( data && data.code == 200 ){
+                    tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                }else{
+                    tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                }
+                _self.showToast(tips);
+            })            
         },
         // 收藏
         collect_dom(param){
             var _self = this;
-            _self.collectFlag == 0 ? _self.collectFlag=1 : _self.collectFlag=0;
+            _self.chw.collectFlag == 0 ? _self.chw.collectFlag=1 : _self.chw.collectFlag=0;
         },
         collect(){
             var _self = this;
             _self.collect_dom();
-            console.log(this.collectFlag,this.likeFlag);
+            console.log(this.chw.collectFlag,this.chw.likeFlag);
             var params = {
                 interfaceId:common.interfaceIds.collect,
                 data:{
-                    collect_type: 4,
+                    collect_type: 3,//收藏type3：问答
                     collect_id: _self.chw_id,
                     user_id: _self.user_id,
                 }
@@ -300,9 +312,9 @@ export default {
                 var data = response.data;
                 var tips = '';
                 if( data && data.code == 200 ){
-                tips = _self.collectFlag == 0 ? '取消成功！' : '收藏成功！';
+                tips = _self.chw.collectFlag == 0 ? '取消成功！' : '收藏成功！';
                 }else{
-                tips = _self.collectFlag == 0 ? '取消失败！' : '收藏失败！';
+                tips = _self.chw.collectFlag == 0 ? '取消失败！' : '收藏失败！';
                 }
                 _self.showToast(tips);
             })
@@ -386,7 +398,6 @@ export default {
                 console.log(response)
                 let data = response.data;
                 _self.setInitData(data);
-                console.log(data);
             })
         },
         setInitData(data){
@@ -394,24 +405,15 @@ export default {
             _self.chw = data.chw || {};
             var imgs = _self.chw.imgs || [];// 图片
             imgs.forEach(function (item,index) {
-            _self.imgs.push({img:item});
-            })
-            // _self.loadMoreStatus.show=true;
-            // _self.loadMoreStatus.showLoading=false;
-            // _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-            // _self.$refs.scroller.disablePullup();
-
-
-            // // 评论
-            // _self.comments = data.comments || [];
-            // if(_self.comments.length < _self.pagination.pageSize){
-            // _self.loadMoreStatus.show=true;
-            // _self.loadMoreStatus.showLoading=false;
-            // _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-            // _self.$refs.scroller.disablePullup();
-            // } else {
-            // _self.pagination.pageNo++
-            // }
+                _self.imgs.push({img:item});
+            });
+            //点赞人列表
+            // console.log('data.chw.likes',data.likes);
+            let likes = data.likes;
+            // _self.likes_7 = likes.splice(0,7);
+            _self.likes = data.likes;
+            console.log(data.likes);
+            console.log('初始化数据完成');
         },
         //读取分页数据
         loadData(){
