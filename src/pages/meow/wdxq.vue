@@ -1,30 +1,29 @@
 <template>
-  <div class="wzxq">
+  <div>
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
     </div>
-    <div class="content content-p">
-      <scroller
-        v-model="pullUpDownStatus"
-        :height="height"
-        :lock-x="lockX"
-        :lock-y="lockY"
-        :use-pulldown="true"
-        :use-pullup="true"
-        :pulldown-config="pulldownConfig"
-        :pullup-config="pullupConfig"
-        @on-scroll="scroll"
-        @on-scroll-bottom="onScrollBottom"
-        @on-pulldown-loading="pullDownLoading"
-        @on-pullup-loading="pullUpLoading"
-        ref="scroller"
-        :class="{scroller:true}"
-      >
+    <scroller
+    v-model="pullUpDownStatus"
+    :height="height"
+    :lock-x="lockX"
+    :lock-y="lockY"
+    :use-pulldown="true"
+    :use-pullup="true"
+    :pulldown-config="pulldownConfig"
+    :pullup-config = "pullupConfig"
+    @on-scroll="scroll"
+    @on-scroll-bottom="onScrollBottom"
+    @on-pulldown-loading="pullDownLoading"
+    @on-pullup-loading="pullUpLoading"
+    ref="scroller"
+    :class="{scroller:true}"
+    >
         <div>
-          <!--文章详情-->
-          <div class="content-wz">
+            <!--文章详情-->
+            <div class="content">
             <div class="piaoti">
                 {{chw.title}}
             </div>
@@ -497,19 +496,19 @@ export default {
 </script>
 <style scoped>
   @import '../../../static/css/meow/wzxq.css';
-
-  .pinlunlist {
-    background: white;
-  }
-
-  .pinglun {
-    padding-bottom: 0;
-  }
-
-  .confirmColor {
-    color: #f65aa6
-  }
-  .wzxq {
-    position: fixed;
-  }
+    .pinlunlist{
+        background:white;
+    }
+    .header{
+        position:static;
+    }
+    .content{
+        margin-top:0;
+    }
+    .pinglun{
+        padding-bottom:0;
+    }
+    .confirmColor{
+        color:#f65aa6
+    }
 </style>

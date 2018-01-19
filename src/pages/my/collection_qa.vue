@@ -7,8 +7,7 @@
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->
-    <div class="content content-p">
-      <scroller
+    <scroller
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"

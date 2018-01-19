@@ -30,11 +30,13 @@
   height: 0.8rem;
   border: none;
   display: block;
-  border: none;
   font-size: 0.28rem;
   color: #999999;
   background: white;
   outline: medium;
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance: none;
 }
 
 .fb-content .xmbt {
