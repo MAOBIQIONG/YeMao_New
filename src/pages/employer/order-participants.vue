@@ -3,7 +3,8 @@
     <!--头部导航-->
     <xheader :title="title"></xheader>
     <!--主体内容-->
-    <div class="od-condent">
+    <div class="content">
+        <div class="od-condent">
       <div class="od-list">
         <div class="qdsjs-list" v-for="item in bidders">
           <div class="qdsjs-time">
@@ -29,7 +30,8 @@
         </div>
       </div>
     </div>
-
+    </div>
+    <!--弹窗-->
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <div v-transfer-dom>
       <confirm v-model="show"
@@ -193,4 +195,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

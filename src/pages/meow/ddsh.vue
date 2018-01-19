@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <div class="header-right">完成</div>
     </div>
-    <div class="zfcg-content">
+    <div class="content">
       <div class="zfcg-top">
         <div class="zt-left"><img src="../../../static/images/zfcg.png"/></div>
         <div class="zt-right">
@@ -43,4 +43,7 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/ddsh.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

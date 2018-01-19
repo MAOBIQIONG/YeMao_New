@@ -6,7 +6,8 @@
       <div class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
     <!--发布订单内容-->
-    <div class="fb-content">
+    <div class="content">
+       <div class="fb-content">
       <div class="xmlx">
         <div class="xmlx-left">
           <span>项目类型</span>
@@ -117,12 +118,8 @@
         <imageUpload :img-arr.sync="imgList"></imageUpload>
       </div>
     </div>
-    <!--弹窗-->
-    <div class="tishikuang">
-      <div class="tisi">
-        发布成功
-      </div>
     </div>
+    <!--弹窗-->
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
@@ -372,19 +369,7 @@
     background: #f65aa6;
     color:#fff;
   }
-  /*提示框*/
-  .tishikuang .tisi {
-    position: fixed;
-    width: 2rem;
-    height: 1.2rem;
-    border-radius: 0.1rem;
-    background: #8d8d8d;
-    text-align: center;
-    line-height: 1.2rem;
-    color: white;
-    left:2.75rem;
-    top: 30%;
-    font-size: 0.32rem;
-    display: none;
+  .content{
+    padding-top: 1.2rem;
   }
 </style>

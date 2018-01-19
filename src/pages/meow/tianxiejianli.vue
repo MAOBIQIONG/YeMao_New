@@ -198,4 +198,7 @@
   .shijian{
     width: 1.9rem;
   }
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

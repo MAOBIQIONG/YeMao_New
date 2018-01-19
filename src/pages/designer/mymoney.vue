@@ -113,4 +113,7 @@
   .eyes_open{
     background: url(../../../static/images/designer/q_02.png) no-repeat;
   }
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

@@ -73,16 +73,6 @@
     }
   }
 </script>
-<!--<style>-->
-  <!--.vux-slider > .vux-swiper{-->
-    <!--height: 100% !important;-->
-    <!--overflow:auto !important;-->
-  <!--}-->
-  <!--.vux-swiper-item{-->
-    <!--height:auto !important;-->
-    <!--background: #f2f2f2 !important;-->
-  <!--}-->
-<!--</style>-->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .myorder-employer{

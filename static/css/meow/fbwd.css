@@ -1,33 +1,30 @@
 
-.set-content {
-  width: 100%;
-  margin-top: 0.88rem;
+.content {
   background: white;
 }
 
-.set-content .xgnc {
-  width: 100%;
+.content .xgnc {
   height: 0.8rem;
   background: white;
   font-size: 0.28rem;
   line-height: 0.8rem;
 }
 
-.set-content .xgnc .left {
+.content .xgnc .left {
   width: 7.1rem;
   height: 0.8rem;
   float: left;
   margin-left: 0.2rem;
 }
 
-.set-content .xgnc .left .btname {
+.content .xgnc .left .btname {
   width: 100%;
   height: 0.8rem;
   outline: medium;
   border: none;
 }
 
-.set-content .pc-shuru {
+.content .pc-shuru {
   position: relative;
   width: 7.1rem;
   border-top: 1px solid #F2F2F2;
@@ -35,19 +32,18 @@
   background-color: white;
 }
 
-.set-content .pc-shuru .area {
+.content .pc-shuru .area {
   width: 6.9rem;
   height: 3.6rem;
   margin: 0.1rem;
   border: none;
-  background: #F2F2F2;
   line-height: 0.4rem;
   background: white;
   outline: medium;
   resize: none;
 }
 
-.set-content .pc-shuru .xianzhi {
+.content .pc-shuru .xianzhi {
   position: absolute;
   font-size: 0.24rem;
   background: white;
@@ -55,20 +51,20 @@
   bottom: 0.1rem;
 }
 
-.set-content .sctp {
+.content .sctp {
   width: 7.1rem;
   margin-left: 0.2rem;
   border-bottom: 1px solid #F2F2F2;
   padding-bottom: 0.4rem;
 }
 
-.set-content .sctp .st-bottom {
+.content .sctp .st-bottom {
   width: 2rem;
   height: 2rem;
   border: 1px dashed #F2F2F2;
   margin-left: 0.1rem;
 }
-.set-content .sctp .st-bottom img{
+.content .sctp .st-bottom img{
   width: 100%;
 }
 /*# sourceMappingURL=fbwd.css.map */

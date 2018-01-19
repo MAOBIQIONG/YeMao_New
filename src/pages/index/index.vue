@@ -3,7 +3,7 @@
   <div id="page">
     <div class="index-banner">
       <!--搜索栏-->
-      <div class="id-header" :class="srollFlag==0?'bg-clo1':'bg-clo'">
+      <div class="id-header qujin" :class="srollFlag==0?'bg-clo1':'bg-clo'">
         <!--地区选择-->
         <div class="crity">
           <group>
@@ -20,7 +20,7 @@
       </div>
     </div>
     <!-- 上拉加载 -->
-    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
+    <scroller lock-x height="13.3rem" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
         <!--banner-->
         <swiper loop auto height="4rem" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange"></swiper>
@@ -491,5 +491,8 @@
   .sousuo1{
     width:1.2rem;
     background-color:rgba(255,255,255,1);
+  }
+  .page{
+    display: flex;
   }
 </style>

@@ -10,34 +10,36 @@
       </div>
       <span @click="goback">取消</span>
     </div>
-    <!--热门搜索-->
-    <div class="rmsearch">
-      <div class="search-rm">
-        热门搜索
+    <div class="content">
+      <!--热门搜索-->
+      <div class="rmsearch">
+        <div class="search-rm">
+          热门搜索
+        </div>
+        <div class="f-ul">
+          <ul>
+            <li v-for="item in hotSearch" v-tap="{methods:search,value:item}">{{item}}</li>
+          </ul>
+        </div>
+        <!--<div class="search-list">-->
+          <!--<div class="guanjianchi" v-for="item in hotSearch" v-tap="{methods:search,value:item}">{{item}}</div>-->
+        <!--</div>-->
       </div>
-      <div class="f-ul">
-        <ul>
-          <li v-for="item in hotSearch" v-tap="{methods:search,value:item}">{{item}}</li>
-        </ul>
-      </div>
-      <!--<div class="search-list">-->
-        <!--<div class="guanjianchi" v-for="item in hotSearch" v-tap="{methods:search,value:item}">{{item}}</div>-->
-      <!--</div>-->
-    </div>
-    <!--搜索历史-->
-    <div class="seach-lishi">
-      <div class="seach-ls">
-        <span class="sl-left">搜索历史</span>
-        <span class="sl-right" v-tap="{methods:clearHistory,index:-1}">清除历史</span>
-      </div>
-      <div class="searchls-list">
-        <div class="ls-list" v-for="(item,index) in historySearch">
-          <div class="ll-left" v-tap="{methods:search,value:item}">{{item}}</div>
-          <span class="ll-right" v-tap="{methods:clearHistory,index:index}">×</span>
+      <!--搜索历史-->
+      <div class="seach-lishi">
+        <div class="seach-ls">
+          <span class="sl-left">搜索历史</span>
+          <span class="sl-right" v-tap="{methods:clearHistory,index:-1}">清除历史</span>
+        </div>
+        <div class="searchls-list">
+          <div class="ls-list" v-for="(item,index) in historySearch">
+            <div class="ll-left" v-tap="{methods:search,value:item}">{{item}}</div>
+            <span class="ll-right" v-tap="{methods:clearHistory,index:index}">×</span>
+          </div>
         </div>
       </div>
+      <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     </div>
-    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
@@ -147,5 +149,8 @@
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+  }
+  .content{
+    margin-top: 1.3rem;
   }
 </style>

@@ -4,7 +4,8 @@
       <span>支付成功</span>
       <div class="header-right"@click="goback">完成</div>
     </div>
-    <div class="zfcg-content">
+    <div class="content">
+       <div class="zfcg-content">
       <div class="zfcg-top">
         <div class="zt-left"><img src="../../../static/images/employer/zfcg.png"/></div>
         <div class="zt-right">
@@ -24,6 +25,7 @@
       <div class="zfcg-bottom">
         <span>查看订单详情</span>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -49,4 +51,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/zfcg.css";
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

@@ -377,9 +377,6 @@
     margin: 0.05rem;
     text-align: center;
     overflow: hidden;
-    /*background: url("../../../static/images/bj.jpg");*/
-    /*background-position: center center;*/
-    /*background-repeat: no-repeat;*/
   }
   .sjs-bottom ul li img{
     height: 100%;
@@ -406,7 +403,6 @@
     background-position-y:0.25rem;
     padding-left: 0.5rem;
   }
-
   .tianjia{
     position: fixed;
     width:1rem;
@@ -429,15 +425,9 @@
 
   /**样式重写**/
   .blank{
-    margin-top: 2.7rem;
+    margin-top: 0.1rem;
   }
   .blank_bottom{
-    padding-bottom: 1.2rem;
+    padding-bottom: 1.6rem;
   }
-  .bankuai{
-    position: fixed;
-    top: 0;
-    z-index: 10;
-  }
-
 </style>

@@ -11,7 +11,9 @@
       </div>
     </div>
     <!--内容-->
-    <miaomiao :is="currentTab" keep-alive></miaomiao>
+    <div class="content">
+      <miaomiao :is="currentTab" keep-alive></miaomiao>
+    </div>
   </div>
 </template>
 
@@ -70,5 +72,8 @@
   .meow{
     width: 100%;
     position: fixed;
+  }
+  .content{
+    padding-top: 1.2rem;
   }
 </style>

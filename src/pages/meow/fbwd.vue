@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="fbwd">
     <!--头部导航-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>发布问题</span>
       <div class="header-right" @click="submit">完成</div>
     </div>
-    <div class="set-content">
+    <div class="content">
       <div class="xgnc">
         <div class="left"><input v-model="question.title" type="text" maxlength="20" placeholder="标题（最多20字）" class="btname" ref="title"></div>
       </div>
@@ -100,7 +100,7 @@
 
                 let params = {
                     interfaceId:common.interfaceIds.insertData,
-                    coll:common.collections.personalChw,               
+                    coll:common.collections.personalChw,
                     data:_self.question,
                 };
                 _self.$axios.post('/mongoApi', {
@@ -124,4 +124,10 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/fbwd.css';
+  .fbwd{
+    position: fixed;
+  }
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

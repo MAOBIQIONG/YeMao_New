@@ -1,17 +1,16 @@
 
-.zfcg-content {
+.content {
   width: 100%;
   height: 100%;
-  margin-top: 0.88rem;
 }
 
-.zfcg-content .zfcg-top {
+.content .zfcg-top {
   width: 100%;
   height: 4.2rem;
   background: white;
 }
 
-.zfcg-content .zfcg-top .zt-left {
+.content .zfcg-top .zt-left {
   float: left;
   width: 0.9rem;
   height: 3.47rem;
@@ -20,11 +19,11 @@
   display: inline-block;
 }
 
-.zfcg-content .zfcg-top .zt-left img {
+.content .zfcg-top .zt-left img {
   width: 100%;
 }
 
-.zfcg-content .zfcg-top .zt-right {
+.content .zfcg-top .zt-right {
   float: left;
   height: 3.47rem;
   margin-top: 0.4rem;
@@ -32,15 +31,15 @@
   font-size: 0.28rem;
 }
 
-.zfcg-content .zfcg-top .zt-right .zr-box {
+.content .zfcg-top .zt-right .zr-box {
   height: 1rem;
   line-height: 1rem;
   margin-bottom: 0.45rem;
 }
-.zfcg-content .zfcg-top .zt-right .zr-zh{
+.content .zfcg-top .zt-right .zr-zh{
   line-height: 0.7rem;
 }
-.zfcg-content .zfcg-top .zt-right .zr-box .first-p {
+.content .zfcg-top .zt-right .zr-box .first-p {
   font-size: 0.36rem;
 }
 

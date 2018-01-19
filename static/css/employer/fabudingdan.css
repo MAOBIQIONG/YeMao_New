@@ -3,7 +3,6 @@
   width: 100%;
   font-size: 0.28rem;
   background: #F2F2F2;
-  margin-top: 0.88rem;
 }
 
 .fb-content .xmlx {
@@ -82,6 +81,7 @@
   font-size: 0.28rem;
   border: none;
   outline: medium;
+  resize: none;
 }
 
 .fb-content .ys-time {

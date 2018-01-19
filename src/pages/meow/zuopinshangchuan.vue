@@ -37,4 +37,7 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/zuopinshangchuan.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

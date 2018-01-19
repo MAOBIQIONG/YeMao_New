@@ -166,4 +166,7 @@
     outline: medium;
     overflow: hidden;
   }
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

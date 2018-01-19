@@ -1,44 +1,44 @@
 
 .header .daohang {
 	width: 4rem;
-	height: 0.6rem;
+	height: 0.5rem;
 	margin: auto;
 	display: inline-block;
-	margin-top: 0.1rem;
+	margin-top: 0.25rem;
+  font-size: 0.30rem;
 	border: 1px solid #f74d9f;
 }
 
 .header .daohang .tab_menu {
 	width: 100%;
-	height: 0.6rem;
+	height: 0.5rem;
 }
 
 .header .daohang .tab_menu li {
 	float: left;
 	width: 50%;
-	height: 0.6rem;
-	line-height: 0.6rem;
+	height: 0.5rem;
+	line-height: 0.5rem;
 	text-align: center;
 }
 
 .header .daohang .tab_menu .selected {
-	height: 0.58rem;
+	height: 0.48rem;
 	background-color: #f74d9f;
 	color: white;
 	cursor: pointer;
 }
 
-.msg-content {
+.content {
 	width: 100%;
 	background: #F2F2F2;
-  margin-top: 0.8rem;
 }
 
-.msg-content .tab_box {
+.content .tab_box {
 	width: 100%;
 }
 
-.msg-content .tab_box .hide {
+.content .tab_box .hide {
 	display: none;
 }
 

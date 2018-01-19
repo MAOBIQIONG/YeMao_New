@@ -38,7 +38,7 @@
     </div>
     <div class="content">
       <!-- 上拉加载 -->
-      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: 3.4rem;">
+      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: 3.8rem;">
         <div>
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
@@ -298,7 +298,7 @@
     background: red;
     border-radius: 50%;
     position: absolute;
-    right: 0;
+    right: 0rem;
     top: 0.1rem;
   }
   .bg{

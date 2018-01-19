@@ -5,11 +5,13 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>关于夜猫</span>
     </div>
-    <div class="log clear">
-      <div class="log-img">
-        <img src="../../../static/images/logo.png"/>
+    <div class="content">
+      <div class="log clear">
+        <div class="log-img">
+          <img src="../../../static/images/logo.png"/>
+        </div>
+        <p>版本号：3.3.0</p>
       </div>
-      <p>版本号：3.3.0</p>
     </div>
   </div>
 </template>
@@ -35,4 +37,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-guanyu.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

@@ -6,18 +6,20 @@
       <div class="header-right" v-tap="{ methods:submit }" >确定</div>
     </div>
     <!--  信息表-->
-    <div class="oq-content">
-      <div class="oq-list">
-        <div class="oq-left"><span>我的报价</span></div>
-        <div class="oq-right"><input type="text" placeholder="请输入报价" v-model="subParams.quotation"/></div>
-      </div>
-      <div class="oq-list">
-        <div class="oq-left"><span>任务时长</span></div>
-        <div class="oq-right"><input type="text" placeholder="请输入时长" v-model="subParams.taskTime"/></div>
-      </div>
-      <div class="fangan">
-        <div class="tle"><span>方案说明</span></div>
-        <textarea class="xt-txt" placeholder="请详细描述一下方案的内容" v-model="subParams.schemeExplains"></textarea>
+    <div class="content">
+      <div class="oq-content">
+        <div class="oq-list">
+          <div class="oq-left"><span>我的报价</span></div>
+          <div class="oq-right"><input type="text" placeholder="请输入报价" v-model="subParams.quotation"/></div>
+        </div>
+        <div class="oq-list">
+          <div class="oq-left"><span>任务时长</span></div>
+          <div class="oq-right"><input type="text" placeholder="请输入时长" v-model="subParams.taskTime"/></div>
+        </div>
+        <div class="fangan">
+          <div class="tle"><span>方案说明</span></div>
+          <textarea class="xt-txt" placeholder="请详细描述一下方案的内容" v-model="subParams.schemeExplains"></textarea>
+        </div>
       </div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
@@ -107,4 +109,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/order-qiangdan.css";
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

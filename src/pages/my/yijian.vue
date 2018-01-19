@@ -4,7 +4,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>意见反馈</span>
     </div>
-    <div class="set-content">
+    <div class="content">
       <div class="xgnc">
         <div class="left"><span>问题和意见</span></div>
       </div>
@@ -72,4 +72,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/my/yijian.css";
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

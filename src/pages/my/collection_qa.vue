@@ -7,51 +7,55 @@
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->
-    <scroller 
+    <div class="content">
+      <scroller
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"
         :lock-y="lockY"
-        :use-pulldown="true" 
-        :use-pullup="true" 
+        :use-pulldown="true"
+        :use-pullup="true"
         :pulldown-config="pulldownConfig"
-        :pullup-config = "pullupConfig"
+        :pullup-config="pullupConfig"
         @on-scroll="scroll"
         @on-scroll-bottom="onScrollBottom"
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
         :class="{scroller:true}"
-    >
-    <div>
-        <div class="weida-list" v-for="(item,index) in QAList" :key="index">
-        <div class="weida" @click="toDetails(item._id)">
-            <div class="wd-top">
-            <div class="touxiang">
-                <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
-                <img v-else src="../../../static/images/bj.jpg"/>
+      >
+        <div>
+          <div class="weida-list" v-for="(item,index) in QAList" :key="index">
+            <div class="weida" @click="toDetails(item._id)">
+              <div class="wd-top">
+                <div class="touxiang">
+                  <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
+                  <img v-else src="../../../static/images/bj.jpg"/>
+                </div>
+                <p class="nicheng">{{item.user.user_name}}</p>
+              </div>
+              <div class="tupian" v-if="item.imgs">
+                <img :src="item.imgs[0]"/>
+              </div>
+              <div class="neirong">
+                <div class="piapti">
+                  {{item.title}}
+                </div>
+                <div class="jieshao">
+                  {{item.description}}
+                </div>
+              </div>
+              <div class="pingjia">
+                <span v-if="item.like">{{item.like}}</span><span v-else>0</span>赞同 · <span
+                v-if="item.comments">{{item.comments}}</span><span v-else>0</span>评论
+              </div>
             </div>
-            <p class="nicheng">{{item.user.user_name}}</p>
-            </div>
-            <div class="tupian" v-if="item.imgs">        
-            <img :src="item.imgs[0]"/>
-            </div>
-            <div class="neirong">
-            <div class="piapti">
-                {{item.title}}
-            </div>
-            <div class="jieshao">
-                {{item.description}}
-            </div>
-            </div>
-            <div class="pingjia">
-            <span v-if="item.like">{{item.like}}</span><span v-else>0</span>赞同 · <span v-if="item.comments">{{item.comments}}</span><span v-else>0</span>评论
-            </div>
+          </div>
+          <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip"
+                     class="loadMore"></load-more>
         </div>
-        </div>
-        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
+      </scroller>
     </div>
-    </scroller>
   </div>
 </template>
 
@@ -123,7 +127,7 @@
                 handler:function(val,oldval){
                     if(val.pullupStatus=="loading"){
                         this.loadMoreStatus.show=true;
-                        this.loadMoreStatus.showLoading=true; 
+                        this.loadMoreStatus.showLoading=true;
                     }
                 }
             }
@@ -147,7 +151,7 @@
                 }
                 _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
                 let params = {
-                    interfaceId: 'getCollects',                    
+                    interfaceId: 'getCollects',
                     pageNo:_self.pagination.pageNo,
                     pageSize:_self.pagination.pageSize,
                     where:{
@@ -160,7 +164,7 @@
                     }, response => {
                         console.log(response);
                         let data = response.data
-                        if (data) {                            
+                        if (data) {
                             // _self.setData(data);
                             console.log(data);
                             console.log('数据设置完成');
@@ -187,12 +191,12 @@
                         _self.$refs.scroller.disablePullup();
                         return
                     }
-                    _self.QAList.push(...data.collects);                   
+                    _self.QAList.push(...data.collects);
                 }
                 _self.loadMoreStatus.show=false;
                 _self.loadMoreStatus.showLoading=false;
                 _self.$refs.scroller.donePulldown();
-                _self.$refs.scroller.donePullup();   
+                _self.$refs.scroller.donePullup();
                 //判断数据是否有一页
                 if(QAList.length < _self.pagination.pageSize){
                     _self.loadMoreStatus.show=true;
@@ -209,28 +213,28 @@
                 let _self = this
                 _self.pagination.pageNo = 0;
                 _self.loadMoreStatus.show=false;
-                _self.$refs.scroller.donePullup();  
+                _self.$refs.scroller.donePullup();
                 _self.loadData()
-                
+
             },
             //上拉加载
             loadMore(){
                 let _self = this;
                 // _self.loadData();
-                _self.loadData(); 
+                _self.loadData();
             },
             scroll(position){
                 // console.log("on-scroll",position);
             },
             pullDownLoading(){
                 console.log('on-pull-down-loading');
-                this.refreshPageDate();       
+                this.refreshPageDate();
             },
             pullUpLoading(){
                 console.log('on-pull-up-loading');
                 this.loadMore();
 
-                
+
             },
             onScrollBottom(){
                 // console.log('on-scroll-bottom');
@@ -252,17 +256,17 @@
                     this.$refs.scroller.disablePullup();
                     this.$refs.scroller.reset({top:0});
                 }
-            );      
+            );
         },
     }
 </script>
 <style scoped>
   @import '../../../static/css/meow/shouchang-wenda.css';
-  .header{
-      position:static;
-  }
   .weida-list{
       margin-top:0.2rem;
+  }
+  .content{
+    padding-top: 1.2rem;
   }
 </style>
 <style>

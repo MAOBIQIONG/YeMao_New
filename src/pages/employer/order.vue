@@ -3,7 +3,8 @@
     <!--头部导航-->
     <xheader2 :title="title" :rightClass="rightClass" :collectFlag="collectFlag" @upup="collectFun"></xheader2>
     <!--主体内容-->
-    <div class="od-condent">
+    <div class="content">
+       <div class="od-condent">
       <!--订单确认后详情页-->
       <div class="ddxq">
         <div class="ddxq-top">
@@ -103,6 +104,7 @@
 
       </div>
     </div>
+    </div>
     <!--底部-->
     <div class="od-botton" v-if="userInfo._id!=order.user_id">
       <div class="mmliaotian">
@@ -113,11 +115,6 @@
       <div v-if="isPart==true" class="lijiqiangdan" v-tap="{ methods:canclePart }">取消抢单</div>
     </div>
     <!--弹窗-->
-    <div class="tishikuang">
-      <div class="tisi">
-        收藏成功
-      </div>
-    </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <div v-transfer-dom>
       <confirm v-model="show"
@@ -256,7 +253,7 @@
         var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
         var num = common.getMaxlenInlineNum(width,fontSize,lines);
         if( text && text.length > num ){
-          text = text.substring(0,num-2) + '...';
+          text = text.substring(0,num-6) + '...';
         }
         return text;
       },
@@ -417,6 +414,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/employer/order.css';
+  .content{
+    padding-top: 1.2rem;
+  }
   .od-condent .od-renshu .tu {
     background: url('../../../static/images/timer.png') left center no-repeat;
     background-size: .5rem .5rem;
@@ -424,19 +424,5 @@
   .od-condent .od-renshu .gengduo {
     background: url('../../../static/images/more.png') center center no-repeat;
     background-size: .5rem .5rem;
-  }
-  .tishikuang .tisi {
-    position: fixed;
-    width: 2rem;
-    height: 1.2rem;
-    border-radius: 0.1rem;
-    background: #8d8d8d;
-    text-align: center;
-    line-height: 1.2rem;
-    color: white;
-    left:2.75rem;
-    top: 30%;
-    font-size: 0.32rem;
-    display: none;
   }
 </style>

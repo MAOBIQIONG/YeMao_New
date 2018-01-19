@@ -5,7 +5,7 @@
       <span>收藏设计师</span>
     </div>
     <!--收藏设计师-->
-    <div class="sc-content">
+    <div class="content">
       <div class="szsjs-list">
         <div class="szsjs-top">
           <div class="szsjs-touxiang">
@@ -59,10 +59,8 @@
 
 <script>
   export default {
-    data () {
-      return {
-
-      }
+    data() {
+      return {}
     },
     methods: {
       goback() {
@@ -78,4 +76,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/shoucangsjs.css";
+  .content {
+    padding-top: 1.2rem;
+  }
 </style>

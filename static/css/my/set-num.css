@@ -1,21 +1,19 @@
 
-.setn-content {
+.content {
   position: fixed;
   background: #f2f2f2;
-  top: 0.88rem;
-  left: 0;
   width: 100%;
   height: 100%;
 }
 
-.setn-content .gh-sjh {
+.content .gh-sjh {
 	width: 100%;
 	margin-top: 0.1rem;
 	background: white;
 	font-size: 0.28rem;
 }
 
-.setn-content .gh-sjh .list {
+.content .gh-sjh .list {
 	position: relative;
 	width: 7.3rem;
 	height: 0.8rem;
@@ -24,22 +22,22 @@
 	border-bottom: 1px solid #F2F2F2;
 }
 
-.setn-content .gh-sjh .list .left {
+.content .gh-sjh .list .left {
 	float: left;
 }
 
-.setn-content .gh-sjh .list .right {
+.content .gh-sjh .list .right {
 	float: right;
 	margin-right: 1.5rem;
 }
 
-.setn-content .gh-sjh .list .right input {
+.content .gh-sjh .list .right input {
 	border: none;
 	font-size: 0.28rem;
 	outline: medium;
 }
 
-.setn-content .gh-sjh .list .yzm {
+.content .gh-sjh .list .yzm {
 	width: 2.4rem;
 	height: 0.6rem;
 	line-height: 0.6rem;

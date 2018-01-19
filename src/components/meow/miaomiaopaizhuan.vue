@@ -64,7 +64,7 @@
         },
         pulldownConfig:{
           content: '下拉刷新',
-          height: 60,
+          height: 50,
           autoRefresh: false,
           downContent: '下拉刷新',
           upContent: '放开刷新',

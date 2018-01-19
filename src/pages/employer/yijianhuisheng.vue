@@ -5,12 +5,14 @@
       <span>一键会审</span>
       <div class="header-right">提交</div>
     </div>
-    <div class="set-content">
+    <div class="content">
+       <div class="set-content">
       <!--留言-->
       <div class="pc-shuru">
         <textarea class="area" maxlength="500" placeholder="请输入会审信息，我们将尽快为你处理"></textarea>
         <p class="xianzhi"><span class="zs">500</span>/<span>500</span></p>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -53,4 +55,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/yijianhuisheng.css";
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

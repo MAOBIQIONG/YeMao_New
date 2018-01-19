@@ -91,7 +91,7 @@
 </script>
 <style scoped>
   .content{
-    margin-top: 1rem;
+    padding-top: 1.2rem;
   }
   .tupianlist{
     width: 7.3rem;

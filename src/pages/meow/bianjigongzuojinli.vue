@@ -25,7 +25,7 @@
             <input type="text"placeholder="请输入职位" />
           </div>
         </div>
-        <div class="qdtime">
+        <div class="qdtime zzsj">
           <div class="qdtime-left">
             <span>在职时间</span>
           </div>
@@ -88,6 +88,13 @@
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
   .shijian{
-    width: 1.6rem;
+    width: 1.9rem;
+  }
+  .zzsj{
+    width: 7.2rem !important;
+    margin-left: 0.3rem !important;
+  }
+  .content{
+    padding-top: 1.2rem;
   }
 </style>

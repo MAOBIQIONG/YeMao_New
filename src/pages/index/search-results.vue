@@ -17,7 +17,9 @@
         <tab-item class="vux-center" key="1">订单</tab-item>
       </tab>
     </div>
-    <designers :is="index==0?'designers':'orders'" :value="searchValue"></designers> <!-- keep-alive -->
+    <div class="content">
+        <designers :is="index==0?'designers':'orders'" :value="searchValue"></designers> <!-- keep-alive -->
+    </div>
   </div>
 </template>
 
@@ -76,12 +78,16 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
   @import "../../../static/css/index/search-jieguo.css";
+  .content{
+    margin-top:0.5rem;
+    padding-bottom: 2rem;
+  }
   .top{
     height: 1.6rem;
   }
   .tabs{
     position: fixed;
-    top: 0.8rem;
+    top:1.2rem;
     left: 0;
     background: white;
     z-index: 99999;

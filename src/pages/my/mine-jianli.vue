@@ -212,4 +212,7 @@
     background-size: 0.6rem 0.6rem;
     background-position: center right;
   }
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

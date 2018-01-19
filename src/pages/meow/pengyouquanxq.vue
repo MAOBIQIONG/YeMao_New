@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="penyouxiangqing">
     <!--导航栏-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
     </div>
     <!--  喵喵列表-->
-    <scroller
+    <div class="content">
+       <scroller
       v-model="pullUpDownStatus"
       :height="height"
       :lock-x="lockX"
@@ -19,7 +20,7 @@
     >
       <div>
         <div class="blank"></div>
-        <div class="mm-list content">
+        <div class="mm-list">
           <div class="sjse-list">
             <div class="sjs-top">
               <div class="st-touxiang">
@@ -79,6 +80,7 @@
         <div class="blank_bottom"></div>
       </div>
     </scroller>
+    </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <div v-transfer-dom>
       <previewer :list="list" ref="previewer" :options="options"></previewer>
@@ -497,12 +499,17 @@
     background-position-y:0.25rem;
     padding-left: 0.5rem;
   }
-
   .previewer-img{
       width:100%;
       height:100%;
       background-repeat: no-repeat;
       background-position:center center;
       background-size: cover
+  }
+  .content{
+    padding-top: 1.2rem;
+  }
+  .penyouxiangqing{
+    position: fixed;
   }
 </style>

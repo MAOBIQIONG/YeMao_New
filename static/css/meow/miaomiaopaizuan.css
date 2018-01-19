@@ -15,9 +15,9 @@
 
 .content {
   width: 100%;
-  /*background: #F2F2F2;*/
-  margin-top: 0.88rem;
+  background: #F2F2F2;
   display: inline-block;
+  padding-bottom: 1.2rem;
 }
 
 .content .list-paizuan {

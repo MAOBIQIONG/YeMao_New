@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div class="swipe-box">
+    <div class="header swipe-box">
       <div class="back" @click="goback"></div>
       <div class="title">{{imgIndex+1}}/{{imgList.length}}</div>
     </div>
-    <swiper height="8rem" class="swiper-self" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange" :show-dots="false"></swiper>
+    <div class="content">
+       <swiper height="8rem" class="swiper-self" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange" :show-dots="false"></swiper>
+    </div>
   </div>
 </template>
 
@@ -44,21 +46,25 @@
 </script>
 
 <style scoped>
+  .content{
+    padding-top: 1.2rem;
+  }
   .swipe-box{
     display:-webkit-box;
-    font-size: 1rem;
+    font-size: 0.5rem;
   }
   .swipe-box .title{
     -webkit-box-flex:1;
     color: #ccc !important;
     text-align: right;
-    padding: .5rem .2rem;
+    padding: 0rem .1rem;
   }
   .back{
-    height: 2rem;
+    height: 0.9rem;
     width: .8rem;
     padding-left: .2rem;
-    background: url('/static/images/goback.png') center center no-repeat;
-    background-size: .8rem .8rem;
+    background: url('../../../static/images/goback.png') center center no-repeat;
+    background-size: .6rem .6rem;
+    background-position:50% 50%;
   }
 </style>

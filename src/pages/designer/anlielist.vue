@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="anlist" >
     <!--头部导航-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
@@ -176,4 +176,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/anlielist.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

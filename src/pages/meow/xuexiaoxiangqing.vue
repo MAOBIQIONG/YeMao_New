@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>学校详情</span>
-      <div class="header-right">邀请</div>
+      <div class="header-right"@click="toUrl('tongxunluhaoyou')">邀请</div>
     </div>
     <!--学校详情-->
     <div class="content">
@@ -36,7 +36,7 @@
           </div>
           <!--<div class="list-right"><img src="../../../static/images/jiangou.png"></div>-->
         </div>
-        <div class="list tz">
+        <div class="list tz"@click="toUrl('dianzhan')">
           <div class="xingxi">校友成员</div>
           <div class="xycy">
             <div class="renshu">
@@ -76,4 +76,7 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/xuexiaoxiangqing.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

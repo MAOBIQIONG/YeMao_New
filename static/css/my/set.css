@@ -1,14 +1,12 @@
 
-.set-content {
+.content {
   position: fixed;
   background: #f2f2f2;
-  top: 0.88rem;
-  left: 0;
 	width: 100%;
   height: 100%;
 }
 
-.set-content .xgnc {
+.content .xgnc {
 	width: 100%;
 	height: 0.8rem;
 	background: white;
@@ -17,24 +15,24 @@
 	margin-top: 0.1rem;
 }
 
-.set-content .xgnc .left {
+.content .xgnc .left {
 	float: left;
 	margin-left: 0.2rem;
 }
 
-.set-content .xgnc .right {
+.content .xgnc .right {
 	float: right;
 	margin-right: 0.2rem;
 }
 
-.set-content .xggh {
+.content .xggh {
 	width: 100%;
 	margin-top: 0.1rem;
 	background: white;
 	font-size: 0.28rem;
 }
 
-.set-content .xggh .xgdl {
+.content .xggh .xgdl {
 	width: 7.3rem;
 	height: 0.8rem;
 	line-height: 0.8rem;
@@ -42,15 +40,15 @@
 	border-bottom: 1px solid #F2F2F2;
 }
 
-.set-content .xggh .xgdl .left {
+.content .xggh .xgdl .left {
 	float: left;
 }
 
-.set-content .xggh .xgdl .right {
+.content .xggh .xgdl .right {
 	float: right;
 	margin-right: 0.2rem;
 }
-.set-content .xggh .xgdl .right img {
+.content .xggh .xgdl .right img {
   width: 0.3rem;
   margin-top: 0.2rem;
 }

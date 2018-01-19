@@ -1,12 +1,11 @@
 
-.fb-content {
+.content {
 	width: 100%;
 	font-size: 0.28rem;
 	background: #F2F2F2;
-  margin-top: 1rem;
 }
 
-.fb-content .xmlx {
+.content .xmlx {
 	width: 100%;
 	height: 0.8rem;
 	background: white;
@@ -14,7 +13,7 @@
 	border-bottom: 1px solid #F2F2F2;
 }
 
-.fb-content .xmlx .xmlx-left {
+.content .xmlx .xmlx-left {
 	float: left;
 	font-size: 0.28rem;
 	height: 0.8rem;
@@ -22,95 +21,97 @@
 	margin-left: 0.3rem;
 }
 
-.fb-content .xmlx .xmlx-right {
+.content .xmlx .xmlx-right {
 	float: right;
 	height: 0.8rem;
-	margin-right: 1.4rem;
+	margin-right:0.3rem;
 }
 
-.fb-content .xmlx .xmlx-right input {
+.content .xmlx .xmlx-right input {
+  width: 2rem;
 	border: none;
 	font-size: 0.28rem;
 	outline: medium;
 }
 
-.fb-content .xmbt {
+.content .xmbt {
 	width: 100%;
 	height: 3.4rem;
 	background: white;
 	border-bottom: 1px solid #F2F2F2;
 }
 
-.fb-content .xmbt .xmbt-top {
+.content .xmbt .xmbt-top {
 	width: 100%;
 	height: 0.8rem;
 	line-height: 0.8rem;
 	border-bottom: 1px solid #F2F2F2;
 }
 
-.fb-content .xmbt .xmbt-top .xt-left {
+.content .xmbt .xmbt-top .xt-left {
 	float: left;
 	margin-left: 0.3rem;
 }
 
-.fb-content .xmbt .xmbt-top .xt-right {
+.content .xmbt .xmbt-top .xt-right {
 	float: right;
 	height: 0.8rem;
-	margin-right: 1.4rem;
+	margin-right:0.1rem;
 }
 
-.fb-content .xmbt .xmbt-top .xt-right input {
+.content .xmbt .xmbt-top .xt-right input {
 	border: none;
 	font-size: 0.28rem;
 	outline: medium;
 }
 
-.fb-content .xmbt .xmbt-bottom {
+.content .xmbt .xmbt-bottom {
 	width: 6.9rem;
 	height: 260px;
 	margin-left: 0.3rem;
 }
 
-.fb-content .xmbt .xmbt-bottom .xt-txt {
+.content .xmbt .xmbt-bottom .xt-txt {
 	width: 100%;
 	height: 2.4rem;
 	margin: 0.1rem 0;
 	font-size: 0.28rem;
 	border: none;
 	outline: medium;
+  resize: none;
 }
 
-.fb-content .sctp {
+.content .sctp {
 	width: 100%;
 	height: 3.2rem;
 	background: white;
 }
 
-.fb-content .sctp .sc-top {
+.content .sctp .sc-top {
 	height: 0.8rem;
 	line-height: 0.8rem;
 	margin-left: 0.3rem;
 }
 
-.fb-content .sctp .st-bottom {
+.content .sctp .st-bottom {
   float: left;
 	width: 2.3rem;
 	height: 2.3rem;
 	border: 1px dashed #F2F2F2;
 	margin: 0.1rem;
 }
-.fb-content .sctp .st-bottom img{
+.content .sctp .st-bottom img{
   width: 100%;
 }
-.fb-content .sctp .img-body{
+.content .sctp .img-body{
   float: left;
   width: 2.3rem;
   height: 2.3rem;
   border: 0.55px solid #F2F2F2;
   margin: 0.1rem;
 }
-.fb-content .sctp .st-bottom img,
-.fb-content .sctp .img-body img{
+.content .sctp .st-bottom img,
+.content .sctp .img-body img{
   width: 100%;
   height: 100%;
 }

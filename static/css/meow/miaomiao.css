@@ -16,8 +16,6 @@
 .bankuai {
 	width: 100%;
 	height: 1.8rem;
-  margin-top: 0.88rem;
-	display: inline-block;
 	background: #fff;
 }
 
@@ -50,11 +48,9 @@
 	width: 100%;
 	height: 100%;
 }
-.content{
-  margin-top: 0.88rem;
-}
 .miao{
-  margin-bottom: 1.2rem;
+  margin-bottom:2rem;
+  /*margin-top: 0.4rem;*/
 }
 .mm-list {
 	background: #F2F2F2;

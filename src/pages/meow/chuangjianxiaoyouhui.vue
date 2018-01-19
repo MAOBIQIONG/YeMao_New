@@ -63,4 +63,7 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

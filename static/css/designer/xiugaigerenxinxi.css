@@ -1,9 +1,9 @@
 
 .content {
 	width: 100%;
+  position:fixed;
 	font-size: 0.28rem;
 	background: #F2F2F2;
-  margin-top: 1rem;
 }
 
 .content .xmlx {

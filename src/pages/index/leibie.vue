@@ -202,7 +202,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .content{
-    margin-top: 0.8rem;
+    width: 100%;
+    display: block;
+    margin-top: 1.2rem;
+    margin-bottom: 1rem;
     background: #f2f2f2;
   }
 </style>

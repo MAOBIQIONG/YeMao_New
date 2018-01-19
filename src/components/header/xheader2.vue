@@ -1,5 +1,5 @@
 <template>
-  <div class="header-box">
+  <div class="header">
     <x-header :left-options="{backText: '',preventGoBack:true}" @on-click-back="goback" :title="title"><a slot="right" :class="collectFlag==0?right_class:right_hover_class" v-tap="{ methods:setHover }"></a></x-header>
   </div>
 </template>
@@ -24,7 +24,6 @@
       // console.log("2 activated:")
     },
     created: function () {
-      // console.log("2 created:")
       this.collectFlag = this.collectFlag;
       this.right_class = this.rightClass;
       this.right_hover_class = this.rightClass + ' hover';
@@ -49,17 +48,10 @@
 </script>
 
 <style>
-  .header-box{
-    height: .92rem;
-  }
   .vux-header{
     width: 100%;
     background-color: #fff !important;
-    -webkit-box-shadow: 0 1px 6px #f2f2f2;
-    box-shadow: 0 1px 6px #f2f2f2;
-    position: fixed !important;
-    top: 0;
-    left:  0;
+    border-bottom: 1px solid #f2f2f2;
     z-index: 666;
   }
   .vux-header .vux-header-left .left-arrow:before{

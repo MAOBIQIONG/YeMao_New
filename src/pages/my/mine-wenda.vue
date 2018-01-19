@@ -10,7 +10,7 @@
         </ul>
       </div>
     </div>
-    <div class="msg-content">
+    <div class="content">
       <div class="tab_box">
         <!--消息列表-->
         <div class="xiaoxi">
@@ -99,4 +99,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-wenda.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

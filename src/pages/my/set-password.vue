@@ -6,7 +6,7 @@
       <span>修改密码</span>
       <div class="header-right"@click="submit">确定</div>
     </div>
-    <div class="setp-content">
+    <div class="content">
       <div class="ymm">
         <div class="left"><span>原密码</span></div>
         <div class="right"><input type="text" placeholder="输入旧密码"/></div>
@@ -60,4 +60,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/set-password.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

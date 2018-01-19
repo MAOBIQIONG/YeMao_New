@@ -1,12 +1,10 @@
-.jl-list{
-  margin-top: 0.88rem;
-}
-.jl-list .jianli {
+
+.content .jianli {
   width: 7.5rem;
   height: 2rem;
 }
 
-.jl-list .jianli .touxiang {
+.content .jianli .touxiang {
   float: left;
   width: 1.2rem;
   height: 1.2rem;
@@ -16,13 +14,13 @@
   overflow: hidden;
 }
 
-.jl-list .jianli .touxiang img {
+.content .jianli .touxiang img {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-.jl-list .jianli .jieshao {
+.content .jianli .jieshao {
   float: left;
   width: 5.3rem;
   height: 2rem;
@@ -30,21 +28,21 @@
   font-size: 0.28rem;
 }
 
-.jl-list .jianli .jieshao p {
+.content .jianli .jieshao p {
   line-height: 0.5rem;
 }
 
-.jl-list .jianli .jieshao .name {
+.content .jianli .jieshao .name {
   color: #000000;
   margin-top: 0.24rem;
 }
 
-.jl-list .jianli .jieshao .qiwan {
+.content .jianli .jieshao .qiwan {
   font-size: 0.26rem;
   color: #d6d2d6;
 }
 
-.jl-list .jianli .jieshao .xinge {
+.content .jianli .jieshao .xinge {
   font-size: 0.24rem;
   color: #d6d2d6;
   display: -webkit-box;

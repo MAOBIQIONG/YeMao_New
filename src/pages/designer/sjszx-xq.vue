@@ -292,4 +292,7 @@
     text-align: center;
     padding: .25rem;
   }
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

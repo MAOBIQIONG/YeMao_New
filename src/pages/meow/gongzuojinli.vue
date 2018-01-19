@@ -52,4 +52,7 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/gongzuojingli.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

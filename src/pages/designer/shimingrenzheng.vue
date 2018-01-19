@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="smrz">
     <!--头部导航-->
     <div class="header">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
@@ -17,14 +17,6 @@
             <input v-model="user.real_name" type="text" placeholder="请输入真实姓名" />
           </div>
         </div>
-        <!--<div class="qdtime">-->
-          <!--<div class="qdtime-left">-->
-            <!--<span>手机号码</span>-->
-          <!--</div>-->
-          <!--<div class="qdtime-right">-->
-            <!--<input type="text"placeholder="请输入手机号" />-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="qdtime">
           <div class="qdtime-left">
             <span>身份证号码</span>
@@ -222,4 +214,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/shimingrenzheng.css';
+  .content{
+    padding-top: 1.2rem;
+  }
+  .smrz{
+    background: #f2f2f2;
+  }
 </style>

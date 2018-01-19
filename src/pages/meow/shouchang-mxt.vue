@@ -1,18 +1,19 @@
 <template>
-  <div>
+  <div class="mxt">
     <!--头部导航-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>喵学堂</span>
     </div>
     <!--问答专辑-->
-        <scroller 
+    <div class="content">
+        <scroller
             v-model="pullUpDownStatus"
             :height="height"
             :lock-x="lockX"
             :lock-y="lockY"
-            :use-pulldown="true" 
-            :use-pullup="true" 
+            :use-pulldown="true"
+            :use-pullup="true"
             :pulldown-config="pulldownConfig"
             :pullup-config = "pullupConfig"
             @on-scroll="scroll"
@@ -29,10 +30,10 @@
                         <div class="piapti">
                             {{item.title}}
                         </div>
-                        <div class="tupian" v-if="item.imgs">        
+                        <div class="tupian" v-if="item.imgs">
                             <img :src="item.imgs[0]"/>
                         </div>
-                        <!-- <div class="tupian" v-else>                   
+                        <!-- <div class="tupian" v-else>
                             <img src="../../../static/images/bj.jpg"/>
                         </div> -->
                         <div class="jieshao">
@@ -47,6 +48,7 @@
                 <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
             </div>
         </scroller>
+    </div>
   </div>
 </template>
 
@@ -119,10 +121,10 @@ export default {
             handler:function(val,oldval){
                 if(val.pullupStatus=="loading"){
                     this.loadMoreStatus.show=true;
-                    if(this.hasMore == false){                      
-                        this.loadMoreStatus.showLoading=false; 
+                    if(this.hasMore == false){
+                        this.loadMoreStatus.showLoading=false;
                     } else {
-                        this.loadMoreStatus.showLoading=true; 
+                        this.loadMoreStatus.showLoading=true;
                     }
                 }
             }
@@ -160,7 +162,7 @@ export default {
                 }, response => {
                     console.log(response);
                     let data = response.data
-                    if (data) {                            
+                    if (data) {
                         _self.setData(data);
                         console.log('数据设置完成');
                     } else {
@@ -186,12 +188,12 @@ export default {
                     _self.$refs.scroller.disablePullup();
                     return
                 }
-                _self.list.push(...data.chws);                   
+                _self.list.push(...data.chws);
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;
             _self.$refs.scroller.donePulldown();
-            _self.$refs.scroller.donePullup();   
+            _self.$refs.scroller.donePullup();
             //判断数据是否有一页
             if(list.length < _self.pagination.pageSize){
                 _self.loadMoreStatus.show=true;
@@ -208,28 +210,28 @@ export default {
             let _self = this
             _self.pagination.pageNo = 0;
             _self.loadMoreStatus.show=false;
-            _self.$refs.scroller.donePullup();  
-            setTimeout(()=>{_self.loadData()},100); 
-            
+            _self.$refs.scroller.donePullup();
+            setTimeout(()=>{_self.loadData()},100);
+
         },
         //上拉加载
         loadMore(){
             let _self = this;
             // _self.loadData();
-            setTimeout(()=>{_self.loadData()},1); 
+            setTimeout(()=>{_self.loadData()},1);
         },
         scroll(position){
             // console.log("on-scroll",position);
         },
         pullDownLoading(){
             console.log('on-pull-down-loading');
-            this.refreshPageDate();       
+            this.refreshPageDate();
         },
         pullUpLoading(){
             console.log('on-pull-up-loading');
             this.loadMore();
 
-            
+
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
@@ -251,16 +253,19 @@ export default {
                 this.$refs.scroller.disablePullup();
                 this.$refs.scroller.reset({top:0});
             }
-        );      
+        );
     },
 }
 </script>
 <style scoped>
   @import '../../../static/css/meow/shouchang-wenda.css';
-  .header{
-      position:static;
-  }
   .weida-list{
       margin-top:0.2rem;
+  }
+  .mxt{
+    position: fixed;
+  }
+  .content{
+    padding-top: 1.2rem;
   }
 </style>

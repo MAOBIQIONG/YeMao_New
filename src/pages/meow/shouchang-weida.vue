@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="scweida">
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
@@ -7,13 +7,14 @@
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->
-    <scroller 
+    <div class="content">
+        <scroller
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"
         :lock-y="lockY"
-        :use-pulldown="true" 
-        :use-pullup="true" 
+        :use-pulldown="true"
+        :use-pullup="true"
         :pulldown-config="pulldownConfig"
         :pullup-config = "pullupConfig"
         @on-scroll="scroll"
@@ -25,7 +26,7 @@
     >
     <div>
         <div class="weida-list" v-for="(item,index) in QAList" :key="index">
-        <div class="weida" @click="toDetails(item._id)">
+            <div class="weida" @click="toDetails(item._id)">
             <div class="wd-top">
             <div class="touxiang">
                 <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
@@ -33,7 +34,7 @@
             </div>
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
-            <div class="tupian" v-if="item.imgs">        
+            <div class="tupian" v-if="item.imgs">
             <img :src="item.imgs[0]"/>
             </div>
             <div class="neirong">
@@ -52,30 +53,7 @@
         <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
     </div>
     </scroller>
-    <!-- <div class="weida-list" >
-      <div class="weida" @click="toUrl('wdxq')">
-        <div class="wd-top">
-          <div class="touxiang">
-            <img src="../../../static/images/bj.jpg"/>
-          </div>
-          <p class="nicheng">昵称</p>
-        </div>
-        <div class="tupian">
-          <img src="../../../static/images/bj.jpg"/>
-        </div>
-        <div class="neirong">
-          <div class="piapti">
-            如果你无法简洁的表达你的想法，那只说明你还不够了解它。- 阿尔伯特·爱因斯坦?
-          </div>
-          <div class="jieshao">
-            如果你无法简洁的表达你的想法，那只说明你还不够了解它阿尔伯特·爱因斯坦如果你无法简洁的表达你的想法，那只说明你还不够了解它。- 阿尔伯特·爱因斯坦阿尔伯特
-          </div>
-        </div>
-        <div class="pingjia">
-          <span>100</span>赞同 · <span>100</span>评论
-        </div>
-      </div>
-    </div> -->
+    </div>
     <toast v-model="toast.show" :time="1000" type="text" width="5rem">{{toast.msg}}</toast>
   </div>
 </template>
@@ -152,7 +130,7 @@ export default {
             handler:function(val,oldval){
                 if(val.pullupStatus=="loading"){
                     this.loadMoreStatus.show=true;
-                    this.loadMoreStatus.showLoading=true; 
+                    this.loadMoreStatus.showLoading=true;
                 }
             }
         }
@@ -194,7 +172,7 @@ export default {
                 }, response => {
                     console.log(response);
                     let data = response.data
-                    if (data) {                            
+                    if (data) {
                         _self.setData(data);
                         console.log('数据设置完成');
                     } else {
@@ -220,12 +198,12 @@ export default {
                     _self.$refs.scroller.disablePullup();
                     return
                 }
-                _self.QAList.push(...data.chws);                   
+                _self.QAList.push(...data.chws);
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;
             _self.$refs.scroller.donePulldown();
-            _self.$refs.scroller.donePullup();   
+            _self.$refs.scroller.donePullup();
             //判断数据是否有一页
             if(QAList.length < _self.pagination.pageSize){
                 _self.loadMoreStatus.show=true;
@@ -242,26 +220,26 @@ export default {
             let _self = this
             _self.pagination.pageNo = 0;
             _self.loadMoreStatus.show=false;
-            _self.$refs.scroller.donePullup();  
+            _self.$refs.scroller.donePullup();
             _self.loadData()
-            
+
         },
         //上拉加载
         loadMore(){
             let _self = this;
             // _self.loadData();
-            _self.loadData(); 
+            _self.loadData();
         },
         scroll(position){
             // console.log("on-scroll",position);
         },
         pullDownLoading(){
             console.log('on-pull-down-loading');
-            this.refreshPageDate();       
+            this.refreshPageDate();
         },
         pullUpLoading(){
             console.log('on-pull-up-loading');
-            this.loadMore();      
+            this.loadMore();
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
@@ -285,17 +263,21 @@ export default {
                 this.$refs.scroller.disablePullup();
                 this.$refs.scroller.reset({top:0});
             }
-        );      
+        );
     },
 }
 </script>
 <style scoped>
   @import '../../../static/css/meow/shouchang-wenda.css';
-  .header{
-      position:static;
-  }
   .weida-list{
       margin-top:0.2rem;
+  }
+  .content{
+    width:7.5rem;
+    padding-top: 1.2rem;
+  }
+  .scweida{
+    position: fixed;
   }
 </style>
 <style>

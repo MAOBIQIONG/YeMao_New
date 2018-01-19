@@ -62,4 +62,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/tixianchenggong.css';
+  .content{
+    padding-top:1.2rem;
+  }
 </style>

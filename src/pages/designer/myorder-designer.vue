@@ -7,8 +7,8 @@
     </div>
     <!--tab选项卡-->
         <tab :line-width=2 active-color='#fc378c' v-model="index" class="tabs">
-            <tab-item 
-                v-for="item in tabItems" 
+            <tab-item
+                v-for="item in tabItems"
                 :key="item.id"
                 @on-item-click="changeList"
             >
@@ -49,7 +49,7 @@
             {id:0,title:'待处理'},
             {id:1,title:'待支付'},
             {id:2,title:'待交付'},
-            {id:3,title:'已完成'}, 
+            {id:3,title:'已完成'},
         ],
         viewArray:['MyOrder_dcl','MyOrder_dzf','MyOrder_djf','MyOrder_ywc']
       }
@@ -77,20 +77,12 @@
     }
   }
 </script>
-<!--<style>-->
-  <!--.vux-slider > .vux-swiper{-->
-    <!--height: 100% !important;-->
-    <!--overflow:auto !important;-->
-  <!--}-->
-  <!--.vux-swiper-item{-->
-    <!--height:auto !important;-->
-    <!--background: #f2f2f2 !important;-->
-  <!--}-->
-<!--</style>-->
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .myorder-employer{
+    width: 7.5rem;
     font-size:16px;
+    position: fixed;
   }
   .header{
       position:static;
@@ -101,9 +93,6 @@
   }
   .tabs{
     width: 100%;
-    /* position: fixed;
-    top: 0.88rem;
-    left: 0; */
     background: white;
     z-index: 999;
   }

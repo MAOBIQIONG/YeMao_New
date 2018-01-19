@@ -143,4 +143,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-shouchang.css';
+  .content{
+    padding-top: 1.2rem;
+  }
 </style>

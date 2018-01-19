@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="anlie">
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
@@ -7,20 +7,20 @@
       <div class="header-right" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
     </div>
     <!--详情内容-->
-    <scroller
-      v-model="pullUpDownStatus"
-      :height="height"
-      :lock-x="lockX"
-      :lock-y="lockY"
-      :use-pullup="true"
-      :pullup-config = "pullupConfig"
-      @on-scroll="scroll"
-      @on-scroll-bottom="onScrollBottom"
-      @on-pullup-loading="pullUpLoading"
-      ref="scroller"
-    >
-      <div>
-        <div class="content">
+    <div class="content">
+      <scroller
+        v-model="pullUpDownStatus"
+        :height="height"
+        :lock-x="lockX"
+        :lock-y="lockY"
+        :use-pullup="true"
+        :pullup-config="pullupConfig"
+        @on-scroll="scroll"
+        @on-scroll-bottom="onScrollBottom"
+        @on-pullup-loading="pullUpLoading"
+        ref="scroller"
+      >
+        <div>
           <div class="xc-top">
             <div class="touxiang">
               <img :src="checkAvatar(chw.user.img)"/>
@@ -56,9 +56,10 @@
             </div>
           </div>
         </div>
-        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
-      </div>
-    </scroller>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip"
+                   class="loadMore"></load-more>
+      </scroller>
+    </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <!-- 评论输入框 -->
     <div class="input-box">
@@ -73,8 +74,9 @@
 </template>
 
 <script>
-  import { Swiper, SwiperItem, Previewer, TransferDom, Scroller, LoadMore, Toast } from 'vux'
+  import {Swiper, SwiperItem, Previewer, TransferDom, Scroller, LoadMore, Toast} from 'vux'
   import store from '@/vuex/store'
+
   export default {
     directives: {
       TransferDom
@@ -91,21 +93,21 @@
     data() {
       return {
         index: 0,
-        userInfo:{},
-        chw:{
-          user:{}
+        userInfo: {},
+        chw: {
+          user: {}
         },
-        imgs:[],
-        comments:[],
+        imgs: [],
+        comments: [],
         // 评论
-        is_submit:false,
-        comment_placeholder:'填写评论',
-        comment_text:'',
+        is_submit: false,
+        comment_placeholder: '填写评论',
+        comment_text: '',
 
         // 上拉加载
-        lockX:true,
-        lockY:false,
-        height:"",
+        lockX: true,
+        lockY: false,
+        height: "",
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -113,7 +115,7 @@
         pullUpDownStatus: {
           pullupStatus: 'default'
         },
-        pullupConfig:{
+        pullupConfig: {
           content: '上拉加载',
           pullUpHeight: 60,
           height: 40,
@@ -123,51 +125,51 @@
           loadingContent: '',
           clsPrefix: 'xs-plugin-pullup-'
         },
-        loadMoreStatus:{
-          tip:"正在加载",
-          tipNoData:"没有更多数据了",
-          tipLoading:"正在加载",
-          showLoading:true,
-          show:true,
+        loadMoreStatus: {
+          tip: "正在加载",
+          tipNoData: "没有更多数据了",
+          tipLoading: "正在加载",
+          showLoading: true,
+          show: true,
         },
-        hasMore:true,
-        showMark:false,
-        showMsg:"",
+        hasMore: true,
+        showMark: false,
+        showMsg: "",
       }
     },
-    created(){
+    created() {
       var _self = this;
       _self.chw_id = _self.$route.query.id;
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.initData();
     },
-    mounted(){
+    mounted() {
       this.$nextTick(
-        ()=>{
+        () => {
           this.$refs.scroller.disablePullup();
-          this.$refs.scroller.reset({top:0});
+          this.$refs.scroller.reset({top: 0});
         }
       );
     },
-    watch:{
-      pullUpDownStatus:{
-        handler:function(val,oldval){
-          if(val.pullupStatus=="loading"){
-            this.loadMoreStatus.show=true;
-            if(this.hasMore == false){
-              this.loadMoreStatus.showLoading=false;
+    watch: {
+      pullUpDownStatus: {
+        handler: function (val, oldval) {
+          if (val.pullupStatus == "loading") {
+            this.loadMoreStatus.show = true;
+            if (this.hasMore == false) {
+              this.loadMoreStatus.showLoading = false;
             } else {
-              this.loadMoreStatus.showLoading=true;
+              this.loadMoreStatus.showLoading = true;
             }
           }
         }
       },
-      comment_text:{
-        handler:function(val,oldval){
+      comment_text: {
+        handler: function (val, oldval) {
           var _self = this;
-          if( _self.is_submit==false && val.length > 0 ){
+          if (_self.is_submit == false && val.length > 0) {
             _self.is_submit = true;
-          }else if( val.length == 0 ){
+          } else if (val.length == 0) {
             _self.is_submit = false;
           }
         }
@@ -183,111 +185,113 @@
       onIndexChange(index) {
         this.index = index
       },
-      showToast(msg){
+      showToast(msg) {
         this.showMark = true;
         this.showMsg = msg;
       },
       // 头像
-      checkAvatar (path) {
+      checkAvatar(path) {
         return common.getAvatar(path)
       },
       // 时间戳转日期
-      timeStamp2String(time,id){
-        if( common.isNull(id) ){ id = 'ymd'; }
-        return common.timeStamp2String(time,id);
+      timeStamp2String(time, id) {
+        if (common.isNull(id)) {
+          id = 'ymd';
+        }
+        return common.timeStamp2String(time, id);
       },
       // 时间戳转发布时长
-      getDateDiff(time){
+      getDateDiff(time) {
         return common.getDateDiff(time);
       },
-      show (index) {
+      show(index) {
         this.$refs.previewer.show(index)
       },
       //点赞
-      dianzan(){
+      dianzan() {
         var _self = this;
-        if( common.isNull(_self.userInfo._id) ){
+        if (common.isNull(_self.userInfo._id)) {
           _self.$router.push({name: 'login'});
-        }else{
+        } else {
           _self.like();
         }
       },
 
       //点赞效果
-      commentchw(){
+      commentchw() {
         var _self = this;
-        if( !_self.is_submit ){
-        }else if( common.isNull(_self.userInfo._id) ){
+        if (!_self.is_submit) {
+        } else if (common.isNull(_self.userInfo._id)) {
           _self.$router.push({name: 'login'});
-        }else {
+        } else {
           _self.addComment();
         }
       },
 
       //下拉刷新
-      refreshPageDate(){
+      refreshPageDate() {
         let _self = this
         _self.pagination.pageNo = 0;
         _self.hasMore = true;
-        _self.loadMoreStatus.show=false;
+        _self.loadMoreStatus.show = false;
         _self.$refs.scroller.donePullup();
         _self.loadData();
       },
       //上拉加载
-      loadMore(){
+      loadMore() {
         let _self = this;
         _self.loadData();
       },
-      scroll(position){
+      scroll(position) {
         // console.log("on-scroll",position);
       },
-      pullUpLoading(){
+      pullUpLoading() {
         console.log('on-pull-up-loading');
         this.loadMore();
       },
-      onScrollBottom(){
+      onScrollBottom() {
         // console.log('on-scroll-bottom');
       },
       //获取数据
-      initData(){
+      initData() {
         let _self = this;
         let params = {
-          interfaceId:common.interfaceIds.getPChwDetails,
-          where:{
+          interfaceId: common.interfaceIds.getPChwDetails,
+          where: {
             _id: _self.chw_id
           }
         };
-        if( !common.isNull(_self.userInfo._id) ){
+        if (!common.isNull(_self.userInfo._id)) {
           params.user_id = _self.userInfo._id;
         }
-        this.$axios.post('/mongoApi',{
+        this.$axios.post('/mongoApi', {
           params
-        },(response)=>{
+        }, (response) => {
           console.log(response)
           let data = response.data;
           _self.setInitData(data);
         })
       },
 
-      setInitData(data){
+      setInitData(data) {
         let _self = this;
         _self.$refs.scroller.enablePullup();
-        _self.loadMoreStatus.show=false;
-        _self.loadMoreStatus.showLoading=false;
+        _self.loadMoreStatus.show = false;
+        _self.loadMoreStatus.showLoading = false;
         _self.$refs.scroller.donePullup();
         // 数据处理
         _self.chw = data.chw || {};
         var imgs = _self.chw.imgs || [];// 图片
-        imgs.forEach(function (item,index) {
-          _self.imgs.push({img:item});
+        imgs.forEach(function (item, index) {
+          _self.imgs.push({img: item});
         })
         // 评论
         _self.comments = data.comments || [];
-        if(_self.comments.length < _self.pagination.pageSize){
+        if (_self.comments.length < _self.pagination.pageSize) {
           _self.hasMore = false;
-          _self.loadMoreStatus.show=true;
-          _self.loadMoreStatus.showLoading=false;
-          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.loadMoreStatus.show = true;
+          _self.loadMoreStatus.showLoading = false;
+          _self.loadMoreStatus.tip = _self.loadMoreStatus.tipNoData;
           _self.$refs.scroller.disablePullup();
         } else {
           _self.pagination.pageNo++
@@ -295,46 +299,46 @@
       },
 
       //获取数据
-      loadData(){
+      loadData() {
         let _self = this;
-        _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
+        _self.loadMoreStatus.tip = _self.loadMoreStatus.tipLoading;
         let params = {
-          interfaceId:common.interfaceIds.getComments,
+          interfaceId: common.interfaceIds.getComments,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
-          where:{
+          where: {
             comment_id: _self.chw_id
           }
         };
-        this.$axios.post('/mongoApi',{
+        this.$axios.post('/mongoApi', {
           params
-        },(response)=>{
+        }, (response) => {
           // console.log(response);
           let data = response.data;
           _self.setData(data);
         })
       },
 
-      setData(data){
+      setData(data) {
         let _self = this;
         _self.$refs.scroller.enablePullup();
         // 订单
         let comments = data.comments || [];
         //判断页码是否为0
-        if(_self.pagination.pageNo == 0) {
+        if (_self.pagination.pageNo == 0) {
           _self.comments = comments;
         } else {
           _self.comments.push(...data.comments);
         }
-        _self.loadMoreStatus.show=false;
-        _self.loadMoreStatus.showLoading=false;
+        _self.loadMoreStatus.show = false;
+        _self.loadMoreStatus.showLoading = false;
         _self.$refs.scroller.donePullup();
         //判断数据是否有一页
-        if(comments.length < _self.pagination.pageSize){
+        if (comments.length < _self.pagination.pageSize) {
           _self.hasMore = false;
-          _self.loadMoreStatus.show=true;
-          _self.loadMoreStatus.showLoading=false;
-          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.loadMoreStatus.show = true;
+          _self.loadMoreStatus.showLoading = false;
+          _self.loadMoreStatus.tip = _self.loadMoreStatus.tipNoData;
           _self.$refs.scroller.disablePullup();
         } else {
           _self.pagination.pageNo++
@@ -342,35 +346,35 @@
       },
 
       //点赞
-      like(){
+      like() {
         let _self = this;
         let params = {
-          interfaceId:common.interfaceIds.like,
+          interfaceId: common.interfaceIds.like,
           data: {
             like_id: _self.chw_id,
             user_id: _self.userInfo._id,
             like_type: 1
           }
         };
-        this.$axios.post('/mongoApi',{
+        this.$axios.post('/mongoApi', {
           params
-        },(response)=>{
+        }, (response) => {
           // console.log(response)
           let data = response.data;
-          if( data.code == 200 ){
-            _self.chw.likeFlag = _self.chw.likeFlag==1? 0 : 1;
-            _self.chw.like += _self.chw.likeFlag==1? 1 : -1;
-          }else{
+          if (data.code == 200) {
+            _self.chw.likeFlag = _self.chw.likeFlag == 1 ? 0 : 1;
+            _self.chw.like += _self.chw.likeFlag == 1 ? 1 : -1;
+          } else {
             _self.showToast("点赞失败!")
           }
         })
       },
 
       //评论
-      addComment(){
+      addComment() {
         let _self = this;
         let params = {
-          interfaceId:common.interfaceIds.addComments,
+          interfaceId: common.interfaceIds.addComments,
           data: {
             user_id: _self.userInfo._id,          // 评论人
             comment_id: _self.chw_id,             // 评论对象ID
@@ -378,22 +382,22 @@
             comment_type: 1,                      // 评论类型：0、喵喵圈，1、案例展示、个人荣誉、我的作品、喵学堂、问答。
           }
         };
-        this.$axios.post('/mongoApi',{
+        this.$axios.post('/mongoApi', {
           params
-        },(response)=>{
+        }, (response) => {
           console.log(response)
           let data = response.data;
-          if( data.code == 200 ){
+          if (data.code == 200) {
             _self.showToast("评论成功!")
             _self.addCommentHmtl(params.data);
-          }else{
+          } else {
             _self.showToast("评论失败!")
           }
         })
       },
 
       // 添加评论html
-      addCommentHmtl(data){
+      addCommentHmtl(data) {
         var _self = this;
         // 修改评论数量
         _self.chw.comments += 1;
@@ -416,28 +420,37 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/anliexq.css';
-  .dz{
+
+  .dz {
     height: 0.9rem;
     line-height: 0.9rem;
     display: inline-block;
     background-image: url("../../../static/images/collect.png");
     background-size: 0.4rem 0.4rem;
-    background-position-y:0.25rem;
+    background-position-y: 0.25rem;
     background-repeat: no-repeat;
     padding-left: 0.5rem;
     padding-right: 0.25rem;
   }
-  .dz.hover{
+
+  .dz.hover {
     background-image: url("../../../static/images/collect-hover.png");
   }
-  .comments{
+
+  .comments {
     height: 0.9rem;
     line-height: 0.9rem;
     display: inline-block;
     background: url("../../../static/images/liulan.png") no-repeat;
     background-size: 0.4rem 0.4rem;
-    background-position-y:0.25rem;
+    background-position-y: 0.25rem;
     padding-left: 0.5rem;
     padding-right: 0.25rem;
+  }
+  .anlie{
+    position: fixed;
+  }
+  .content {
+    padding-top: 1.2rem;
   }
 </style>

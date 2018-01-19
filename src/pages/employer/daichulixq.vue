@@ -4,102 +4,104 @@
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
     </div>
-    <!--主体内容-->
-    <div class="dcl-content">
-      <div class="dcl-top">
-        <img v-if="order.project_state>=0&&order.project_state<3" src="../../../static/images/employer/dcl.png" />
-        <img v-if="order.project_state==3" src="../../../static/images/employer/dzf.png" />
-        <img v-if="order.project_state>3&&order.project_state<7" src="../../../static/images/employer/djf.png" />
-        <img v-if="order.project_state==7" src="../../../static/images/employer/ywc.png" />
+    <div class="content">
+      <!--主体内容-->
+      <div class="dcl-content">
+        <div class="dcl-top">
+          <img v-if="order.project_state>=0&&order.project_state<3" src="../../../static/images/employer/dcl.png" />
+          <img v-if="order.project_state==3" src="../../../static/images/employer/dzf.png" />
+          <img v-if="order.project_state>3&&order.project_state<7" src="../../../static/images/employer/djf.png" />
+          <img v-if="order.project_state==7" src="../../../static/images/employer/ywc.png" />
+        </div>
+        <div class="ddxq">
+          <div class="ddxq-top">
+            <div class="ddxq-img" @click="toUrl('emporderimgs')">
+              <img :src="order.imgs[0]" v-if="imgSize>0">
+              <div class="num">{{imgSize}}</div>
+            </div>
+            <div class="ddxq-jianjie">
+              <div class="jianjie-top">
+                {{order.project_title}}
+              </div>
+              <div class="jianjie-bottom">
+                <div class="db-yushuan"><span>预算</span> <span class="yushuan">￥</span><span class="yushuan">{{order.project_budget}}</span></div>
+                <div class="db-miaomiao"><span><img src='../../../static/images/employer/miaomiao.png'></span><span>喵喵</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ddxq-list">
+            <div class="ddxq-box">
+              <div class="box-left">
+                <span><img src="../../../static/images/employer/07.png"/></span><span>订单类型：</span>
+              </div>
+              <div class="box-right">
+                <span>{{order.project_type | designType}}</span>
+              </div>
+            </div>
+            <div class="ddxq-box">
+              <div class="box-left">
+                <span><img src="../../../static/images/employer/05.png"/></span><span>设计面积：</span>
+              </div>
+              <div class="box-right">
+                <span>{{order.project_area}}</span>
+              </div>
+            </div>
+            <div class="ddxq-box">
+              <div class="box-left">
+                <span><img src="../../../static/images/employer/leixin.png"/></span><span>预计完成：</span>
+              </div>
+              <div class="box-right">
+                <span>{{order.project_endTime}}</span>
+              </div>
+            </div>
+            <div class="ddxq-box">
+              <div class="box-left">
+                <span><img src="../../../static/images/employer/04.png"/></span><span>交易状态：</span>
+              </div>
+              <div class="box-right">
+                <span>{{order.project_state | getStateName}}</span>
+              </div>
+            </div>
+            <div class="ddxq-box">
+              <div class="box-left">
+                <span><img src="../../../static/images/employer/02.png"/></span><span>设计深度：</span>
+              </div>
+              <div class="box-right">
+                <span :key="index" v-for="(item,index) in order.project_depth">{{item | getDepthName}}</span>
+              </div>
+            </div>
+            <div class="ddxq-box">
+              <div class="box-left">
+                <span><img src="../../../static/images/employer/03.png"/></span><span>工时：</span>
+              </div>
+              <div class="box-right">
+                <span>{{order.project_workHours}}小时</span>
+              </div>
+            </div>
+            <div class="ddxq-box" style="border: none;">
+              <div class="box-left">
+                <span><img src="../../../static/images/employer/06.png"/></span><span>地区：</span>
+              </div>
+              <div class="box-right">
+                <span>{{order.project_region}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="ddxq-bottom">
+            <div class="biaoqi">订单详情</div>
+            <div class="neirong">
+              <span ref="project_describe">{{getMaxlen(order.project_describe)}}</span>
+            </div>
+            <div class="chakangengduo" v-tap="{methods:viewMoreFun}">{{viewText}}</div>
+          </div>
+        </div>
       </div>
-      <div class="ddxq">
-        <div class="ddxq-top">
-          <div class="ddxq-img" @click="toUrl('emporderimgs')">
-            <img :src="order.imgs[0]" v-if="imgSize>0">
-            <div class="num">{{imgSize}}</div>
-          </div>
-          <div class="ddxq-jianjie">
-            <div class="jianjie-top">
-              {{order.project_title}}
-            </div>
-            <div class="jianjie-bottom">
-              <div class="db-yushuan"><span>预算</span> <span class="yushuan">￥</span><span class="yushuan">{{order.project_budget}}</span></div>
-              <div class="db-miaomiao"><span><img src='../../../static/images/employer/miaomiao.png'></span><span>喵喵</span></div>
-            </div>
-          </div>
+      <!-- 底部按钮-->
+      <div class="dcl-bottom">
+        <div class="db-right">
+          <div class="db-qxdd">取消订单</div>
+          <div class="db-qrdd" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }">选择设计师</div>
         </div>
-        <div class="ddxq-list">
-          <div class="ddxq-box">
-            <div class="box-left">
-              <span><img src="../../../static/images/employer/07.png"/></span><span>订单类型：</span>
-            </div>
-            <div class="box-right">
-              <span>{{order.project_type | designType}}</span>
-            </div>
-          </div>
-          <div class="ddxq-box">
-            <div class="box-left">
-              <span><img src="../../../static/images/employer/05.png"/></span><span>设计面积：</span>
-            </div>
-            <div class="box-right">
-              <span>{{order.project_area}}</span>
-            </div>
-          </div>
-          <div class="ddxq-box">
-            <div class="box-left">
-              <span><img src="../../../static/images/employer/leixin.png"/></span><span>预计完成：</span>
-            </div>
-            <div class="box-right">
-              <span>{{order.project_endTime}}</span>
-            </div>
-          </div>
-          <div class="ddxq-box">
-            <div class="box-left">
-              <span><img src="../../../static/images/employer/04.png"/></span><span>交易状态：</span>
-            </div>
-            <div class="box-right">
-              <span>{{order.project_state | getStateName}}</span>
-            </div>
-          </div>
-          <div class="ddxq-box">
-            <div class="box-left">
-              <span><img src="../../../static/images/employer/02.png"/></span><span>设计深度：</span>
-            </div>
-            <div class="box-right">
-              <span :key="index" v-for="(item,index) in order.project_depth">{{item | getDepthName}}</span>
-            </div>
-          </div>
-          <div class="ddxq-box">
-            <div class="box-left">
-              <span><img src="../../../static/images/employer/03.png"/></span><span>工时：</span>
-            </div>
-            <div class="box-right">
-              <span>{{order.project_workHours}}小时</span>
-            </div>
-          </div>
-          <div class="ddxq-box" style="border: none;">
-            <div class="box-left">
-              <span><img src="../../../static/images/employer/06.png"/></span><span>地区：</span>
-            </div>
-            <div class="box-right">
-              <span>{{order.project_region}}</span>
-            </div>
-          </div>
-        </div>
-        <div class="ddxq-bottom">
-          <div class="biaoqi">订单详情</div>
-          <div class="neirong">
-            <span ref="project_describe">{{getMaxlen(order.project_describe)}}</span>
-          </div>
-          <div class="chakangengduo" v-tap="{methods:viewMoreFun}">{{viewText}}</div>
-        </div>
-      </div>
-    </div>
-    <!-- 底部按钮-->
-    <div class="dcl-bottom">
-      <div class="db-right">
-        <div class="db-qxdd">取消订单</div>
-        <div class="db-qrdd" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }">选择设计师</div>
       </div>
     </div>
   </div>
