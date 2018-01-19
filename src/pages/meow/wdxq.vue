@@ -41,17 +41,18 @@
             <div class="neirongshijian">
                 {{chw.description}}
                 <div class="bottom">
-                <div class="bottom-zan" :class="{confirmColor:!likeFlag}" v-tap={methods:like_dom}>
+                <div class="bottom-zan" :class="{confirmColor:likeFlag == 1}" v-tap={methods:like_dom}>
                     <span id="praise" ref="like">
-                        <img v-if="likeFlag" src="../../../static/images/zan1.png"/>
-                        <img v-else src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                        
+                        <img v-if="likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                        <img v-else src="../../../static/images/zan1.png"/>
                     </span>
                     <span id="praise-txt">100</span>
                 </div>
-                <div class="bottom-sz" :class="{confirmColor:!collectFlag}" v-tap="{methods:collect}">
-                    <span id="xinxin" ref="star">
-                        <img v-if="collectFlag" src="../../../static/images/xin1.png"/>
-                        <img v-else src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                <div class="bottom-sz" :class="{confirmColor:collectFlag == 1}" v-tap="{methods:collect}">
+                    <span id="xinxin" ref="star">         
+                        <img v-if="collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                        <img v-else src="../../../static/images/xin1.png"/>
                     </span>
                     <span>收藏</span>
                 </div>
@@ -71,7 +72,7 @@
                 <li></li>
                 <li></li>
                 </ul>
-                <div class="dianzhan"@click="toUrl('dianzhan')">
+                <div class="dianzhan" @click="toUrl('dianzhan')">
                 <span></span>人点赞
                 </div>
             </div>
@@ -144,8 +145,8 @@ export default {
                 create_date:null,
                 user:{}
             },
-            likeFlag:1,
-            collectFlag:1,
+            likeFlag:0,
+            collectFlag:0,
             comments:[],
             user_id:null,
             imgs:[],
@@ -284,14 +285,13 @@ export default {
         collect(){
             var _self = this;
             _self.collect_dom();
-            console.log(this.collectFlag);
+            console.log(this.collectFlag,this.likeFlag);
             var params = {
                 interfaceId:common.interfaceIds.collect,
                 data:{
-                    collect_type: 3,
+                    collect_type: 4,
                     collect_id: _self.chw_id,
                     user_id: _self.user_id,
-                    isdel: _self.collectFlag
                 }
             }
             _self.$axios.post('/mongoApi', {
@@ -300,9 +300,9 @@ export default {
                 var data = response.data;
                 var tips = '';
                 if( data && data.code == 200 ){
-                tips = _self.collectFlag == true ? '取消成功！' : '收藏成功！';
+                tips = _self.collectFlag == 0 ? '取消成功！' : '收藏成功！';
                 }else{
-                tips = _self.collectFlag == true ? '取消失败！' : '收藏失败！';
+                tips = _self.collectFlag == 0 ? '取消失败！' : '收藏失败！';
                 }
                 _self.showToast(tips);
             })

@@ -152,7 +152,7 @@
                     pageSize:_self.pagination.pageSize,
                     where:{
                         user_id: _self.user_id,
-                        collect_type: 3
+                        collect_type:4//问答
                     }
                 }
                 _self.$axios.post('/mongoApi', {
@@ -161,7 +161,7 @@
                         console.log(response);
                         let data = response.data
                         if (data) {                            
-                            // _self.setData(data);
+                            _self.setData(data);
                             console.log(data);
                             console.log('数据设置完成');
                         } else {
@@ -216,7 +216,6 @@
             //上拉加载
             loadMore(){
                 let _self = this;
-                // _self.loadData();
                 _self.loadData(); 
             },
             scroll(position){
