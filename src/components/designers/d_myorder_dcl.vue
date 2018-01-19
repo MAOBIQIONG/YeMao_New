@@ -31,7 +31,11 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <div class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                            <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
+                            <template v-else >
+                                <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
+                                <div class="db-djs" v-else>等待设计师完善订单</div>
+                            </template>                           
                         </div>
                     </div>
                 </div>
@@ -43,10 +47,18 @@
                 <div class="ds-bottom">
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
-                        <div class="db-qrdd" v-if="isNull(item.project_winBidder)">抢单中</div>
+                        <!-- <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div> -->
+                        <div class="db-qrdd" v-if="isNull(item.project_winBidder)">
+                            <!-- 抢单中 -->
+                        </div>
                         <template v-else>
-                            <div class="db-qrdd" v-if="item.project_winBidder == user_id" @click="">完善订单</div>
+                            <template v-if="item.project_winBidder == user_id" >
+                                <div class="db-qrdd" v-if="item.project_state==2" style="background:white;">
+                                    <!-- 完善订单 -->
+                                </div>
+                                <div class="db-qrdd" v-else @click="improveTheOrder(item._id)">完善订单</div>
+                            </template>
+                            
                             <div class="db-qrdd" v-else>抢单失败</div>
                         </template>              
                     </div>
@@ -215,6 +227,9 @@ export default {
         toDetails (id) {
             this.$router.push({name: 'daichulixq', query: {id: id}})
         },
+        improveTheOrder(id){
+            this.$router.push({name:'fabudingdan',query:{id:id,improve:1}});
+        },
         isNull(data){
             return common.isNull(data);
         },
@@ -261,7 +276,46 @@ export default {
 
             });
         },
-
+//混合两个对象返回新对象eg:let d = mix(protoObject).w(toObject)
+        mix(protoObject,ifNeedPropProto=false){
+            let w =function(toObject){
+                //以protoObject为原型以toObject属性为自有属性创建新的对象
+                let d = Object.create(protoObject,Object.getOwnPropertyDescriptors(toObject))
+                //将原型属性赋值于自有属性
+                if(ifNeedPropProto){
+                    for (var k in d){
+                        d[k] = d[k]
+                    }
+                }              
+                return d;
+            };
+            return {
+                w
+            }
+        },
+        //两个对象数组根据字段合并，返回合并后数组
+        //o1:{arr:[],field:''}
+        arryLeftJoin(o1,o2){
+            // console.log(o1,o2);
+            let _self = this;
+            let result = [];
+            if(common.isArray(o1.arr) && common.isArray(o2.arr)){
+                for(let r1 of o1.arr){  
+                    r1.sub = new Array();
+                    for(let r2 of o2.arr){                
+                        if(r1[o1.field]==r2[o2.field]){
+                            // console.log(r1[o1.field],r2[o2.field]);            
+                            r1.sub.push(r2);
+                        }
+                    }
+                    // console.log(r1.sub);
+                    result.push(r1);
+                }
+                return result;
+            } else {
+                throw new Error("参数格式mergeData(o1:{arr:[],field:''},o2:{arr:[],field:''})")
+            }
+        },
         //获取数据
         loadData(){
             let _self = this;
@@ -292,8 +346,10 @@ export default {
         setData(data){
             let _self = this;
             _self.$refs.scroller.enablePullup();
-            // 订单
+             // 订单
             let orderList = data.orderList || [];
+
+            console.log('mergeList',orderList);   
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.orderList = orderList;

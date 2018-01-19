@@ -16,46 +16,43 @@
         :use-pulldown="true"
         :use-pullup="true"
         :pulldown-config="pulldownConfig"
-        :pullup-config="pullupConfig"
+        :pullup-config = "pullupConfig"
         @on-scroll="scroll"
         @on-scroll-bottom="onScrollBottom"
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
         :class="{scroller:true}"
-      >
-        <div>
-          <div class="weida-list" v-for="(item,index) in QAList" :key="index">
-            <div class="weida" @click="toDetails(item._id)">
-              <div class="wd-top">
-                <div class="touxiang">
-                  <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
-                  <img v-else src="../../../static/images/bj.jpg"/>
-                </div>
-                <p class="nicheng">{{item.user.user_name}}</p>
-              </div>
-              <div class="tupian" v-if="item.imgs">
-                <img :src="item.imgs[0]"/>
-              </div>
-              <div class="neirong">
-                <div class="piapti">
-                  {{item.title}}
-                </div>
-                <div class="jieshao">
-                  {{item.description}}
-                </div>
-              </div>
-              <div class="pingjia">
-                <span v-if="item.like">{{item.like}}</span><span v-else>0</span>赞同 · <span
-                v-if="item.comments">{{item.comments}}</span><span v-else>0</span>评论
-              </div>
+    >
+    <div>
+        <div class="weida-list" v-for="(item,index) in QAList" :key="index">
+        <div class="weida" @click="toDetails(item._id)">
+            <div class="wd-top">
+            <div class="touxiang">
+                <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
+                <img v-else src="../../../static/images/bj.jpg"/>
             </div>
-          </div>
-          <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip"
-                     class="loadMore"></load-more>
+            <p class="nicheng">{{item.user.user_name}}</p>
+            </div>
+            <div class="tupian" v-if="item.imgs">
+            <img :src="item.imgs[0]"/>
+            </div>
+            <div class="neirong">
+            <div class="piapti">
+                {{item.title}}
+            </div>
+            <div class="jieshao">
+                {{item.description}}
+            </div>
+            </div>
+            <div class="pingjia">
+            <span v-if="item.like">{{item.like}}</span><span v-else>0</span>赞同 · <span v-if="item.comments">{{item.comments}}</span><span v-else>0</span>评论
+            </div>
         </div>
-      </scroller>
+        </div>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
     </div>
+    </scroller>
   </div>
 </template>
 
@@ -262,6 +259,9 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/shouchang-wenda.css';
+  .header{
+      position:static;
+  }
   .weida-list{
       margin-top:0.2rem;
   }

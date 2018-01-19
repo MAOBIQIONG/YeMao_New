@@ -154,7 +154,7 @@ export default {
                 pageSize:_self.pagination.pageSize,
                 where:{
                     // user_id: _self.user_id,
-                    type: 4//喵学堂
+                    type: 3//喵学堂
                 }
             }
             _self.$axios.post('/mongoApi', {
