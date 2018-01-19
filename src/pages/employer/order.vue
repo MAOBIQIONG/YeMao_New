@@ -3,7 +3,7 @@
     <!--头部导航-->
     <xheader2 :title="title" :rightClass="rightClass" :collectFlag="collectFlag" @upup="collectFun"></xheader2>
     <!--主体内容-->
-    <div class="content">
+    <div class="content content-p">
        <div class="od-condent">
       <!--订单确认后详情页-->
       <div class="ddxq">
@@ -414,9 +414,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/employer/order.css';
-  .content{
-    padding-top: 1.2rem;
-  }
   .od-condent .od-renshu .tu {
     background: url('../../../static/images/timer.png') left center no-repeat;
     background-size: .5rem .5rem;

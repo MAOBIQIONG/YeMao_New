@@ -7,7 +7,7 @@
       <div class="header-right" v-tap="{ methods:submit }"><span>上传</span></div>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="xmlx">
         <div class="xmlx-left">
           <span>作品名称</span>
@@ -157,8 +157,5 @@
   @import '../../../static/css/designer/rongyushangchuan.css';
   .shijian{
     width: 1.9rem;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

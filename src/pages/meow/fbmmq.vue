@@ -6,7 +6,7 @@
       <span>发表动态</span>
       <div class="header-right" v-tap="{ methods:submit }">发布</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--留言-->
       <div class="pc-shuru">
         <textarea v-model="params.title" class="area" maxlength="300" placeholder="请输入问题描述"></textarea>
@@ -120,8 +120,5 @@
   .img-upload{
     width: 6.9rem;
     margin: 0 auto;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

@@ -7,7 +7,7 @@
       <div class="header-right"@click="toUrl('tongxunluhaoyou')">邀请</div>
     </div>
     <!--学校详情-->
-    <div class="content">
+    <div class="content content-p">
       <div class="xxmc">
         <div class="touxiang">
           <img src="../../../static/images/bj.jpg" />
@@ -76,7 +76,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/xuexiaoxiangqing.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

@@ -28,12 +28,18 @@ ul {
   padding: 0;
   list-style: none;
 }
-/*全景样式*/
+/*沉浸式样式*/
+.content-p{
+  padding-top: 1.2rem;
+}
 .qujin{
  padding-top: 0.3rem;
 }
 /**定位**/
-.p-fixed{ position: fixed !important;  }
+.p-fixed{
+  position: fixed !important;
+  width: 7.5rem;
+}
 .p-absolute{ position: absolute !important;  }
 .p-static{ position: static !important;  }
 

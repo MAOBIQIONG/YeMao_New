@@ -5,7 +5,7 @@
       <span>收藏设计师</span>
     </div>
     <!--收藏设计师-->
-    <div class="content">
+    <div class="content content-p">
       <div class="szsjs-list">
         <div class="szsjs-top">
           <div class="szsjs-touxiang">
@@ -76,7 +76,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/shoucangsjs.css";
-  .content {
-    padding-top: 1.2rem;
-  }
 </style>

@@ -6,7 +6,7 @@
       <span>我的钱包</span>
       <div class="header-right "@click="toUrl('tixian')">提现</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="jinge-top">
         <div class="biaoti">
           <div class="duoshao">钱包余额（元）</div>
@@ -112,8 +112,5 @@
   }
   .eyes_open{
     background: url(../../../static/images/designer/q_02.png) no-repeat;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

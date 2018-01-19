@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>设置</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="xgnc"@click="toUrl('setnicheng')">
         <div class="left"><span>修改昵称</span></div>
         <div class="right"><span>设计师小A</span></div>
@@ -53,7 +53,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/set.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

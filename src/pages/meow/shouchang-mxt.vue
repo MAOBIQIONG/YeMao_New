@@ -6,7 +6,7 @@
       <span>喵学堂</span>
     </div>
     <!--问答专辑-->
-    <div class="content">
+    <div class="content content-p">
         <scroller
             v-model="pullUpDownStatus"
             :height="height"
@@ -264,8 +264,5 @@ export default {
   }
   .mxt{
     position: fixed;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

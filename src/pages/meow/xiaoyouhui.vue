@@ -7,7 +7,7 @@
       <div class="header-right"@click="toUrl('chuangjianxiaoyouhui')">创建</div>
     </div>
     <!--简历列表-->
-    <div class="content">
+    <div class="content content-p">
       <div class="jianli"@click="toUrl('xuexiaoxiangqing')">
         <div class="touxiang">
           <img src="../../../static/images/bj.jpg"/>
@@ -61,7 +61,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/xiaoyouhui.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

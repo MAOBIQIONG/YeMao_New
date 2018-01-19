@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div class="bg p-fixed">
     <div class="top">
       <div class="search">
         <div class="search-input">
@@ -17,7 +17,7 @@
         <tab-item class="vux-center" key="1">订单</tab-item>
       </tab>
     </div>
-    <div class="content">
+    <div class="content content-p">
         <designers :is="index==0?'designers':'orders'" :value="searchValue"></designers> <!-- keep-alive -->
     </div>
   </div>
@@ -79,11 +79,10 @@
 <style lang="less" scoped>
   @import "../../../static/css/index/search-jieguo.css";
   .content{
-    margin-top:0.5rem;
-    padding-bottom: 2rem;
+    width:7.5rem;
   }
   .top{
-    height: 1.6rem;
+    height:0.8rem;
   }
   .tabs{
     position: fixed;

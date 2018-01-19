@@ -6,7 +6,7 @@
       <span>评论详情</span>
     </div>
     <!--评论详情-->
-    <div class="content">
+    <div class="content content-p">
       <div class="pinlunlist">
         <div class="top-pinlun">
           <div class="tp-left">
@@ -72,7 +72,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/pinlunxiangqin.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

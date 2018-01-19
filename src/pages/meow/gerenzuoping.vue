@@ -6,7 +6,7 @@
       <span>作品展示</span>
     </div>
     <!--作品展示-->
-    <div class="content">
+    <div class="content content-p">
         <div class="tupianlist">
           <img class="previewer-demo-img" v-for="(item, index) in list" :src="item.src" width="100" @click="show(index)">
           <div v-transfer-dom>
@@ -90,9 +90,6 @@
   }
 </script>
 <style scoped>
-  .content{
-    padding-top: 1.2rem;
-  }
   .tupianlist{
     width: 7.3rem;
     margin: auto;

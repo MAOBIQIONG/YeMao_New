@@ -1,5 +1,5 @@
 <template>
-  <div class="myorder-employer">
+  <div class="myorder-employer p-fixed">
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
       <span>我的订单</span>

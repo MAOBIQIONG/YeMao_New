@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
     </div>
     <!--  喵喵列表-->
-    <div class="content">
+    <div class="content content-p">
        <scroller
       v-model="pullUpDownStatus"
       :height="height"
@@ -505,9 +505,6 @@
       background-repeat: no-repeat;
       background-position:center center;
       background-size: cover
-  }
-  .content{
-    padding-top: 1.2rem;
   }
   .penyouxiangqing{
     position: fixed;

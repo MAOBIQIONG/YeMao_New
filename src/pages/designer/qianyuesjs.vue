@@ -6,7 +6,7 @@
       <span>签约设计师</span>
       <div class="header-right" v-tap="{methods:submit}">提交</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
@@ -165,8 +165,5 @@
     background: white;
     outline: medium;
     overflow: hidden;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

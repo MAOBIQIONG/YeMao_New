@@ -7,7 +7,7 @@
       <div class="header-right"@click="toUrl('gongzuojinli')">下一步</div>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
@@ -197,8 +197,5 @@
   @import '../../../static/css/meow/tianxiejianli.css';
   .shijian{
     width: 1.9rem;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

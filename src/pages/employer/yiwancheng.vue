@@ -5,7 +5,7 @@
       <span>订单详情</span>
     </div>
     <!--主体内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="dcl-content">
         <div class="dcl-top">
           <img src="../../../static/images/employer/ywc.png" />

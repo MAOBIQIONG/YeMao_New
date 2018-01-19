@@ -5,7 +5,7 @@
       <span>收藏订单</span>
     </div>
     <!--收藏设计师-->
-    <div class="content">
+    <div class="content content-p">
       <scroller
         v-model="pullUpDownStatus"
         :height="height"
@@ -315,8 +315,5 @@
     line-height: 0.9rem;
     color: #9e9e9e;
     margin-right: 0.3rem;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

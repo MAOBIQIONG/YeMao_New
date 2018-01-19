@@ -5,7 +5,7 @@
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
       <span>系统通知</span>
     </div>
-    <div class="xiaoxi-content">
+    <div class="xiaoxi-content content-p">
       <div class="xiaoxi-list">
         <div class="xl-time">2017-09-27 08:29</div>
         <div class="xl-content">

@@ -4,7 +4,7 @@
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--主体内容-->
       <div class="dcl-content">
         <div class="dcl-top">

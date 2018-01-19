@@ -6,7 +6,7 @@
       <span>个人简介</span>
       <div class="header-right" v-tap="{ methods:submit }">确定</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--留言-->
       <div class="pc-shuru">
         <textarea v-model="user.description" class="area" maxlength="100" placeholder="一句话描述一下自己吧"></textarea>
@@ -118,7 +118,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/jianjiexiugai.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

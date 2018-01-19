@@ -6,7 +6,7 @@
       <div class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
        <div class="fb-content">
       <div class="xmlx">
         <div class="xmlx-left">
@@ -368,8 +368,5 @@
   .demo5-item-selected {
     background: #f65aa6;
     color:#fff;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

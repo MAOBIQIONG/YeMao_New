@@ -8,7 +8,7 @@
         <div class="hongdian"></div>
       </div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="top-menu">
         <!--模块-->
         <div class="mokuai">
@@ -164,13 +164,11 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/designer.css';
-
   .designer {
     background-color: #f2f2f2;
     width: 100%;
     position: fixed;
   }
-
   .header .header-right .hongdian {
     width: 0.1rem;
     height: 0.1rem;
@@ -180,7 +178,6 @@
     right: 0rem;
     top: 0.1rem;
   }
-
   .sx-cont .area {
     position: absolute;
     width: 100%;
@@ -190,7 +187,6 @@
     z-index: 999;
     display: none;
   }
-
   .sx-cont .area ul li {
     width: 100%;
     height: 0.8rem;
@@ -221,7 +217,4 @@
   .on {
     display: block !important;
   }
-.content{
-  padding-top: 1.2rem;
-}
 </style>

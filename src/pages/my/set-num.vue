@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>更换手机号</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="gh-sjh">
         <div class="list">
           <div class="left"><span>旧手机号码：</span></div>
@@ -64,7 +64,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/set-num.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

@@ -7,7 +7,7 @@
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->
-    <div class="content">
+    <div class="content content-p">
       <scroller
         v-model="pullUpDownStatus"
         :height="height"
@@ -264,9 +264,6 @@
   @import '../../../static/css/meow/shouchang-wenda.css';
   .weida-list{
       margin-top:0.2rem;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>
 <style>

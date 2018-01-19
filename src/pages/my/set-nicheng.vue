@@ -6,7 +6,7 @@
       <span>修改昵称</span>
       <div class="header-right"@click="submit">确定</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="ymm">
         <div class="left"><span>昵称</span></div>
         <div class="right"><input type="text" placeholder="输入新昵称"/></div>
@@ -49,7 +49,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/set-nichen.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

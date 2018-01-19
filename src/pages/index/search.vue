@@ -10,7 +10,7 @@
       </div>
       <span @click="goback">取消</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--热门搜索-->
       <div class="rmsearch">
         <div class="search-rm">
@@ -149,8 +149,5 @@
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
-  }
-  .content{
-    margin-top: 1.3rem;
   }
 </style>

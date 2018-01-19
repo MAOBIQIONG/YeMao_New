@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>明细</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!-- 上拉加载 -->
       <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
         <div>
@@ -168,9 +168,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/shouzhiminxi.css';
-  .content{
-    padding-top: 1.2rem;
-  }
   .szmx{
     position: fixed;
   }

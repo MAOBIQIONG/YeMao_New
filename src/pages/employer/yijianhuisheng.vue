@@ -5,7 +5,7 @@
       <span>一键会审</span>
       <div class="header-right">提交</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
        <div class="set-content">
       <!--留言-->
       <div class="pc-shuru">
@@ -55,7 +55,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/yijianhuisheng.css";
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

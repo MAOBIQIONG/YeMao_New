@@ -5,7 +5,7 @@
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <div class="header-right" v-tap="{methods:toUrl, pagename:'xiugaigerenxinxi'}">设置</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--设计师基本信息模块-->
       <div class="xinximokuai">
         <div class="ximk-top">
@@ -291,8 +291,5 @@
     color: #999;
     text-align: center;
     padding: .25rem;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

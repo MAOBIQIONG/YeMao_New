@@ -6,7 +6,7 @@
       <div class="header-right">完成</div>
     </div>
     <!--评价内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="pj-content">
         <div class="pc-top">
           <div class="pt-tu"><img src="../../../static/images/bj.jpg"></div>
@@ -88,7 +88,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/order-pingjia.css";
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

@@ -6,7 +6,7 @@
       <span>平台认证</span>
       <div class="header-right" v-tap="{methods:submit}">下一步</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--流程-->
       <div class="banner">
          <img src="../../../static/images/designer/renzheng_02.png"/>
@@ -165,7 +165,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/pingtairenzheng.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

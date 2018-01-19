@@ -7,7 +7,7 @@
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->
-    <div class="content">
+    <div class="content content-p">
         <scroller
         v-model="pullUpDownStatus"
         :height="height"
@@ -274,7 +274,6 @@ export default {
   }
   .content{
     width:7.5rem;
-    padding-top: 1.2rem;
   }
   .scweida{
     position: fixed;

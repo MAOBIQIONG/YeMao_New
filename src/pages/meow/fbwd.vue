@@ -6,7 +6,7 @@
       <span>发布问题</span>
       <div class="header-right" @click="submit">完成</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="xgnc">
         <div class="left"><input v-model="question.title" type="text" maxlength="20" placeholder="标题（最多20字）" class="btname" ref="title"></div>
       </div>
@@ -126,8 +126,5 @@
   @import '../../../static/css/meow/fbwd.css';
   .fbwd{
     position: fixed;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

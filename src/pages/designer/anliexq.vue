@@ -7,7 +7,7 @@
       <div class="header-right" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
     </div>
     <!--详情内容-->
-    <div class="content">
+    <div class="content content-p">
       <scroller
         v-model="pullUpDownStatus"
         :height="height"
@@ -449,8 +449,5 @@
   }
   .anlie{
     position: fixed;
-  }
-  .content {
-    padding-top: 1.2rem;
   }
 </style>

@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>收藏专辑</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--设计师专辑-->
       <div class="sjszj">
         <div class="sjszj-top">
@@ -143,7 +143,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-shouchang.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

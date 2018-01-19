@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>点赞列表</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <div class="dzlist">
         <div class="left"></div>
         <div class="right">设计师昵称</div>
@@ -56,7 +56,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/dianzhan.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

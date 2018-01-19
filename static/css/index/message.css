@@ -1,12 +1,10 @@
 
 .header {
-  position: relative;
   width: 100%;
   color: #f65aa6;
   font-size: 0.28rem;
   text-align: center;
-  border-bottom: 1px solid #CCCCCC;
-  overflow: hidden;
+
 }
 .header .daohang {
   width: 2.84rem;

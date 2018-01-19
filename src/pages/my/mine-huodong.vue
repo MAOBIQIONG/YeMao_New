@@ -6,7 +6,7 @@
       <span>参与的活动</span>
     </div>
     <!--活动列表-->
-    <div class="content">
+    <div class="content content-p">
       <div class="hd-list"@click="toUrl('haibao')">
         <div class="hd-top">
           <img src="../../../static/images/bj.jpg">
@@ -54,7 +54,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-huodong.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

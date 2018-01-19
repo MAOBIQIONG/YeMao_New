@@ -4,7 +4,7 @@
       <div class="back" @click="goback"></div>
       <div class="title">{{imgIndex+1}}/{{imgList.length}}</div>
     </div>
-    <div class="content">
+    <div class="content content-p">
        <swiper height="8rem" class="swiper-self" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange" :show-dots="false"></swiper>
     </div>
   </div>
@@ -46,9 +46,6 @@
 </script>
 
 <style scoped>
-  .content{
-    padding-top: 1.2rem;
-  }
   .swipe-box{
     display:-webkit-box;
     font-size: 0.5rem;

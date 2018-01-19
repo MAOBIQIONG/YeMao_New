@@ -6,7 +6,7 @@
       <div class="header-right"@click="goback">完成</div>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="cgzt">
         <div class="tupiao">
           <img src="../../../static/images/designer/txcg.png" />
@@ -42,7 +42,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/tixianchenggong.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

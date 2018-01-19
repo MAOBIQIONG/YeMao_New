@@ -5,7 +5,7 @@
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>通讯录好友</span>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--搜索-->
       <div class="shousuo">
         <div class="sskuang">
@@ -82,7 +82,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/tongxunluhaoyou.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

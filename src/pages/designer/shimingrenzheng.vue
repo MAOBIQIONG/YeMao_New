@@ -7,7 +7,7 @@
       <div class="header-right" v-tap="{methods:submit}">提交</div>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
@@ -214,9 +214,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/shimingrenzheng.css';
-  .content{
-    padding-top: 1.2rem;
-  }
   .smrz{
     background: #f2f2f2;
   }

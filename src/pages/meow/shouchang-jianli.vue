@@ -7,7 +7,7 @@
       <div class="header-right"@click="toUrl('tianxiejianli')">发布</div>
     </div>
     <!--简历列表-->
-    <div class="content">
+    <div class="content content-p">
       <div class="jianli"@click="toUrl('minejianli')">
         <div class="touxiang">
           <img src="../../../static/images/bj.jpg"/>
@@ -61,7 +61,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/shouchang-jianli.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

@@ -6,7 +6,7 @@
       <span>我的评论</span>
     </div>
     <!--评论列表-->
-    <div class="content">
+    <div class="content content-p">
       <swipeout class="vux-1px-tb">
         <swipeout-item transition-mode="follow" v-for="i in 3" :key="i">
           <div slot="right-menu">
@@ -66,7 +66,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-pinlun.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

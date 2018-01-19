@@ -6,7 +6,7 @@
       <span>{{title}}</span>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
       <!-- 上拉加载 -->
       <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
         <div>
@@ -176,7 +176,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/anlielist.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

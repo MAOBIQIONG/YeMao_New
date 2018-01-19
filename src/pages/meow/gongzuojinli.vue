@@ -7,7 +7,7 @@
       <div class="header-right"@click="toUrl('qiwanggongzuo')">下一步</div>
     </div>
     <!--编辑工作经历-->
-    <div class="content">
+    <div class="content content-p">
       <div class="gzjl">
         <div class="rzsj">
           <div class="rzsj-left">
@@ -52,7 +52,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/gongzuojingli.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

@@ -7,7 +7,7 @@
       <div class="header-right" v-tap="{methods:submit}">下一步</div>
     </div>
     <!--发布订单内容-->
-    <div class="content wrz">
+    <div class="content wrz content-p">
       <!--流程-->
       <div class="banner">
          <img src="../../../static/images/designer/renzheng_01.png"/>
@@ -203,7 +203,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/pingtairenzheng.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

@@ -5,7 +5,7 @@
       <span>{{title}}</span>
     </div>
     <!--雇主列表-->
-    <div class="content">
+    <div class="content content-p">
       <!-- 上拉加载 -->
       <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100">
         <div>
@@ -204,7 +204,6 @@
   .content{
     width: 100%;
     display: block;
-    margin-top: 1.2rem;
     margin-bottom: 1rem;
     background: #f2f2f2;
   }

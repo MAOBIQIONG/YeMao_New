@@ -6,7 +6,7 @@
       <div class="header-right" v-tap="{ methods:submit }" >确定</div>
     </div>
     <!--  信息表-->
-    <div class="content">
+    <div class="content content-p">
       <div class="oq-content">
         <div class="oq-list">
           <div class="oq-left"><span>我的报价</span></div>
@@ -109,7 +109,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/order-qiangdan.css";
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

@@ -6,7 +6,7 @@
       <span>人才详情</span>
       <div class="header-right"></div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--基本信息-->
       <div class="jbxx">
         <div class="touxiang">
@@ -211,8 +211,5 @@
     background: url("../../../static/images/xinghove.png") no-repeat;
     background-size: 0.6rem 0.6rem;
     background-position: center right;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

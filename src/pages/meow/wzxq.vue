@@ -5,7 +5,7 @@
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
       <div class="header-right"><img src="../../../static/images/fx1.png"/></div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <scroller
         v-model="pullUpDownStatus"
         :height="height"
@@ -450,9 +450,7 @@
   .pinglun {
     padding-bottom: 0;
   }
-
   .content {
-    padding-top: 1.2rem;
     background: white;
   }
   .wzxq{

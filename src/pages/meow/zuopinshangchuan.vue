@@ -7,7 +7,7 @@
       <div class="header-right"@click="toUrl('ddsh')">完成</div>
     </div>
     <!--编辑工作经历-->
-    <div class="content">
+    <div class="content content-p">
       <!--图片上传-->
       <div class="sctp">
         <div class="st-bottom">
@@ -37,7 +37,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/zuopinshangchuan.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

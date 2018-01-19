@@ -9,7 +9,7 @@
         </ul>
       </div>
     </div>
-    <div class="msg-content">
+    <div class="msg-content content-p">
       <div class="tab_box">
         <!--消息列表-->
         <div class="xiaoxi">

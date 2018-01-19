@@ -5,7 +5,7 @@
       <span>订单详情</span>
     </div>
     <!--主体内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="dcl-content">
         <div class="dcl-top">
           <img src="../../../static/images/employer/djf.png" />
@@ -125,7 +125,7 @@
       zhishu () {
         var neirong = $(".neirong").text();
         $(".neirong").each(function() {
-          var maxwidth = 80;
+          var maxwidth = 70;
           if($(this).text().length > maxwidth) {
             $(this).text($(this).text().substring(0, maxwidth));
             $(this).html($(this).html() + '...');
@@ -137,7 +137,7 @@
           if(flag == true) {
             $(this).html('点击查看更多')
             $(".neirong").each(function() {
-              let maxwidth = 80;
+              let maxwidth = 70;
               if($(this).text().length > maxwidth) {
                 $(this).text($(this).text().substring(0, maxwidth));
                 $(this).html($(this).html() + '...');

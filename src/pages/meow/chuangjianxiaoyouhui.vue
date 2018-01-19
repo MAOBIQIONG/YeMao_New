@@ -7,7 +7,7 @@
       <div class="header-right">提交</div>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
@@ -63,7 +63,4 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>

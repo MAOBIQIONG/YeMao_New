@@ -1,11 +1,10 @@
 
-.fenlei-list {
+.content {
   margin-left: 0.24rem;
-  padding-top: 1.2rem;
   font-size: 0.24rem;
 }
 
-.fenlei-list .fl-box {
+.content .fl-box {
   position: relative;
   float: left;
   width: 2.2rem;
@@ -20,11 +19,11 @@
   overflow: hidden;
 }
 
-.fenlei-list .fl-box img {
+.content .fl-box img {
   width: 100%;
 }
 
-.fenlei-list .fl-box .zhezhao {
+.content .fl-box .zhezhao {
   /*background: rgba(0, 0, 0, 0.5);*/
   position: absolute;
   top: 0px;

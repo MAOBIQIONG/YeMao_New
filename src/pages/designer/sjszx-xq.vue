@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
     </div>
-    <div class="content">
+    <div class="content content-p">
       <!--设计师基本信息模块-->
       <div class="xinximokuai">
         <div class="ximk-top">
@@ -291,8 +291,5 @@
     color: #999;
     text-align: center;
     padding: .25rem;
-  }
-  .content{
-    padding-top: 1.2rem;
   }
 </style>

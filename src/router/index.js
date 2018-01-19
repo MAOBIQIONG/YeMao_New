@@ -192,18 +192,6 @@ const routeArray = [
     name: 'emporderparts',
     component: emporderparts
   },
-  {
-    path: '/vuxtest',
-    name: 'vuxtest',
-    component: vuxtest,
-    meta: { keepAlive: true }
-  },
-  {
-    path: '/vuxswiper',
-    name: 'vuxswiper',
-    component: vuxswiper,
-    meta: { keepAlive: true }
-  },
   //meow模块
   { path: '/gerenzuoping',
     name: 'gerenzuoping',

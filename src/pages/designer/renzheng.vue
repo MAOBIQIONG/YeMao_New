@@ -6,7 +6,7 @@
       <span>认证中心</span>
     </div>
     <!--发布订单内容-->
-    <div class="content">
+    <div class="content content-p">
       <div class="liebiao">
         <div class="list" v-tap="{methods:toSmrz}">
           <div class="tupiao sm"><img src="../../../static/images/designer/sm.png" /></div>
@@ -107,7 +107,4 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/renzheng.css';
-  .content{
-    padding-top: 1.2rem;
-  }
 </style>
