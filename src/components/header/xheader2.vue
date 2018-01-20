@@ -49,9 +49,6 @@
 </script>
 
 <style>
-  .header-box{
-    height: .92rem;
-  }
   .vux-header{
     width: 100%;
     background-color: #fff !important;
