@@ -63,13 +63,22 @@
     height: 100%;
     top: 0;
     position: absolute;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
     /*backface-visibility: hidden;*/
     /*perspective: 1000;*/
+    backface-visibility: hidden;
+    -moz-backface-visibility: hidden; /* Firefox */
   }
 
   .vux-pop-out-enter {
     opacity: 0;
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+    -moz-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
   }
 
   .vux-pop-out-leave-active {
@@ -80,7 +89,12 @@
 
   .vux-pop-in-enter {
     opacity: 0;
-    transform: translate3d(100%, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+    -moz-transform: translate3d(-100%, 0, 0);
+    -ms-transform: translate3d(-100%, 0, 0);
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
   }
 
   .vux-pop-in-leave-active {
