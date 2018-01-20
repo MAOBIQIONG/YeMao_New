@@ -21,11 +21,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-<<<<<<< Updated upstream
     host:process.env.HOST, // can be overwritten by process.env.HOST
-=======
-    host: process.env.HOST, // can be overwritten by process.env.HOST
->>>>>>> Stashed changes
     port: 8090, // can be overwritten by process.env.HOST, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
