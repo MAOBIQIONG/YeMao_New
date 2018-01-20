@@ -34,9 +34,6 @@
   color: #999999;
   background: white;
   outline: medium;
-  appearance:none;
-  -moz-appearance:none;
-  -webkit-appearance: none;
 }
 
 .fb-content .xmbt {

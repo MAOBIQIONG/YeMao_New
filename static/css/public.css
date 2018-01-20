@@ -28,8 +28,14 @@ ul {
   padding: 0;
   list-style: none;
 }
+/*解决手机ios中 select input textarea 在手机端中会出现阴影*/
 input{
-  -webkit-tap-highlight-color:transparent !important;
+  -webkit-tap-highlight-color:rgba(255,255,255,0)
+}
+textarea,select{
+  -webkit-tap-highlight-color:rgba(255,255,255,0);
+  -moz-appearance:none;
+  -webkit-appearance: none;
 }
 /*沉浸式样式*/
 .content-p{

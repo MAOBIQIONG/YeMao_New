@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 上拉加载 -->
-    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
+    <scroller lock-x height="-60px" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
       <div>
         <!--雇主列表-->
         <div class="content" style="margin-top: 0rem;padding-top: 0rem;">

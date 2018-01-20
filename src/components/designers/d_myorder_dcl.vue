@@ -35,7 +35,7 @@
                             <template v-else >
                                 <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
                                 <div class="db-djs" v-else>等待设计师完善订单</div>
-                            </template>                           
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -58,9 +58,9 @@
                                 </div>
                                 <div class="db-qrdd" v-else @click="improveTheOrder(item._id)">完善订单</div>
                             </template>
-                            
+
                             <div class="db-qrdd" v-else>抢单失败</div>
-                        </template>              
+                        </template>
                     </div>
                 </div>
             </div>
@@ -286,7 +286,7 @@ export default {
                     for (var k in d){
                         d[k] = d[k]
                     }
-                }              
+                }
                 return d;
             };
             return {
@@ -300,11 +300,11 @@ export default {
             let _self = this;
             let result = [];
             if(common.isArray(o1.arr) && common.isArray(o2.arr)){
-                for(let r1 of o1.arr){  
+                for(let r1 of o1.arr){
                     r1.sub = new Array();
-                    for(let r2 of o2.arr){                
+                    for(let r2 of o2.arr){
                         if(r1[o1.field]==r2[o2.field]){
-                            // console.log(r1[o1.field],r2[o2.field]);            
+                            // console.log(r1[o1.field],r2[o2.field]);
                             r1.sub.push(r2);
                         }
                     }
@@ -349,7 +349,7 @@ export default {
              // 订单
             let orderList = data.orderList || [];
 
-            console.log('mergeList',orderList);   
+            console.log('mergeList',orderList);
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.orderList = orderList;

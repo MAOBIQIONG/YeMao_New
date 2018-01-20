@@ -1,13 +1,13 @@
 <template>
   <div class="">
-    <div class="header">
+    <div class="header p-static">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>{{title}}</span>
     </div>
     <!--雇主列表-->
-    <div class="content content-p">
+    <div class="content">
       <!-- 上拉加载 -->
-      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100">
+      <scroller lock-x height="-30px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100">
         <div>
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
