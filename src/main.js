@@ -10,6 +10,7 @@ import $ from '../static/js/jquery-3.2.1.min'
 import store from './vuex/store'
 import common from '../static/js/common.js'
 import uploadImg from '../static/js/uploadImg.js'
+import uploadImg2 from '../static/js/uploadImg-more.js'
 // 引用API文件
 import api from './api/api.js'
 // 全局引入iconfont.css
@@ -28,6 +29,7 @@ window.jQuery = $
 window.$ = $
 window.common = common
 window.uploadImg = uploadImg
+window.uploadImg2 = uploadImg2
 
 router.beforeEach(function (to, from, next) {
   // 如果isBack为true时，证明是用户点击了回退，执行slide-right动画

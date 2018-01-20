@@ -9,7 +9,7 @@
       <div class="ddxq">
         <div class="ddxq-top">
           <div class="ddxq-img" @click="toViewImgs(order.imgs)">
-            <img v-if="imgSize>0" :src='order.imgs[0]'>
+            <img v-if="imgSize>0" :src='checkImg(order.imgs[0])'>
             <div class="num">{{imgSize}}</div>
           </div>
           <div class="ddxq-jianjie">
@@ -217,6 +217,9 @@
       toViewImgs: function (imgs) {
         common.setStorage("viewImgs",imgs);
         this.$router.push({name:'emporderimgs',query:{id:this.order_id}})
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
       },
       // 抢单
       toGrabOrder () {

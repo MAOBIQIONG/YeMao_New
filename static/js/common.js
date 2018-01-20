@@ -1,4 +1,4 @@
-var root = 'http://47.100.34.193:3000/';
+var root = 'http://101.132.96.90:8080/upload/img/';
 const common = {
   /*****************1.0、验证(返回值:boolean)*******************/
   /**
@@ -306,24 +306,38 @@ const common = {
     }
     if( common.isNull(path) == true ){
       path = local;
-    }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0  ) {
+    }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
       path = root + path;
     }
     return path;
   },
-    uuid:function () {
-        var s = [];
-        var hexDigits = "0123456789abcdef";
-        for (var i = 0; i < 36; i++) {
-        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-        }
-        s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-        s[8] = s[13] = s[18] = s[23] = "-";
 
-        var uuid = s.join("");
-        return uuid;
-    },
+  // 默认图片
+  getDefultImg: function (path,local){
+    if( common.isNull(local) == true ){
+      local = './static/images/bj.jpg';
+    }
+    if( common.isNull(path) == true ){
+      path = local;
+    }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
+      path = root + path;
+    }
+    return path;
+  },
+
+  uuid:function () {
+      var s = [];
+      var hexDigits = "0123456789abcdef";
+      for (var i = 0; i < 36; i++) {
+      s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+      }
+      s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
+      s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+      s[8] = s[13] = s[18] = s[23] = "-";
+
+      var uuid = s.join("");
+      return uuid;
+  },
   // 集合
   collections:{
     users:'users',                                 // 用户

@@ -111,12 +111,11 @@
       <div class="sctp">
         <div class="sc-top">上传图片</div>
         <div class="img-body" v-for="img in imgList">
-          <img :src="img.src" />
+          <img :src="getDefultImg(img.src)" />
         </div>
         <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
           <img src="../../../static/images/employer/j.png" />
         </div>
-        <imageUpload :img-arr.sync="imgList"></imageUpload>
       </div>
     </div>
     </div>
@@ -126,9 +125,9 @@
 </template>
 
 <script>
-  import imageUpload from '../../components/upload/image-upload.vue'
   import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast } from 'vux'
   import store from '@/vuex/store'
+  import uploadImg from "../../../static/js/uploadImg";
 
   export default {
     components: {
@@ -137,7 +136,6 @@
       Group,
       Checker,
       CheckerItem,
-      imageUpload,
       Toast
     },
     store,
@@ -207,7 +205,8 @@
         var _self = this;
         uploadImg.init({
           callback:function (path) {
-            _self.imgList.push(path);
+            console.log("path："+path)
+            _self.imgList.push({src:path});
           }
         });
       },
@@ -215,6 +214,9 @@
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
+      },
+      getDefultImg(path){
+        return common.getAvatar(path)
       },
       // 地区
       getName (value) {
@@ -284,8 +286,6 @@
             },
         };
 
-        // console.log('before improve');
-        // return;
         _self.$axios.post('/mongoApi', {
             params: params
         }, response => {
@@ -306,7 +306,7 @@
                 return false
             }
         }
-       
+
         if( common.isNull(_self.subParams.project_type) == true ){
           _self.showToast("请选择项目类型!");
           return false
@@ -358,7 +358,12 @@
         var _self = this;
         //验证输入
         if(!_self.validate()) return;
-
+        // 图片
+        if( _self.imgList.length > 0 ){
+          _self.imgList.forEach(function (item,index) {
+            _self.subParams.imgs.push(item.src);
+          })
+        }
         var params = {
         //批量添加
           interfaceId:common.interfaceIds.addOrders,

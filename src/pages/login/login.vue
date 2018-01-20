@@ -196,7 +196,6 @@
         }, response => {
           var data = response.data;
           if( data ){
-            console.log("data:"+JSON.stringify(data))
             if( data.length == 1 ){
               common.setStorage("userInfo",data[0]);
               this.$store.state.pageIndex = 0;

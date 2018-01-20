@@ -16,7 +16,7 @@
       <div class="sctp">
         <div class="img-upload">
           <div class="img" v-for="img in params.imgs" :style="{backgroundImage: 'url(' + img + ')'}"></div>
-          <div class="upload-handle" v-if="params.imgs.length<9"></div>
+          <div class="upload-handle" v-if="params.imgs.length<9" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
     </div>
@@ -67,9 +67,10 @@
       triggerFile(){
         console.log("trigger:")
         var _self = this;
-        uploadImg.init({
+        uploadImg2.init({
           callback:function (path) {
-            _self.imgList.push(path);
+            console.log("path:"+path)
+            _self.imgs.push(path);
           }
         });
       },

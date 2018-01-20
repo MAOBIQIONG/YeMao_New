@@ -31,7 +31,7 @@
       var _self = this;
       var imgs = common.getObjStorage("viewImgs")||[];
       imgs.forEach(function (item,i) {
-        _self.imgList.push({"img":item})
+        _self.imgList.push({"img": _self.checkImg(item)})
       })
     },
     methods: {
@@ -40,7 +40,10 @@
       },
       onIndexChange (index) {
         this.imgIndex = index
-      }
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },
     },
   }
 </script>

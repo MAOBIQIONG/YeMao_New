@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png"/></div>
-      <div class="header-right"@click="toUrl('zhuche')">注册</div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+      <div class="header-right" @click="toUrl('zhuche')">注册</div>
     </div>
     <div class="log">
       <div class="log-img">
@@ -12,7 +12,7 @@
     <div class="login-shuru">
       <p class="tishi"></p>
       <div class="ls-shouji">
-        <input type="text"class="shouji" placeholder="手机号"/>
+        <input v-model="phone" type="text"class="shouji" placeholder="手机号"/>
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
@@ -32,7 +32,7 @@
   export default {
     data () {
       return {
-
+        phone:"",
       }
     },
     mounted:function(){
@@ -117,6 +117,7 @@
       },
       //判断输入框不能为空
       login(anniu, shouji, valp) {
+        var obj=this;
         $(anniu).click(function () {
           var username = $.trim($(shouji).val()); //获取到手机号
           var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
@@ -125,7 +126,6 @@
             let v = $(this).val();
             if (v == "") {
               $('.tishi').text("输入框不能为空");
-
             } else if (!myreg.test($(shouji).val())) {
               $('.tishi').text('请输入有效的手机号码！');
               return false;
@@ -134,10 +134,41 @@
               return false;
             } else {
               $('.tishi').text("");
+              obj.submit();
             }
           })
         })
-      }
+      },
+
+      submit () {
+        var _self = this;
+        var params = {
+          interfaceId:common.interfaceIds.queryData,
+          coll:'users',
+          where:{
+            "phone":_self.phone
+          }
+        }
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data;
+          if( data ){
+            if( data.length == 1 ){
+              common.setStorage("userInfo",data[0]);
+              this.$store.state.pageIndex = 0;
+              _self.toUrl('index');
+            }else if( data.length == 0 ){
+              // _self.showToast("用户不存在！")
+            }else if( data.length > 1 ){
+              // _self.showToast("帐户重复，请联系管理员！")
+            }
+          }else{
+            // _self.showToast("用户不存在！")
+          }
+        })
+      },
+
     }
   }
 </script>
