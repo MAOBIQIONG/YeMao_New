@@ -167,6 +167,7 @@
           project_state:0,
           imgs:[]
         },
+        is_submit: false,
         showMark:false,
         showMsg:"",
         addressData: ChinaAddressV4Data,
@@ -293,71 +294,80 @@
             var data = response.data;
         });
     },
-    validate(improve){
-        var _self = this;
-        if(improve){
-            if( common.isNull(_self.userInfo) == true ){
-                _self.showToast("未成功获取用户信息!");
-                return false
-            }
-        }else {
-            if( common.isNull(_self.subParams.user_id) == true ){
-                _self.showToast("未成功获取用户信息!");
-                return false
-            }
-        }
 
-        if( common.isNull(_self.subParams.project_type) == true ){
-          _self.showToast("请选择项目类型!");
-          return false
-        }
-        if( common.isNull(_self.subParams.project_region) == true ){
-          _self.showToast("请选择项目地区!");
-          return false
-        }
-        if( common.isNull(_self.subParams.project_title) == true ){
-          _self.showToast("请输入项目标题!");
-          return false
-        }
-        if( common.isNull(_self.subParams.project_describe) == true ){
-          _self.showToast("请输入项目描述!");
-          return false
-        }
-        if( common.isNull(_self.subParams.project_budget) == true ){
-          _self.showToast("请输入预算金额!");
-          return false
-        }
-        if( common.isNull(_self.subParams.project_unit) == true ){
-          _self.showToast("请输入设计单位!");
-          return false
-        }
-        if( common.isNull(_self.subParams.project_area) == true ){
-          _self.showToast("请选择设计面积!");
-          return false
-        }
-        if( _self.subParams.project_depth.length == 0 ){
-          _self.showToast("请选择设计深度!");
-          return false
-        }
-        if( common.isNull(_self.subParams.project_workHours) == true ){
-          _self.showToast("请输入工时!");
-          return false
-        }
-        if( common.dateCompare(_self.subParams.project_deadLine,_self.subParams.project_startTime) == false ){
-          _self.showToast("开始时间不能小于抢单截止日期!");
-          return false
-        }
-        if( common.dateCompare(_self.subParams.project_startTime,_self.subParams.project_endTime) == false ){
-          _self.showToast("截止时间不能小于开始日期!");
-          return false
-        }
-        return true;
+    validate(improve){
+      var _self = this;
+      if(improve){
+          if( common.isNull(_self.userInfo) == true ){
+              _self.showToast("未成功获取用户信息!");
+              return false
+          }
+      }else {
+          if( common.isNull(_self.subParams.user_id) == true ){
+              _self.showToast("未成功获取用户信息!");
+              return false
+          }
+      }
+
+      if( common.isNull(_self.subParams.project_type) == true ){
+        _self.showToast("请选择项目类型!");
+        return false
+      }
+      if( common.isNull(_self.subParams.project_region) == true ){
+        _self.showToast("请选择项目地区!");
+        return false
+      }
+      if( common.isNull(_self.subParams.project_title) == true ){
+        _self.showToast("请输入项目标题!");
+        return false
+      }
+      if( common.isNull(_self.subParams.project_describe) == true ){
+        _self.showToast("请输入项目描述!");
+        return false
+      }
+      if( common.isNull(_self.subParams.project_budget) == true ){
+        _self.showToast("请输入预算金额!");
+        return false
+      }
+      if( common.isNull(_self.subParams.project_unit) == true ){
+        _self.showToast("请输入设计单位!");
+        return false
+      }
+      if( common.isNull(_self.subParams.project_area) == true ){
+        _self.showToast("请选择设计面积!");
+        return false
+      }
+      if( _self.subParams.project_depth.length == 0 ){
+        _self.showToast("请选择设计深度!");
+        return false
+      }
+      if( common.isNull(_self.subParams.project_workHours) == true ){
+        _self.showToast("请输入工时!");
+        return false
+      }
+      if( common.dateCompare(_self.subParams.project_deadLine,_self.subParams.project_startTime) == false ){
+        _self.showToast("开始时间不能小于抢单截止日期!");
+        return false
+      }
+      if( common.dateCompare(_self.subParams.project_startTime,_self.subParams.project_endTime) == false ){
+        _self.showToast("截止时间不能小于开始日期!");
+        return false
+      }
+      return true;
     },
       submit(){
         console.log("submit:")
         var _self = this;
         //验证输入
         if(!_self.validate()) return;
+        // 避免多次点击提交按钮
+        if( _self.is_submit == true ) return;
+        _self.is_submit = true;
+        // 设置加载动画
+        _self.showLoad = true;
+        setTimeout(function () {
+          _self.showLoad = false;
+        },5000)
         // 图片
         if( _self.imgList.length > 0 ){
           _self.imgList.forEach(function (item,index) {
@@ -372,7 +382,11 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          // console.log(JSON.stringify(response))
+          // 取消加载动画
+          _self.showLoad = false;
+          // 提交标识
+          _self.is_submit = true;
+          // 返回数据
           var data = response.data;
           if( data && data.code == 200 ){
             this.$store.state.indexRefreshMark = 1;

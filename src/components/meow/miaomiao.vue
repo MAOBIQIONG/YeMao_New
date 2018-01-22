@@ -43,8 +43,7 @@
           <div class="sjse-list" v-for="(item,index) in meows" v-tap="{methods:toUrl,pagename:'pengyouquanxq',id:item._id}">
             <div class="sjs-top">
               <div class="st-touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',id:item.user_id}">
-                <!-- checkAvatar(item.user.img) -->
-                <img :src="item.user.img"/>
+                <img :src="checkAvatar(item.user.img)"/>
               </div>
               <div class="st-neirong">
                 <div class="sn-top">
@@ -67,7 +66,7 @@
             <div class="sjs-bottom">
               <ul>
                 <li v-for="(img, i) in item.imgs" v-tap="{methods:show,index:index,i:i}">
-                  <div class="previewer-img" :class="'previewer'+index" :style="'background-image:url('+img+')'"></div>
+                  <div class="previewer-img" :class="'previewer'+index" :style="'background-image:url('+checkImg(img)+')'"></div>
                 </li>
               </ul>
             </div>
@@ -225,7 +224,10 @@
       checkAvatar (path) {
         return common.getAvatar(path)
       },
-      //
+      checkImg (path) {
+        return common.getAvatar(path)
+      },
+      // 时间戳转日期
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
       },
@@ -250,7 +252,7 @@
         _self.options.previewer = '.previewer'+param.index;
         var imgs = _self.meows[param.index].imgs || [];
         imgs.forEach(function (img, j) {
-          _self.list.push({src:img,w:1200,h:700})
+          _self.list.push({src: _self.checkImg(img),w:1200,h:700})
         })
         _self.$refs.previewer.show(param.i)
         param.event.cancelBubble = true;

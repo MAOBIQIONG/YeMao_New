@@ -112,13 +112,20 @@
   *{
     margin:0;
   }
+  /**vux css重写 start**/
   /**confirm**/
   .weui-dialog__hd{
     padding: 0rem 1.6rem !important;
   }
-
+  /**scroll**/
   .xs-plugin-pulldown-container,.xs-plugin-pullup-container{
     font-size: 14px !important;
   }
+  /**loading**/
+  .vux-loading .weui-toast{
+    width: 3rem !important;
+    min-height: 3rem !important;
+  }
+  /**vux css重写 end**/
 
 </style>
