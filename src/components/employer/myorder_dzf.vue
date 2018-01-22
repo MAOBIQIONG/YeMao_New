@@ -20,7 +20,8 @@
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
-                        <img src=item.imgs[0] v-if="item.imgs.length>0">
+                        <img :src="item.imgs[0]" v-if="item.imgs.length>0">
+                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0">
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -52,7 +53,7 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
                         
-                        <div class="db-qrdd">支付</div>
+                        <div class="db-qrdd" @click="payOrder(item._id)">支付</div>
                     </div>
                 </div>
             </div>
@@ -119,6 +120,7 @@ export default {
         return {
             cancel_id:null,
             improve_id:null,
+            order_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -241,6 +243,49 @@ export default {
                         _self.renderAfterConfirmImprove();
                     } else {
                         _self.showToast('取消失败联系管理员');
+                    }
+                })
+        },
+        removeAnOrderRender(){
+            let _self = this;
+            let index = 0;
+            for (let r of _self.orderList) {
+                console.log(_self.orderList[index]);
+                if(r._id == _self.order_id){
+                    _self.orderList.splice(index,1);
+                }
+                index++
+            }
+        },
+        payOrder(order_id){
+            this.order_id = order_id;
+            this.pay();
+        },
+        pay(){
+            let _self = this;
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                coll:common.collections.orderList,
+                wheredata:{
+                    _id:_self.order_id
+                },
+                data:{
+                    $set: {
+                        project_state: 4, // 待交付
+                    }
+                }
+            };
+            console.log(params);
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.ok > 0 ){
+                        _self.showToast('支付成功！');
+                        _self.removeAnOrderRender();
+                    } else {
+                        _self.showToast('支付失败联系管理员');
                     }
                 })
         },
