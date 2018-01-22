@@ -3,14 +3,15 @@ import EXIF from './exif'
 import Qs from 'qs'
 
 const uploadImg2 ={
-	maxLen:9,                                   //最大上传数量
-	maxH:800,
-	maxW:800,
-  imgArr:[],                                  //图片数组
-  imgBase64:[],                               //图片base64格式数据
-	uploadPath:'appUploadImg/imgBase64',        //上传接口
-	callback:function(){},
-	successfun:function(){},
+	maxLen:9,                                   // 最大上传数量
+  maxH:800,                                   // 图片最大高度
+  maxW:800,                                   // 图片最大宽度
+  imgArr:[],                                  // 图片路径数组
+  imgBase64:[],                               // 图片base64格式数据
+	uploadPath:'appUploadImg/imgBase64',        // 上传接口
+	callback:function(){},                      // 选择图片后执行
+	successfun:function(){},                    // 上传图片后执行
+  loading:function(){},                       // 加载动画
 	//检测数据
 	isNull:function(ele){
 		if( ele != null && ele != undefined )
@@ -37,7 +38,9 @@ const uploadImg2 ={
     if( param && !uploadImg2.isNull(param.successfun) ){
       uploadImg2.successfun = param.successfun;
     }
-
+    if( param && !uploadImg2.isNull(param.loading) ){
+      uploadImg2.loading = param.loading;
+    }
 
     var a = [{
       title: "拍照"
@@ -68,13 +71,14 @@ const uploadImg2 ={
 
   //拍照
   getImage:function() {
-    window.alert("getImage:");
+    // window.alert("getImage:");
 		var c = plus.camera.getCamera();
 		c.captureImage(function(e) {
 			plus.io.resolveLocalFileSystemURL(e, function(entry) {
+			  uploadImg2.loading();// 执行加载动画
 				//图片
 				var s = entry.toLocalURL() + "?version=" + new Date().getTime();
-				uploadImg2.getOrientation(s,0); /*图片修复*/
+				uploadImg2.getOrientation(s,1); /*图片修复*/
 			}, function(e) {
 				console.log("读取拍照文件错误：" + e.message);
 			});
@@ -87,17 +91,18 @@ const uploadImg2 ={
 
 	//本地相册选择
 	galleryImgs:function() {
-    window.alert("galleryImgs:");
+    // window.alert("galleryImgs:");
 		plus.gallery.pick(function(e) {
 			var files = e.files;
 			if( files.length > uploadImg2.maxLen ){
         plus.nativeUI.alert("最多只能选择"+uploadImg2.maxLen+"张图片");
 			}else{
 				if( (uploadImg2.imgArr.length+files.length) <= uploadImg2.maxLen ){
+          uploadImg2.loading();// 执行加载动画
 					for (var i=0;i<files.length;i++) {
 						plus.io.resolveLocalFileSystemURL(files[i],function(entry){
 							//图片：entry.toLocalURL()
-							uploadImg2.getOrientation(entry.toLocalURL(),0); /*图片修复*/
+							uploadImg2.getOrientation(entry.toLocalURL(),1); /*图片修复*/
 						})
 					}
 				}else{
@@ -119,8 +124,6 @@ const uploadImg2 ={
 	},
 
 	getOrientation:function (imgPath,flag){
-    // window.alert("getOrientation:");
-		// console.log("imgPath = " + imgPath);
 		var Orientation = null;
 		var image = new Image();
 		image.src = imgPath;
@@ -131,15 +134,9 @@ const uploadImg2 ={
         Orientation = EXIF.getTag(this, 'Orientation');
         console.log("Orientation = " + Orientation);
         var imgData =  uploadImg2.getBase64ImageConvert(Orientation,image);
-        if( flag == 0 ){
-          var imgSuffix = imgPath.substr(imgPath.lastIndexOf("."));
-          var fileName = uploadImg2.getFileName(imgSuffix);
-          uploadImg2.saveBitmap(fileName,imgData);
-        }else{
-          uploadImg2.imgArr.push(imgPath);
-          uploadImg2.imgBase64.push({"filePath":imgPath,"base64Data":imgData});
-          uploadImg2.callback(imgPath);
-        }
+        uploadImg2.imgArr.push(imgPath);
+        uploadImg2.imgBase64.push({"filePath":imgPath,"base64Data":imgData});
+        uploadImg2.callback(imgPath);
       });
 		}
 	},
@@ -211,69 +208,33 @@ const uploadImg2 ={
     return base64.replace("data:image/png;base64,", "");
 	},
 
-	/**
-	 * 保存图片参数:
-	 * 1、
-	 * 2、base64Data：去除前缀
-	 * eg:
-	  iVBORw0KGgoAAAANSUhEUgAAABgAAAAsCAYAAAB/nHhDAAAABHNCSVQICAgIfAhkiAAAAAlwSF
-	  lzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwNC8yOC8xMqLz6JEAAAAcdEVYdFN
-	  vZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABJ0lEQVRYhe3Wv6rCMBQG8C/VN1AEd3HS
-	  zuYO3jr4knkY0UE62xTBcp9A8A0uHhc72CZp/lQQyZmT7xfSJKeMiPDOSt6aHoEIRKAbkLKioqiCr
-	  roWkLKi+51ARAhBlEAdXlcI0gLK8u8lPBRpAYvFjCUJUw72QZRbtFzOe0O0H7kvxHhM83yfhiJdF+
-	  2c5/utCTmdLnS93rQQs2mZQogN59lOdbrqmk7HmExGrZVYAU9kzXl2cEWsgSfys1r9Hk1TmogTAAB
-	  FcTFOaQJOr6mUlVO4E9B8n2zCrQHfcAAYmoKFEAPOs39dOGMMaTpXX5J6jGlTTSu3CQcsGk5IuBbo
-	  K1wJ6BqOT7gS0DUcn3AlALR7gW84YHGKiOAd3gn0UV/+6xiBCHwG8AByzMrOPKV7sAAAAABJRU5ErkJggg==
-	 * */
-	getFileName:function (suf) {
-	    var len = 32;
-	    var radix=16;//16进制
-	    var chars='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');var uuid=[],i;radix=radix||chars.length;if(len){for(i=0;i<len;i++)uuid[i]=chars[0|Math.random()*radix];}else{var r;uuid[8]=uuid[13]=uuid[18]=uuid[23]='-';uuid[14]='4';for(i=0;i<36;i++){if(!uuid[i]){r=0|Math.random()*16;uuid[i]=chars[(i==19)?(r&0x3)|0x8:r];}}}
-	    return uuid.join('')+suf;
-	},
-
-  // 保存图片至本地路径
-	rootPath:"_doc/yemao/cache/img/",
-	saveBitmap:function (filePath,base64Data){
-    // window.alert("saveBitmap:");
-		//拍照图片去除路径参数后缀
-		var num = filePath.lastIndexOf("?");
-		if( num >= 0 ){
-			filePath = filePath.substr(0,num);
-		}
-		filePath = uploadImg2.rootPath + filePath;
-		var bitmap = new plus.nativeObj.Bitmap();
-	    // 加载Base64编码格式图片到Bitmap对象
-	    bitmap.loadBase64Data(base64Data, function(){
-        console.log("加载Base64图片数据成功");
-	    }, function(){
-        plus.nativeUI.alert("图片格式错误！");
-        console.log('加载Base64图片数据失败：'+JSON.stringify(e));
-	    } );
-	    bitmap.save(filePath
-	    ,{}
-	    ,function(i){
-	        console.log('保存图片成功：'+JSON.stringify(i));
-	        uploadImg2.imgArr.push(i.target);
-	        uploadImg2.imgBase64.push({"filePath":i.target,"base64Data":base64Data});
-	        uploadImg2.callback(i.target);
-	    }
-	    ,function(e){
-	        console.log('保存图片失败：'+JSON.stringify(e));
-	    });
-	},
-
 	//上传图片base64
-  uploadBase64:function(imgData){
+  uploadBase64:function(imgData,callback){
     var params = Qs.stringify({ "img":imgData})// 解决后台接收参数错误问题
     webapi.post(uploadImg.uploadPath, params, function (data) {
       if( data && data.code == "01" ){
-        uploadImg.callback(data.result);
-        plus.nativeUI.alert("上传成功");
+        console.log("上传成功!")
+        if( callback ){
+          callback(data.result);
+        }
       }else{
-        plus.nativeUI.alert("上传失败");
+        console.log("上传失败!")
       }
     })
+  },
+
+  // 上传选中图片
+  uploadImgs:function (callback) {
+    var imgs = uploadImg2.imgBase64;
+    if( imgs.length > 0 ){
+      imgs.forEach(function (item,index) {
+        uploadImg2.uploadBase64(item.base64Data,function (path) {
+          uploadImg2.successfun(path);
+        });
+      })
+    }else{
+      plus.nativeUI.alert("请选择图片!");
+    }
   },
 
 	clearImgArr:function(path,flag) {

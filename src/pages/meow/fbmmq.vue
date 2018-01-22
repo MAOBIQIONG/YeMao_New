@@ -15,34 +15,46 @@
       <!--图片上传-->
       <div class="sctp">
         <div class="img-upload">
-          <div class="img" v-for="img in params.imgs" :style="{backgroundImage: 'url(' + img + ')'}"></div>
-          <div class="upload-handle" v-if="params.imgs.length<9" v-tap="{ methods:triggerFile }"></div>
+          <div class="img" v-for="img in base64Arr" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
+    </div>
+    <div v-transfer-dom>
+      <loading :show="showLoad" :text="showLoadMsg"></loading>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
-  import { Toast } from 'vux'
+  import { Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
   import store from '@/vuex/store'
+  import uploadImg2 from "../../../static/js/uploadImg-more";
   export default {
+    directives: {
+      TransferDom
+    },
     components: {
-      Toast
+      Toast,
+      Loading
     },
     data: function () {
       return {
+        base64Arr:[],
         params:{
           user_id: '',
           title: '',
           like: 0,
           comments: 0,
           is_del: 0,
-          imgs:['./static/images/bj.jpg','./static/images/bj.jpg','./static/images/bj.jpg']
+          imgs:[]
         },
+        is_submit: false,
         showMark:false,
         showMsg:"",
+        showLoad: false,
+        showLoadMsg: '...'
       }
     },
     created: function () {
@@ -58,26 +70,49 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      // toalst
+      // toast
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
+      },
+      // loading
+      showLoading() {
+        var _self = this;
+        _self.showLoad = true;
+        setTimeout(() => {
+          _self.showLoad = false;
+        }, 2000)
       },
       //上传图片
       triggerFile(){
         console.log("trigger:")
         var _self = this;
+        // 首先清空图片数组
+        _self.params.imgs = [];
+        // 调用相机、相册
         uploadImg2.init({
           callback:function (path) {
+            _self.showLoad = true;
             console.log("path:"+path)
-            _self.imgs.push(path);
-          }
+            _self.base64Arr.push(path);
+          },
+          successfun:function (path) {
+            _self.params.imgs.push(path);
+            console.log("path:"+path)
+            if( _self.params.imgs.length == _self.base64Arr.length ){
+              _self.submit2();
+            }
+          },
         });
       },
 
       submit(){
         console.log("submit:")
         var _self = this;
+        // 避免多次点击提交按钮
+        if( _self.is_submit == true ) return;
+        _self.is_submit = true;
+
         if( common.isNull(_self.params.user_id) ){
           _self.showToast("未成功获取用户信息!");
           return
@@ -86,7 +121,20 @@
           _self.showToast("请输入问题描述!");
           return
         }
+        // 设置加载动画
+        _self.showLoad = true;
+        setTimeout(function () {
+          _self.showLoad = false;
+        },5000)
+        if( _self.base64Arr.length == 0 ){
+          _self.submit2();
+        }else{
+          uploadImg2.uploadImgs();
+        }
+      },
 
+      submit2(){
+        var _self = this;
         var params = {
           //批量添加
           interfaceId: common.interfaceIds.insertData,
@@ -96,10 +144,15 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(JSON.stringify(response))
+          // 取消加载动画
+          _self.showLoad = false;
+          // 提交标识
+          _self.is_submit = true;
+          // 返回数据
           var data = response.data;
           if( data ){
-            // this.$store.state.indexRefreshMark = 1;
+            // 刷新喵喵圈
+            _self.$store.state.indexRefreshMark = 1;
             var result = data.result || {};
             if( result.ok>0 && result.n>0  ){
               _self.showToast("发布成功！");
