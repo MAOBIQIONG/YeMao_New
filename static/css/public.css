@@ -36,6 +36,7 @@ textarea,select{
   -webkit-tap-highlight-color:rgba(255,255,255,0);
   -moz-appearance:none;
   -webkit-appearance: none;
+  background:white;
   -webkit-user-modify:read-write-plaintext-only;
 }
 /*沉浸式样式*/
