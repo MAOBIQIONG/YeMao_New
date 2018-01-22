@@ -11,7 +11,6 @@ const uploadImg2 ={
 	uploadPath:'appUploadImg/imgBase64',        // 上传接口
 	callback:function(){},                      // 选择图片后执行
 	successfun:function(){},                    // 上传图片后执行
-  loading:function(){},                       // 加载动画
 	//检测数据
 	isNull:function(ele){
 		if( ele != null && ele != undefined )
@@ -37,9 +36,6 @@ const uploadImg2 ={
     }
     if( param && !uploadImg2.isNull(param.successfun) ){
       uploadImg2.successfun = param.successfun;
-    }
-    if( param && !uploadImg2.isNull(param.loading) ){
-      uploadImg2.loading = param.loading;
     }
 
     var a = [{
@@ -75,7 +71,6 @@ const uploadImg2 ={
 		var c = plus.camera.getCamera();
 		c.captureImage(function(e) {
 			plus.io.resolveLocalFileSystemURL(e, function(entry) {
-			  uploadImg2.loading();// 执行加载动画
 				//图片
 				var s = entry.toLocalURL() + "?version=" + new Date().getTime();
 				uploadImg2.getOrientation(s,1); /*图片修复*/
@@ -98,7 +93,6 @@ const uploadImg2 ={
         plus.nativeUI.alert("最多只能选择"+uploadImg2.maxLen+"张图片");
 			}else{
 				if( (uploadImg2.imgArr.length+files.length) <= uploadImg2.maxLen ){
-          uploadImg2.loading();// 执行加载动画
 					for (var i=0;i<files.length;i++) {
 						plus.io.resolveLocalFileSystemURL(files[i],function(entry){
 							//图片：entry.toLocalURL()

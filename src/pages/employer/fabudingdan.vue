@@ -297,10 +297,6 @@
 
     validate(improve){
       var _self = this;
-      // 避免多次点击提交按钮
-      if( _self.is_submit == true ) return;
-      _self.is_submit = true;
-
       if(improve){
           if( common.isNull(_self.userInfo) == true ){
               _self.showToast("未成功获取用户信息!");
@@ -364,6 +360,9 @@
         var _self = this;
         //验证输入
         if(!_self.validate()) return;
+        // 避免多次点击提交按钮
+        if( _self.is_submit == true ) return;
+        _self.is_submit = true;
         // 设置加载动画
         _self.showLoad = true;
         setTimeout(function () {

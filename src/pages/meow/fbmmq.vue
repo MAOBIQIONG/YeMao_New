@@ -39,6 +39,7 @@
       Toast,
       Loading
     },
+    store,
     data: function () {
       return {
         base64Arr:[],
@@ -92,7 +93,6 @@
         // 调用相机、相册
         uploadImg2.init({
           callback:function (path) {
-            _self.showLoad = true;
             console.log("path:"+path)
             _self.base64Arr.push(path);
           },
@@ -109,9 +109,6 @@
       submit(){
         console.log("submit:")
         var _self = this;
-        // 避免多次点击提交按钮
-        if( _self.is_submit == true ) return;
-        _self.is_submit = true;
 
         if( common.isNull(_self.params.user_id) ){
           _self.showToast("未成功获取用户信息!");
@@ -121,6 +118,9 @@
           _self.showToast("请输入问题描述!");
           return
         }
+        // 避免多次点击提交按钮
+        if( _self.is_submit == true ) return;
+        _self.is_submit = true;
         // 设置加载动画
         _self.showLoad = true;
         setTimeout(function () {
