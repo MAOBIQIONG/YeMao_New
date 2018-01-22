@@ -64,11 +64,11 @@
             <div class="dsr">
                 <ul>
                 <li v-for="(l,i) in likes" :key="i">
-                    <img src="../../../static/images/bj.jpg"/>
+                    <img :src="checkAvatar()"/>
                 </li>
                 </ul>
                 <div class="dianzhan" @click="toUrl('dianzhan')">
-                <span v-if="likes.length">{{likes.length}}</span>人点赞
+                <span>{{likes_num}}</span>人点赞
                 </div>
             </div>
             <p>热门评论</p>
@@ -142,9 +142,10 @@ export default {
                 create_date:null,
                 user:{}
             },
+            isLogin:false,
             //点赞人
-            likes_7:[],
             likes:[],
+            likes_num:0,
             comments:[],
             user_id:null,
             imgs:[],
@@ -233,6 +234,7 @@ export default {
         _self.userInfo = userInfo;
         if( !common.isNull(userInfo._id) ){
             _self.user_id = userInfo._id;
+            _self.isLogin = true;
         }
         _self.chw_id = _self.$route.query.id;
         _self.initData();
@@ -252,7 +254,10 @@ export default {
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
-
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
+        },
         like_dom(param){
             var _self = this;
             // _self.chw.likeFlag == 0 ? _self.chw.likeFlag= 1 : _self.chw.likeFlag=0;
@@ -266,6 +271,9 @@ export default {
         },
         like(){
             var _self = this;
+            if(_self.isLogin == false){
+                _self.$router.push({name: 'login'});
+            }
             _self.like_dom();
             console.log(this.chw.collectFlag,this.chw.likeFlag);
             var params = {
@@ -296,6 +304,9 @@ export default {
         },
         collect(){
             var _self = this;
+            if(_self.isLogin == false){
+                _self.$router.push({name: 'login'});
+            }
             _self.collect_dom();
             console.log(this.chw.collectFlag,this.chw.likeFlag);
             var params = {
@@ -411,8 +422,10 @@ export default {
             // console.log('data.chw.likes',data.likes);
             let likes = data.likes;
             common.setStorage('likes_chwdetail',likes);
-            _self.likes_7 = likes.splice(0,7);
+            _self.likes = likes.slice(0,7);
+            _self.likes_num = likes.length;
             console.log(data.likes);
+            console.log(_self.likes);
             console.log('初始化数据完成');
         },
         //读取分页数据

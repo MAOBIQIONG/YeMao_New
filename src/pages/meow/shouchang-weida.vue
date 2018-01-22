@@ -252,7 +252,7 @@ export default {
             _self.user_id = user._id;
         } else {
             console.log('user_id is null');
-            _self.$router.push({name:'login'});
+            // _self.$router.push({name:'login'});
         }
         this.loadData();
     },
