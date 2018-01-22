@@ -504,9 +504,11 @@ export default {
     }
     .content{
         margin-top:0;
+        background: white;
     }
     .pinglun{
         padding-bottom:0;
+      background: white;
     }
     .confirmColor{
         color:#f65aa6
