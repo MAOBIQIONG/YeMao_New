@@ -70,11 +70,11 @@
 
 .content .neirongshijian .bottom .bottom-zan span {
   margin: 0 0.1rem;
-  margin-top: -0.1rem;
 }
 
 .content .neirongshijian .bottom .bottom-zan span img {
   width:0.5rem;
+  margin-top: -0.08rem;
   display: inline-block;
   vertical-align: middle;
 }
@@ -96,7 +96,7 @@
 
 .content .neirongshijian .bottom .bottom-sz span img {
   width:0.5rem;
-  height: 0.5rem;
+  margin-top: -0.08rem;
   display: inline-block;
   vertical-align: middle;
 }
