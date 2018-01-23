@@ -42,12 +42,15 @@
             </li>
           </ul>
         </div>
-            <div class="scsjs">
-                收藏设计师
+            <div @click="collect()">
+                <div class="scsjs" v-if="collectFlag==0">
+                    收藏设计师
+                </div>
+                <div class="scsjs ysc" v-else>
+                    已收藏
+                </div>
             </div>
-            <div class="scsjs ysc">
-                已收藏
-            </div>
+            
             <div class="xiaoxi">
                 <img src="../../../static/images/designer/xiangqing_liaotian.png" alt="">
             </div>
@@ -157,7 +160,9 @@
         loadMark:1,
         cases: [],
         honors: [],
-        works: []
+        works: [],
+        collectFlag:0,
+        isLogin:false,
       }
     },
     activated: function () {
@@ -174,10 +179,18 @@
       _self.isInit = true;
     },
     created: function () {
-      console.log("created:")
-      var _self = this;
-      _self.user_id = this.$route.query.id;
-      _self.initData();
+        console.log("created:")
+        var _self = this;
+        _self.user_id = this.$route.query.id;
+        _self.initData();
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+            _self.user_id = user._id;
+            _self.isLogin = true;
+        } else {
+            console.log('user_id is null');
+            // _self.$router.push({name:'login'});
+        }
     },
     methods: {
       goback(){
@@ -278,6 +291,40 @@
           }
         })
       },
+        // 收藏
+        collect_dom(param){
+            var _self = this;
+            _self.collectFlag == 0 ? _self.collectFlag=1 : _self.collectFlag=0;
+        },
+        collect(){
+            var _self = this;
+            if(_self.isLogin == false){
+                _self.$router.push({name: 'login'});
+            }
+            _self.collect_dom();
+            console.log(this.collectFlag);
+            return;
+            var params = {
+                interfaceId:common.interfaceIds.collect,
+                data:{
+                    collect_type: 3,//收藏type3：问答
+                    collect_id: _self.chw_id,
+                    user_id: _self.user_id,
+                }
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+            }, response => {
+                var data = response.data;
+                var tips = '';
+                if( data && data.code == 200 ){
+                tips = _self.chw.collectFlag == 0 ? '取消成功！' : '收藏成功！';
+                }else{
+                tips = _self.chw.collectFlag == 0 ? '取消失败！' : '收藏失败！';
+                }
+                _self.showToast(tips);
+            })
+        },
     }
   }
 </script>
@@ -302,6 +349,6 @@
     padding: .25rem;
   }
   .ysc{
-      background:#999;  
+      background:#999!important;  
   }
 </style>
