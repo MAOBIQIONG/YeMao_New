@@ -207,6 +207,7 @@
   .shijian{
     width: 1.9rem;
   }
+  /*性别选ze*/
   .demo1-item {
     text-align: center;
     width: 0.8rem;
