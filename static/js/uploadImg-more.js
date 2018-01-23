@@ -231,7 +231,7 @@ const uploadImg2 ={
     }
   },
 
-	clearImgArr:function(path,flag) {
+	clearImgArr:function(flag,path) {
 		if( flag == true ){//清空所有图片及缓存
 			uploadImg2.imgArr = [];
 			uploadImg2.imgBase64 = [];

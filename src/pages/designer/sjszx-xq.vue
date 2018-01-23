@@ -50,7 +50,7 @@
                     已收藏
                 </div>
             </div>
-            
+
             <div class="xiaoxi">
                 <img src="../../../static/images/designer/xiangqing_liaotian.png" alt="">
             </div>
@@ -348,6 +348,6 @@
     padding: .25rem;
   }
   .ysc{
-      background:#999!important;  
+      background:#999!important;
   }
 </style>

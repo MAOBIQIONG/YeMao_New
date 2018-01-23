@@ -209,6 +209,28 @@
         }, 1000)
       },
 
+      // 检测用户是否存在
+      checkUser(phone){
+        let params= {
+          interfaceId:common.interfaceIds.checkUser,
+          phone:phone
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data;
+          if( data ) {
+            if( data.code == 200 ){
+              _self.showText = '网络异常，请重试!';
+              _self.show = true;
+            }
+          }else{
+            _self.showText = '网络异常，请重试!';
+            _self.show = true;
+          }
+        })
+      },
+
       // 获取验证码
       getVerificationCode () {
         var _self = this;
