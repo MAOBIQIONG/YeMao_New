@@ -158,11 +158,11 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
             return;
           }
           if(_self.param.password != _self.param.passwordConfirm) {
-                _self.toastText = _self.toastNotSame;
-                _self.show=true;
-                return;
+            _self.toastText = _self.toastNotSame;
+            _self.show=true;
+            return;
           }
-         
+
           let user_name = common.op_localStorage().get('nickname');
           let phone = common.op_localStorage().get('mobile_phone');
           let user_type =common.op_localStorage().get('user_typee');

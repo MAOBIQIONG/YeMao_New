@@ -358,6 +358,9 @@ const common = {
     likes:'likes',                                 // 点赞
     resumeList:'resumeList',                       // 人才简历
     activitys:'activitys',                         // 活动
+    resumes:'resumes',                             // 简历
+    workExperiences:'workExperiences',             // 工作经历
+    alumnis:'alumniAssociations',                  // 校友会
 
   },
 
@@ -400,7 +403,13 @@ const common = {
     addOrders:'addOrders',                         // 发布订单
     refreshOrders:'refreshOrders',                 // 刷新订单
     getDesignerOrders:'getDesignerOrders',         // 查询设计师未处理订单
-
+    saveDataFun:'saveDataFun',                     // 保存数据，有则修改，无则保存
+    queryByUserId:'queryByUserId',                 // 根据user_id查询单个集合数据
+    queryList:'queryList',                         // 分页查询数据
+    queryResumeById:'queryResumeById',             // 人才简历详情
+    queryWEById:'queryWEById',                     // 工作经历详情
+    queryAlumniById:'queryAlumniById',             // 校友会详情
+    checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
   },
 
 }

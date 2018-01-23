@@ -25,14 +25,21 @@
       <div class="lb-left" @click="toUrl('zhlogin')"><a style="color: #f65aa6;">快速登录</a></div>
       <div class="lb-right"@click="toUrl('wjmm')"><a>忘记密码？</a></div>
     </div>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
+  import { Toast, } from 'vux'
   export default {
+    components: {
+      Toast,
+    },
     data () {
       return {
         phone:"",
+        showMark:false,
+        showMsg:"",
       }
     },
     mounted:function(){
@@ -52,6 +59,10 @@
       },
       toUrl(name){
         this.$router.push({name:name});
+      },
+      showToast(msg){
+        this.showMark = true;
+        this.showMsg = msg;
       },
       //输入框内有内容时显示清空按钮
       checkNumber(obj) {
@@ -152,6 +163,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
+          console.log(response)
           var data = response.data;
           if( data ){
             if( data.length == 1 ){
@@ -159,12 +171,12 @@
               this.$store.state.pageIndex = 0;
               _self.toUrl('index');
             }else if( data.length == 0 ){
-              // _self.showToast("用户不存在！")
+              _self.showToast("用户不存在！")
             }else if( data.length > 1 ){
-              // _self.showToast("帐户重复，请联系管理员！")
+              _self.showToast("帐户重复，请联系管理员！")
             }
           }else{
-            // _self.showToast("用户不存在！")
+            _self.showToast("用户不存在！")
           }
         })
       },
