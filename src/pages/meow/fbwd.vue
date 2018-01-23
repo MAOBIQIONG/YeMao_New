@@ -147,7 +147,7 @@
                             var data = response.data;
                             if( data && response.code == '200' ){
                                 _self.showToast("发布成功！");
-
+                                uploadImg2.clearImgArr(true);
                                 setTimeout(function () {
                                 _self.goback();
                                 },1000)

@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>喵喵人才</span>
-      <div class="header-right"@click="toUrl('tianxiejianli')">发布</div>
+      <div class="header-right" @click="toJl()">发布</div>
     </div>
     <!--简历列表-->
     <div class="content content-p">
@@ -56,6 +56,18 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
+      toJl(){
+           var _self = this;
+            var user = common.getObjStorage("userInfo") || {};
+            if( !common.isNull(user._id) ){
+                _self.user_id = user._id;
+                _self.toUrl('tianxiejianli');
+            } else {
+                console.log('没有获取用户信息');
+                _self.$router.push({name:"login"});
+            }
+          
+      }
     }
   }
 </script>
