@@ -8,35 +8,48 @@
     </div>
     <div class="content content-p">
       <div class="xgnc">
-        <div class="left"><input v-model="question.title" type="text" maxlength="20" placeholder="标题（最多20字）" class="btname" ref="title"></div>
+        <div class="left"><input v-model="params.title" type="text" maxlength="20" placeholder="标题（最多20字）" class="btname" ref="title"></div>
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea class="area" ref="area" maxlength="300" placeholder="请输入问题描述" v-model="question.description"></textarea>
+        <textarea class="area" ref="area" maxlength="300" placeholder="请输入问题描述" v-model="params.description"></textarea>
         <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
       </div>
       <!--图片上传-->
       <div class="sctp">
-        <div class="st-bottom">
-          <img src="../../../static/images/employer/j.png" />
+        <div class="img-upload">
+          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
+    </div>
+    <div v-transfer-dom>
+      <loading :show="showLoad" :text="showLoadMsg"></loading>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
   </div>
 </template>
 
 <script>
-    import {Toast} from 'vux'
+    import { Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
+    import uploadImg2 from "../../../static/js/uploadImg-more";
     export default {
-        components:{
-            Toast
+        directives: {
+            TransferDom
+        },
+        components: {
+            Toast,
+            Loading
         },
         data: function () {
             return {
+                base64Arr:[],
+                is_submit: false,
                 toastShow:false,
                 toastText:'sss',
-                question:{
+                showLoad: false,
+                showLoadMsg: '正在提交',
+                params:{
                     title:'',
                     description:'',
                     user_id:null,
@@ -44,19 +57,24 @@
                     collection:0,
                     like:0,
                     type:4,//问答,
-                    is_del:0
+                    is_del:0,
+                    imgs:[]
                 },
             }
         },
         created(){
-            var _slef = this;
+            var _self = this;
             var user = common.getObjStorage("userInfo") || {};
             if( !common.isNull(user._id) ){
-                _slef.question.user_id = user._id;
+                _self.params.user_id = user._id;
+            } else {
+                console.log('没有获取用户信息');
+                _self.$router.push({name:"login"});
             }
         },
         mounted: function () {
-            this. wzxz()
+            this.wzxz();
+            // this.showLoad = true;
         },
         methods: {
             goback () {
@@ -86,8 +104,10 @@
             },
             submit(){
                 let _self = this;
-                let title = _self.$refs.title.value;
-                let area = _self.$refs.area.value;
+                if( common.isNull(_self.params.user_id) ){
+                    _self.showToast("未成功获取用户信息!");
+                    return;
+                }
                 if(common.isNull(title)) {
                     _self.showToast("请填写标题");
                     return;
@@ -96,16 +116,34 @@
                     _self.showToast("请填写提问内容");
                     return;
                 }
-
+                // 避免多次点击提交按钮
+                if( _self.is_submit == true ) return;
+                _self.is_submit = true;
+                // 设置加载动画
+                _self.showLoad = true;
+                if( _self.base64Arr.length == 0 ){
+                    _self.submit2();
+                }else{
+                    uploadImg2.uploadImgs();
+                }
+            },
+            submit2(){
+                let _self = this;
+                let title = _self.$refs.title.value;
+                let area = _self.$refs.area.value;
 
                 let params = {
                     interfaceId:common.interfaceIds.insertData,
                     coll:common.collections.personalChw,
-                    data:_self.question,
+                    data:_self.params,
                 };
                 _self.$axios.post('/mongoApi', {
                     params: params
                     }, response => {
+                            // 取消加载动画
+                            _self.showLoad = false;
+                            // 提交标识
+                            _self.is_submit = true;
                             console.log(response)
                             var data = response.data;
                             if( data && response.code == '200' ){
@@ -118,7 +156,27 @@
                                 _self.showToast("发布失败！");
                             }
                         })
-            }
+            },
+            triggerFile(){
+                console.log("trigger:")
+                var _self = this;
+                // 首先清空图片数组
+                _self.params.imgs = [];
+                // 调用相机、相册
+                uploadImg2.init({
+                callback:function (path) {
+                    console.log("path:"+path)
+                    _self.base64Arr.push(path);
+                },
+                successfun:function (path) {
+                    _self.params.imgs.push(path);
+                    console.log("path:"+path)
+                    if( _self.params.imgs.length == _self.base64Arr.length ){
+                    _self.submit2();
+                    }
+                },
+                });
+            },         
         }
     }
 </script>

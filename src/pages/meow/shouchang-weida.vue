@@ -184,6 +184,9 @@ export default {
             let _self = this;
             _self.$refs.scroller.enablePullup();
             let QAList = data.chws || [];
+            if(!QAList.user){
+               QAList[0].user={};
+            }
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.QAList = QAList;
