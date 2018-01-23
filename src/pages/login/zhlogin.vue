@@ -22,7 +22,7 @@
       <div class="log-btn">登录</div>
     </div>
     <div class="log-botton">
-      <div class="lb-left"@click="toUrl('login')"><a style="color: #f65aa6;">快速登录</a></div>
+      <div class="lb-left" @click="toUrl('zhlogin')"><a style="color: #f65aa6;">快速登录</a></div>
       <div class="lb-right"@click="toUrl('wjmm')"><a>忘记密码？</a></div>
     </div>
   </div>
