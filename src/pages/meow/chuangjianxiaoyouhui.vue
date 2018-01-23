@@ -8,6 +8,10 @@
     </div>
     <!--发布订单内容-->
     <div class="content content-p">
+      <div class="touxiang">
+        <div class="tu"><img src="../../../static/images/meow/xiangji.png" /></div>
+        <p>上传图片</p>
+      </div>
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
