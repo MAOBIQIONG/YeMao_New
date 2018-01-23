@@ -8,6 +8,10 @@
     </div>
     <!--发布订单内容-->
     <div class="content content-p">
+      <div class="touxiang">
+           <div class="tu"><img src="../../../static/images/meow/xiangji.png" /></div>
+            <p>上传头像</p>
+      </div>
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
@@ -22,10 +26,14 @@
             <span>性别</span>
           </div>
           <div class="qdtime-right">
-            <form action="" method="get">
-              <label><input name="Fruit" type="radio" value="男" />男 </label>
-              <label><input name="Fruit" type="radio" value="女" />女</label>
-            </form>
+            <checker v-model="demo1Required" radio-required default-item-class="demo1-item" selected-item-class="demo1-item-selected">
+              <checker-item value="男">男</checker-item>
+              <checker-item value="女">女</checker-item>
+            </checker>
+            <!--<form action="" method="get">-->
+              <!--<label><input name="Fruit" type="radio" value="男" />男 </label>-->
+              <!--<label><input name="Fruit" type="radio" value="女" />女</label>-->
+            <!--</form>-->
           </div>
         </div>
         <div class="qdtime">
@@ -122,6 +130,7 @@
     },
     data: function () {
       return {
+        demo1Required: '男',
         imgList:[],
         isShow:true,
         typeList:[],
@@ -197,5 +206,15 @@
   @import '../../../static/css/meow/tianxiejianli.css';
   .shijian{
     width: 1.9rem;
+  }
+  .demo1-item {
+    text-align: center;
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+  .demo1-item-selected {
+    text-align: center;
+    width:0.8rem;
+    color: #f65aa6;
   }
 </style>
