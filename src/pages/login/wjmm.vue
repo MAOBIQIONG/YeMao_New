@@ -8,28 +8,42 @@
       <span>输入你的手机号获取验证码<br />进行密码重置</span>
     </div>
     <div class="login-shuru">
-      <p class="tishi"></p>
+      <p class="tishi" ref="tips"></p>
       <div class="ls-shouji">
-        <input type="text"class="shouji"id="phone" placeholder="手机号">
+        <input v-model="phone" type="text" class="shouji" id="phone" placeholder="手机号">
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
-        <input type="text"class="yanzheng"id="yanzhengma"maxlength="8"placeholder="验证码"/>
-        <div class="dj-shuru"><span class="msgs">点击获取验证码</span></div>
+        <input type="text" class="yanzheng" id="yanzhengma" maxlength="6" placeholder="验证码" ref="code"/>
+        <div class="dj-shuru"><span class="msgs" ref="verify_btn" v-tap="{methods:getVerificationCode}">点击获取验证码</span></div>
       </div>
       <div class="ls-xma">
-        <input type="password"class="xma"id="xma" placeholder="新密码"/>
+        <input v-model="password" type="password"class="xma"id="xma" placeholder="新密码"/>
         <span class="del">×</span>
       </div>
     </div>
-    <div class="wj-queding">确 定</div>
+    <div class="wj-queding" v-tap="{methods:submit}">确 定</div>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
+  import { Toast, } from 'vux'
+  import interfaces from  '../../../static/js/interface'
+  import md5 from 'js-md5';
   export default {
+    components: {
+      Toast,
+    },
     data() {
-      return {}
+      return {
+        phone:'',
+        password:'',
+        is_submit:false,
+        verify_code:'',
+        showMark:false,
+        showMsg:"",
+      }
     },
     created: function () {
 
@@ -40,10 +54,10 @@
       this.checkNumber(".xma");
       //获取焦点时触发判断事件
       this.panduan("#phone");
-      //获取短信验证码
-      this.huoquyanzhengma(".msgs", ".shouji");
-      //判断输入框不能为空
-      this.login(".wj-queding", ".shouji", ".xma");
+      // 获取短信验证码
+      // this.huoquyanzhengma(".msgs", ".shouji");
+      // 判断输入框不能为空
+      // this.login(".wj-queding", ".shouji", ".xma");
     },
     methods: {
       goback() {
@@ -66,38 +80,6 @@
           $(obj).next('.del').css('display', 'none')
         })
       },
-      //获取短信验证码
-      huoquyanzhengma(obj, shouji) {
-        var validCode = true;
-        $(obj).click(function () {
-          var username = $.trim($(shouji).val());
-          var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
-          var time = 30;
-          var code = $(this);
-          if (username == "" || username == null || username == undefined) {
-            $('.tishi').text("手机号不能为空");
-          } else if (!myreg.test($(shouji).val())) {
-            $('.tishi').text('请输入有效的手机号码！');
-            return false;
-          } else {
-            $('.tishi').text('')
-            if (validCode) {
-              validCode = false;
-              code.addClass("msgs1"); //可以改变当前颜色的类名
-              var t = setInterval(function () {
-                time--;
-                code.html(time + "秒后重新获取");
-                if (time == 0) {
-                  clearInterval(t);
-                  code.html("重新获取");
-                  validCode = true;
-                  code.removeClass("msgs1");
-                }
-              }, 1000)
-            }
-          }
-        })
-      },
       //获取焦点时触发判断事件
       panduan(obj) {
         $(obj).blur(function () {
@@ -111,29 +93,145 @@
           }
         });
       },
-      //判断输入框不能为空
-      login(anniu, shouji, valp) {
-        $(anniu).click(function () {
-          var username = $.trim($(shouji).val()); //获取到手机号
-          var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
-          var mima = /^[0-9a-zA-Z_#]{6,16}$/;
-          $("input").each(function () {
-            let v = $(this).val();
-            if (v == "") {
-              $('.tishi').text("输入框不能为空");
 
-            } else if (!myreg.test($(shouji).val())) {
-              $('.tishi').text('请输入有效的手机号码！');
-              return false;
-            } else if (!mima.test($(valp).val())) {
-              $('.tishi').text('密码为6-16位的数字或字母！');
-              return false;
-            } else {
-              $('.tishi').text("");
+      /*************************************/
+      showToast(msg){
+        this.showMark = true;
+        this.showMsg = msg;
+      },
+      submit () {
+        var _self = this;
+        // 验证手机号码
+        if( !_self.verifyPhone() ){
+          return;
+        }
+        // 验证码验证
+        if( !_self.verifyCode() ){
+          return;
+        }
+        // 密码验证
+        if( !_self.verifyPassword() ){
+          return;
+        }
+        // 避免多次提交
+        if( _self.is_submit == true ) return;
+        _self.is_submit = true
+        // 提交
+        var params = {
+          interfaceId:common.interfaceIds.updateData,
+          coll:'users',
+          wheredata:{"phone":_self.phone},
+          data:{
+            $set:{
+              password: _self.password
             }
-          })
+          }
+        }
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          _self.is_submit = false;
+          console.log(response)
+          var data = response.data;
+          if( data ){
+            if( data.n == 0 ){
+              _self.showToast("该用户不存在！")
+            }else if( data.n==1 && data.nModified==1 && data.ok==1 ){
+              _self.showToast("修改成功！");
+              setTimeout(function () {
+                _self.goback();
+              },1000)
+            }
+          }else{
+            _self.showToast("修改失败！")
+          }
         })
-      }
+      },
+
+      // 手机验证
+      verifyPhone(){
+        var _self = this;
+        var reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if ( common.isNull(_self.phone) ) {
+          _self.$refs.tips.innerText = '手机号不能为空';
+          return false;
+        } else if (!reg.test(_self.phone)) {
+          _self.$refs.tips.innerText = '请输入有效的手机号码';
+          return false;
+        } return true;
+      },
+
+      // 验证码验证
+      verifyCode(){
+        var _self = this;
+        var code = _self.$refs.code.value;
+        if ( common.isNull(_self.verify_code) ) {
+          _self.$refs.tips.innerText = '请获取验证码!';
+          return false;
+        } else if( common.isNull(code) ){
+          _self.$refs.tips.innerText = '请输入验证码!';
+          return false;
+        } else if( md5(code) !== _self.verify_code ){
+          _self.$refs.tips.innerText = '验证码错误!';
+          return false;
+        }
+        return true;
+      },
+
+      // 密码验证
+      verifyPassword(){
+        var _self = this;
+        var reg = /^[A-Za-z0-9]{6,16}$/;
+        if( common.isNull(_self.password) ){
+          _self.$refs.tips.innerText = '请输入密码!';
+          return false;
+        } else if( !reg.test(_self.password) ){
+          _self.$refs.tips.innerText = '密码为6-16位的数字或字母！';
+          return false;
+        }
+        return true;
+      },
+
+      // 倒计时
+      count_down(time){
+        var _self = this;
+        var interval = setInterval(function () {
+          if( !_self.$refs.verify_btn ) return;
+          // 开始
+          time--;
+          _self.$refs.verify_btn.innerText = time + "秒后重新获取";
+          if( time == 0 ) {
+            clearInterval(t);
+            _self.$refs.verify_btn.innerText = "重新获取";
+            // 重置获取验证码状态及验证码
+            _self.is_verify = false;
+            _self.verify_code = '';
+          }
+        }, 1000)
+      },
+
+      // 获取验证码
+      getVerificationCode () {
+        var _self = this;
+        // 验证手机号码
+        if( !_self.verifyPhone() ){
+          return;
+        }
+        // 设置获取验证码状态
+        if( _self.is_verify == true ) return;
+        _self.is_verify = true;
+        // 获取验证码
+        var params = {
+          'mobile': _self.phone,
+          'template': '3064129'
+        }
+        interfaces.getVerifyCode(params,function (data) {
+          if( data.code == 200 ){
+            _self.verify_code = data.obj;
+            _self.count_down(120);
+          }
+        })
+      },
     }
   }
 </script>

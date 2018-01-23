@@ -40,9 +40,11 @@ const common = {
 
   //1.1.3、验证是否为Float：返回Float
   checkFloat:function (str){
-    if(str==""||str=="null"||str==null||!common.isNumber(str)||str==undefined){
-      return 0;
-    } return parseFloat(str);
+    if( common.isNumber(str) ){
+
+      return parseFloat(str);
+    }
+
   },
 
   /*****************1.2、验证(返回值:对应类型)*******************/

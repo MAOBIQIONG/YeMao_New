@@ -2,7 +2,7 @@
   <div class="">
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png"/></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <div class="header-right zc"@click="toUrl('zhuche')">注册</div>
     </div>
     <!--log-->
@@ -13,19 +13,21 @@
     </div>
     <!--登陆-->
     <div class="login-shuru">
-      <p class="tishi"></p>
+      <p class="tishi" ref="tips"></p>
       <div class="ls-shouji">
         <input v-model="phone" type="text" class="shouji" id="phone" placeholder="手机号">
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
-        <input type="text"class="yanzheng"id="yanzhengma"maxlength="8"placeholder="验证码">
-        <div class="dj-shuru"><span class="msgs">点击获取验证码</span></div>
+        <input type="number" class="yanzheng" maxlength="6" placeholder="验证码" ref="code">
+        <div class="dj-shuru">
+          <span class="msgs" ref="verify_btn" v-tap="{methods:getVerificationCode}">点击获取验证码</span>
+        </div>
       </div>
       <div class="log-btn">登录</div>
     </div>
     <div class="log-botton">
-      <div class="lb-left"@click="toUrl('zhlogin')">账号密码登录</div>
+      <div class="lb-left" v-tap="{methods:goback}">账号密码登录</div>
       <div class="lb-right"@click="toUrl('wjmm')">忘记密码？</div>
     </div>
     <!--弹窗-->
@@ -56,6 +58,8 @@
 <script>
   import { Toast, } from 'vux'
   import store from '@/vuex/store'
+  import interfaces from  '../../../static/js/interface'
+  import md5 from 'js-md5';
   export default {
     components: {
       Toast,
@@ -63,6 +67,8 @@
     data () {
       return {
         phone:"",
+        verify_code:'',
+        is_verify:false,
         showMark:false,
         showMsg:"",
       }
@@ -77,7 +83,7 @@
       //获取焦点时触发判断事件
       this.panduan("#phone");
       //获取短信验证码
-      this.huoquyanzhengma(".msgs", ".shouji");
+      // this.huoquyanzhengma(".msgs", ".shouji");
       //判断输入框不能为空
       this.login(".log-btn",".shouji");
     },
@@ -107,6 +113,8 @@
       },
       //获取短信验证码
       huoquyanzhengma(obj, shouji) {
+        var _self = this;
+
         var validCode = true;
         $(obj).click(function () {
           var username = $.trim($(shouji).val());
@@ -131,6 +139,9 @@
                   code.html("重新获取");
                   validCode = true;
                   code.removeClass("msgs1");
+                  // 重置获取验证码状态
+                  _self.is_verify = false;
+                  _self.verify_code = '';
                 }
               }, 1000)
             }
@@ -161,12 +172,10 @@
             let v = $(this).val();
             if (v == "") {
               $('.tishi').text("输入框不能为空");
-
             } else if (!myreg.test($(shouji).val())) {
               $('.tishi').text('请输入有效的手机号码！');
               return false;
-            } else if (!mima.test($(valp).val())) {
-              $('.tishi').text('密码为6-16位的数字或字母！');
+            } else if (!obj.verifyCode()) {
               return false;
             } else {
               $('.tishi').text("");
@@ -190,12 +199,12 @@
             "phone":_self.phone
           }
         }
-
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           var data = response.data;
           if( data ){
+            _self.verify_code = '';// 清除验证码
             if( data.length == 1 ){
               common.setStorage("userInfo",data[0]);
               this.$store.state.pageIndex = 0;
@@ -207,6 +216,77 @@
             }
           }else{
             _self.showToast("用户不存在！")
+          }
+        })
+      },
+
+      // 手机验证
+      verifyPhone(){
+        var _self = this;
+        var reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if ( common.isNull(_self.phone) ) {
+          _self.$refs.tips.innerText = '手机号不能为空';
+          return false;
+        } else if (!reg.test(_self.phone)) {
+          _self.$refs.tips.innerText = '请输入有效的手机号码';
+          return false;
+        } return true;
+      },
+
+      // 验证码验证
+      verifyCode(){
+        var _self = this;
+        var code = _self.$refs.code.value;
+        if ( common.isNull(_self.verify_code) ) {
+          _self.$refs.tips.innerText = '请获取验证码!';
+          return false;
+        } else if( common.isNull(code) ){
+          _self.$refs.tips.innerText = '请输入验证码!';
+          return false;
+        } else if( md5(code) !== _self.verify_code ){
+          _self.$refs.tips.innerText = '验证码错误!';
+          return false;
+        }
+        return true;
+      },
+
+      // 倒计时
+      count_down(time){
+        var _self = this;
+        var interval = setInterval(function () {
+          if( !_self.$refs.verify_btn ) return;
+          // 开始
+          time--;
+          _self.$refs.verify_btn.innerText = time + "秒后重新获取";
+          if( time == 0 ) {
+            clearInterval(t);
+            _self.$refs.verify_btn.innerText = "重新获取";
+            // 重置获取验证码状态及验证码
+            _self.is_verify = false;
+            _self.verify_code = '';
+          }
+        }, 1000)
+      },
+
+      // 获取验证码
+      getVerificationCode () {
+        var _self = this;
+        // 验证手机号码
+        if( !_self.verifyPhone() ){
+          return;
+        }
+        // 设置获取验证码状态
+        if( _self.is_verify == true ) return;
+        _self.is_verify = true;
+        // 获取验证码
+        var params = {
+          'mobile': _self.phone,
+          'template': '3064129'
+        }
+        interfaces.getVerifyCode(params,function (data) {
+          if( data.code == 200 ){
+            _self.verify_code = data.obj;
+            _self.count_down(120);
           }
         })
       },

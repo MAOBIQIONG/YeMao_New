@@ -13,27 +13,10 @@
         <span class="del">×</span>
       </div>
       <div class="ls-shouji">
-        <!--<div class="xmlx-left">-->
-          <!--<span>类型</span>-->
-        <!--</div>-->
         <div class="xmlx-right">
           <select class="xmlx-kuang" v-model="param.user_type">
             <option value="null" selected="selected">类型</option>
             <option v-for="(item,index) in typeList" :key="index" :value="item._id">{{item.type_name}}</option>
-            <!-- <option value="opel">规划设计</option>
-            <option value="audi">建筑设计</option>
-            <option value="audi">结构设计</option>
-
-            <option value="saab">给排水设计</option>
-            <option value="opel">电气设计</option>
-            <option value="audi">暖通设计</option>
-            <option value="audi">景观设计</option>
-
-            <option value="saab">室内设计</option>
-            <option value="opel">软装设计</option>
-            <option value="audi">项目经理</option>
-            <option value="audi">概预算</option>
-            <option value="audi">审图</option> -->
           </select>
         </div>
       </div>
@@ -42,8 +25,8 @@
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
-        <input type="text" class="yanzheng" maxlength="8" placeholder="验证码"  v-model="param.verifying_code"/>
-        <div class="dj-shuru"><span class="msgs">点击获取验证码</span></div>
+        <input type="text" class="yanzheng" maxlength="8" placeholder="验证码"  v-model="param.verifying_code" ref="code"/>
+        <div class="dj-shuru" ref="verify_btn" v-tap="{methods:getVerificationCode}"><span class="msgs">点击获取验证码</span></div>
       </div>
     </div>
     <div class="log-btn" @click="nextStep()"><span>下一步</span></div>
@@ -53,7 +36,9 @@
 
 <script>
     import  { Toast } from 'vux'
-  export default {
+    import interfaces from  '../../../static/js/interface'
+    import md5 from 'js-md5';
+    export default {
       components:{
           Toast
       },
@@ -71,7 +56,10 @@
         showTextNoPhone:"请输入手机号",
         showTextWrongName:"昵称为4到10位（字母，数字，下划线，减号）",
         showTextWrongPhone:"请输入有效的手机号码",
-        typeList:common.getProjectTypes()
+        typeList:common.getProjectTypes(),
+
+        is_verify:false,
+        verify_code:'',
       }
     },
     mounted: function () {
@@ -182,6 +170,78 @@
         })
       },
 
+      /*************************************/
+      // 验证码验证
+      verifyCode(){
+        var _self = this;
+        var code = _self.$refs.code.value;
+        if ( common.isNull(_self.verify_code) ) {
+          _self.showText = '请获取验证码!';
+          _self.show = true;
+          return false;
+        } else if( common.isNull(code) ){
+          _self.showText = '请输入验证码!';
+          _self.show = true;
+          return false;
+        } else if( md5(code) !== _self.verify_code ){
+          _self.showText = '验证码错误!';
+          _self.show = true;
+          return false;
+        }
+        return true;
+      },
+
+      // 倒计时
+      count_down(time){
+        var _self = this;
+        var interval = setInterval(function () {
+          if( !_self.$refs.verify_btn ) return;
+          // 开始
+          time--;
+          _self.$refs.verify_btn.innerText = time + "秒后重新获取";
+          if( time == 0 ) {
+            clearInterval(t);
+            _self.$refs.verify_btn.innerText = "重新获取";
+            // 重置获取验证码状态及验证码
+            _self.is_verify = false;
+            _self.verify_code = '';
+          }
+        }, 1000)
+      },
+
+      // 获取验证码
+      getVerificationCode () {
+        var _self = this;
+        // 验证手机号码
+        if(common.isNull(_self.param.mobile_phone)){
+          _self.showText = _self.showTextNoPhone;
+          _self.show = true;
+          return;
+        }
+        let regMobilePhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        if(!regMobilePhone.test(_self.param.mobile_phone)){
+          _self.showText = _self.showTextWrongPhone;
+          _self.show = true;
+          return;
+        }
+        // 设置获取验证码状态
+        if( _self.is_verify == true ) return;
+        _self.is_verify = true;
+        // 获取验证码
+        var params = {
+          'mobile': _self.param.mobile_phone,
+          'template': '3064129'
+        }
+        interfaces.getVerifyCode(params,function (data) {
+          console.log("data.code:"+data.code)
+          if( data.code == 200 ){
+            _self.verify_code = data.obj;
+            _self.count_down(120);
+          }
+        })
+      },
+      /*************************************/
+
         nextStep(){
             let _self = this;
             let regNickname = /^[a-zA-Z0-9_-]{4,10}$/;
@@ -204,6 +264,10 @@
             if(!regMobilePhone.test(_self.param.mobile_phone)){
                 _self.showText = _self.showTextWrongPhone;
                 _self.show = true;
+                return;
+            }
+
+            if( !_self.verifyCode() ){
                 return;
             }
 
