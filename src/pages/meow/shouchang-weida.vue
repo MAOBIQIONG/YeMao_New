@@ -153,7 +153,7 @@ export default {
             var _self = this;
             var user = common.getObjStorage("userInfo") || {};
             if( !common.isNull(user._id) ){
-                toUrl('fbwd');              
+                _self.toUrl('fbwd');              
             } else {
                 console.log('user_id is null');
                 _self.$router.push({name:'login'});
@@ -194,9 +194,12 @@ export default {
             let _self = this;
             _self.$refs.scroller.enablePullup();
             let QAList = data.chws || [];
-            if(!QAList.user){
-               QAList[0].user={};
-            }
+            //对于没有user情况处理
+            QAList.forEach((r,i)=>{
+                if(!r.user){
+                    QAList[i].user = {};
+                }
+            });
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.QAList = QAList;

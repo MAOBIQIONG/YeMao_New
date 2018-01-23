@@ -174,6 +174,12 @@ export default {
             let _self = this;
             _self.$refs.scroller.enablePullup();
             let list = data.chws || [];
+            //对于没有user情况处理
+            list.forEach((r,i)=>{
+                if(!r.user){
+                    list[i].user = {};
+                }
+            });
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.list = list;

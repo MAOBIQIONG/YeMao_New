@@ -396,7 +396,11 @@ export default {
         },
         setInitData(data){
             let _self = this;
-            _self.chw = data.chw || {};
+            let chw = data.chw || {};
+            if(!chw.user){
+                chw.user = {};
+            }
+            _self.chw = chw;
             var imgs = _self.chw.imgs || [];// 图片
             imgs.forEach(function (item,index) {
             _self.imgs.push({img:item});
