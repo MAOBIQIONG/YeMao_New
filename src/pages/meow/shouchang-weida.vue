@@ -152,7 +152,7 @@ export default {
         toFbwd(){
             var _self = this;
             var user = common.getObjStorage("userInfo") || {};
-            if( !common.isNull(user._id) ){
+            if( !common.isNull(user._id)){
                 _self.toUrl('fbwd');              
             } else {
                 console.log('user_id is null');
