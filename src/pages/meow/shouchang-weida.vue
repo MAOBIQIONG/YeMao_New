@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>问答</span>
-      <div class="header-right" @click="toUrl('fbwd')">提问</div>
+      <div class="header-right" @click="toFbwd()">提问</div>
     </div>
     <!--问答专辑-->
     <div class="content content-p">
@@ -148,6 +148,16 @@ export default {
         showToast(msg){
             this.toast.show = true;
             this.toast.msg = msg;
+        },
+        toFbwd(){
+            var _self = this;
+            var user = common.getObjStorage("userInfo") || {};
+            if( !common.isNull(user._id) ){
+                toUrl('fbwd');              
+            } else {
+                console.log('user_id is null');
+                _self.$router.push({name:'login'});
+            }
         },
         loadData(){
             console.log('this is loadData');

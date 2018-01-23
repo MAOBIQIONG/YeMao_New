@@ -69,7 +69,7 @@
                 _self.params.user_id = user._id;
             } else {
                 console.log('没有获取用户信息');
-                _self.$router.push({name:"login"});
+                // _self.$router.push({name:"login"});
             }
         },
         mounted: function () {

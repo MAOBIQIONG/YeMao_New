@@ -185,7 +185,6 @@
         _self.initData();
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
-            _self.user_id = user._id;
             _self.isLogin = true;
         } else {
             console.log('user_id is null');
