@@ -302,6 +302,6 @@
     padding: .25rem;
   }
   .ysc{
-      background:#999;
+      background:#999;  
   }
 </style>
