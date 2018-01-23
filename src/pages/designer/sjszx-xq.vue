@@ -42,7 +42,16 @@
             </li>
           </ul>
         </div>
-      </div>
+            <div class="scsjs">
+                收藏设计师
+            </div>
+            <div class="scsjs ysc">
+                已收藏
+            </div>
+            <div class="xiaoxi">
+                <img src="../../../static/images/designer/xiangqing_liaotian.png" alt="">
+            </div>
+        </div>
       <!--日历选取-->
       <div class="rili">
         <inline-calendar
@@ -291,5 +300,8 @@
     color: #999;
     text-align: center;
     padding: .25rem;
+  }
+  .ysc{
+      background:#999;  
   }
 </style>

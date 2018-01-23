@@ -7,13 +7,13 @@
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->
-    <scroller
+    <scroller 
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"
         :lock-y="lockY"
-        :use-pulldown="true"
-        :use-pullup="true"
+        :use-pulldown="true" 
+        :use-pullup="true" 
         :pulldown-config="pulldownConfig"
         :pullup-config = "pullupConfig"
         @on-scroll="scroll"
@@ -33,7 +33,7 @@
             </div>
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
-            <div class="tupian" v-if="item.imgs">
+            <div class="tupian" v-if="item.imgs">        
             <img :src="item.imgs[0]"/>
             </div>
             <div class="neirong">
@@ -123,7 +123,7 @@
                 handler:function(val,oldval){
                     if(val.pullupStatus=="loading"){
                         this.loadMoreStatus.show=true;
-                        this.loadMoreStatus.showLoading=true;
+                        this.loadMoreStatus.showLoading=true; 
                     }
                 }
             }
@@ -147,12 +147,12 @@
                 }
                 _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
                 let params = {
-                    interfaceId: 'getCollects',
+                    interfaceId: 'getCollects',                    
                     pageNo:_self.pagination.pageNo,
                     pageSize:_self.pagination.pageSize,
                     where:{
                         user_id: _self.user_id,
-                        collect_type: 3
+                        collect_type:3// 收藏类型3问答
                     }
                 }
                 _self.$axios.post('/mongoApi', {
@@ -160,8 +160,8 @@
                     }, response => {
                         console.log(response);
                         let data = response.data
-                        if (data) {
-                            // _self.setData(data);
+                        if (data) {                            
+                            _self.setData(data);
                             console.log(data);
                             console.log('数据设置完成');
                         } else {
@@ -187,12 +187,12 @@
                         _self.$refs.scroller.disablePullup();
                         return
                     }
-                    _self.QAList.push(...data.collects);
+                    _self.QAList.push(...data.collects);                   
                 }
                 _self.loadMoreStatus.show=false;
                 _self.loadMoreStatus.showLoading=false;
                 _self.$refs.scroller.donePulldown();
-                _self.$refs.scroller.donePullup();
+                _self.$refs.scroller.donePullup();   
                 //判断数据是否有一页
                 if(QAList.length < _self.pagination.pageSize){
                     _self.loadMoreStatus.show=true;
@@ -209,28 +209,27 @@
                 let _self = this
                 _self.pagination.pageNo = 0;
                 _self.loadMoreStatus.show=false;
-                _self.$refs.scroller.donePullup();
+                _self.$refs.scroller.donePullup();  
                 _self.loadData()
-
+                
             },
             //上拉加载
             loadMore(){
                 let _self = this;
-                // _self.loadData();
-                _self.loadData();
+                _self.loadData(); 
             },
             scroll(position){
                 // console.log("on-scroll",position);
             },
             pullDownLoading(){
                 console.log('on-pull-down-loading');
-                this.refreshPageDate();
+                this.refreshPageDate();       
             },
             pullUpLoading(){
                 console.log('on-pull-up-loading');
                 this.loadMore();
 
-
+                
             },
             onScrollBottom(){
                 // console.log('on-scroll-bottom');
@@ -252,7 +251,7 @@
                     this.$refs.scroller.disablePullup();
                     this.$refs.scroller.reset({top:0});
                 }
-            );
+            );      
         },
     }
 </script>

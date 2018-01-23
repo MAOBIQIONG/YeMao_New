@@ -132,6 +132,7 @@ export default {
                 create_date:null,
                 user:{}
             },
+            isLogin:false,
             comments:[],
             user_id:null,
             imgs:[],
@@ -220,6 +221,7 @@ export default {
         _self.userInfo = userInfo;
         if( !common.isNull(userInfo._id) ){
             _self.user_id = userInfo._id;
+            _self.isLogin = true;
         }
         _self.chw_id = _self.$route.query.id;
         _self.initData();
@@ -227,7 +229,6 @@ export default {
 
     },
     mounted: function () {
-        this.dianzan();
         this.$nextTick(()=>{
 
         });
@@ -252,6 +253,9 @@ export default {
         },
         like(){
             var _self = this;
+            if(_self.isLogin==false) {
+                _self.$router.push({name:"login"});
+            }
             _self.like_dom();
             console.log(this.chw.collectFlag,this.chw.likeFlag);
             var params = {
@@ -282,6 +286,9 @@ export default {
         },
         collect(){
             var _self = this;
+            if(_self.isLogin==false) {
+                _self.$router.push({name:"login"});
+            }
             _self.collect_dom();
             console.log(this.chw.collectFlag,this.chw.likeFlag);
             var params = {
