@@ -71,8 +71,8 @@
     z-index: 100;
   }
   .tabs .tabbar-item{
-    padding: .2rem 0 .2rem 0;
-    background-size: .45rem .45rem !important;
+    padding: .1rem 0 .2rem;
+    background-size: auto .45rem !important;
     background-position:  center top .3rem !important;
     background-repeat: no-repeat !important;
     -webkit-box-flex: 1;
