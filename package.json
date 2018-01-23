@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "exif-js": "^2.3.0",
+    "js-md5": "^0.7.3",
     "v-tap": "^3.0.2",
     "vue": "^2.5.10",
     "vue-concise-slider": "^2.4.3",
