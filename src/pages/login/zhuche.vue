@@ -26,7 +26,7 @@
       </div>
       <div class="ls-yanzheng">
         <input type="text" class="yanzheng" maxlength="8" placeholder="验证码"  v-model="param.verifying_code" ref="code"/>
-        <div class="dj-shuru" ref="verify_btn" v-tap="{methods:getVerificationCode}"><span class="msgs">点击获取验证码</span></div>
+        <div class="dj-shuru" ref="verify_btn" v-tap="{methods:verifyParams}"><span class="msgs">点击获取验证码</span></div>
       </div>
     </div>
     <div class="log-btn" @click="nextStep()"><span>下一步</span></div>
@@ -59,7 +59,8 @@
         typeList:common.getProjectTypes(),
 
         is_verify:false,
-        verify_code:'',
+        verify_code:'', // 加密验证码
+        verify_phone:'' // 验证手机号
       }
     },
     mounted: function () {
@@ -183,6 +184,10 @@
           _self.showText = '请输入验证码!';
           _self.show = true;
           return false;
+        } else if( _self.param.mobile_phone != _self.verify_phone ){
+          _self.showText = '手机号码不匹配!';
+          _self.show = true;
+          return false;
         } else if( md5(code) !== _self.verify_code ){
           _self.showText = '验证码错误!';
           _self.show = true;
@@ -205,34 +210,13 @@
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
             _self.verify_code = '';
+            _self.verify_phone = '';
           }
         }, 1000)
       },
 
-      // 检测用户是否存在
-      checkUser(phone){
-        let params= {
-          interfaceId:common.interfaceIds.checkUser,
-          phone:phone
-        };
-        _self.$axios.post('/mongoApi', {
-          params: params
-        }, response => {
-          var data = response.data;
-          if( data ) {
-            if( data.code == 200 ){
-              _self.showText = '网络异常，请重试!';
-              _self.show = true;
-            }
-          }else{
-            _self.showText = '网络异常，请重试!';
-            _self.show = true;
-          }
-        })
-      },
-
       // 获取验证码
-      getVerificationCode () {
+      verifyParams () {
         var _self = this;
         // 验证手机号码
         if(common.isNull(_self.param.mobile_phone)){
@@ -249,6 +233,41 @@
         // 设置获取验证码状态
         if( _self.is_verify == true ) return;
         _self.is_verify = true;
+        _self.checkUser();
+      },
+
+      // 检测用户是否存在
+      checkUser(){
+        var _self = this;
+        let params= {
+          interfaceId:common.interfaceIds.checkUser,
+          phone:_self.param.mobile_phone
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          _self.is_verify = false;
+          var data = response.data;
+          if( data ) {
+            if( data.code == 200 ){
+              _self.getVerificationCode();
+            }else{
+              _self.showText = '网络异常，请重试!';
+              if( !common.isNull(data.msg) ){
+                _self.showText = data.msg;
+              }
+              _self.show = true;
+            }
+          }else{
+            _self.showText = '网络异常，请重试!';
+            _self.show = true;
+          }
+        })
+      },
+
+      // 获取验证码
+      getVerificationCode () {
+        var _self = this;
         // 获取验证码
         var params = {
           'mobile': _self.param.mobile_phone,
@@ -258,6 +277,7 @@
           console.log("data.code:"+data.code)
           if( data.code == 200 ){
             _self.verify_code = data.obj;
+            _self.verify_phone = params.mobile;
             _self.count_down(120);
           }
         })
