@@ -446,7 +446,7 @@
   .weui-cell_access {
     padding:0 !important;
     height: 0.8rem;
-    width: 1rem;
+    /* width: 1rem; */
     display:inline-block!important;
   }
   .weui-cells:before{

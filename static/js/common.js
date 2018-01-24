@@ -327,6 +327,26 @@ const common = {
     return path;
   },
 
+  getWorkyearsType:function(){
+      var type = [
+          {"_id":"1","type_name":"1-3年"},
+          {"_id":"2","type_name":"3-5年"},
+          {"_id":"3","type_name":"5-10年"},
+          {"_id":"4","type_name":"10年以上"}
+      ];
+      return type;
+  },
+  getWorkyearsName:function(id){
+    var name = "";
+    var types = common.getWorkyearsType();
+    var i=0,len=types.length;
+    for(;i<len;i++){
+        if( id == types[i]._id ){
+            name = types[i].type_name;
+        }
+    }
+    return name;
+  },
   uuid:function () {
       var s = [];
       var hexDigits = "0123456789abcdef";

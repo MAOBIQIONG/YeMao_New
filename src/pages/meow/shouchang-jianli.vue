@@ -65,9 +65,8 @@
             } else {
                 console.log('没有获取用户信息');
                 _self.$router.push({name:"login"});
-            }
-          
-      }
+            }         
+      } 
     }
   }
 </script>
