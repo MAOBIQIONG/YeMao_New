@@ -13,7 +13,7 @@
       <div class="tab_box">
         <!--消息列表-->
         <div class="xiaoxi">
-          <div class="xiaoxi-list"@click="toUrl('maintain')">
+          <div class="xiaoxi-list"@click="toUrl('liaotian')">
             <div class="xl-touxiang">
               <img src="../../../static/images/index/bj.jpg" />
             </div>
@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <div class="xiaoxi-list"@click="toUrl('maintain')">
+          <div class="xiaoxi-list"@click="toUrl('liaotian')">
             <div class="xl-touxiang">
               <img src="../../../static/images/index/bj.jpg" />
             </div>

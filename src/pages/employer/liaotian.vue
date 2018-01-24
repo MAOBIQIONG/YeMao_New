@@ -9,12 +9,12 @@
 
     </div>
     <div class="lt-bottom">
-        <!--<div class="lb-left">-->
-           <!--<input type="text" placeholder="请输入价格" />-->
-        <!--</div>-->
-        <!--<div class="lb-right">-->
-            <!--发送-->
-        <!--</div>-->
+        <div class="lb-left">
+           <input type="text" placeholder="请输入消息" />
+        </div>
+        <div class="lb-right">
+            发送
+        </div>
     </div>
   </div>
 </template>
