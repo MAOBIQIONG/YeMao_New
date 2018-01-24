@@ -5,13 +5,13 @@
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
     </div>
-    <scroller 
+    <scroller
     v-model="pullUpDownStatus"
     :height="height"
     :lock-x="lockX"
     :lock-y="lockY"
-    :use-pulldown="true" 
-    :use-pullup="true" 
+    :use-pulldown="true"
+    :use-pullup="true"
     :pulldown-config="pulldownConfig"
     :pullup-config = "pullupConfig"
     @on-scroll="scroll"
@@ -21,7 +21,7 @@
     ref="scroller"
     :class="{scroller:true}"
     >
-        <div>    
+        <div>
             <!--文章详情-->
             <div class="content">
             <div class="piaoti">
@@ -42,14 +42,14 @@
                 {{chw.description}}
                 <div class="bottom">
                 <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:like}">
-                    <span id="praise" ref="like">                     
+                    <span id="praise" ref="like">
                         <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
                         <img v-else src="../../../static/images/zan1.png"/>
                     </span>
                     <span id="praise-txt">{{chw.like}}</span>
                 </div>
                 <div class="bottom-sz" :class="{confirmColor:chw.collectFlag == 1}" v-tap="{methods:collect}">
-                    <span id="xinxin" ref="star">         
+                    <span id="xinxin" ref="star">
                         <img v-if="chw.collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
                         <img v-else src="../../../static/images/xin1.png"/>
                     </span>
@@ -187,10 +187,10 @@ export default {
             // 评论
             is_submit:false,
             comment_placeholder:'填写评论',
-            comment_text:'', 
+            comment_text:'',
             //toast
             showMark:false,
-            showMsg:"",           
+            showMsg:"",
         }
     },
     filters:{
@@ -213,7 +213,7 @@ export default {
             handler:function(val,oldval){
                 if(val.pullupStatus=="loading"){
                     this.loadMoreStatus.show=true;
-                    this.loadMoreStatus.showLoading=true; 
+                    this.loadMoreStatus.showLoading=true;
                 }
             }
         },
@@ -239,12 +239,12 @@ export default {
         _self.chw_id = _self.$route.query.id;
         _self.initData();
         _self.loadData();
-        
+
     },
     mounted: function () {
         // this.dianzan();
         this.$nextTick(()=>{
-            
+
         });
     },
     methods: {
@@ -278,7 +278,7 @@ export default {
             console.log(this.chw.collectFlag,this.chw.likeFlag);
             var params = {
                 interfaceId:common.interfaceIds.like,
-                data:{  
+                data:{
                     like_type: 1,//0、喵喵圈,1、personalChw,2、comments
                     like_id: _self.chw_id,
                     user_id: _self.user_id,
@@ -295,7 +295,7 @@ export default {
                     tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
                 }
                 _self.showToast(tips);
-            })            
+            })
         },
         // 收藏
         collect_dom(param){
@@ -344,7 +344,7 @@ export default {
                 _self.addComment();
             }
         },
-        
+
         addComment(){
             let _self = this;
             let params = {
@@ -475,7 +475,7 @@ export default {
                 _self.loadMoreStatus.show=true;
                 _self.loadMoreStatus.showLoading=false;
                 _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-                
+
                 _self.$refs.scroller.disablePullup();
             } else {
                 _self.pagination.pageNo++
@@ -486,22 +486,22 @@ export default {
             let _self = this
             _self.pagination.pageNo = 0;
             _self.loadMoreStatus.show=false;
-            _self.$refs.scroller.donePullup();  
-            setTimeout(()=>{_self.loadData();_self.initData()},10); 
-            
+            _self.$refs.scroller.donePullup();
+            setTimeout(()=>{_self.loadData();_self.initData()},10);
+
         },
         //上拉加载
         loadMore(){
             let _self = this;
             // _self.loadData();
-            _self.loadData(); 
+            _self.loadData();
         },
         scroll(position){
             // console.log("on-scroll",position);
         },
         pullDownLoading(){
             console.log('on-pull-down-loading');
-            this.refreshPageDate();       
+            this.refreshPageDate();
         },
         pullUpLoading(){
             console.log('on-pull-up-loading');
@@ -527,9 +527,10 @@ export default {
     }
     .pinglun{
         padding-bottom:0;
-      background: white;
+        background: white;
     }
     .confirmColor{
-        color:#f65aa6
+        color:#f65aa6;
+        background: #ffffff !important;
     }
 </style>

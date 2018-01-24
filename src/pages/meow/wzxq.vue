@@ -520,6 +520,7 @@ export default {
         background: white;
     }
     .confirmColor{
-        color:#f65aa6
+      color:#f65aa6;
+      background: #ffffff !important;
     }
 </style>

@@ -61,7 +61,8 @@
   height: 0.7rem;
   line-height: 0.7rem;
   text-align: center;
-  background: #bbbbbb;
+  background: #f65aa6;
+  border: 1px solid #f65aa6;
   border-radius: 0.7rem;
   float: left;
   position: relative;
@@ -74,7 +75,7 @@
 
 .content .neirongshijian .bottom .bottom-zan span img {
   width:0.5rem;
-  margin-top: -0.08rem;
+  margin-top: -0.05rem;
   display: inline-block;
   vertical-align: middle;
 }
@@ -84,7 +85,8 @@
   text-align: center;
   height: 0.7rem;
   line-height: 0.7rem;
-  background: #bbbbbb;
+  background: #f65aa6;
+  border: 1px solid #f65aa6;
   border-radius: 0.7rem;
   float: right;
   margin-right: 1.1rem;
@@ -96,7 +98,7 @@
 
 .content .neirongshijian .bottom .bottom-sz span img {
   width:0.5rem;
-  margin-top: -0.08rem;
+  margin-top: -0.05rem;
   display: inline-block;
   vertical-align: middle;
 }
