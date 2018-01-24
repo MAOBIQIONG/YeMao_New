@@ -1,0 +1,109 @@
+.content .ddxq-top {
+  width: 100%;
+  height: 2rem;
+  background-color: white;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.content .ddxq-top .ddxq-img {
+  width: 1.6rem;
+  height: 1.6rem;
+  background-color: #CCCCCC;
+  margin: 0.2rem 0.18rem;
+  float: left;
+}
+.content .ddxq-top .ddxq-img img{
+  width: 100%;
+  height: 100%;
+}
+.content .ddxq-top .ddxq-jianjie {
+  float: left;
+  width: 5.4rem;
+  height: 1.6rem;
+  line-height: 0.4rem;
+  margin: 0.2rem 0;
+}
+
+.content .ddxq-top .ddxq-jianjie .jianjie-top {
+  width: 100%;
+  height: 1rem;
+  font-size: 0.26rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  color: #4e4e4e;
+}
+
+.content .ddxq-top .ddxq-jianjie .jianjie-bottom {
+  width: 100%;
+  height: 0.6rem;
+  font-size: 0.2rem;
+}
+
+.content .ddxq-top .ddxq-jianjie .jianjie-bottom .db-yushuan {
+  float: left;
+  line-height: 0.6rem;
+  height: 0.6rem;
+}
+
+.content .ddxq-top .ddxq-jianjie .jianjie-bottom .db-yushuan .yushuan {
+  color: #f54747;
+  font-size: 0.32rem;
+}
+.content .xzffs{
+  font-size: 0.28rem;
+}
+.content .xzffs p{
+  width:100%;
+  height: 1rem;
+  line-height: 1rem;
+  background: white;
+  padding-left: 0.2rem;
+  margin-top: 0.2rem;
+  border-bottom:1px solid #f2f2f2;
+}
+.ddxq .ddxq-list .ddxq-box {
+  height:1.2rem;
+}
+
+.ddxq .ddxq-list .ddxq-box .box-left {
+  float: left;
+  height: 1.2rem;
+  line-height: 1.2rem;
+}
+
+.ddxq .ddxq-list .ddxq-box .box-left span {
+  display: inline-block;
+  float: left;
+  height:1.2rem;
+  line-height:1.2rem;
+  text-align: center;
+}
+
+.ddxq .ddxq-list .ddxq-box .box-left span img {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.ddxq .ddxq-list .ddxq-box .box-right {
+  float: right;
+  height:1rem;
+  line-height:1em;
+}
+.ddxq .ddxq-list .ddxq-box .box-right input{
+ margin-top: 0.4rem;
+}
+.ljzf{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  background: #f65aa6;
+  font-size: 0.34rem;
+  color: white;
+}

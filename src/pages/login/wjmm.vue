@@ -15,7 +15,7 @@
       </div>
       <div class="ls-yanzheng">
         <input type="text" class="yanzheng" id="yanzhengma" maxlength="6" placeholder="验证码" ref="code"/>
-        <div class="dj-shuru"><span class="msgs" ref="verify_btn" v-tap="{methods:getVerificationCode}">点击获取验证码</span></div>
+        <div class="dj-shuru"><span class="msgs" ref="verify_btn" v-tap="{methods:verifyParams}">点击获取验证码</span></div>
       </div>
       <div class="ls-xma">
         <input v-model="password" type="password"class="xma"id="xma" placeholder="新密码"/>
@@ -40,7 +40,8 @@
         phone:'',
         password:'',
         is_submit:false,
-        verify_code:'',
+        verify_code:'',  // 加密验证码
+        verify_phone:'', // 验证手机号
         showMark:false,
         showMsg:"",
       }
@@ -171,6 +172,9 @@
         } else if( common.isNull(code) ){
           _self.$refs.tips.innerText = '请输入验证码!';
           return false;
+        }else if( _self.phone != _self.verify_phone ){
+          _self.$refs.tips.innerText = '手机号码不匹配!';
+          return false;
         } else if( md5(code) !== _self.verify_code ){
           _self.$refs.tips.innerText = '验证码错误!';
           return false;
@@ -206,6 +210,7 @@
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
             _self.verify_code = '';
+            _self.verify_phone = '';
           }
         }, 1000)
       },
@@ -213,13 +218,6 @@
       // 获取验证码
       getVerificationCode () {
         var _self = this;
-        // 验证手机号码
-        if( !_self.verifyPhone() ){
-          return;
-        }
-        // 设置获取验证码状态
-        if( _self.is_verify == true ) return;
-        _self.is_verify = true;
         // 获取验证码
         var params = {
           'mobile': _self.phone,
@@ -228,10 +226,53 @@
         interfaces.getVerifyCode(params,function (data) {
           if( data.code == 200 ){
             _self.verify_code = data.obj;
+            _self.verify_phone = params.mobile;
             _self.count_down(120);
           }
         })
       },
+
+      // 获取验证码
+      verifyParams () {
+        var _self = this;
+        // 验证手机号码
+        if( !_self.verifyPhone() ){
+          return;
+        }
+        // 设置获取验证码状态
+        if( _self.is_verify == true ) return;
+        _self.is_verify = true;
+        _self.checkUser();
+      },
+
+      // 检测用户是否存在
+      checkUser(){
+        var _self = this;
+        let params= {
+          interfaceId:common.interfaceIds.checkUser,
+          phone:_self.phone
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          _self.is_verify = false;
+          var data = response.data;
+          if( data ) {
+            if( data.code == 201 ){
+              _self.getVerificationCode();
+            }else{
+              if( !common.isNull(data.msg) ){
+                _self.showToast(data.msg);
+              }else{
+                _self.showToast('网络异常，请重试!');
+              }
+            }
+          }else{
+            _self.showToast('网络异常，请重试!');
+          }
+        })
+      },
+
     }
   }
 </script>

@@ -30,6 +30,7 @@ import orderpingjia from '@/pages/employer/orderpingjia'
 import orderqiangdan from '@/pages/employer/orderqiangdan'
 import shoucangsjs from '@/pages/employer/shoucangsjs'
 import zfcg from '@/pages/employer/zfcg'
+import payment from '@/pages/employer/payment'
 import liaotian from '@/pages/employer/liaotian'
 import daizhifu from '@/pages/employer/daizhifu'
 import daijiaofu from '@/pages/employer/daijiaofu'
@@ -476,6 +477,10 @@ const routeArray = [
   { path: '/zfcg',
     name: 'zfcg',
     component: zfcg
+  },
+  { path: '/payment',
+    name: 'payment',
+    component: payment
   },
   { path: '/liaotian',
     name: 'liaotian',
