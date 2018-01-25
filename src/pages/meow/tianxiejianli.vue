@@ -18,7 +18,7 @@
             <span>姓名</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="params.real_name" type="text" placeholder="请输入姓名" />
+            <input v-model="dataParams.real_name" type="text" placeholder="请输入姓名" />
           </div>
         </div>
         <div class="qdtime">
@@ -26,7 +26,7 @@
             <span>性别</span>
           </div>
           <div class="qdtime-right">
-            <checker v-model="params.gender" radio-required default-item-class="demo1-item" selected-item-class="demo1-item-selected">
+            <checker v-model="dataParams.gender" radio-required default-item-class="demo1-item" selected-item-class="demo1-item-selected">
               <checker-item value="男">男</checker-item>
               <checker-item value="女">女</checker-item>
             </checker>
@@ -41,7 +41,7 @@
             <span>出生年月</span>
           </div>
           <div class="qdtime-right">
-            <datetime v-model="params.birthday" class="shijian" placeholder="请选择生日" style="padding-right:0"></datetime>
+            <datetime v-model="dataParams.birthday" class="shijian" placeholder="请选择生日" style="padding-right:0" :min-year="1949"></datetime>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
             <span>毕业院校</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="params.school_name" type="text" placeholder="请输入毕业院校" />
+            <input v-model="dataParams.school_name" type="text" placeholder="请输入毕业院校" />
           </div>
         </div>
         <div class="qdtime">
@@ -59,7 +59,7 @@
             <span>设计类型</span>
           </div>
           <div class="qdtime-right">
-            <select class="xmlx-kuang" v-model="params.type">
+            <select class="xmlx-kuang" v-model="dataParams.type">
               <option value="">请选择类型</option>
               <option v-for="item in typeList" :value="item._id">{{item.type_name}}</option>
             </select>
@@ -70,7 +70,7 @@
             <span>最高学历</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="params.education" type="text" placeholder="请输入最高学历" />
+            <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" />
           </div>
         </div>
         <div class="qdtime">
@@ -78,7 +78,7 @@
             <span>工作年限</span>
           </div>
             <div class="qdtime-right">
-                <select class="xmlx-kuang rtl" v-model="params.working_year">
+                <select class="xmlx-kuang rtl" v-model="dataParams.working_year">
                     <option value="">请选择工作年限</option>
                     <option :value="item._id" v-for="(item,index) in workyearList" :key="index">{{item.type_name}}</option>
                 </select>
@@ -91,7 +91,7 @@
             <span>邮箱</span>
           </div>
           <div class="qdtime-right"style="line-height:normal">
-            <x-input name="email" placeholder="请输入邮箱地址" is-type="email" text-align="right" v-model="params.email"></x-input>
+            <x-input name="email" placeholder="请输入邮箱地址" is-type="email" text-align="right" v-model="dataParams.email"></x-input>
           </div>
         </div>
         <div class="qdtime">
@@ -101,14 +101,14 @@
           <div class="qdtime-right">
             <group class="xmlx-kuang">
               <!-- <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address> -->
-                <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address>
+                <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" style="height:1rem;line-height:1rem;"></x-address>
             </group>
           </div>
         </div>
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="params.description"></textarea>
+        <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="dataParams.description"></textarea>
         <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
       </div>
     </div>
@@ -128,7 +128,7 @@
       XInput,
       Toast
     },
-    data: function () {
+    data(){
         return {
             demo1Required: '男',
             imgList:[],
@@ -145,7 +145,7 @@
             value1: '2015-11-12',
             value2: '2015-10-12',
             value4: '2025-10-12',
-            params:{
+            dataParams:{
                 real_name:"",
                 img:"http://yemao/wozuishuai.png",
                 gender:"",
@@ -167,25 +167,26 @@
         _self.typeList = common.getProjectTypes();
         _self.workyearList = common.getWorkyearsType();
         var user = common.getObjStorage("userInfo") || {};
-        var resumesParams1 = common.getObjStorage("resumesParams1")|| {};
+        var resumeParams1 = common.getObjStorage("resumeParams1")|| {};
         
-        console.log('resumesParams1',resumesParams1);
+        console.log('resumeParams1',resumeParams1);
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
             _self.initData();
         } else {
             console.log('user_id is null');
-            // _self.$router.push({name:'login'});
+            _self.$router.push({name:'login'});
         }
-        if(!common.isNull(resumesParams1)){
-            // resumesParams1.city = ['430000', '430400', '430407'];
-            _self.params = resumesParams1;
+        if(!common.isNull(resumeParams1) && common.getStorage('fromWorkExp')=='1'){
+            // resumeParams1.city = ['430000', '430400', '430407'];
+            _self.dataParams = resumeParams1;
             // console.log('缓存加载完成');
             // console.log('_self.params',_self.params)
         }
     },
     mounted: function () {
       this. wzxz()
+      console.log("mounted!!",this.dataParams);
     },
     methods: {
         showToast(msg){
@@ -193,7 +194,9 @@
             this.toastText = msg;
         },
         goback () {
-            this.$router.goBack()
+            common.delStorage("fromWorkExp");
+            common.delStorage("resumeParams1");
+            this.$router.goBack();
         },
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
@@ -253,63 +256,55 @@
                     console.log(response);
                     let data = response.data.data
                     if(!common.isNull(data)) {
-                        _self.params.user_id = _self.user_id;
-                        _self.params = data;
+                        _self.dataParams.user_id = _self.user_id;
+                        _self.dataParams = data;
                     }
                 });
         },
         nextStep(){
             var _self = this;
-            if( common.isNull(_self.params.real_name) ){
+            if( common.isNull(_self.dataParams.real_name) ){
                 _self.showToast("请填写用户名");
                 return;
             }
-            if( common.isNull(_self.params.gender) ){
+            if( common.isNull(_self.dataParams.gender) ){
                 _self.showToast("请选择性别");
                 return;
             }
-            if( common.isNull(_self.params.birthday) ){
+            if( common.isNull(_self.dataParams.birthday) ){
                 _self.showToast("请选择生日");
                 return;
             }
-            if( common.isNull(_self.params.school_name) ){
+            if( common.isNull(_self.dataParams.school_name) ){
                 _self.showToast("请填写学校名称");
                 return;
             }
-            if( common.isNull(_self.params.type) ){
+            if( common.isNull(_self.dataParams.type) ){
                 _self.showToast("请选择设计类别");
                 return;
             }
-            if( common.isNull(_self.params.education) ){
+            if( common.isNull(_self.dataParams.education) ){
                 _self.showToast("请填写最高学历");
                 return;
             }
-            if( common.isNull(_self.params.working_year) ){
+            if( common.isNull(_self.dataParams.working_year) ){
                 _self.showToast("请填写工作年限");
                 return;
             }
-            if( common.isNull(_self.params.email) ){
+            if( common.isNull(_self.dataParams.email) ){
                 _self.showToast("请填写邮箱地址");
                 return;
             }
-            if( common.isNull(_self.params.city) ){
+            if( common.isNull(_self.dataParams.city) ){
                 _self.showToast("请填写所在城市");
                 return;
             }
-            if( common.isNull(_self.params.description) ){
+            if( common.isNull(_self.dataParams.description) ){
                 _self.showToast("请填写自我描述");
                 return;
             }
-            // if(common.isNull(title)) {
-            //     _self.showToast("请填写标题");
-            //     return;
-            // }
-            // if (common.isNull(area)) {
-            //     _self.showToast("请填写提问内容");
-            //     return;
-            // }
-            common.setStorage("resumesParams1",this.params);
-            console.log(this.params);
+            common.setStorage("resumeParams1",this.dataParams);
+            console.log(this.dataParams);
             _self.toUrl('gongzuojinli')
         }
     }

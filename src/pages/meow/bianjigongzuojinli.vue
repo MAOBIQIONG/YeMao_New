@@ -14,7 +14,7 @@
             <span>企业名称</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="params.company_name" type="text" placeholder="请输入企业名称" />
+            <input v-model="dataParams.company_name" type="text" placeholder="请输入企业名称" />
           </div>
         </div>
         <div class="qdtime">
@@ -22,7 +22,7 @@
             <span>职位</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="params.positions" type="text" placeholder="请输入职位" />
+            <input v-model="dataParams.positions" type="text" placeholder="请输入职位" />
           </div>
         </div>
         <div class="qdtime zzsj">
@@ -30,13 +30,13 @@
             <span>在职时间</span>
           </div>
           <div class="qdtime-right">
-            <span><datetime v-model="params.start_time" class="shijian" placeholder="开始时间"></datetime></span> / <span><datetime v-model="params.end_time" class="shijian" placeholder="结束时间"></datetime></span>
+            <span><datetime v-model="dataParams.start_time" class="shijian" placeholder="开始时间" :min-year="1978"></datetime></span> / <span><datetime v-model="dataParams.end_time" class="shijian" placeholder="结束时间"  :min-year="1978"></datetime></span>
           </div>
         </div>
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="params.description" class="area" maxlength="300" placeholder="请输入工作描述"></textarea>
+        <textarea v-model="dataParams.description" class="area" maxlength="300" placeholder="请输入工作描述"></textarea>
         <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
       </div>
       <div class="tjgzjl">
@@ -58,7 +58,7 @@ export default {
       return {
         value2: '2015-10-12',
         value4: '2025-10-12',
-        params:{
+        dataParams:{
             user_id:"",
             company_name:"",
             positions:"",
@@ -67,20 +67,23 @@ export default {
             description:"",
         },
         toastShow:false,
-        toastText:""
+        toastText:"",
+        isEdit:false,
       }
     },
     created(){
         var _self = this;
+        console.log(_self.$route.query);
         if(_self.$route.query){
             if(_self.$route.query.id){
                 _self.we_id = _self.$route.query.id;
+                _self.isEdit = true;
                 _self.initData();
             }
         }     
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
-            _self.params.user_id = user._id;
+            _self.dataParams.user_id = user._id;
             // _self.initData();
         } else {
             console.log('user_id is null');
@@ -128,7 +131,7 @@ export default {
                 }, response => {
                     console.log(response);
                     var data = response.data.we;   
-                    _self.params = data;
+                    _self.dataParams = data;
                 });
         },
         strToTimestamp(str){
@@ -141,36 +144,39 @@ export default {
         },
         saveData(){
             let _self = this;
-            if( common.isNull(_self.params.company_name) ){
+            if( common.isNull(_self.dataParams.company_name) ){
                 _self.showToast("请填写公司名称");
                 return;
             }
-            if( common.isNull(_self.params.positions) ){
+            if( common.isNull(_self.dataParams.positions) ){
                 _self.showToast("请输入职位");
                 return;
             }
-            if( common.isNull(_self.params.start_time) ){
+            if( common.isNull(_self.dataParams.start_time) ){
                 _self.showToast("请选择在职开始时间");
                 return;
             }
-            if( common.isNull(_self.params.end_time) ){
+            if( common.isNull(_self.dataParams.end_time) ){
                 _self.showToast("请选择在职结束时间");
                 return;
             }          
-            if(_self.strToTimestamp(_self.params.start_time)>=_self.strToTimestamp(_self.params.end_time)){
+            if(_self.strToTimestamp(_self.dataParams.start_time)>=_self.strToTimestamp(_self.dataParams.end_time)){
                 _self.showToast("结束时间必须大于开始时间");
                 return;
             }
-            if( common.isNull(_self.params.description) ){
+            if( common.isNull(_self.dataParams.description) ){
                 _self.showToast("请填写描述信息");
                 return;
             }
-            console.log(_self.params);
+            console.log(_self.dataParams);
             let params = {
                 interfaceId:common.interfaceIds.saveDataFun,
                 coll:'workExperiences',
-                data:_self.params,
+                data:_self.dataParams,
             };
+            if(_self.isEdit) {
+                params._id = _self.we_id;
+            }
             _self.$axios.post('/mongoApi', {
                 params: params
                 }, response => {

@@ -1,10 +1,10 @@
 <template>
   <div>
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>工作经历</span>
-      <div class="header-right" @click="toUrl('qiwanggongzuo')">下一步</div>
+      <div class="header-right" @click="nextStep()">下一步</div>
     </div>
     <scroller
         v-model="pullUpDownStatus"
@@ -23,7 +23,7 @@
         :class="{scroller:true}"    
     >
         <!--编辑工作经历-->
-        <div class="content content-p" style="margin:0;outline:2px solid red;">
+        <div class="content content-p" style="padding-top:0;position:static">
             <div v-for="(item,index) in list" :key="index">
                 <div class="gzjl">
                 <div class="rzsj">
@@ -70,14 +70,11 @@ import {Scroller,LoadMore,Toast} from 'vux'
         lockY:{
             type:Boolean,
             default:false
-        },
-        height:{
-            type:String,
-            default:""
         }
     },
     data: function () {
       return {
+        height:"",
         toastShow:false,
         toastText:"",
         list:[],
@@ -146,17 +143,23 @@ import {Scroller,LoadMore,Toast} from 'vux'
         }
     },
     mounted(){
-        // let fontSize = getComputedStyle(document.getElementsByTagName('body')[0]).fontSize;
-        // console.log(fontSize);
-        // this.height ='-' + parseInt(fontSize.replace('px','')*1.2)
-        // console.log('height',this.height);
+        let fontSize = getComputedStyle(document.getElementsByTagName('body')[0]).fontSize;
+        console.log(fontSize);
+        this.height ='-' + parseInt(fontSize.replace('px','')*1.2)
+        console.log('height',this.height);
     },
     methods: {
         goback () {
+            common.setStorage('fromWorkExp',1)
             this.$router.goBack()
         },
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
+        },
+        nextStep(){
+            common.setStorage('resumeParams2',this.list);
+            this.toUrl('qiwanggongzuo');
+           
         },
         showToast(msg){
             this.toastShow = true;
@@ -223,7 +226,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
             }
             // console.log(_self.list);
         },
-                refreshPageDate(){
+        refreshPageDate(){
             let _self = this
             _self.pagination.pageNo = 0;
             _self.loadMoreStatus.show=false;
