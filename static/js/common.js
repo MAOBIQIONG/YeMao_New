@@ -327,7 +327,6 @@ const common = {
     return path;
   },
 
-<<<<<<< HEAD
   getWorkyearsType:function(){
       var type = [
           {"_id":"1","type_name":"1-3年"},
@@ -348,7 +347,6 @@ const common = {
     }
     return name;
   },
-=======
   // 获取随机数
   getRandomNum: function (minNum,maxNum){
     return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
@@ -361,7 +359,6 @@ const common = {
     return avatar;
   },
 
->>>>>>> de48beae9c458d96376f1f6bfda4776747c05839
   uuid:function () {
       var s = [];
       var hexDigits = "0123456789abcdef";
@@ -492,11 +489,7 @@ common.op_localStorage = function() {
 }
 
 // isType方法: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
-<<<<<<< HEAD
-var names = ['Arguments', 'Function','Number', 'Date', 'RegExp'];
-=======
 var names = ['Arguments', 'Function', 'Number', 'Date', 'RegExp'];//, 'String'
->>>>>>> de48beae9c458d96376f1f6bfda4776747c05839
 for (var i = 0; i < names.length; i++) {
 (function(common,i){
 	common['is' + names[i]] = function(obj) {
