@@ -209,8 +209,6 @@
             _self.$refs.verify_btn.innerText = "重新获取";
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
-            // 重置获取验证码状态及验证码
-            _self.is_verify = false;
             _self.verify_code = '';
             _self.verify_phone = '';
           }
@@ -228,6 +226,7 @@
         interfaces.getVerifyCode(params,function (data) {
           if( data.code == 200 ){
             _self.verify_code = data.obj;
+            _self.verify_phone = params.mobile;
             _self.count_down(120);
           }
         })
