@@ -58,13 +58,13 @@
   .vux-pop-out-enter-active,
   /*.vux-pop-out-leave-active,*/
   .vux-pop-in-enter-active
-  /*.vux-pop-in-leave-active */
+  /*.vux-pop-in-leave-active*/
   {
     height: 100%;
     width: 100%;
     top: 0;
     position: absolute;
-    transition: all 300ms;
+    transition: all 160ms;
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -91,7 +91,6 @@
 
   /**下一页离开**/
   .vux-pop-in-leave-active {
-    transition: all 50ms;
     opacity: 0;
     /*transform: translate3d(-100%, 0, 0);*/
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <x-header :left-options="{backText: ''}" :title="title"></x-header>
+    <x-header :left-options="{backText: '',preventGoBack:true}" :title="title" @on-click-back="goback"></x-header>
   </div>
 </template>
 
@@ -20,6 +20,11 @@
     data () {
       return {
       }
+    },
+    methods: {
+      goback() {
+        this.$router.goBack();
+      },
     }
   }
 </script>
