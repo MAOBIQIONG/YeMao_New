@@ -472,11 +472,16 @@ common.op_localStorage = function() {
 }
 
 // isType方法: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
-var names = ['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'];
+var names = ['Arguments', 'Function','Number', 'Date', 'RegExp'];
 for (var i = 0; i < names.length; i++) {
+(function(common,i){
 	common['is' + names[i]] = function(obj) {
+        console.log(names,i,names[i])
+        console.log(Object.prototype.toString.call(obj),'[object ' + names[i] + ']');
 		return toString.call(obj) == '[object ' + names[i] + ']';
 	};
+})(common,i)
+
 }
 common['isArray'] =  Array.isArray || function(obj) {
     return toString.call(obj) == '[object Array]';

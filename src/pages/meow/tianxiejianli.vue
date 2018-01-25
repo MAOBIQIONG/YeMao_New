@@ -100,7 +100,8 @@
           </div>
           <div class="qdtime-right">
             <group class="xmlx-kuang">
-              <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address>
+              <!-- <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address> -->
+                <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address>
             </group>
           </div>
         </div>
@@ -166,6 +167,9 @@
         _self.typeList = common.getProjectTypes();
         _self.workyearList = common.getWorkyearsType();
         var user = common.getObjStorage("userInfo") || {};
+        var resumesParams1 = common.getObjStorage("resumesParams1")|| {};
+        
+        console.log('resumesParams1',resumesParams1);
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
             _self.initData();
@@ -173,8 +177,12 @@
             console.log('user_id is null');
             // _self.$router.push({name:'login'});
         }
-
-        
+        if(!common.isNull(resumesParams1)){
+            // resumesParams1.city = ['430000', '430400', '430407'];
+            _self.params = resumesParams1;
+            // console.log('缓存加载完成');
+            // console.log('_self.params',_self.params)
+        }
     },
     mounted: function () {
       this. wzxz()
@@ -236,7 +244,7 @@
             let _self = this;
             let params = {
                 interfaceId:common.interfaceIds.queryByUserId,
-                coll:'resumes',
+                coll:common.collections.resumes,
                 user_id:_self.user_id
             }
             _self.$axios.post('/mongoApi', {
@@ -282,6 +290,10 @@
             }
             if( common.isNull(_self.params.email) ){
                 _self.showToast("请填写邮箱地址");
+                return;
+            }
+            if( common.isNull(_self.params.city) ){
+                _self.showToast("请填写所在城市");
                 return;
             }
             if( common.isNull(_self.params.description) ){

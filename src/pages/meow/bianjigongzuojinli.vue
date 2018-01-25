@@ -36,14 +36,14 @@
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="params.description" class="area" maxlength="300" placeholder="请输入问题描述"></textarea>
+        <textarea v-model="params.description" class="area" maxlength="300" placeholder="请输入工作描述"></textarea>
         <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
       </div>
       <div class="tjgzjl">
         删除此工作经历
       </div>
     </div>
-    <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
+    <toast v-model="toastShow" type="text" :text="toastText" width="4em" :time="1500"></toast>
   </div>
 </template>
 
@@ -62,7 +62,7 @@ export default {
             user_id:"",
             company_name:"",
             positions:"",
-            start_time:"",
+            start_time:"",  
             end_time:"",
             description:"",
         },
@@ -72,6 +72,12 @@ export default {
     },
     created(){
         var _self = this;
+        if(_self.$route.query){
+            if(_self.$route.query.id){
+                _self.we_id = _self.$route.query.id;
+                _self.initData();
+            }
+        }     
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
             _self.params.user_id = user._id;
@@ -80,6 +86,8 @@ export default {
             console.log('user_id is null');
             _self.$router.push({name:'login'});
         }
+       
+       
     },
     mounted: function () {
         this. wzxz()
@@ -108,6 +116,20 @@ export default {
                 $(".zs").text(300-$(".area").val().length)
             }
             })
+        },
+        initData(){
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.queryWEById,
+                _id:_self.we_id
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response);
+                    var data = response.data.we;   
+                    _self.params = data;
+                });
         },
         strToTimestamp(str){
             if(/\d{4}-\d{1,2}-\d{1,2}$/.test(str)){
@@ -153,6 +175,9 @@ export default {
                 params: params
                 }, response => {
                     console.log(response);
+                    _self.showToast("保存成功！")
+                    setTimeout(()=>{_self.$router.goBack()},1500);
+                    
                 });
         }
     }
