@@ -59,12 +59,12 @@ import {Toast} from 'vux'
         }
     },
     methods: {
-      goback () {
-        this.$router.goBack()
-      },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
-      },
+        goback () {
+            this.$router.goBack()
+        },
+        toUrl: function (pagename) {
+            this.$router.push({name: pagename})
+        },
         showToast(msg){
             this.toastShow = true;
             this.toastText = msg;
