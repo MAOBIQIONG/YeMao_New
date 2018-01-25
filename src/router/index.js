@@ -105,10 +105,12 @@ import maintain from '@/pages/main/maintain'
 
 Vue.use(Router)
 
-Router.prototype.goBack = function () {
-  // console.log('back:')
+Router.prototype.goBack = function (num) {
+  if( num == null || num == undefined ){
+    num = -1;
+  }
   this.isBack = true
-  window.history.go(-1)
+  window.history.go(num)
 }
 
 const routeArray = [

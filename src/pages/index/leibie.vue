@@ -24,7 +24,7 @@
             <div class="gz-content">
               <div class="tupian">
                 <div class="tu" v-for="img in order.imgs.slice(0, 3)">
-                  <img :src="img" />
+                  <img :src="checkImg(img)" />
                 </div>
               </div>
               <div class="wenzhi">{{order.project_describe}}</div>
@@ -95,6 +95,9 @@
       checkAvatar (path) {
         var img = common.getAvatar(path, './static/images/bj.jpg')
         return img
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
       },
       // 抢单
       grabOrder (id) {

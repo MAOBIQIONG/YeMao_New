@@ -188,7 +188,7 @@
           _self.showText = '手机号码不匹配!';
           _self.show = true;
           return false;
-        } else if( md5(code) !== _self.verify_code ){
+        }else if( md5(code) !== _self.verify_code ){
           _self.showText = '验证码错误!';
           _self.show = true;
           return false;
@@ -246,7 +246,6 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          _self.is_verify = false;
           var data = response.data;
           if( data ) {
             if( data.code == 200 ){
@@ -275,6 +274,7 @@
         }
         interfaces.getVerifyCode(params,function (data) {
           console.log("data.code:"+data.code)
+          _self.is_verify = false;
           if( data.code == 200 ){
             _self.verify_code = data.obj;
             _self.verify_phone = params.mobile;

@@ -56,52 +56,45 @@
     height:100%;
   }
   .vux-pop-out-enter-active,
-  .vux-pop-out-leave-active,
-  .vux-pop-in-enter-active,
-  .vux-pop-in-leave-active {
-    transition: all 300ms;
+  /*.vux-pop-out-leave-active,*/
+  .vux-pop-in-enter-active
+  /*.vux-pop-in-leave-active*/
+  {
     height: 100%;
+    width: 100%;
     top: 0;
     position: absolute;
+    transition: all 160ms;
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
-    /*backface-visibility: hidden;*/
-    /*perspective: 1000;*/
     backface-visibility: hidden;
     -moz-backface-visibility: hidden; /* Firefox */
   }
 
+  /**上一页返回**/
   .vux-pop-out-enter {
     opacity: 0;
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(-100%, 0, 0);
-    -moz-transform: translate3d(-100%, 0, 0);
-    -ms-transform: translate3d(-100%, 0, 0);
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
+    transform: translate3d(-100%, 0, 0);
   }
 
+  /**上一页离开**/
   .vux-pop-out-leave-active {
-    transition: all 0ms;
     opacity: 0;
     /*transform: translate3d(100%, 0, 0);*/
   }
 
+  /**下一页进入**/
   .vux-pop-in-enter {
     opacity: 0;
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(-100%, 0, 0);
-    -moz-transform: translate3d(-100%, 0, 0);
-    -ms-transform: translate3d(-100%, 0, 0);
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
+    transform: translate3d(100%, 0, 0);
   }
 
+  /**下一页离开**/
   .vux-pop-in-leave-active {
-    transition: all 0ms;
     opacity: 0;
     /*transform: translate3d(-100%, 0, 0);*/
   }
+
 </style>
 
 <style>

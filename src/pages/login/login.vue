@@ -66,7 +66,7 @@
     },
     data () {
       return {
-        phone:"",
+        phone:'',
         is_verify:false,
         verify_code:'',  // 加密验证码
         verify_phone:'', // 验证手机号
@@ -76,7 +76,9 @@
     },
     store,
     created: function () {
-    //   this.submit();
+      var _self = this;
+      var phone = common.getObjStorage('login_account');
+      _self.phone = common.checkNull(phone);
     },
     mounted:function(){
       //输入框内有内容时显示清空按钮
@@ -195,8 +197,7 @@
       submit () {
         var _self = this;
         var params = {
-          interfaceId:common.interfaceIds.queryData,
-          coll:'users',
+          interfaceId:common.interfaceIds.login,
           where:{
             "phone":_self.phone
           }
@@ -208,17 +209,16 @@
           if( data ){
             _self.verify_code = '';  // 清除验证码
             _self.verify_phone = ''; // 清除获取验证码手机号
-            if( data.length == 1 ){
-              common.setStorage("userInfo",data[0]);
+            if( data.code == 200 ){
+              common.setStorage("userInfo",data.result);
+              common.setStorage("login_account",_self.phone);
               this.$store.state.pageIndex = 0;
               _self.toUrl('index');
-            }else if( data.length == 0 ){
-              _self.showToast("用户不存在！")
-            }else if( data.length > 1 ){
-              _self.showToast("帐户重复，请联系管理员！")
+            }else{
+              _self.showToast(data.msg);
             }
           }else{
-            _self.showToast("用户不存在！")
+            _self.showToast("登录失败！")
           }
         })
       },

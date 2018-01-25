@@ -38,16 +38,16 @@
 }
 
 .content .gh-sjh .list .yzm {
-	width: 2.4rem;
-	height: 0.6rem;
-	line-height: 0.6rem;
-	text-align: center;
-	border: 1px solid #ff4fae;
-	color: #ff4fae;
-	border-radius: 0.1rem;
-	position: absolute;
-	top: 0.1rem;
-	right: 0.2rem;
+  width: 2.4rem;
+  height: 0.7rem;
+  line-height: 0.7rem;
+  text-align: center;
+  border: 1px solid #ff4fae;
+  color: #ff4fae;
+  border-radius: 0.1rem;
+  position: absolute;
+  top: 0.05rem;
+  right: 0.2rem;
 }
 
 .gunzhe {
