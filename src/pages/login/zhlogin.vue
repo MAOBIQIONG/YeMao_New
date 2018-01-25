@@ -31,7 +31,6 @@
 
 <script>
   import { Toast, } from 'vux'
-  import md5 from 'js-md5';
   export default {
     components: {
       Toast,
@@ -43,6 +42,11 @@
         showMark:false,
         showMsg:"",
       }
+    },
+    created: function () {
+      var _self = this;
+      var phone = common.getStorage('login_account');
+      _self.phone = common.checkNull(phone);
     },
     mounted:function(){
       //输入框内有内容时显示清空按钮
@@ -156,30 +160,27 @@
       submit () {
         var _self = this;
         var params = {
-          interfaceId:common.interfaceIds.queryData,
-          coll:'users',
+          interfaceId:common.interfaceIds.login,
           where:{
             "phone":_self.phone,
-            "password":md5(_self.phone+_self.password)
+            "password": _self.password
           }
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
           var data = response.data;
           if( data ){
-            if( data.length == 1 ){
-              common.setStorage("userInfo",data[0]);
-              this.$store.state.pageIndex = 0;
+            if( data.code == 200 ){
+              common.setStorage("userInfo",data.result);
+              common.setStorage("login_account",_self.phone);
+              _self.$store.state.pageIndex = 0;
               _self.toUrl('index');
-            }else if( data.length == 0 ){
-              _self.showToast("账号或密码错误！")
-            }else if( data.length > 1 ){
-              _self.showToast("账号重复，请联系管理员！")
+            }else{
+              _self.showToast(data.msg);
             }
           }else{
-            _self.showToast("网络异常，请重试！")
+            _self.showToast("登录失败！")
           }
         })
       },

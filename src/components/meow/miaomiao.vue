@@ -224,8 +224,8 @@
       checkAvatar (path) {
         return common.getAvatar(path)
       },
-      checkImg (path) {
-        return common.getAvatar(path)
+      checkImg(path){
+        return common.getDefultImg(path);
       },
       // 时间戳转日期
       timeStamp2String(time){

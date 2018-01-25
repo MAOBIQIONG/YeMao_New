@@ -423,6 +423,10 @@ const common = {
     queryAlumniById:'queryAlumniById',             // 校友会详情
     checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
     registerUser:'registerUser',                   // 注册
+    updateUserById:'updateUserById',               // 修改用户信息
+    checkUserName:'checkUserName',                 // 检测用户昵称重复
+    login:"login",                                 // 登录
+    updateUserPwd:'updateUserPwd',                 // 修改密码
   },
 
 }
@@ -465,7 +469,7 @@ common.op_localStorage = function() {
 }
 
 // isType方法: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
-var names = ['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'];
+var names = ['Arguments', 'Function', 'Number', 'Date', 'RegExp'];//, 'String'
 for (var i = 0; i < names.length; i++) {
 	common['is' + names[i]] = function(obj) {
 		return toString.call(obj) == '[object ' + names[i] + ']';

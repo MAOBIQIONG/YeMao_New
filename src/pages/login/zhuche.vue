@@ -274,6 +274,7 @@
         }
         interfaces.getVerifyCode(params,function (data) {
           console.log("data.code:"+data.code)
+          _self.is_verify = false;
           if( data.code == 200 ){
             _self.verify_code = data.obj;
             _self.verify_phone = params.mobile;

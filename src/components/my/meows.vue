@@ -46,7 +46,7 @@
             <div class="sjs-bottom">
               <ul>
                 <li v-for="(img, i) in item.imgs" v-tap="{methods:show,index:index,i:i}">
-                  <div class="previewer-img" :class="'previewer'+index" :style="'background-image:url('+img+')'"></div>
+                  <div class="previewer-img" :class="'previewer'+index" :style="'background-image:url('+checkImg(img)+')'"></div>
                 </li>
               </ul>
             </div>
@@ -190,6 +190,9 @@
       // 头像
       checkAvatar (path) {
         return common.getAvatar(path)
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
       },
       //
       timeStamp2String(time){

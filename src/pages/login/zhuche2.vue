@@ -175,7 +175,7 @@
           interfaceId:common.interfaceIds.registerUser,
           data:{
             user_name: user_name,
-            password: md5(phone+password),
+            password: password,
             phone: phone,
             user_type: user_type,
             img: common.getRandomAvatar(),
