@@ -327,6 +327,18 @@ const common = {
     return path;
   },
 
+  // 获取随机数
+  getRandomNum: function (minNum,maxNum){
+    return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
+  },
+
+  // 获取随机头像
+  getRandomAvatar: function () {
+    var num = common.getRandomNum(1,8);
+    var avatar = './static/images/avatar/'+num+'.png';
+    return avatar;
+  },
+
   uuid:function () {
       var s = [];
       var hexDigits = "0123456789abcdef";
@@ -410,6 +422,7 @@ const common = {
     queryWEById:'queryWEById',                     // 工作经历详情
     queryAlumniById:'queryAlumniById',             // 校友会详情
     checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
+    registerUser:'registerUser',                   // 注册
   },
 
 }

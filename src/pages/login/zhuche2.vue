@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { Toast, Group, XSwitch, XButton } from 'vux'
+  import { Toast, Group, XSwitch, XButton } from 'vux'
+  import md5 from 'js-md5';
   export default {
     data () {
       return {
@@ -37,7 +38,8 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
         toastText:"请正确填写密码",
         toastNotSame:"两次密码不一样",
         toastNotReg:"密码为6-16位的数字或字母",
-        toastSuccess:"注册成功"
+        toastSuccess:"注册成功",
+        toastFail:"注册失败"
       }
     },
     components: {
@@ -58,34 +60,35 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
       this.mima('.mima')
     },
     methods: {
-         showPosition (position) {
-            this.position = position
-            this.showPositionValue = true
-        },
-        onHide () {
-            console.log('on hide')
-        },
-        onChange (val) {
-            const _this = this
-            if (val) {
-                this.$vux.toast.show({
-                text: 'Hello World',
-                onShow () {
-                    console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                    console.log('Plugin: I\'m hiding')
-                    _this.show9 = false
-                }
-                })
-            } else {
-                this.$vux.toast.hide()
+      showPosition (position) {
+        this.position = position
+        this.showPositionValue = true
+      },
+      onHide () {
+        console.log('on hide')
+      },
+      onChange (val) {
+        const _this = this
+        if (val) {
+          this.$vux.toast.show({
+            text: 'Hello World',
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+              console.log('Plugin: I\'m hiding')
+              _this.show9 = false
             }
-        },
+          })
+        } else {
+          this.$vux.toast.hide()
+        }
+      },
+
       goback () {
         this.$router.goBack()
       },
-       toUrl(name){
+      toUrl(name){
         this.$router.push({name:name});
       },
       //输入框内有内容时显示清空按钮
@@ -149,69 +152,48 @@ import { Toast, Group, XSwitch, XButton } from 'vux'
         })
       },
       register(){
-          let _self = this;
-          let regpwd =/^[0-9a-zA-Z_#]{6,16}$/;
+        let _self = this;
+        let regpwd =/^[0-9a-zA-Z_#]{6,16}$/;
 
-          if(!regpwd.test(_self.param.password)){
-            _self.toastText = _self.toastNotReg;
-            _self.show=true;
-            return;
-          }
-          if(_self.param.password != _self.param.passwordConfirm) {
-            _self.toastText = _self.toastNotSame;
-            _self.show=true;
-            return;
-          }
+        if(!regpwd.test(_self.param.password)){
+          _self.toastText = _self.toastNotReg;
+          _self.show=true;
+          return;
+        }
+        if(_self.param.password != _self.param.passwordConfirm) {
+          _self.toastText = _self.toastNotSame;
+          _self.show=true;
+          return;
+        }
 
-          let user_name = common.op_localStorage().get('nickname');
-          let phone = common.op_localStorage().get('mobile_phone');
-          let user_type =common.op_localStorage().get('user_typee');
-          let password = _self.param.password;
-          // let verifying_code = common.op_localStorage().get('verifying_code');
-          let data = {
-            // id:"",
-            // create_date:"创建时间",
-            user_name:user_name,
-            real_name:"",
-            password:password,
-            phone:phone,
-            gender:"",
-            birthday:"",
-            img:"",
-            user_type:user_type,
-            working_years:0,
-            composite_score:0,
-            authenticating_state:0,
-            hourly_wage:0,
-            description:"",
-            real_name:"",
-            id_number:"",
-            school_name:"",
-            certificate_name:"",
-            city:"",
-            email:"",
-            orders_number:0,
-            working_hours:0,
-          }
-          console.log("data:"+JSON.stringify(data))
-          let params= {};
-          params.data = data;
-          // params.data.password = _self.param.password;
-
-          params.interfaceId = common.interfaceIds.insertData;
-          params.coll= "users";
-          console.log(params);
-
+        let user_name = common.op_localStorage().get('nickname');
+        let phone = common.op_localStorage().get('mobile_phone');
+        let user_type =common.op_localStorage().get('user_type');
+        console.log(user_type)
+        let password = _self.param.password;
+        let params= {
+          interfaceId:common.interfaceIds.registerUser,
+          data:{
+            user_name: user_name,
+            password: md5(phone+password),
+            phone: phone,
+            user_type: user_type,
+            img: common.getRandomAvatar(),
+          },
+        };
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          if (response.data) {
-            console.log(response)
-            console.log(response.data)
-            // 显示
+          var data = response.data;
+          if( data && data.code == 200 ) {
             _self.toastText=_self.toastSuccess;
             _self.show=true;
-            setTimeout(()=>{_self.toUrl('login')}, 1200)
+            setTimeout(function () {
+              _self.$router.go(-2)
+            },1000)
+          }else{
+            _self.toastText=_self.toastFail;
+            _self.show=true;
           }
         })
       }

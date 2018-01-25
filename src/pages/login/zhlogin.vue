@@ -16,7 +16,7 @@
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
-        <input type="password"class="yanzheng mima" placeholder="密码"/>
+        <input v-model="password" type="password" class="yanzheng mima" placeholder="密码"/>
         <span class="del">×</span>
       </div>
       <div class="log-btn">登录</div>
@@ -31,13 +31,15 @@
 
 <script>
   import { Toast, } from 'vux'
+  import md5 from 'js-md5';
   export default {
     components: {
       Toast,
     },
     data () {
       return {
-        phone:"",
+        phone:'',
+        password:'',
         showMark:false,
         showMsg:"",
       }
@@ -157,7 +159,8 @@
           interfaceId:common.interfaceIds.queryData,
           coll:'users',
           where:{
-            "phone":_self.phone
+            "phone":_self.phone,
+            "password":md5(_self.phone+_self.password)
           }
         }
         _self.$axios.post('/mongoApi', {
@@ -171,12 +174,12 @@
               this.$store.state.pageIndex = 0;
               _self.toUrl('index');
             }else if( data.length == 0 ){
-              _self.showToast("用户不存在！")
+              _self.showToast("账号或密码错误！")
             }else if( data.length > 1 ){
-              _self.showToast("帐户重复，请联系管理员！")
+              _self.showToast("账号重复，请联系管理员！")
             }
           }else{
-            _self.showToast("用户不存在！")
+            _self.showToast("网络异常，请重试！")
           }
         })
       },
