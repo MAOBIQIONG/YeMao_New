@@ -34,6 +34,14 @@ export default {
     },
     created(){
         let _self = this;
+        let resumeId = common.getStorage("resumeId");
+        if( !common.isNull(resumeId) ){
+            _self.resumeParams._id = resumeId;
+        }
+        let user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+            _self.resumeParams.user_id = user._id;
+        }
         let resumeParams1 =common.getObjStorage('resumeParams1');
         let resumeParams3 =common.getObjStorage('resumeParams3');
         if(!common.isNull(resumeParams1) && !common.isNull(resumeParams3)){
@@ -43,6 +51,8 @@ export default {
             }
             // console.log(_self.resumeParams);
         }
+        _self.resumeParams.status = 0;
+        console.log(_self.resumeParams)
         // console.log(resumeParams1,resumeParams3);
         // console.log('_self.resumeParams',_self.resumeParams);
     },

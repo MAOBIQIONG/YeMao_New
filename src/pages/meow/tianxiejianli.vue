@@ -101,7 +101,7 @@
           <div class="qdtime-right">
             <group class="xmlx-kuang">
               <!-- <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address> -->
-                <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" style="height:1rem;line-height:1rem;"></x-address>
+                <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" style="height:1rem;line-height:1rem;"></x-address>
             </group>
           </div>
         </div>
@@ -113,11 +113,12 @@
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
+    <loading :show="loadingShow" text="提交中"></loading>
   </div>
 </template>
 
 <script>
-  import { XAddress, ChinaAddressV4Data, Datetime, Group, Checker, CheckerItem, XInput ,Toast} from 'vux'
+  import { XAddress, ChinaAddressV4Data, Datetime, Group, Checker, CheckerItem, XInput ,Toast,Loading } from 'vux'
   export default {
     components: {
       XAddress,
@@ -126,7 +127,8 @@
       Checker,
       CheckerItem,
       XInput,
-      Toast
+      Toast,
+      Loading 
     },
     data(){
         return {
@@ -159,7 +161,8 @@
                 description:""
             },
             toastShow:false,
-            toastText:""
+            toastText:"",
+            loadingShow:false,
         }
     },
     created(){
@@ -167,9 +170,8 @@
         _self.typeList = common.getProjectTypes();
         _self.workyearList = common.getWorkyearsType();
         var user = common.getObjStorage("userInfo") || {};
-        var resumeParams1 = common.getObjStorage("resumeParams1")|| {};
+        // var resumeParams1 = common.getObjStorage("resumeParams1")|| {};
         
-        console.log('resumeParams1',resumeParams1);
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
             _self.initData();
@@ -177,12 +179,11 @@
             console.log('user_id is null');
             _self.$router.push({name:'login'});
         }
-        if(!common.isNull(resumeParams1) && common.getStorage('fromWorkExp')=='1'){
-            // resumeParams1.city = ['430000', '430400', '430407'];
-            _self.dataParams = resumeParams1;
-            // console.log('缓存加载完成');
-            // console.log('_self.params',_self.params)
-        }
+        // _self.loadingShow = true;
+        // setTimeout(()=>{_self.loadingShow = false},1500);
+        // if(!common.isNull(resumeParams1) && common.getStorage('fromWorkExp')=='1'){
+        //     _self.dataParams = resumeParams1;
+        // }
     },
     mounted: function () {
       this. wzxz()
@@ -194,8 +195,11 @@
             this.toastText = msg;
         },
         goback () {
-            common.delStorage("fromWorkExp");
-            common.delStorage("resumeParams1");
+            // common.delStorage("resumeId");
+            // common.delStorage("fromWorkExp");
+            // common.delStorage("resumeParams1");
+            // common.delStorage("resumeParams2");
+            // common.delStorage("resumeParams3");
             this.$router.goBack();
         },
         toUrl: function (pagename) {
@@ -244,6 +248,7 @@
             console.log('on-show',str)
         },
         initData(){
+            console.log('this is initData');
             let _self = this;
             let params = {
                 interfaceId:common.interfaceIds.queryByUserId,
@@ -256,11 +261,28 @@
                     console.log(response);
                     let data = response.data.data
                     if(!common.isNull(data)) {
+                        common.setStorage("resumeId",data._id);
                         _self.dataParams.user_id = _self.user_id;
                         _self.dataParams = data;
                     }
                 });
         },
+        submit(){
+          let _self = this;
+          _self.loadingShow = true;
+          let params = {
+              interfaceId:common.interfaceIds.saveDataFun,
+              coll:common.collections.resumes,
+              data:_self.dataParams
+          };
+          _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+
+                    console.log(response);
+                    // setTimeout(()=>{_self.loadingShow = false; _self.toUrl('gongzuojinli');},10)           
+                });
+         },
         nextStep(){
             var _self = this;
             if( common.isNull(_self.dataParams.real_name) ){
@@ -303,9 +325,9 @@
                 _self.showToast("请填写自我描述");
                 return;
             }
-            common.setStorage("resumeParams1",this.dataParams);
             console.log(this.dataParams);
-            _self.toUrl('gongzuojinli')
+            _self.submit();
+            // _self.toUrl('gongzuojinli')
         }
     }
   }

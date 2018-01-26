@@ -2,8 +2,8 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
-      <div class="header-right">完成</div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-right" @click="toResume()" >完成</div>
     </div>
     <div class="content content-p">
       <div class="zfcg-top">
@@ -38,6 +38,14 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
+        toResume(){
+            common.delStorage("resumeId");
+            common.delStorage("fromWorkExp");
+            common.delStorage("resumeParams1");
+            common.delStorage("resumeParams2");
+            common.delStorage("resumeParams3");
+            this.toUrl('shouchangjianli')
+        }
     }
   }
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!--头部导航-->
-    <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+    <div class="header" style="position:static">
+      <div class="header-left" @click="toUrl('meow')"><img src="../../../static/images/back.png" /></div>
       <span>喵喵人才</span>
       <div class="header-right" @click="toJl()">发布</div>
     </div>
@@ -23,26 +23,29 @@
         ref="scroller"
         :class="{scroller:true}"   
     >   
-    <div class="content content-p">
-      <div class="jianli"@click="toUrl('minejianli')">
-        <div class="touxiang">
-          <img src="../../../static/images/bj.jpg"/>
+    <div>
+        <div class="content content-p" style="padding-top:0.2rem;" v-for="(item,index) in list" :key="index">
+            <div class="jianli" @click="toUrl('minejianli')">
+                <div class="touxiang">
+                    <img src="../../../static/images/bj.jpg"/>
+                </div>
+                <div class="jieshao">
+                    <p class="name"><span>{{item.real_name}}</span>/<span>{{item.expected_positions}}</span></p>
+                    <p class="qiwan"><span>{{getName([item.city[0]])}}</span>&nbsp;<span>{{item.working_year | getWorkyearsName}}</span>工作经验&nbsp;<span>{{item.education}}</span>&nbsp;<span>￥{{item.expected_salary}}</span></p>
+                    <p class="xinge">{{item.description}}</p>
+                </div>
+            </div>     
         </div>
-        <div class="jieshao">
-          <p class="name"><span>王思靓</span>/<span>助理设计师</span></p>
-          <p class="qiwan"><span>朝阳区</span>&nbsp;<span>3</span>年工作经验&nbsp;<span>本科</span>&nbsp;<span>8K-10K</span></p>
-          <p class="xinge">温和、顽强、高品位的法归设计师温和、顽强、高品位的法归设计师</p>
-        </div>
-      </div>
-      <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
     </div>
+    
     </scroller>
     
   </div>
 </template>
 
 <script>
-import {Scroller,LoadMore,Toast} from 'vux'
+import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Data} from 'vux'
 export default {
     components:{
         Scroller,
@@ -58,6 +61,11 @@ export default {
             type:Boolean,
             default:false
         }, 
+    },
+    filters:{
+        getWorkyearsName(id){
+            return common.getWorkyearsName(id);
+        }
     }, 
     data: function () {
       return {
@@ -65,6 +73,7 @@ export default {
         list:[],
         list_id:null,
         user:null,
+        addressData: ChinaAddressV4Data,
         pagination:{
             pageNo:0,
             pageSize:10,
@@ -133,17 +142,16 @@ export default {
                 _self.$router.push({name:"login"});
             }         
       },
-              loadData(){
+        getName (value) {
+            return value2name(value, ChinaAddressV4Data)
+        },
+        loadData(){
             console.log('this is loadData');
             let _self = this;
-            // if( common.isNull(_self.user_id) ){
-            //     throw new Error('请先登录');
-            //     return;
-            // }
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let params = {
                 interfaceId: common.interfaceIds.queryList,
-                coll:common.collections.resumeList,
+                coll:common.collections.resumes,
                 pageNo:_self.pagination.pageNo,
                 pageSize:_self.pagination.pageSize,
             }
@@ -153,7 +161,7 @@ export default {
                     console.log(response);
                     let data = response.data
                     if (data) {
-                        // _self.setData(data);
+                        _self.setData(data);
                         console.log('数据设置完成');
                     } else {
                         console.log('noData');
@@ -163,13 +171,13 @@ export default {
         setData(data){
             let _self = this;
             _self.$refs.scroller.enablePullup();
-            let list = data.chws || [];
+            let list = data.datalist || [];
             //对于没有user情况处理
-            list.forEach((r,i)=>{
-                if(!r.user){
-                    list[i].user = {};
-                }
-            });
+            // list.forEach((r,i)=>{
+            //     if(!r.user){
+            //         list[i].user = {};
+            //     }
+            // });
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.list = list;
@@ -184,7 +192,7 @@ export default {
                     _self.$refs.scroller.disablePullup();
                     return
                 }
-                _self.list.push(...data.chws);
+                _self.list.push(...list);
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;
