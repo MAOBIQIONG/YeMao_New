@@ -114,6 +114,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  @import "../../../static/css/employer/liaotian.css";
   .liaotian {
     width: 100%;
     background-color: #f2f2f2;
@@ -242,8 +243,5 @@
     .fzDInfo{width:82%;}
   }
 
-</style>
-<style scoped>
-  @import "../../../static/css/employer/liaotian.css";
 </style>
 
