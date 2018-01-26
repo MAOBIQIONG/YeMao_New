@@ -11,7 +11,7 @@
 .index-banner .id-header .crity {
   position: relative;
   float: left;
-  width: 1rem;
+  /* width: 1rem; */
   height: 0.8rem;
   line-height: 0.8rem;
   margin-left: 0.1rem;

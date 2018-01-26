@@ -156,6 +156,7 @@
             var result = data.result || {};
             if( result.ok>0 && result.n>0  ){
               _self.showToast("发布成功！");
+              uploadImg2.clearImgArr(true);
               setTimeout(function () {
                 _self.goback();
               },1000)

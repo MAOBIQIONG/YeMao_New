@@ -113,7 +113,7 @@
         </div>
         <!--雇主列表-->
         <div class="content"style="padding-bottom:0.2rem">
-          <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
+          <div class="gz-list" v-for="order in orderList" v-tap="{methods:toDetails,id:order._id}">
             <div class="gz-top">
               <div class="gz-touxiang">
                 <img :src="checkAvatar(order.user.img)" />
@@ -141,7 +141,7 @@
                 <div class="gb-wz"><span>{{order.bidders.length}}</span>人抢单</div>
               </div>
               <div class="gb-right">
-                <div class="gb-ljqd" @click.stop="grabOrder(order._id)">立即抢单</div>
+                <div class="gb-ljqd" v-tap="{methods:grabOrder,id:order._id}">立即抢单</div>
               </div>
             </div>
           </div>
@@ -216,8 +216,8 @@
         this.$router.push({name: params.pagename})
       },
       // 详情页
-      toDetails (id) {
-        this.$router.push({name: 'emporder', query: {id: id}})
+      toDetails (params) {
+        this.$router.push({name: 'emporder', query: {id: params.id}})
       },
       // 根据类别id查询订单
       getOrderByTypeId (params) {
@@ -252,19 +252,22 @@
         }
       },
       // 抢单
-      grabOrder (id) {
+      grabOrder (params) {
         var userInfo = common.getObjStorage('userInfo') || {};
         if ( common.isNull(userInfo._id) == true ) { // 未登录
           this.$router.push({name: 'login'})
         } else {
-          var status = this.getBidStatus(id, userInfo._id);
+          var status = this.getBidStatus(params.id, userInfo._id);
           // console.log("status:"+status)
           if ( status == 0 ) { // 未参与
-            this.$router.push({name: 'orderqiangdan', query: {id: id}});
+            this.$router.push({name: 'orderqiangdan', query: {id: params.id}});
           } else { // 已参与
-            this.$router.push({name: 'emporder', query: {id: id}});
+            this.$router.push({name: 'emporder', query: {id: params.id}});
           }
         }
+        params.event.cancelBubble = true;//阻止冒泡（原声方法）
+        params.event.stop;//阻止冒泡（原声方法）
+        return false
       },
       // 获取用户抢单状态
       getBidStatus (oid, uid) {
@@ -446,7 +449,7 @@
   .weui-cell_access {
     padding:0 !important;
     height: 0.8rem;
-    width: 1rem;
+    /* width: 1rem; */
     display:inline-block!important;
   }
   .weui-cells:before{

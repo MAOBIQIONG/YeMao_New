@@ -8,7 +8,7 @@
     <div class="content content-p">
       <div class="xgnc"@click="toUrl('setnicheng')">
         <div class="left"><span>修改昵称</span></div>
-        <div class="right"><span>设计师小A</span></div>
+        <div class="right"><span>{{userInfo.user_name}}</span></div>
       </div>
       <div class="xggh">
         <div class="xgdl"@click="toUrl('setpassword')">
@@ -32,8 +32,13 @@
   export default {
     data () {
       return {
-
+        userInfo:{},
       }
+    },
+    created: function () {
+      console.log("created:")
+      var _self = this;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
     },
     methods: {
       goback(){

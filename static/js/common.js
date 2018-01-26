@@ -327,6 +327,38 @@ const common = {
     return path;
   },
 
+  getWorkyearsType:function(){
+      var type = [
+          {"_id":"1","type_name":"1-3年"},
+          {"_id":"2","type_name":"3-5年"},
+          {"_id":"3","type_name":"5-10年"},
+          {"_id":"4","type_name":"10年以上"}
+      ];
+      return type;
+  },
+  getWorkyearsName:function(id){
+    var name = "";
+    var types = common.getWorkyearsType();
+    var i=0,len=types.length;
+    for(;i<len;i++){
+        if( id == types[i]._id ){
+            name = types[i].type_name;
+        }
+    }
+    return name;
+  },
+  // 获取随机数
+  getRandomNum: function (minNum,maxNum){
+    return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
+  },
+
+  // 获取随机头像
+  getRandomAvatar: function () {
+    var num = common.getRandomNum(1,8);
+    var avatar = './static/images/avatar/'+num+'.png';
+    return avatar;
+  },
+
   uuid:function () {
       var s = [];
       var hexDigits = "0123456789abcdef";
@@ -410,6 +442,11 @@ const common = {
     queryWEById:'queryWEById',                     // 工作经历详情
     queryAlumniById:'queryAlumniById',             // 校友会详情
     checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
+    registerUser:'registerUser',                   // 注册
+    updateUserById:'updateUserById',               // 修改用户信息
+    checkUserName:'checkUserName',                 // 检测用户昵称重复
+    login:"login",                                 // 登录
+    updateUserPwd:'updateUserPwd',                 // 修改密码
   },
 
 }
@@ -452,11 +489,16 @@ common.op_localStorage = function() {
 }
 
 // isType方法: isArguments, isFunction, isString, isNumber, isDate, isRegExp.
-var names = ['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp'];
+var names = ['Arguments', 'Function', 'Number', 'Date', 'RegExp'];//, 'String'
 for (var i = 0; i < names.length; i++) {
+(function(common,i){
 	common['is' + names[i]] = function(obj) {
+        console.log(names,i,names[i])
+        console.log(Object.prototype.toString.call(obj),'[object ' + names[i] + ']');
 		return toString.call(obj) == '[object ' + names[i] + ']';
 	};
+})(common,i)
+
 }
 common['isArray'] =  Array.isArray || function(obj) {
     return toString.call(obj) == '[object Array]';

@@ -104,6 +104,8 @@
             },
             submit(){
                 let _self = this;
+                let title = _self.$refs.title.value;
+                let area = _self.$refs.area.value;
                 if( common.isNull(_self.params.user_id) ){
                     _self.showToast("未成功获取用户信息!");
                     return;
@@ -129,9 +131,6 @@
             },
             submit2(){
                 let _self = this;
-                let title = _self.$refs.title.value;
-                let area = _self.$refs.area.value;
-
                 let params = {
                     interfaceId:common.interfaceIds.insertData,
                     coll:common.collections.personalChw,
@@ -148,7 +147,7 @@
                             var data = response.data;
                             if( data && response.code == '200' ){
                                 _self.showToast("发布成功！");
-
+                                uploadImg2.clearImgArr(true);
                                 setTimeout(function () {
                                 _self.goback();
                                 },1000)
