@@ -198,7 +198,7 @@
       initData(){
           let _self = this;
           let params = {
-              interfaceId:comon.interfaceIds.
+              interfaceId:comon.interfaceIds
           };
       }
     }
