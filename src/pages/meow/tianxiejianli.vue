@@ -2,9 +2,9 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>填写简历</span>
-      <div class="header-right"@click="nextStep()">下一步</div>
+      <div class="header-right" @click="nextStep()">下一步</div>
     </div>
     <!--发布订单内容-->
     <div class="content content-p">
