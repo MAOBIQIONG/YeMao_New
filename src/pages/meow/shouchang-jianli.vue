@@ -25,7 +25,7 @@
     >   
     <div>
         <div class="content content-p" style="padding-top:0.2rem;" v-for="(item,index) in list" :key="index">
-            <div class="jianli" @click="toUrl('minejianli')">
+            <div class="jianli" @click="toDetail(item._id)">
                 <div class="touxiang">
                     <img src="../../../static/images/bj.jpg"/>
                 </div>
@@ -130,6 +130,9 @@ export default {
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      toDetail(id){
+          this.$router.push({name:"minejianli",query:{id:id}});
       },
       toJl(){
            var _self = this;

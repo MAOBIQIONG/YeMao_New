@@ -164,8 +164,13 @@
   export default {
     data () {
       return {
-
+          resumeId:"",
+          dataParams:{}
       }
+    },
+    created(){
+        let resumeId = this.$route.query.id;
+        this.resumeId = resumeId;
     },
     mounted: function () {
       this.dianzan();
@@ -190,6 +195,12 @@
           }
         });
       },
+      initData(){
+          let _self = this;
+          let params = {
+              interfaceId:comon.interfaceIds.
+          };
+      }
     }
   }
 </script>
