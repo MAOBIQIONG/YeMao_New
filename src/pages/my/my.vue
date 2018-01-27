@@ -8,7 +8,7 @@
       </div>
       <div class="tu-nicheng">
         <div class="touxiang" v-tap="{ methods:modifyAvatar }">
-          <img :src="userInfo.img || defultAvatar" />
+          <img :src="checkAvatar(userInfo.img)" />
         </div>
         <div class="nicheng"><span>{{userInfo.user_name || tips}}</span></div>
       </div>
@@ -48,17 +48,17 @@
         <div class="list"@click="toUrl('minehuodong')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">我参与的活动</div>
-          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
+          <div class="list-right"></div>
         </div>
         <div class="list tz"@click="toUrl('minejianli')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">简历中心</div>
-          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
+          <div class="list-right"></div>
         </div>
         <div class="list"@click="toUrl('minewenda')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">我的问答</div>
-          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
+          <div class="list-right"></div>
         </div>
       </div>
     </div>
@@ -68,61 +68,94 @@
         <div class="list"@click="toUrl('maintain')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">客服中心</div>
-          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
+          <div class="list-right"></div>
         </div>
         <div class="list"@click="toUrl('yijian')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">意见反馈</div>
-          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
+          <div class="list-right"></div>
         </div>
-        <div id="qchc" class="list">
-          <!--<div class="tupiao"></div>-->
-          <div class="xingxi">清除缓存</div>
-          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
-        </div>
+        <!--<div class="list" v-tap="{methods:showClearCachePop}">-->
+          <!--&lt;!&ndash;<div class="tupiao"></div>&ndash;&gt;-->
+          <!--<div class="xingxi">清除缓存</div>-->
+          <!--<div class="list-right"><span>{{cacheSize}}</span></div>-->
+        <!--</div>-->
         <div class="list"@click="toUrl('mineguanyu')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">关于夜猫</div>
-          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
+          <div class="list-right"></div>
         </div>
       </div>
     </div>
     <!-- 清除缓存弹窗-->
-    <div class="pop">
+    <div class="pop" v-if="showPop==true">
       <div class="pop-bottom">
-        <div id="qx1" class="anniu"><span>清除缓存</span></div>
-        <div id="qx" class="anniu"><span style="color: #0076ff;">取消</span></div>
+        <div class="anniu" v-tap="{methods:clearCache}"><span>清除缓存</span></div>
+        <div class="anniu" v-tap="{methods:hideClearCachePop}"><span style="color: #0076ff;">取消</span></div>
       </div>
+    </div>
+    <toast v-model="showMark" type="text" :text="showMsg" width="5rem"></toast>
+    <div v-transfer-dom>
+      <loading :show="showLoad" :text="showLoadMsg"></loading>
     </div>
   </div>
 </template>
 
 <script>
+  import { Toast,Loading,TransferDomDirective as TransferDom} from 'vux'
   export default {
+    directives: {
+      TransferDom,
+    },
+    components: {
+      Toast,
+      Loading
+    },
     data () {
       return {
         userInfo:{},
-        defultAvatar:"./static/images/bj.jpg",
-        tips:"点击登录"
+        tips:"点击登录",
+        cacheSize: '',
+        showPop:false,
+        showMark: false,
+        showMsg: '',
+        showLoad: false,
+        showLoadMsg: ''
       }
     },
     created: function () {
       console.log("created:")
-      this.tanchuang();
     },
     activated: function () {
       console.log("activated:")
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
+      // _self.initCalcCache();
     },
     methods: {
       goback(){
         this.$router.goBack();
       },
-      toUrl: function (pagename) {
+      toUrl (pagename) {
         this.$router.push({name: pagename})
       },
-      toSet: function () {
+      showToast(msg){
+        this.showMark = true;
+        this.showMsg = msg;
+      },
+      // loading
+      showLoading() {
+        var _self = this;
+        _self.showLoad = true;
+        setTimeout(() => {
+          _self.showLoad = false;
+        }, 2000)
+      },
+      //头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      toSet () {
         var _self = this;
         if( _self.userInfo._id != null ){
           _self.toUrl('set');
@@ -131,27 +164,74 @@
         }
       },
       //		弹窗
-      tanchuang(){
-        $("#qchc").click(function(){
-          $(".pop").show();
-        });
-        $("#qx").click(function(){
-          $(".pop").hide();
-        });
-        $("#qx1").click(function(){
-          $(".pop").hide();
-        });
+      showClearCachePop() {
+        this.showPop = true;
+      },
+      hideClearCachePop() {
+        this.showPop = false;
+      },
+      clearCache() {
+        var _self = this;
+        /*if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+          common.clearCache(function () {
+            _self.showToast('清除成功！')
+            _self.initCalcCache();
+          });
+        }*/
+        _self.showPop = false;
       },
 
-      modifyAvatar: function () {
+      // 计算缓存
+      initCalcCache(){
         var _self = this;
-        console.log("_self.userInfo:"+_self.userInfo._id)
+        console.log("process.env.NODE_ENV:"+process.env.NODE_ENV)
+        if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+          common.calcCache(function (size) {
+            _self.cacheSize = size;
+          });
+        }
+      },
+
+      // 修改头像
+      modifyAvatar() {
+        var _self = this;
         if( _self.userInfo._id != null ){
           console.log("修改头像。。")
+          if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+            uploadImg.init({
+              callback:function (path) {
+                _self.showLoading();
+                _self.uploadAtavar(path);
+              }
+            })
+          }
         }else{
           _self.toUrl('login');
         }
       },
+
+      // 加载更多
+      uploadAtavar (path) {
+          var _self = this;
+          var params = {
+            interfaceId:common.interfaceIds.updateUserById,
+            user_id: _self.userInfo._id,
+            data:{
+              img: path
+            }
+          };
+          _self.$axios.post('/mongoApi', {
+            params: params
+          }, response => {
+            var data = response.data;
+            if( data && data.code == 200 ){
+              _self.userInfo.img = path;
+              common.setStorage("userInfo",_self.userInfo);
+            }else{
+              _self.showToast('修改失败!');
+            }
+          });
+        },
     }
   }
 </script>

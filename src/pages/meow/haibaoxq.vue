@@ -56,6 +56,7 @@
 
       // 参与
       canyu(){
+        if( common.checkInt(params.state) >= 2 ) return;
         var _self = this;
         if( common.isNull(_self.userInfo._id) ){
           _self.$router.push({name: 'login'});

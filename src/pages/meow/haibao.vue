@@ -7,7 +7,7 @@
     </div>
     <div class="content" :style="'background-image:url('+checkImg(activity.poster_img)+')'">
       <div class="bottom">
-        <div class="anniu" :class="activity.state<2 ? 'hover' : ''" v-tap="{methods:canyu}">{{getActivityStateName(activity.state)}}</div>
+        <div class="anniu" :class="activity.state<2 ? 'hover' : ''" v-tap="{methods:canyu,state:activity.state}">{{getActivityStateName(activity.state)}}</div>
         <p class="ckxq" v-tap="{methods:toUrl,pagename:'haibaoxq',id:activity._id}"><a>查看详情></a></p>
         <p><span>{{activity.participants.length}}</span>人已报名</p>
       </div>
@@ -60,7 +60,8 @@
       },
 
       // 参与
-      canyu(){
+      canyu(params){
+        if( common.checkInt(params.state) >= 2 ) return;
         var _self = this;
         if( common.isNull(_self.userInfo._id) ){
           _self.$router.push({name: 'login'});

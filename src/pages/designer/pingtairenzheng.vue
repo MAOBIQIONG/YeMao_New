@@ -60,17 +60,14 @@
         <p>请上传学历证书</p>
       </div>
     </div>
-    <uploadSingle @upup="change"></uploadSingle>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
   import { Toast } from 'vux'
-  import uploadSingle from '../../components/upload/image-upload-single.vue'
   export default {
     components: {
-      uploadSingle,
       Toast
     },
     data () {
@@ -120,7 +117,6 @@
       },
       //上传图片
       triggerFile(param){
-        document.getElementById("upload").click();
       },
 
       // 选择图片回调

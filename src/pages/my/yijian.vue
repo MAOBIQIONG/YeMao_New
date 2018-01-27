@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>意见反馈</span>
     </div>
     <div class="content content-p">
@@ -10,15 +10,15 @@
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea class="area" maxlength="200" placeholder="请详细描述你遇见的问题和意见"></textarea>
+        <textarea v-model="description" class="area" maxlength="200" placeholder="请详细描述您遇见的问题和意见"></textarea>
         <p class="xianzhi"><span class="zs">200</span>/<span>200</span></p>
       </div>
     </div>
     <!--退出登陆-->
-    <div class="tcdl" @click="submit">
+    <div class="tcdl" v-tap="{methods:submit}">
       <span>提交</span>
     </div>
-    <toast v-model="showMark" type="text" text="提交成功"width="3rem"></toast>
+    <toast v-model="showMark" type="text" :text="showMsg"width="5.5rem"></toast>
   </div>
 </template>
 
@@ -30,8 +30,17 @@
     },
     data () {
       return {
+        userInfo: {},
+        description: '',
+        is_submit: false,
         showMark: false,
+        showMsg: '',
       }
+    },
+    created: function () {
+      console.log("created:")
+      var _self = this;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
     },
     mounted: function () {
       this. wzxz()
@@ -58,13 +67,46 @@
         })
       },
       //弹窗
-      submit(){
+      showToast(msg){
         this.showMark = true;
-        var _self = this;
-        setTimeout(function () {
-          _self.toUrl('my');
-        },1000)
+        this.showMsg = msg;
       },
+      // 提交
+      submit(){
+        var _self = this;
+        if( common.isNull(_self.userInfo._id) ){
+          _self.showToast('未成功获取到用户信息,请重新登录!');
+          return;
+        }
+        if( common.isNull(_self.description) ){
+          _self.showToast('请详细描述您遇见的问题和意见!');
+          return;
+        }
+        if( _self.is_submit == true ) return;
+        _self.is_submit = true;
+        var params = {
+          interfaceId:common.interfaceIds.feedback,
+          data:{
+            user_id: _self.userInfo._id,
+            description: _self.description
+          }
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          _self.is_submit = false;
+          var data = response.data;
+          if( data && data.code == 200 ){
+            _self.showToast('提交成功，十分感谢您的反馈!');
+            setTimeout(function () {
+              _self.goback();
+            },1000)
+          }else{
+            _self.showToast('提交失败!');
+          }
+        });
+      },
+
     }
   }
 </script>

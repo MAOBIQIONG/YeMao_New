@@ -44,17 +44,14 @@
         <!--<p>请上传身份证背面照</p>-->
       <!--</div>-->
     </div>
-    <uploadSingle @upup="change"></uploadSingle>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
   import { Toast } from 'vux'
-  import uploadSingle from '../../components/upload/image-upload-single.vue'
   export default {
     components: {
-      uploadSingle,
       Toast
     },
     data () {
@@ -113,7 +110,6 @@
       triggerFile(param){
         var _self = this;
         _self.imgIndex = param.index;
-        document.getElementById("upload").click();
       },
 
       // 选择图片回调

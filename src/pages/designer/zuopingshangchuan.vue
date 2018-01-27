@@ -36,7 +36,6 @@
         <div class="img-body" v-for="img in imgList">
           <img :src="img.src" />
         </div>
-        <imageUpload :img-arr.sync="imgList"></imageUpload>
       </div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
@@ -44,11 +43,9 @@
 </template>
 
 <script>
-  import imageUpload from '../../components/upload/image-upload.vue'
   import { Datetime, Toast } from 'vux'
   export default {
     components: {
-      imageUpload,
       Datetime,
       Toast
     },
@@ -98,7 +95,6 @@
       //上传图片
       triggerFile(){
         console.log("trigger:")
-        document.getElementById("img-upload").click();
       },
       // 提交
       submit(){
