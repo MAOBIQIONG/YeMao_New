@@ -132,7 +132,6 @@
           params: params
         }, response => {
           _self.is_submit = false;
-          console.log(response)
           var data = response.data;
           if( data ){
             if( data.n == 0 ){

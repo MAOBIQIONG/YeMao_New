@@ -1,5 +1,26 @@
 var root = 'http://101.132.96.90:8080/upload/img/';
 const common = {
+  /**0、判断访问终端**/
+  browser: {
+    versions:function(){
+      var u = navigator.userAgent, app = navigator.appVersion;
+      return {
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+        iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+        iPad: u.indexOf('iPad') > -1, //是否iPad
+        webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') > -1, //是否微信 （2015-01-22新增）
+        qq: u.match(/\sQQ/i) == " qq" //是否QQ
+      };
+    }(),
+    language:(navigator.browserLanguage || navigator.language).toLowerCase()
+  },
   /*****************1.0、验证(返回值:boolean)*******************/
   /**
    *1.0.1、判断对象是否是字符串
@@ -110,6 +131,79 @@ const common = {
   //2.4、localStorage删除指定键对应的值
   delStorage:function (key){
     localStorage.removeItem(key);
+  },
+
+  /**
+   * 2.5、计算缓存大小
+   */
+  calcCache:function (callback) {
+    console.log("开始计算缓存大小");
+    if( common.browser.versions.ios ){
+      plus.cache.calculate(function(size) {
+        console.log(size + "byte");
+        var finalSize = common.formatSize(size)
+        return callback(finalSize);
+      });
+    }else{
+      var main = plus.android.runtimeMainActivity();
+      var File = plus.android.importClass("java.io.File");
+      var cacheSize=0;
+      var sdRoot = main.getCacheDir();
+      var files = plus.android.invoke(sdRoot,"listFiles");
+      cacheSize += common.getFolderSize(files);
+      console.log("android size-->"+cacheSize);
+      console.log(cacheSize + "byte");
+      var finalSize = common.formatSize(cacheSize)
+      return callback(finalSize);
+    }
+  },
+  /**
+   * 2.6、计算文件大小
+   */
+  getFolderSize:function (files) {
+    var size = 0;
+    var len = files.length;
+    for(var i = 0; i < len; i++) {
+      // 如果下面还有文件
+      console.log("!plus.android.invoke(files[i],'isDirectory'):"+!plus.android.invoke(files[i],"isDirectory"))
+      if(plus.android.invoke(files[i],"isDirectory")) {
+        size = size + common.getFolderSize(files[i]);
+      } else if(!plus.android.invoke(files[i],"isHidden")){
+        size = size + files[i].length();
+      }
+    }
+    return size;
+  },
+  /**
+   * 2.7、缓存单位转换
+   */
+  formatSize:function (size){
+    var fileSizeString;
+    size=parseInt(size);
+    console.log("size:"+size);
+    if(size == 0){
+      fileSizeString = "0B";
+    }else if(size < 1024){
+      fileSizeString = size + "B";
+    }else if(size < 1048576){
+      fileSizeString = (size/1024).toFixed(2) + "KB";
+    }else if (size < 1073741824){
+      console.log("Mb"+size);
+      fileSizeString = (size/1048576).toFixed(2) + "MB";
+      console.log("/ after"+fileSizeString);
+    }else{
+      fileSizeString = (size/1073741824).toFixed(2) + "GB";
+    }
+    return fileSizeString;
+  },
+  /**
+   * 清除缓存
+   */
+  clearCache:function (callback) {
+    plus.storage.clear();
+    plus.cache.clear(function() {
+      return callback();
+    });
   },
 
   /*****************date*******************/
@@ -430,6 +524,7 @@ const common = {
     getCollects:'getCollects',                     // 收藏列表
     getCollectsPage:'getCollectsPage',             // 我的收藏
     getActivitys:'getActivitys',                   // 活动
+    getMypartInActs:'getMypartInActivity',         // 我参与的活动
     getActDetails:'getActivityDetails',            // 活动详情
     partInActivity:'partInActivity',               // 参加活动
     addOrders:'addOrders',                         // 发布订单
@@ -447,6 +542,8 @@ const common = {
     checkUserName:'checkUserName',                 // 检测用户昵称重复
     login:"login",                                 // 登录
     updateUserPwd:'updateUserPwd',                 // 修改密码
+    feedback:'feedback',                 　　　　　　// 意见反馈
+
   },
 
 }

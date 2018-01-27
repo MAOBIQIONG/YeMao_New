@@ -8,6 +8,7 @@ const uploadImg ={
     maxW:800,                                         //图片最大宽度
     base64Data: '',                                   //图片数组
     uploadPath: 'appUploadImg/imgBase64',             //上传接口
+    isUpload: true,                                   //是否上传
     flag:0,                                           //拍照类型：0、拍照；1、相册;
 
     //检测数据
@@ -31,6 +32,9 @@ const uploadImg ={
     	if( param && !uploadImg.isNull(param.uploadPath) ){
     		uploadImg.uploadPath = param.uploadPath;
     	}
+      if( param && !uploadImg.isNull(param.isUpload) ){
+        uploadImg.isUpload = param.isUpload;
+      }
     	if( param && !uploadImg.isNull(param.callback) ){
     		uploadImg.callback = param.callback;
     	}
