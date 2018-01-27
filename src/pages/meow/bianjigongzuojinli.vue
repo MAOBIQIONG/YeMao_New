@@ -43,7 +43,7 @@
         删除此工作经历
       </div>
     </div>
-    <toast v-model="toastShow" type="text" :text="toastText" width="4em" :time="1500"></toast>
+    <toast v-model="toastShow" type="text" :text="toastText" width="4em" :time="1000"></toast>
   </div>
 </template>
 
@@ -182,7 +182,7 @@ export default {
                 }, response => {
                     console.log(response);
                     _self.showToast("保存成功！")
-                    setTimeout(()=>{_self.$router.goBack()},1500);
+                    setTimeout(()=>{_self.$router.goBack()},1000);
                     
                 });
         }

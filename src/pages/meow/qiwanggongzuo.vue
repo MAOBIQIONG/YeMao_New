@@ -43,6 +43,7 @@
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
+    <loading :show="loadingShow" text="提交中"></loading>
   </div>
 </template>
 
@@ -72,11 +73,19 @@
     },
     created(){
         let _self = this;
-        var resumeParams3 = common.getObjStorage("resumeParams3")|| {};
-        console.log(resumeParams3);
-        if(!common.isNull(resumeParams3)){
-            _self.dataParams = resumeParams3;
+        let user = common.getObjStorage('userInfo');
+        if( !common.isNull(user._id) ){
+            _self.user_id = user._id;
+            _self.initData();
+        } else {
+            console.log('user_id is null');
+            _self.$router.push({name:'login'});
         }
+        // var resumeParams3 = common.getObjStorage("resumeParams3")|| {};
+        // console.log(resumeParams3);
+        // if(!common.isNull(resumeParams3)){
+        //     _self.dataParams = resumeParams3;
+        // }
     },
     mounted: function () {
       this. wzxz()
@@ -110,8 +119,9 @@
                 _self.showToast("请填写期望工作描述");
                 return;
             }
-            common.setStorage('resumeParams3',_self.dataParams);
-            this.toUrl('zuopinshangchuan');
+            // common.setStorage('resumeParams3',_self.dataParams);
+            _self.submit();
+            
 
         },
         //留言字数限制
@@ -145,6 +155,42 @@
         logShow (str) {
             console.log('on-show',str)
         },
+        initData(){
+            console.log('this is initData');
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.queryByUserId,
+                coll:common.collections.resumes,
+                user_id:_self.user_id
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response);
+                    let data = response.data.data
+                    if(!common.isNull(data)) {
+                        // common.setStorage("resumeId",data._id);
+                        _self.dataParams.user_id = _self.user_id;
+                        _self.dataParams = data;
+                    }
+                });
+        },
+        submit(){
+            let _self = this;
+            _self.loadingShow = true;
+            let params = {
+                interfaceId:common.interfaceIds.saveDataFun,
+                coll:common.collections.resumes,
+                data:_self.dataParams
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+
+                    console.log(response);
+                    setTimeout(()=>{_self.loadingShow = false; _self.toUrl('zuopinshangchuan');},10)
+                });
+         },
     }
   }
 </script>

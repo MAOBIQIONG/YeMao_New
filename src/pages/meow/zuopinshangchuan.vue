@@ -2,9 +2,9 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>作品上传</span>
-      <div class="header-right"@click="submit()">完成</div>
+      <div class="header-right" @click="submit()">完成</div>
     </div>
     <!--编辑工作经历-->
     <div class="content content-p">
@@ -16,6 +16,7 @@
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em" :time="1500"></toast>
+    <loading :show="loadingShow" text="提交中"></loading>
   </div>
 </template>
 
@@ -30,29 +31,20 @@ export default {
         resumeParams:{},
         toastShow:false,
         toastText:"",
+        dataParams:{},
       }
     },
     created(){
         let _self = this;
-        let resumeId = common.getStorage("resumeId");
-        if( !common.isNull(resumeId) ){
-            _self.resumeParams._id = resumeId;
-        }
-        let user = common.getObjStorage("userInfo") || {};
+        let user = common.getObjStorage('userInfo');
         if( !common.isNull(user._id) ){
-            _self.resumeParams.user_id = user._id;
+            _self.user_id = user._id;
+            _self.initData();
+        } else {
+            console.log('user_id is null');
+            _self.$router.push({name:'login'});
         }
-        let resumeParams1 =common.getObjStorage('resumeParams1');
-        let resumeParams3 =common.getObjStorage('resumeParams3');
-        if(!common.isNull(resumeParams1) && !common.isNull(resumeParams3)){
-            let r = _self.mix(resumeParams3).w(resumeParams1);
-            for(var i in r)  {
-                _self.resumeParams[i]= r[i];
-            }
-            // console.log(_self.resumeParams);
-        }
-        _self.resumeParams.status = 0;
-        console.log(_self.resumeParams)
+        console.log(_self.dataParams);  
         // console.log(resumeParams1,resumeParams3);
         // console.log('_self.resumeParams',_self.resumeParams);
     },
@@ -83,21 +75,44 @@ export default {
             this.toastShow = true;
             this.toastText = msg;
         },
-      submit(){
-          let _self = this;
-          let params = {
-              interfaceId:common.interfaceIds.saveDataFun,
-              coll:common.collections.resumes,
-              data:_self.resumeParams
-          };
-          _self.$axios.post('/mongoApi', {
+        initData(){
+            console.log('this is initData');
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.queryByUserId,
+                coll:common.collections.resumes,
+                user_id:_self.user_id
+            }
+            _self.$axios.post('/mongoApi', {
                 params: params
                 }, response => {
                     console.log(response);
-                    _self.showToast('提交成功待审核');
-                    setTimeout(()=>{_self.toUrl('ddsh')},1500)           
+                    let data = response.data.data
+                    if(!common.isNull(data)) {
+                        // common.setStorage("resumeId",data._id);
+                        _self.dataParams.user_id = _self.user_id;
+                        _self.dataParams = data;
+                    }
                 });
-      }
+        },
+        submit(){
+            let _self = this;
+            _self.loadingShow = true;
+            _self.dataParams.status = 1;
+            _self.dataParams.is_del = 0;
+            let params = {
+                interfaceId:common.interfaceIds.saveDataFun,
+                coll:common.collections.resumes,
+                data:_self.dataParams
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {                  
+                    console.log(response);
+                    _self.showToast('提交成功');
+                    setTimeout(()=>{_self.loadingShow = false; _self.toUrl('shouchangjianli');},1500)
+                });
+         },
     }
   }
 </script>

@@ -158,7 +158,8 @@
                 working_year:"",
                 email:"",
                 city:[],
-                description:""
+                description:"",
+                status:0,
             },
             toastShow:false,
             toastText:"",
@@ -261,7 +262,7 @@
                     console.log(response);
                     let data = response.data.data
                     if(!common.isNull(data)) {
-                        common.setStorage("resumeId",data._id);
+                        // common.setStorage("resumeId",data._id);
                         _self.dataParams.user_id = _self.user_id;
                         _self.dataParams = data;
                     }
@@ -280,7 +281,7 @@
                 }, response => {
 
                     console.log(response);
-                    // setTimeout(()=>{_self.loadingShow = false; _self.toUrl('gongzuojinli');},10)           
+                    setTimeout(()=>{_self.loadingShow = false; _self.toUrl('gongzuojinli');},10)
                 });
          },
         nextStep(){

@@ -51,16 +51,18 @@
     </scroller>
 
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
+    <loading :show="loadingShow" text="提交中"></loading>
   </div>
 </template>
 
 <script>
-import {Scroller,LoadMore,Toast} from 'vux'
+import {Scroller,LoadMore,Toast,Loading} from 'vux'
   export default {
     components:{
         Scroller,
         LoadMore,
-        Toast
+        Toast,
+        Loading
     },
     props:{
         lockX:{
@@ -114,6 +116,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
             showLoading:true,
             show:true,
         },
+        loadingShow:false,
       }
     },
     watch:{
@@ -157,7 +160,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
             this.$router.push({name: pagename})
         },
         nextStep(){
-            common.setStorage('resumeParams2',this.list);
+            // common.setStorage('resumeParams2',this.list);
             this.toUrl('qiwanggongzuo');
            
         },
