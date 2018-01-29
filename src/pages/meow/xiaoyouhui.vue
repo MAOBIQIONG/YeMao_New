@@ -1,55 +1,65 @@
 <template>
   <div>
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static">
       <div class="header-left" @click="toUrl('meow')"><img src="../../../static/images/back.png" /></div>
       <span>校友会</span>
       <div class="header-right" @click="toUrl('chuangjianxiaoyouhui')">创建</div>
     </div>
-    <!--简历列表-->
-    <div class="content content-p">
-      <div class="jianli" @click="toUrl('xuexiaoxiangqing')">
-        <div class="touxiang">
-          <img src="../../../static/images/bj.jpg"/>
+    <!--校友会列表-->
+    <scroller
+        v-model="pullUpDownStatus"
+        :height="height"
+        :lock-x="lockX"
+        :lock-y="lockY"
+        :use-pulldown="true"
+        :use-pullup="true"
+        :pulldown-config="pulldownConfig"
+        :pullup-config = "pullupConfig"
+        @on-scroll="scroll"
+        @on-scroll-bottom="onScrollBottom"
+        @on-pulldown-loading="pullDownLoading"
+        @on-pullup-loading="pullUpLoading"
+        ref="scroller"
+        :class="{scroller:true}"   
+    >  
+        <div class="content content-p" style="padding-top:0;" >
+            <div class="jianli" @click="toUrl('xuexiaoxiangqing')" v-for="(item,index) in list" :key="index">
+                <div class="touxiang">
+                <img src="../../../static/images/bj.jpg"/>
+                </div>
+                <div class="jieshao">
+                <p class="name">{{item.school_name}}</p>
+                <p class="xinge">{{item.school_description}}</p>
+                <!-- <div class="biaoqian">
+                    <img src="../../../static/images/bj.jpg"/>
+                </div> -->
+                </div>
+            </div>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
-        <div class="jieshao">
-          <p class="name">上海交通大学</p>
-          <p class="xinge">温和、顽强、高品位的法归设计师</p>
-          <div class="biaoqian">
-            <img src="../../../static/images/bj.jpg"/>
-          </div>
-        </div>
-      </div>
-      <div class="jianli">
-        <div class="touxiang">
-          <img src="../../../static/images/bj.jpg"/>
-        </div>
-        <div class="jieshao">
-          <p class="name">上海交通大学</p>
-          <p class="xinge">温和、顽强、高品位的法归设计师</p>
-        </div>
-      </div>
-      <div class="jianli">
-        <div class="touxiang">
-          <img src="../../../static/images/bj.jpg"/>
-        </div>
-        <div class="jieshao">
-          <p class="name">上海交通大学</p>
-          <p class="xinge">温和、顽强、高品位的法归设计师</p>
-        </div>
-      </div>
-    </div>
+    </scroller>
   </div>
 </template>
 
-<script>
+<script>    
 import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Data} from 'vux'
   export default {
     components:{
         Scroller,
         LoadMore,
         Toast
-    }, 
+    },
+    props:{
+        lockX:{
+            type:Boolean,
+            default:true
+        },
+        lockY:{
+            type:Boolean,
+            default:false
+        }, 
+    },
     data: function () {
       return {
         height:'',
@@ -105,6 +115,13 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
             _self.$router.push({name:'login'});
         }
         this.loadData();
+    },
+    mounted(){
+        //获取页面字体大小
+        let fontSize = getComputedStyle(document.getElementsByTagName('body')[0]).fontSize;
+        console.log(fontSize);
+        this.height ='-' + parseInt(fontSize.replace('px','')*1.2)
+        console.log('height',this.height);
     },
     methods: {
         goback () {
@@ -177,9 +194,40 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
             }
             // console.log(_self.list);
         },
+        //下拉刷新
+        refreshPageDate(){
+            let _self = this
+            _self.pagination.pageNo = 0;
+            _self.loadMoreStatus.show=false;
+            _self.$refs.scroller.donePullup();
+            setTimeout(()=>{_self.loadData()},100);
+        },
+        //上拉加载
+        loadMore(){
+            let _self = this;
+            // _self.loadData();
+            setTimeout(()=>{_self.loadData()},1);
+        },
+        scroll(position){
+            // console.log("on-scroll",position);
+        },
+        pullDownLoading(){
+            console.log('on-pull-down-loading');
+            this.refreshPageDate();
+        },
+        pullUpLoading(){
+            console.log('on-pull-up-loading');
+            this.loadMore();
+
+
+        },
+        onScrollBottom(){
+            // console.log('on-scroll-bottom');
+        }
     }
   }
 </script>
 <style scoped>
   @import '../../../static/css/meow/xiaoyouhui.css';
+
 </style>

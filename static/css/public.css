@@ -993,6 +993,7 @@ textarea,select{
     line-height:60px!important;
 }
 .scroller{
-    background:#F2F2F2;
+    /* background:#F2F2F2; */
+    background:transparent;
 }
 

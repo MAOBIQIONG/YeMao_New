@@ -18,7 +18,7 @@
             <span>学校名称</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.school_name" type="text"placeholder="请输入学校名称" />
+            <input v-model="dataParams.school_name" type="text" placeholder="请输入学校名称" />
           </div>
         </div>
         <div class="qdtime">
