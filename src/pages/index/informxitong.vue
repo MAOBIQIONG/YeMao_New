@@ -2,7 +2,7 @@
   <div class="">
     <!--导航栏-->
     <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span>系统通知</span>
     </div>
     <div class="xiaoxi-content content-p">
@@ -12,7 +12,7 @@
           <div class="jianjia"></div>
           <div class="zf-jg">支付成功</div>
           <div class="zf-sm">文字说明</div>
-          <div class="ckxq"@click="toUrl('maintain')">
+          <div class="ckxq"v-tap="{ methods:toUrl , pagename:'maintain'}">
             <span>查看详情</span>
             <div class="ck-right">
               <img src="../../../static/images/index/jiangou.png">
@@ -33,8 +33,11 @@
       goback() {
         this.$router.goBack();
       },
-      toUrl(name) {
-        this.$router.push({name: name, query: {id: this.$route.query.id}});
+//      toUrl(name) {
+//        this.$router.push({name: name, query: {id: this.$route.query.id}});
+//      },
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
     }
   }

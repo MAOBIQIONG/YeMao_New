@@ -1,8 +1,8 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
-      <div class="header-right" @click="toUrl('zhuche')">注册</div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
+      <div class="header-right" v-tap="{ methods:toUrl , pagename:'zhuche'}">注册</div>
     </div>
     <div class="log">
       <div class="log-img">
@@ -22,8 +22,8 @@
       <div class="log-btn">登录</div>
     </div>
     <div class="log-botton">
-      <div class="lb-left" @click="toUrl('zhlogin')"><a style="color: #f65aa6;">快速登录</a></div>
-      <div class="lb-right"@click="toUrl('wjmm')"><a>忘记密码？</a></div>
+      <div class="lb-left" v-tap="{ methods:toUrl , pagename:'zhlogin'}"><a style="color: #f65aa6;">快速登录</a></div>
+      <div class="lb-right"v-tap="{ methods:toUrl , pagename:'wjmm'}"><a>忘记密码？</a></div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
@@ -63,8 +63,8 @@
       goback() {
         this.$router.goBack();
       },
-      toUrl(name){
-        this.$router.push({name:name});
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
       showToast(msg){
         this.showMark = true;
@@ -175,7 +175,7 @@
               common.setStorage("userInfo",data.result);
               common.setStorage("login_account",_self.phone);
               _self.$store.state.pageIndex = 0;
-              _self.toUrl('index');
+              _self.toUrl({'pagename':'index'});
             }else{
               _self.showToast(data.msg);
             }

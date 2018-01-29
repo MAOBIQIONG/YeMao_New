@@ -6,7 +6,7 @@
         <input type="text" name="" id="search-inp" value=""class="search-inp" placeholder="搜索"/>
         <!--<span class="searchcha">×</span>-->
       </div>
-      <span @click="toUrl('index')">取消</span>
+      <span v-tap="{ methods:toUrl , pagename:'index'}">取消</span>
     </div>
     <!--tab选项卡-->
     <div class="content">
@@ -571,8 +571,8 @@
       goback() {
         this.$router.goBack();
       },
-      toUrl(name) {
-        this.$router.push({name: name});
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
       setFocus() {
         this.$refs.search.setFocus()

@@ -8,7 +8,7 @@
           <!--<span class="searchcha">×</span>-->
         </form>
       </div>
-      <span @click="goback">取消</span>
+      <span v-tap="{methods:goback}">取消</span>
     </div>
     <div class="content content-p">
       <!--热门搜索-->

@@ -149,7 +149,12 @@
         loadMark:1,
         cases: [],
         honors: [],
-        works: []
+        works: [],
+        disableDateFunction (date) {
+          if (date.formatedDate === "2017-12-30") {
+            return true
+          }
+        },
       }
     },
     activated: function () {
@@ -205,13 +210,6 @@
       },
       /*******************************************************/
       // 日历
-      disableDateFunction (date) {
-        // console.log("date:"+date)
-        if (date.formatedDate === '2017-12-28') {
-          return true
-        }
-      },
-
       // swiper
       onIndexChange (index) {
         console.log("index:"+index)

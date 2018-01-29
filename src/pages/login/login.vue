@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
-      <div class="header-right zc"@click="toUrl('zhuche')">注册</div>
+      <div class="header-right zc"v-tap="{ methods:toUrl , pagename:'zhuche'}">注册</div>
     </div>
     <!--log-->
     <div class="log clear">
@@ -28,7 +28,7 @@
     </div>
     <div class="log-botton">
       <div class="lb-left" v-tap="{methods:goback}">账号密码登录</div>
-      <div class="lb-right"@click="toUrl('wjmm')">忘记密码？</div>
+      <div class="lb-right" v-tap="{ methods:toUrl , pagename:'wjmm'}">忘记密码？</div>
     </div>
     <!--弹窗-->
     <div class="tanchuang">
@@ -94,8 +94,8 @@
       goback() {
         this.$router.goBack();
       },
-      toUrl(name){
-        this.$router.push({name:name});
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
       //输入框内有内容时显示清空按钮
       checkNumber(obj) {
@@ -213,7 +213,7 @@
               common.setStorage("userInfo",data.result);
               common.setStorage("login_account",_self.phone);
               this.$store.state.pageIndex = 0;
-              _self.toUrl('index');
+              _self.toUrl({'pagename':'index'});
             }else{
               _self.showToast(data.msg);
             }

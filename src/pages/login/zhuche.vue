@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png"/></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
     </div>
     <div class="zc-piaoti">
       <span>欢迎注册成为夜猫会员</span>
@@ -29,7 +29,7 @@
         <div class="dj-shuru" ref="verify_btn" v-tap="{methods:verifyParams}"><span class="msgs">点击获取验证码</span></div>
       </div>
     </div>
-    <div class="log-btn" @click="nextStep()"><span>下一步</span></div>
+    <div class="log-btn" v-tap="{methods:nextStep}"><span>下一步</span></div>
     <toast v-model="show" type="text" width="4em" :text="showText"></toast>
   </div>
 </template>

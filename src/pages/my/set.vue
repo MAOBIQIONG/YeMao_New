@@ -2,27 +2,27 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>设置</span>
     </div>
     <div class="content content-p">
-      <div class="xgnc"@click="toUrl('setnicheng')">
+      <div class="xgnc"v-tap="{ methods:toUrl , pagename:'setnicheng'}">
         <div class="left"><span>修改昵称</span></div>
         <div class="right"><span>{{userInfo.user_name}}</span></div>
       </div>
       <div class="xggh">
-        <div class="xgdl"@click="toUrl('setpassword')">
+        <div class="xgdl" v-tap="{ methods:toUrl , pagename:'setpassword'}">
           <div class="left"><span>修改登陆密码</span></div>
           <div class="right"><img src="../../../static/images/jiangou.png"></div>
         </div>
-        <div class="xgdl"@click="toUrl('setnum')">
+        <div class="xgdl"v-tap="{ methods:toUrl , pagename:'setnum'}">
           <div class="left"><span>更换手机号</span></div>
           <div class="right"><img src="../../../static/images/jiangou.png"></div>
         </div>
       </div>
     </div>
     <!--退出登陆-->
-    <div class="tcdl"@click="logout()">
+    <div class="tcdl" v-tap="{methods:logout}">
       <span>退出登陆</span>
     </div>
   </div>
@@ -44,8 +44,11 @@
       goback(){
         this.$router.goBack();
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+//      toUrl: function (pagename) {
+//        this.$router.push({name: pagename})
+//      },
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
       logout(){
         localStorage.setItem("userInfo",'{}');

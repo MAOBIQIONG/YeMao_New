@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png"/></div>
+      <div class="header-left"v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
     </div>
     <div class="zc-piaoti">
       <span>欢迎注册成为夜猫会员</span>
@@ -17,7 +17,7 @@
         <span class="del">×</span>
       </div>
     </div>
-    <div class="log-btn" @click="register()"><span>完成</span></div>
+    <div class="log-btn" v-tap="{methods:register}"><span>完成</span></div>
     <!-- <toast v-model="showPositionValue" type="text" :time="800" is-show-mask text="注册成功" :position="position" width="3em">注册成功</toast> -->
     <toast v-model="show" type="text" width="4em" :text="toastText"></toast>
   </div>

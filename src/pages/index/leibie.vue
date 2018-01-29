@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="header p-static">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left"v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>{{title}}</span>
     </div>
     <!--雇主列表-->

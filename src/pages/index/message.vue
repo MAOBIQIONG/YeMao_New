@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left"v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <div class="daohang">
         <ul class="tab_menu">
           <li class="selected">消息</li>
@@ -13,7 +13,7 @@
       <div class="tab_box">
         <!--消息列表-->
         <div class="xiaoxi">
-          <div class="xiaoxi-list"@click="toUrl('liaotian')">
+          <div class="xiaoxi-list" v-tap="{ methods:toUrl , pagename:'liaotian'}">
             <div class="xl-touxiang">
               <img src="../../../static/images/index/bj.jpg" />
             </div>
@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <div class="xiaoxi-list"@click="toUrl('liaotian')">
+          <div class="xiaoxi-list" v-tap="{ methods:toUrl , pagename:'liaotian'}">
             <div class="xl-touxiang">
               <img src="../../../static/images/index/bj.jpg" />
             </div>
@@ -45,7 +45,7 @@
         </div>
         <!--通知列表-->
         <div class="tongzhi hide">
-          <div class="tongzhi-list"@click="toUrl('informxitong')">
+          <div class="tongzhi-list" v-tap="{ methods:toUrl , pagename:'informxitong'}">
             <div class="tl-touxiang">
               <img src="../../../static/images/index/tongzhi_xitong.png">
             </div>
@@ -53,7 +53,7 @@
               系统通知
             </div>
           </div>
-          <div class="tongzhi-list"@click="toUrl('informxitong')">
+          <div class="tongzhi-list" v-tap="{ methods:toUrl , pagename:'informxitong'}">
             <div class="tl-touxiang">
               <img src="../../../static/images/index/tongzhi_huodong.png">
             </div>
@@ -83,8 +83,11 @@
       goback() {
         this.$router.goBack();
       },
-      toUrl(name){
-        this.$router.push({name:name,query:{id:this.$route.query.id}});
+//      toUrl(name){
+//        this.$router.push({name:name,query:{id:this.$route.query.id}});
+//      },
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
       tap(){
         var $tab_li = $('.daohang ul li');

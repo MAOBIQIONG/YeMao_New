@@ -9,7 +9,7 @@
             <!--<span class="searchcha">×</span>-->
           </form>
         </div>
-        <span @click="toUrl('index')">取消</span>
+        <span v-tap="{ methods:toUrl , pagename:'index'}">取消</span>
       </div>
       <!--tab选项卡-->
       <tab :line-width=2 active-color='#fc378c'  v-model="index" class="tabs">
@@ -50,8 +50,8 @@
       goback() {
         this.$router.goBack();
       },
-      toUrl(name) {
-        this.$router.push({name: name});
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
       },
       //搜索框
       key(e){
