@@ -151,8 +151,8 @@
           // 返回数据
           var data = response.data;
           if( data ){
-            // 刷新喵喵圈
-            _self.$store.state.indexRefreshMark = 1;
+            // 刷新喵喵圈首页
+            _self.$store.state.meowRefreshMark = 1;
             var result = data.result || {};
             if( result.ok>0 && result.n>0  ){
               _self.showToast("发布成功！");
