@@ -44,7 +44,7 @@
                 <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:like}">
                     <span id="praise" ref="like">
                         <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
-                        <img v-else src="../../../static/images/zan1.png"/>
+                        <img v-else src="../../../static/images/zan3.png"/>
                     </span>
                     <span id="praise-txt">{{chw.like}}</span>
                 </div>

@@ -463,6 +463,7 @@
   }
   .weui-cell_access .weui-cell__ft:after{
     border: none !important;
+    border-style: none !important;
   }
   .vux-cell-value{
     color:#333333;

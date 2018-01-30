@@ -220,7 +220,7 @@
 .liuyan {
 	width: 100%;
 	padding-top: 0.1rem;
-	background: #F2F2F2;
+	/*background: #F2F2F2;*/
 }
 
 .liuyan .lylist {
@@ -270,5 +270,12 @@
 	margin-left: 0.8rem;
 }
 
+/**更多**/
+.more{
+  float: right;
+  height: 0.9rem;
+  line-height: 0.9;
+  padding-right: 1rem;
+}
 
 /*# sourceMappingURL=miaomiao.css.map */
