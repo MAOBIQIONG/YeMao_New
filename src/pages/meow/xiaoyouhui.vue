@@ -24,7 +24,7 @@
         :class="{scroller:true}"   
     >  
         <div class="content content-p" style="padding-top:0;" >
-            <div class="jianli" @click="toUrl('xuexiaoxiangqing')" v-for="(item,index) in list" :key="index">
+            <div class="jianli" @click="toDetail(item._id)" v-for="(item,index) in list" :key="index">
                 <div class="touxiang">
                 <img src="../../../static/images/bj.jpg"/>
                 </div>
@@ -129,6 +129,9 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
         },
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
+        },
+        toDetail(id){
+            this.$router.push({name:'xuexiaoxiangqing',query:{id:id}})
         },
         loadData(){
             console.log('this is loadData');

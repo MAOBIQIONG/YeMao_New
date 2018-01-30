@@ -165,15 +165,19 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
           loadingShow:false,
       }
     },
-    created(){
-        let resumeId = this.$route.query.id;
-        this.resumeId = resumeId;
-        this.requestData();
-    },
-    mounted: function () {
-      this.dianzan();
-    },
     watch:{
+        pullUpDownStatus:{
+            handler:function(val,oldval){
+                if(val.pullupStatus=="loading"){
+                    this.loadMoreStatus.show=true;
+                    if(this.hasMore == false){
+                        this.loadMoreStatus.showLoading=false;
+                    } else {
+                        this.loadMoreStatus.showLoading=true;
+                    }
+                }
+            }
+        },
         loaded:{
             handler(val,oldval){
                 // console.log(val,oldval);
@@ -183,6 +187,29 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
             }
         }
     },
+    created(){
+        let resumeId = this.$route.query.id;
+        let isUserId = this.$route.query.isUserId;
+        if(resumeId){
+            this.resumeId = resumeId;
+            this.requestData();
+        }
+        if(isUserId){
+            let user = common.getObjStorage("userInfo");
+            if( !common.isNull(user._id) ){
+                this.user_id = user._id;
+                this.requestData2();
+            } else {
+                console.error('未获取用户参数');
+            }            
+        }
+        
+        
+    },
+    mounted: function () {
+      this.dianzan();
+    },
+
     methods: {
       goback(){
         this.$router.goBack();
@@ -274,6 +301,27 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
             let params = {
                 interfaceId:common.interfaceIds.queryResumeById,
                 _id:_self.resumeId
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response);
+                    let data = response.data.resume;
+                    _self.data = data;
+                    if (data) {
+                        _self.loaded = true;
+                        console.log('数据设置完成');
+                    } else {
+                        console.log('noData');
+                    }
+                });
+        },
+        requestData2(){
+            let _self = this;
+            _self.loadingShow = true;
+            let params = {
+                interfaceId:common.interfaceIds.queryResumeById,
+                user_id:_self.user_id
             };
             _self.$axios.post('/mongoApi', {
                 params: params
