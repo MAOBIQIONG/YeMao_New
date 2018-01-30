@@ -113,17 +113,16 @@
       },
       // 获取默认图片
       getDefultImg(img){
-        return common.getAvatar(img,'./static/images/employer/j.png');
+        return common.getDefultImg(img, './static/images/employer/j.png');
       },
       //上传图片
-      triggerFile(param){
-      },
-
-      // 选择图片回调
-      change(path){
-        // console.log("change path:"+path);
+      triggerFile(params){
         var _self = this;
-        _self.imgs[0].img = path;
+        uploadImg.init({
+          callback: function (path) {
+            _self.imgs[0].img = path;
+          }
+        })
       },
 
       /*************************************/
@@ -144,7 +143,7 @@
           // console.log(response)
           var data = response.data
           if( data && data.length > 0 ){
-            _self.imgs = data;
+            _self.imgs[0].img = data[0].img;
           }
         })
       },
@@ -159,10 +158,10 @@
           _self.showToast('请输入学校名称！');
           return;
         }
-//        if( common.isNull(_self.imgs[0].img) ){
-//          _self.showToast(_self.imgs[0].remark);
-//          return;
-//        }
+        if( common.isNull(_self.imgs[0].img) ){
+          _self.showToast(_self.imgs[0].remark);
+          return;
+        }
         _self.imgs.forEach(function (item, index) {
           item.user_id = _self.user_id;
         });
