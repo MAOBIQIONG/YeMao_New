@@ -4,7 +4,7 @@
     <div class="header" style="position:static">
       <div class="header-left" @click="toUrl('meow')"><img src="../../../static/images/back.png" /></div>
       <span>校友会</span>
-      <div class="header-right" @click="toUrl('chuangjianxiaoyouhui')">创建</div>
+      <div class="header-right" @click="createXyh()">创建</div>
     </div>
     <!--校友会列表-->
     <scroller
@@ -24,7 +24,7 @@
         :class="{scroller:true}"   
     >  
         <div class="content content-p" style="padding-top:0;" >
-            <div class="jianli" @click="toUrl('xuexiaoxiangqing')" v-for="(item,index) in list" :key="index">
+            <div class="jianli" @click="toDetail(item._id)" v-for="(item,index) in list" :key="index">
                 <div class="touxiang">
                 <img src="../../../static/images/bj.jpg"/>
                 </div>
@@ -105,14 +105,11 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
     },
     created(){
         var _self = this;
-        var user = common.getObjStorage("userInfo") || {};
-        // var resumeParams1 = common.getObjStorage("resumeParams1")|| {};
-        
+        var user = common.getObjStorage("userInfo") || {};       
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
         } else {
             console.log('user_id is null');
-            _self.$router.push({name:'login'});
         }
         this.loadData();
     },
@@ -129,6 +126,19 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
         },
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
+        },
+        toDetail(id){
+            this.$router.push({name:'xuexiaoxiangqing',query:{id:id}})
+        },
+        createXyh(){
+            var _self = this;
+            var user = common.getObjStorage("userInfo") || {};
+            if( !common.isNull(user._id) ){
+                _self.toUrl('chuangjianxiaoyouhui');
+            } else {
+                console.log('没有获取用户信息');
+                _self.$router.push({name:"login"});
+            }   
         },
         loadData(){
             console.log('this is loadData');

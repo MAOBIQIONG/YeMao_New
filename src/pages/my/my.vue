@@ -22,7 +22,7 @@
           </p>
           <p>消息</p>
         </li>
-        <li @click="toUrl('mineshouchang')">
+        <li @click="toUrlAfterLogin('mineshouchang')">
           <p>
             <img src="../../../static/images/my/shouchang.png" />
           </p>
@@ -50,7 +50,7 @@
           <div class="xingxi">我参与的活动</div>
           <div class="list-right"></div>
         </div>
-        <div class="list tz"@click="toUrl('minejianli')">
+        <div class="list tz" @click="toMyResume()">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">简历中心</div>
           <div class="list-right"></div>
@@ -124,7 +124,13 @@
       }
     },
     created: function () {
-      console.log("created:")
+        var _self = this;
+        var user = common.getObjStorage("userInfo") || {};        
+        if( !common.isNull(user._id) ){
+            _self.user_id = user._id;
+        } else {
+            _self.$router.push({name:'login'});
+        }
     },
     activated: function () {
       console.log("activated:")
@@ -139,9 +145,22 @@
       toUrl (pagename) {
         this.$router.push({name: pagename})
       },
+      toMyResume(){
+          this.$router.push({name:"minejianli",query:{isUserId:1}});
+      },
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
+      },
+      toUrlAfterLogin(pagename){
+        var _self = this;
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+            _self.toUrl(pagename);
+        } else {
+            console.log('没有获取用户信息');
+            _self.$router.push({name:"login"});
+        }   
       },
       // loading
       showLoading() {
