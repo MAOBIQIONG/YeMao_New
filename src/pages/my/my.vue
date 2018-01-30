@@ -22,7 +22,7 @@
           </p>
           <p>消息</p>
         </li>
-        <li @click="toUrl('mineshouchang')">
+        <li @click="toUrlAfterLogin('mineshouchang')">
           <p>
             <img src="../../../static/images/my/shouchang.png" />
           </p>
@@ -151,6 +151,16 @@
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
+      },
+      toUrlAfterLogin(pagename){
+        var _self = this;
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+            _self.toUrl(pagename);
+        } else {
+            console.log('没有获取用户信息');
+            _self.$router.push({name:"login"});
+        }   
       },
       // loading
       showLoading() {

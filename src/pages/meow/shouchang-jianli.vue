@@ -249,8 +249,6 @@ export default {
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
-        }else {
-            _self.$router.push({name:"login"});
         }
         this.loadData();
     },

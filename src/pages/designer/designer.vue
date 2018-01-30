@@ -66,7 +66,7 @@
               <div class="area" :class="areaMark==1&&showMark==true ? 'on' : ''">
                 <ul>
                   <li class="bg" v-tap="{ methods:chooseSortType, sortMark:3 }"
-                      :class="sortMark<=3||sortMark>7?'active':''">不限
+                      :class = "sortMark<=3||sortMark>7?'active':''">不限
                   </li>
                   <li class="bg" v-tap="{ methods:chooseSortType, sortMark:4 }" :class="sortMark==4?'active':''">一年以下</li>
                   <li class="bg" v-tap="{ methods:chooseSortType, sortMark:5 }" :class="sortMark==5?'active':''">1-3年</li>

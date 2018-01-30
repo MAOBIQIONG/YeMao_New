@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>人才详情</span>
-      <div class="header-right"></div>
+      <div v-if="isMyResume == false" class="header-right" :class="{'hr-hover':collectFlag==1}" @click="collect()"></div>
     </div>
     <div class="content content-p">
       <!--基本信息-->
@@ -163,6 +163,8 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
           resumeId:"",
           resume:{},
           loadingShow:false,
+          collectFlag:0,
+          isMyResume:false,
       }
     },
     watch:{
@@ -190,24 +192,28 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     created(){
         let resumeId = this.$route.query.id;
         let isUserId = this.$route.query.isUserId;
+        let user = common.getObjStorage("userInfo");
+        if( !common.isNull(user._id) ){
+            this.user_id = user._id;
+        } else {
+            console.log('未获取用户参数');
+        }            
         if(resumeId){
             this.resumeId = resumeId;
+            if(resumeId==this.user_id){
+                this.isMyResume = true;
+            }
             this.requestData();
         }
         if(isUserId){
-            let user = common.getObjStorage("userInfo");
-            if( !common.isNull(user._id) ){
-                this.user_id = user._id;
-                this.requestData2();
-            } else {
-                console.error('未获取用户参数');
-            }            
+            this.isMyResume = true;
+            this.requestData2();        
         }
         
         
     },
     mounted: function () {
-      this.dianzan();
+    //   this.dianzan();
     },
 
     methods: {
@@ -218,18 +224,63 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
         this.$router.push({name: pagename})
       },
       // 收藏效果
-      dianzan(){
-        var lr=true
-        $(".header-right").click(function(){
-          if(lr==true){
-            $(".header-right").addClass("hr-hover");
-            lr=false
-          }else if(lr==false){
-            $(".header-right").removeClass("hr-hover");
-            lr=true
-          }
-        });
-      },
+    //   dianzan(){
+    //     var lr=true
+    //     $(".header-right").click(function(){
+    //       if(lr==true){
+    //         $(".header-right").addClass("hr-hover");
+    //         lr=false
+    //       }else if(lr==false){
+    //         $(".header-right").removeClass("hr-hover");
+    //         lr=true
+    //       }
+    //     });
+    //   },
+        checkLogin(){
+            var _self = this;
+            var user = common.getObjStorage("userInfo") || {};
+            if(common.isNull(user._id)){
+                console.log('没有获取用户信息');
+                _self.$router.push({name:"login"});
+                return false;
+            } 
+            return true;
+        },
+        collect_dom(param){
+            var _self = this;
+            _self.collectFlag == 0 ? _self.collectFlag=1 : _self.collectFlag=0;
+        },
+        collect(){
+            var _self = this;
+            if(_self.checkLogin()){
+                _self.collect_dom();
+            } else {
+                return;
+            }
+            
+            console.log(this.collectFlag);
+            // return;
+            var params = {
+                interfaceId:common.interfaceIds.collect,
+                data:{
+                    collect_type: 4,//人才
+                    collect_id:resumeId,
+                    user_id: _self.user._id,
+                }
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+            }, response => {
+                var data = response.data;
+                var tips = '';
+                if( data && data.code == 200 ){
+                tips = _self.chw.collectFlag == 0 ? '取消成功！' : '收藏成功！';
+                }else{
+                tips = _self.chw.collectFlag == 0 ? '取消失败！' : '收藏失败！';
+                }
+                _self.showToast(tips);
+            })
+        },
         getCityName (value) {
             if(!value) return;
             return value2name(value, ChinaAddressV4Data);
@@ -300,7 +351,8 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
             _self.loadingShow = true;
             let params = {
                 interfaceId:common.interfaceIds.queryResumeById,
-                _id:_self.resumeId
+                _id:_self.resumeId,
+                user_id:_self.user_id
             };
             _self.$axios.post('/mongoApi', {
                 params: params
