@@ -23,7 +23,7 @@
                 <p class="time">2017-09-08 08：23</p>
               </div>
               <div class="pl-right">
-                <img src="../../../static/images/bj.jpg" />
+                <!--这个设计非常不错，我感觉非常好-->
               </div>
             </div>
           </div>
@@ -66,4 +66,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-pinlun.css';
+  .pinglun-list .pl-right{
+    background: url("/static/images/bj.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
 </style>
