@@ -545,6 +545,7 @@ const common = {
     login:"login",                                 // 登录
     updateUserPwd:'updateUserPwd',                 // 修改密码
     feedback:'feedback',                 　　　　　　// 意见反馈
+    getMyComments:'getMyComments',                 // 我的评论
 
   },
 
