@@ -73,6 +73,7 @@
             <div class="pinjia">
               <p class="dz" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,index:index,id:item._id}"><span>{{item.like}}</span></p>
               <p class="comments"><span></span><span>{{item.comments}}</span></p>
+              <!--<div class="more more-icon"></div>-->
             </div>
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
@@ -252,7 +253,7 @@
         _self.options.previewer = '.previewer'+param.index;
         var imgs = _self.meows[param.index].imgs || [];
         imgs.forEach(function (img, j) {
-          _self.list.push({src: _self.checkImg(img),w:1200,h:700})
+          _self.list.push({src: _self.checkImg(img)})
         })
         _self.$refs.previewer.show(param.i)
         param.event.cancelBubble = true;

@@ -22,8 +22,7 @@
           <div class="sjse-list" v-for="(item,index) in meows" v-tap="{methods:toUrl,pagename:'pengyouquanxq',id:item._id}">
             <div class="sjs-top">
               <div class="st-touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',id:item.user_id}">
-                <!-- checkAvatar(item.user.img) -->
-                <img :src="item.user.img"/>
+                <img :src="checkAvatar(item.user.img)"/>
               </div>
               <div class="st-neirong">
                 <div class="sn-top">
@@ -53,6 +52,7 @@
             <div class="pinjia">
               <p class="dz" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,index:index,id:item._id}"><span>{{item.like}}</span></p>
               <p class="comments"><span></span><span>{{item.comments}}</span></p>
+              <!--<div class="more more-icon"></div>-->
             </div>
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
