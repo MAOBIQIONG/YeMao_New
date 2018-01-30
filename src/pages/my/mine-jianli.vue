@@ -2,7 +2,7 @@
   <div >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>人才详情</span>
       <div class="header-right"></div>
     </div>
@@ -13,14 +13,14 @@
           <img src="../../../static/images/bj.jpg" />
         </div>
         <p>基本信息</p>
-        <p class="xingmin"><span>史珂</span>/<span>女</span>/<span>24岁</span>/<span>朝阳区</span></p>
+        <p class="xingmin"><span>{{resume.real_name}}</span>/<span>{{resume.gender}}</span>/<span>{{getAge(resume.birthday)}}岁</span>/<span>{{getCityName(resume.city)}}</span></p>
         <div class="xq">
           <div class="xinxi-list">
             <div class="xx-left">
               工作年限：
             </div>
             <div class="xx-right">
-              3
+              {{getWorkYears(resume.working_year)}}
             </div>
           </div>
           <div class="xinxi-list">
@@ -28,7 +28,7 @@
               学 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：
             </div>
             <div class="xx-right">
-
+                {{resume.education}}
             </div>
           </div>
           <div class="xinxi-list">
@@ -36,7 +36,7 @@
               邮 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：
             </div>
             <div class="xx-right">
-
+                {{resume.email}}
             </div>
           </div>
           <div class="xinxi-list">
@@ -44,7 +44,7 @@
               毕业院校：
             </div>
             <div class="xx-right">
-
+                {{resume.school_name}}
             </div>
           </div>
           <div class="xinxi-list">
@@ -52,7 +52,7 @@
               设计类型：
             </div>
             <div class="xx-right">
-
+                {{getTypeName(resume.type)}}
             </div>
           </div>
         </div>
@@ -63,12 +63,12 @@
         </div>
         <div class="qwgz-top">
           <p class="biaoti">期望工作</p>
-          <p class="zhiwei"><span>设计师助理</span>/<span>全职</span>/<span>5k-6k</span></p>
+          <p class="zhiwei"><span>{{resume.expected_positions}}</span>/<span>￥{{resume.expected_salary}}</span></p>
         </div>
         <div class="right">
         </div>
         <div class="qwgz-bottom">
-          <p>补充说明: 本人热爱建筑设计，擅长手绘，熟练运用PS CDR SAl及办公软件，性格开随和，工作踏实认真。</p>
+          <p>{{resume.expected_description}}</p>
         </div>
       </div>
       <!--工作经历-->
@@ -81,32 +81,19 @@
           工作经历
         </div>
         <div class="gzjl-content">
-          <div class="gc-list">
+          <div class="gc-list" v-for="(item,index) in resume.wes" :key="index">
             <div class="yuan"></div>
             <div class="neirong">
-              <p>2017-07-2017-09</p>
-              <p>宏晖文化发展有限公司/3</p>
+              <p>{{item.start_time}}~{{item.end_time}}</p>
+              <p>{{item.company_name}}</p>
+              <p>{{item.positions}}</p>
               <p class="gznr">工作内容</p>
               <div class="list-neirong">
-                应季开发产品和可承印物，图案设计
-                应季开发产品和可承印物，图案设计
-                应季开发产品和可承印物，图案设计
+                {{item.description}}
               </div>
             </div>
           </div>
-          <div class="gc-list">
-            <div class="yuan"></div>
-            <div class="neirong">
-              <p>2017-07-2017-09</p>
-              <p>宏晖文化发展有限公司/3</p>
-              <p class="gznr">工作内容</p>
-              <div class="list-neirong">
-                应季开发产品和可承印物，图案设计
-                应季开发产品和可承印物，图案设计
-                应季开发产品和可承印物，图案设计
-              </div>
-            </div>
-          </div>
+
 
         </div>
       </div>
@@ -120,7 +107,7 @@
           自我描述
         </div>
         <div class="zwms-content">
-          本人热爱服装设计，擅长手绘，熟练运用PS CDR SAl及办公软件，熟悉运用Brother绣花机，擅长打版缝制，成衣样衣制作，性格开朗随和，工作踏实认真。平时的爱好是摄影，唱歌，有一定审美能力，做过微信运营，婚礼策划，对自己的能力很肯定，比较全面。
+          {{resume.description}}
         </div>
       </div>
       <!--个人作品-->
@@ -132,7 +119,7 @@
           </div>
           个人作品
         </div>
-        <div class="fanhui"@click="toUrl('gerenzuoping')">
+        <div class="fanhui" @click="toUrl('gerenzuoping')">
           <img src="../../../static/images/youhui.png" />
         </div>
         <div class="gzzp-content">
@@ -157,23 +144,44 @@
         喵 喵 聊 天
       </div>
     </div>
+    <loading :show="loadingShow" text="加载中"></loading>
   </div>
 </template>
 
 <script>
+import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddressV4Data} from 'vux'
   export default {
+    components:{
+        Scroller,
+        LoadMore,
+        Toast,
+        Loading
+    },
     data () {
       return {
+          loaded:false,
           resumeId:"",
-          dataParams:{}
+          resume:{},
+          loadingShow:false,
       }
     },
     created(){
         let resumeId = this.$route.query.id;
         this.resumeId = resumeId;
+        this.requestData();
     },
     mounted: function () {
       this.dianzan();
+    },
+    watch:{
+        loaded:{
+            handler(val,oldval){
+                // console.log(val,oldval);
+                if(val == true){
+                    this.setData(this.data);
+                }
+            }
+        }
     },
     methods: {
       goback(){
@@ -195,12 +203,97 @@
           }
         });
       },
-      initData(){
-          let _self = this;
-          let params = {
-              interfaceId:comon.interfaceIds
-          };
-      }
+        getCityName (value) {
+            if(!value) return;
+            return value2name(value, ChinaAddressV4Data);
+        },
+        getTypeName(value){
+            return common.getNameByTypeId(value);
+        },
+        getWorkYears(value){
+            return common.getWorkyearsName(value);
+        },
+        //strBirthday:yyyy-mm-dd
+        getAge(strBirthday){
+            if(!common.isString(strBirthday)){
+                // console.error("参数需要字符串");
+                return;
+            }
+            var returnAge;  
+            var strBirthdayArr=strBirthday.split("-");  
+            var birthYear = strBirthdayArr[0];  
+            var birthMonth = strBirthdayArr[1];  
+            var birthDay = strBirthdayArr[2];  
+            
+            var d = new Date();  
+            var nowYear = d.getFullYear();  
+            var nowMonth = d.getMonth() + 1;  
+            var nowDay = d.getDate();  
+            
+            if(nowYear == birthYear){  
+                returnAge = 0;//同年 则为0岁  
+            }  
+            else{  
+                var ageDiff = nowYear - birthYear ; //年之差  
+                if(ageDiff > 0){  
+                    if(nowMonth == birthMonth) {  
+                        var dayDiff = nowDay - birthDay;//日之差  
+                        if(dayDiff < 0)  
+                        {  
+                            returnAge = ageDiff - 1;  
+                        }  
+                        else  
+                        {  
+                            returnAge = ageDiff ;  
+                        }  
+                    }  
+                    else  
+                    {  
+                        var monthDiff = nowMonth - birthMonth;//月之差  
+                        if(monthDiff < 0)  
+                        {  
+                            returnAge = ageDiff - 1;  
+                        }  
+                        else  
+                        {  
+                            returnAge = ageDiff ;  
+                        }  
+                    }  
+                }  
+                else  
+                {  
+                    returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天  
+                }  
+            }  
+            
+            return returnAge;//返回周岁年龄            
+        },
+        requestData(){
+            let _self = this;
+            _self.loadingShow = true;
+            let params = {
+                interfaceId:common.interfaceIds.queryResumeById,
+                _id:_self.resumeId
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response);
+                    let data = response.data.resume;
+                    _self.data = data;
+                    if (data) {
+                        _self.loaded = true;
+                        console.log('数据设置完成');
+                    } else {
+                        console.log('noData');
+                    }
+                });
+        },
+        setData(data){
+            let _self = this;
+            _self.resume = data;
+            _self.loadingShow = false;
+        }
     }
   }
 </script>

@@ -23,7 +23,7 @@
     </div>
     <!--退出登陆-->
     <div class="tcdl" v-tap="{methods:logout}">
-      <span>退出登陆</span>
+      <span>退出登录</span>
     </div>
   </div>
 </template>

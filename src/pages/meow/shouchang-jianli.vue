@@ -255,6 +255,10 @@ export default {
         this.loadData();
     },
     mounted(){
+        let fontSize = getComputedStyle(document.getElementsByTagName('body')[0]).fontSize;
+        console.log(fontSize);
+        this.height ='-' + parseInt(fontSize.replace('px','')*1.2)
+        console.log('height',this.height);
         // console.log('mounted');
         this.$nextTick(
             ()=>{
