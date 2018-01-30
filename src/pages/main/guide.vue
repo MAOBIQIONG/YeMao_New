@@ -1,6 +1,6 @@
 <template>
   <!-- 制作一个框架包裹slider -->
-  <div style="width:100%;height:100%">
+  <div style="width:100%;height:100%" ontouchstart>
     <!-- 配置slider组件 -->
     <slider :pages="pages" :sliderinit="sliderinit">
       <!-- 设置loading,可自定义 -->

@@ -49,6 +49,7 @@
         <inline-calendar
           ref="calendar"
           class="inline-calendar-demo"
+          :return-six-rows="return6Rows"
           :disable-date-function="disableDateFunction">
         </inline-calendar>
       </div>
@@ -150,8 +151,9 @@
         cases: [],
         honors: [],
         works: [],
+        return6Rows: true,
         disableDateFunction (date) {
-          if (date.formatedDate === "2017-12-30") {
+          if (date.formatedDate === "2017-1-28") {
             return true
           }
         },
