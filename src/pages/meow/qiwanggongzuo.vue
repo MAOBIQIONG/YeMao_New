@@ -48,12 +48,13 @@
 </template>
 
 <script>
-  import { XAddress, ChinaAddressV4Data,Group,Toast} from 'vux'
+  import { XAddress, ChinaAddressV4Data,Group,Toast,Loading} from 'vux'
   export default {
     components: {
       XAddress,
       Group,
-      Toast
+      Toast,
+      Loading
     },
     data: function () {
       return {
@@ -69,6 +70,7 @@
         },
         toastShow:false,
         toastText:"",
+        loadingShow:false,
       }
     },
     created(){
@@ -170,8 +172,11 @@
                     let data = response.data.data
                     if(!common.isNull(data)) {
                         // common.setStorage("resumeId",data._id);
-                        _self.dataParams.user_id = _self.user_id;
-                        _self.dataParams = data;
+                        // _self.dataParams.user_id = _self.user_id;
+                        for(var i in data){
+                            console.log(data);
+                        }
+                        // _self.dataParams = data;
                     }
                 });
         },

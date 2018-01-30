@@ -200,9 +200,11 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
         }            
         if(resumeId){
             this.resumeId = resumeId;
-            if(resumeId==this.user_id){
+            let resume_user_id = common.getStorage('resume_user_id');
+            if(resume_user_id==this.user_id){
                 this.isMyResume = true;
             }
+            common.delStorage('resume_user_id');
             this.requestData();
         }
         if(isUserId){
