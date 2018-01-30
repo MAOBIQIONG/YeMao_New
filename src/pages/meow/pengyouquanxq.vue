@@ -77,15 +77,15 @@
                     <span class="pd-0">{{getDateDiff(com.create_date)}}</span>
                     <span>·</span>
                     <span v-if="userInfo._id!=null&&userInfo._id==com.user._id" :id="com._id" class="pd-0" v-tap="{methods:deleteSth,id:com._id,floor:0,flag:1}">删除</span>
-                    <span v-else="" :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id}">评论</span>
+                    <span v-else="" :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}">评论</span>
                   </div>
                 </div>
                 <div class="comment-content">{{com.content}}</div>
                 <div class="arr-up" v-if="com.replys && com.replys.length>0"></div>
                 <div class="comment-reply" v-if="com.replys && com.replys.length>0">
-                  <div class="reply" v-tap="{methods:replyFun,id:com._id,aid:rep._id,name:rep.user.user_name,uid:rep.user._id}" :id="rep._id" v-for="rep in com.replys">
-                    <p v-if="rep.answer_id==''"><span class="replier">{{rep.user.user_name}}</span>&nbsp;:&nbsp;<span>{{rep.content}}</span></p>
-                    <p v-if="rep.answer_id!=''">
+                  <div class="reply" v-tap="{methods:replyFun,id:com._id,aid:rep._id,name:rep.user.user_name,uid:rep.user._id,floor:2}" :id="rep._id" v-for="rep in com.replys">
+                    <p v-if="rep.floor==1"><span class="replier">{{rep.user.user_name}}</span>&nbsp;:&nbsp;<span>{{rep.content}}</span></p>
+                    <p v-if="rep.floor==2">
                       <span class="replier">{{rep.user.user_name}}</span>
                       <span>回复</span>
                       <span class="replier" v-if="rep.answer">{{rep.answer.user_name}}</span>&nbsp;:&nbsp;<span>{{rep.content}}</span>
@@ -144,6 +144,7 @@
         comment_id:'',
         comment_text:'',
         answer_id:'',
+        answer_name:'',
         floor:0,
         // 删除遮罩层
         showSheet: false,
@@ -302,12 +303,13 @@
         }
         // 评论、回复
         var id = "#"+params.id;
-        _self.floor = 1;
         _self.comment_id = params.id;
+        _self.floor = common.checkInt(params.floor);
         if( !common.isNull(params.aid) && !common.isNull(params.name) ){
           id = "#"+params.aid;
           _self.answer_id = params.uid;
-          _self.comment_placeholder = '回复'+params.name+':';
+          _self.answer_name = params.name;
+          _self.comment_placeholder = '回复'+_self.answer_name+':';
         }
         if( !$(id).hasClass('bg-clo-1') ){
           $(id).addClass('bg-clo-1');
@@ -323,7 +325,7 @@
         var _self = this;
         _self.comment_placeholder = '填写评论';
         _self.comment_id = _self.miao_id;
-        _self.answer_id = '';
+        _self.answer_id = _self.meow.user._id;
         _self.floor = 0;
       },
       // 获取焦点
@@ -395,6 +397,7 @@
         _self.$refs.scroller.donePullup();
         // 喵喵圈动态
         _self.meow = data.meow || {};
+        _self.answer_id = _self.meow.user._id;
         // 图片
         var imgs = _self.meow.imgs || [];
         imgs.forEach(function (item,index) {
@@ -497,7 +500,7 @@
             comment_id: _self.comment_id,        // 评论对象ID
             content: _self.comment_text,         // 评论内容
             comment_type: 0,                     // 评论类型：0、喵喵圈，1、案例展示、个人荣誉、我的作品、喵学堂、问答。
-            answer_id: _self.answer_id,          // 回复ID
+            answer_id: _self.answer_id,          // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
             floor: _self.floor                   // 评论层级
           }
         };
@@ -530,18 +533,25 @@
         // 刷新喵喵圈首页
         _self.$store.state.meowRefreshMark = 1;
         // 添加评论记录
+        data.create_date = new Date().getTime();
         data.user = {
           authenticating_state: _self.userInfo.authenticating_state,
           img: _self.userInfo.img,
           user_name: _self.userInfo.user_name,
           _id: _self.userInfo._id
         };
-        data.create_date = new Date().getTime();
-        if( data.floor == 0 ){
+        if( data.floor == 0 ){ // 一级评论
           // 修改评论数量
           _self.meow.comments += 1;
           _self.comments.unshift(data);
         }else{
+          if( data.floor == 2 ){ // 回复
+            data.answer = {
+              user_name: _self.answer_name,
+              _id: _self.answer_id
+            };
+          }
+          // 添加回复记录
           _self.comments.forEach(function (item,index) {
             if( data.comment_id == item._id.toString() ){
               if( item.replys ){
