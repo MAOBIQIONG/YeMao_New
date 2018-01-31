@@ -1,6 +1,5 @@
 <template>
   <div class="my">
-    <!--<div v-tap="{ methods:cgLink , pagename:'vuxtest' }" class="msg">{{ msg }}</div>-->
     <!--头部-->
     <div class="mine-top">
       <div class="shezhi" v-tap="{ methods:toUrlAfterLogin, pagename:'set' }">
@@ -46,17 +45,14 @@
     <div class="my-msg">
       <div class="liebiao">
         <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minehuodong'}">
-          <!--<div class="tupiao"></div>-->
           <div class="xingxi">我参与的活动</div>
           <div class="list-right"></div>
         </div>
         <div class="list tz" v-tap="{methods:toMyResume}">
-          <!--<div class="tupiao"></div>-->
           <div class="xingxi">简历中心</div>
           <div class="list-right"></div>
         </div>
         <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minewenda'}">
-          <!--<div class="tupiao"></div>-->
           <div class="xingxi">我的问答</div>
           <div class="list-right"></div>
         </div>
@@ -66,12 +62,10 @@
     <div class="yijian">
       <div class="liebiao">
         <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">
-          <!--<div class="tupiao"></div>-->
           <div class="xingxi">客服中心</div>
           <div class="list-right"></div>
         </div>
         <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'yijian'}">
-          <!--<div class="tupiao"></div>-->
           <div class="xingxi">意见反馈</div>
           <div class="list-right"></div>
         </div>
