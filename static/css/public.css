@@ -48,10 +48,11 @@ textarea,select{
 }
 /*沉浸式样式*/
 .content-p{
-  padding-top: 1.2rem;
+  /*padding-top: 1.2rem;*/
+  padding-top:0.88rem;
 }
 .qujin{
- padding-top: 0.3rem;
+ /*padding-top: 0.3rem;*/
 }
 /**定位**/
 .p-fixed{
@@ -68,7 +69,9 @@ textarea,select{
   top:0;
   left: 0;
   width: 100%;
-  height: 1.2rem;
+  /*沉浸式样式*/
+  /*height: 1.2rem;*/
+  height: 0.88rem;
   color: #f65aa6;
   border-bottom: 1px solid #F2F2F2;
   font-size: 0.4rem;
@@ -76,7 +79,8 @@ textarea,select{
   text-align: center;
   background: white;
   z-index: 999;
-  padding-top: 0.3rem;
+  /*沉浸式样式*/
+  /*padding-top: 0.3rem;*/
 }
 .header .header-left {
   position: absolute;
@@ -86,7 +90,9 @@ textarea,select{
   line-height: 0.88rem;
   text-align: center;
   left: 0;
-  top:0.35rem;
+  /*沉浸式样式*/
+  /*top:0.35rem;*/
+  top:0rem;
   background-size: .3rem auto;
   background-position: center center;
   background-repeat: no-repeat;
@@ -95,6 +101,7 @@ textarea,select{
 .img-back2{background-image: url("/static/images/bj.jpg");  }
 .header .header-left img {
   height: 0.4rem;
+  /*沉浸式样式*/
   margin-top: 0.22rem;
 }
 .header .header-right {
@@ -103,12 +110,15 @@ textarea,select{
   font-size: 0.32rem;
   line-height: 0.88rem;
   text-align: center;
-  top: 0.32rem;
+  /*沉浸式样式*/
+  /*top: 0.32rem;*/
+  top:0;
   right:0.2rem;
 }
 .header .header-right img{
   width: 0.4rem;
-  margin-top: 0.2rem;
+  display: inline-block;
+  margin-top: 0.25rem;
 }
 /*首页列表模块公共样式*/
 .gz-list {

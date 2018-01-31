@@ -83,9 +83,9 @@
     <div class="pop" v-if="showPop==true">
       <div class="pop-bottom">
         <div class="anniu">
-          <p @click="toUrl('fenxiang')">分享到微信好友</p>
-          <p @click="toUrl('fenxiang')">分享到微信朋友圈</p>
-          <p @click="toUrl('fenxiang')">分享到QQ</p>
+          <p v-tap="{methods:toUrlAfterLogin,pagename:'fenxiang'}">分享到微信好友</p>
+          <p v-tap="{methods:toUrlAfterLogin,pagename:'fenxiang'}">分享到微信朋友圈</p>
+          <p v-tap="{methods:toUrlAfterLogin,pagename:'fenxiang'}">分享到QQ</p>
         </div>
         <div class="anniu" v-tap="{methods:hideClearCachePop}"><span style="color: #0076ff;">取消</span></div>
       </div>
