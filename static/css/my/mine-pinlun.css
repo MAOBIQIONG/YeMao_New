@@ -46,7 +46,8 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  font-size: 0.24rem;
+  font-size: 0.27rem;
+  padding: 0.1rem;
 	overflow: hidden;
 }
 

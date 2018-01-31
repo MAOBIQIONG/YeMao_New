@@ -81,7 +81,7 @@
         </div>
       </scroller>
     </div>
-    <div class="tianjia" v-tap="{methods:toUrl,pagename:'fbmmq'}"></div>
+    <div class="tianjia" v-tap="{methods:toRelease}"></div>
     <div v-transfer-dom>
       <previewer :list="list" ref="previewer" :options="options"></previewer>
     </div>
@@ -168,12 +168,14 @@
       }
     },
     activated: function () {
-      var mrm = this.$store.state.meowRefreshMark;
+      var _self = this;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
+      var mrm = _self.$store.state.meowRefreshMark;
       if ( mrm > 0 ) {
-        this.$store.state.meowRefreshMark = 0;
-        this.pagination.pageNo = 0;
-        this.pagination.pageSize = 10;
-        this.loadData()
+        _self.$store.state.meowRefreshMark = 0;
+        _self.pagination.pageNo = 0;
+        _self.pagination.pageSize = 10;
+        _self.loadData()
       }
     },
     created(){
@@ -216,6 +218,14 @@
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）
         return false
+      },
+      toRelease(){
+        var _self = this;
+        if( common.isNull(_self.userInfo._id) ){
+          _self.$router.push({name: 'login'});
+        }else{
+          _self.$router.push({name: 'fbmmq'});
+        }
       },
       showToast(msg){
         this.showMark = true;
