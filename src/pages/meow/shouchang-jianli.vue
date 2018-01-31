@@ -176,6 +176,14 @@ export default {
             let _self = this;
             _self.$refs.scroller.enablePullup();
             let list = data.datalist || [];
+            for(let item of list) {
+                if(common.isNull(item.city)){
+                    item.city = [];
+                }
+                if(common.isNull(item.expected_city)){
+                    item.expected_city = [];
+                }
+            }
             //对于没有user情况处理
             // list.forEach((r,i)=>{
             //     if(!r.user){

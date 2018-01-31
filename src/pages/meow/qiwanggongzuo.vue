@@ -171,11 +171,6 @@
                     console.log(response);
                     let data = response.data.data
                     if(!common.isNull(data)) {
-                        // common.setStorage("resumeId",data._id);
-                        // _self.dataParams.user_id = _self.user_id;
-                        // for(var i in data){
-                        //     console.log(data);
-                        // }
                         _self.dataParams = data;
                     }
                 });
