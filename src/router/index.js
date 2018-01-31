@@ -9,8 +9,6 @@ import meow from '@/pages/meow/meow'
 import designer from '@/pages/designer/designer'
 import my from '@/pages/my/my'
 import home from '@/pages/main/home'
-import vuxtest from '@/pages/index/vuxtest'
-import vuxswiper from '@/pages/index/vuxswiper'
 import zhlogin from '@/pages/login/login'
 import wjmm from '@/pages/login/wjmm'
 import login from '@/pages/login/zhlogin'
@@ -75,6 +73,7 @@ import collectionQa from '@/pages/my/collection_qa'
 import collectionResume from '@/pages/my/collection_resume'
 import yijian from '@/pages/my/yijian'
 import miaomiaoquan from '@/pages/my/miaomiaoquan'
+import fenxiang from '@/pages/my/fenxiang'
 import uploadImg from '@/pages/designer/uploadImg'
 import fbmmq from '@/pages/meow/fbmmq'
 import bianjigongzuojinli from '@/pages/meow/bianjigongzuojinli'
@@ -289,6 +288,10 @@ const routeArray = [
     component: fbmmq
   },
   // my模块
+  { path: '/fenxiang',
+    name: 'fenxiang',
+    component: fenxiang
+  },
   { path: '/miaomiaoquan',
     name: 'miaomiaoquan',
     component: miaomiaoquan

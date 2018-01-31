@@ -75,11 +75,11 @@
           <div class="xingxi">意见反馈</div>
           <div class="list-right"></div>
         </div>
-        <!--<div class="list" v-tap="{methods:showClearCachePop}">-->
-          <!--&lt;!&ndash;<div class="tupiao"></div>&ndash;&gt;-->
-          <!--<div class="xingxi">清除缓存</div>-->
-          <!--<div class="list-right"><span>{{cacheSize}}</span></div>-->
-        <!--</div>-->
+        <div class="list" v-tap="{methods:showClearCachePop}">
+          <!--<div class="tupiao"></div>-->
+          <div class="xingxi">分享夜猫</div>
+          <div class="list-right"><span>{{cacheSize}}</span></div>
+        </div>
         <div class="list"@click="toUrl('mineguanyu')">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">关于夜猫</div>
@@ -87,10 +87,14 @@
         </div>
       </div>
     </div>
-    <!-- 清除缓存弹窗-->
+    <!-- 分享弹窗-->
     <div class="pop" v-if="showPop==true">
       <div class="pop-bottom">
-        <div class="anniu" v-tap="{methods:clearCache}"><span>清除缓存</span></div>
+        <div class="anniu">
+          <p @click="toUrl('fenxiang')">分享到微信好友</p>
+          <p @click="toUrl('fenxiang')">分享到微信朋友圈</p>
+          <p @click="toUrl('fenxiang')">分享到QQ</p>
+        </div>
         <div class="anniu" v-tap="{methods:hideClearCachePop}"><span style="color: #0076ff;">取消</span></div>
       </div>
     </div>

@@ -23,7 +23,7 @@
                 <p class="time">2017-09-08 08：23</p>
               </div>
               <div class="pl-right">
-                <!--这个设计非常不错，我感觉非常好-->
+                这个设计非常不错，我感觉非常好dsfsdfs
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@
 <style scoped>
   @import '../../../static/css/my/mine-pinlun.css';
   .pinglun-list .pl-right{
-    background: url("/static/images/bj.jpg");
+    /*background: url("/static/images/bj.jpg");*/
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
