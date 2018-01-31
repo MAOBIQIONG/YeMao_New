@@ -128,7 +128,8 @@
             <div class="gz-content">
               <div class="tupian">
                 <div class="tu" v-for="img in order.imgs.slice(0, 3)">
-                  <img :src="checkImg(img)" />
+                  <!--<img :src="checkImg(img)" />-->
+                  <div class="bg-cover" :style="'background-image:url('+checkImg(img)+')'"></div>
                 </div>
               </div>
               <div class="wenzhi">{{order.project_describe}}</div>

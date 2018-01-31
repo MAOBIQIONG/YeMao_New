@@ -85,6 +85,7 @@
         }
       },
       search:function (param) {
+        console.log("param:"+JSON.stringify(param))
         var _self = this;
         if( _self.historySearch.indexOf(param.value) < 0 ){
           _self.historySearch.push(param.value);

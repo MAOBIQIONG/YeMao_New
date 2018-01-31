@@ -192,7 +192,9 @@ textarea,select{
 }
 
 .gz-list .gz-content .tupian .tu {
-  max-width: 33%;
+  height: 2.2rem;
+  width: 2.2rem;
+  /*max-width: 33%;*/
   /*-webkit-box-flex: 1;*/
   margin: 0rem 0.05rem;
   overflow: hidden;
@@ -790,6 +792,7 @@ textarea,select{
   bottom: 0.1rem;
   right: 0.28rem;
   color: #9e9e9e;
+  line-height: 0.25rem;
 }
 /*待处理*/
 .ddlist-sjsdai {
