@@ -537,6 +537,7 @@ const common = {
     queryList:'queryList',                         // 分页查询数据
     queryResumeById:'queryResumeById',             // 人才简历详情
     queryWEById:'queryWEById',                     // 工作经历详情
+    updateResumes:'updateResumesById',             // 修改简历
     queryAlumniById:'queryAlumniById',             // 校友会详情
     checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
     registerUser:'registerUser',                   // 注册
