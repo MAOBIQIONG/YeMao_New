@@ -6,9 +6,14 @@
       <span>人才详情</span>
       <div v-if="isMyResume == false" class="header-right" :class="{'hr-hover':resume.collectFlag==1}" @click="collect()"></div>
     </div>
+    <!-- 我的简历无数据 -->
     <div v-if="noResume">
-       <div style="padding:0.1rem 0;background:transparent;width:2rem;font-size:0.4rem;text-align:center;margin:50%  auto 0 auto">暂无简历</div>
+        <div style="padding:0.1rem 0;background:transparent;width:2rem;font-size:0.4rem;text-align:center;margin:50%  auto 0 auto">暂无简历</div>
+        <div class="imgNoData">
+            <img src="../../../static/images/shuju.png"/>
+        </div>
     </div>
+    <!-- 我的简历有数据 -->
     <div class="content content-p" v-else>
       <!--基本信息-->
       <div class="jbxx">
@@ -154,12 +159,14 @@
 
 <script>
 import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddressV4Data} from 'vux'
+import NoData from '@/pages/main/maintain'
   export default {
     components:{
         Scroller,
         LoadMore,
         Toast,
-        Loading
+        Loading,
+        NoData
     },
     data () {
         return {
@@ -433,4 +440,13 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     background-size: 0.6rem 0.6rem;
     background-position: center right;
   }
+    .imgNoData{
+        position: fixed;
+        width: 4.5rem;
+        left:1.5rem;
+        top: 3rem;
+    }
+    .imgNoData img{
+        width: 100%;
+    }
 </style>
