@@ -3,7 +3,7 @@
     <!--<div v-tap="{ methods:cgLink , pagename:'vuxtest' }" class="msg">{{ msg }}</div>-->
     <!--头部-->
     <div class="mine-top">
-      <div class="shezhi" v-tap="{ methods:toSet }">
+      <div class="shezhi" v-tap="{ methods:toUrlAfterLogin, pagename:'set' }">
           <img src="../../../static/images/my/shezhi1.png" />
       </div>
       <div class="tu-nicheng">
@@ -16,25 +16,25 @@
     <!--消息栏-->
     <div class="msage-top">
       <ul>
-        <li @click="toUrl('message')">
+        <li v-tap="{methods:toUrlAfterLogin,pagename:'message'}">
           <p>
             <img src="../../../static/images/my/xiaoxi.png" />
           </p>
           <p>消息</p>
         </li>
-        <li @click="toUrlAfterLogin('mineshouchang')">
+        <li v-tap="{methods:toUrlAfterLogin,pagename:'mineshouchang'}">
           <p>
             <img src="../../../static/images/my/shouchang.png" />
           </p>
           <p>收藏</p>
         </li>
-        <li @click="toUrl('minepinlun')">
+        <li v-tap="{methods:toUrlAfterLogin,pagename:'minepinlun'}">
           <p>
             <img src="../../../static/images/my/pinglun.png" />
           </p>
           <p>评论中心</p>
         </li>
-        <li @click="toUrl('miaomiaoquan')">
+        <li v-tap="{methods:toUrlAfterLogin,pagename:'miaomiaoquan'}">
           <p>
             <img src="../../../static/images/my/miaomiao.png" />
           </p>
@@ -45,17 +45,17 @@
     <!--我的消息-->
     <div class="my-msg">
       <div class="liebiao">
-        <div class="list"@click="toUrl('minehuodong')">
+        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minehuodong'}">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">我参与的活动</div>
           <div class="list-right"></div>
         </div>
-        <div class="list tz" @click="toMyResume()">
+        <div class="list tz" v-tap="{methods:toMyResume}">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">简历中心</div>
           <div class="list-right"></div>
         </div>
-        <div class="list"@click="toUrl('minewenda')">
+        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minewenda'}">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">我的问答</div>
           <div class="list-right"></div>
@@ -65,22 +65,31 @@
     <!--意见反馈-->
     <div class="yijian">
       <div class="liebiao">
-        <div class="list"@click="toUrl('maintain')">
+        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">客服中心</div>
           <div class="list-right"></div>
         </div>
-        <div class="list"@click="toUrl('yijian')">
+        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'yijian'}">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">意见反馈</div>
           <div class="list-right"></div>
         </div>
+<<<<<<< Updated upstream
         <div class="list" v-tap="{methods:showClearCachePop}">
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">分享夜猫</div>
           <div class="list-right"><span>{{cacheSize}}</span></div>
         </div>
         <div class="list"@click="toUrl('mineguanyu')">
+=======
+        <!--<div class="list" v-tap="{methods:showClearCachePop}">-->
+          <!--&lt;!&ndash;<div class="tupiao"></div>&ndash;&gt;-->
+          <!--<div class="xingxi">清除缓存</div>-->
+          <!--<div class="list-right"><span>{{cacheSize}}</span></div>-->
+        <!--</div>-->
+        <div class="list" v-tap="{methods:toUrl,pagename:'mineguanyu'}">
+>>>>>>> Stashed changes
           <!--<div class="tupiao"></div>-->
           <div class="xingxi">关于夜猫</div>
           <div class="list-right"></div>
@@ -128,43 +137,43 @@
       }
     },
     created: function () {
-        var _self = this;
-        var user = common.getObjStorage("userInfo") || {};        
-        if( !common.isNull(user._id) ){
-            _self.user_id = user._id;
-        } else {
-            _self.$router.push({name:'login'});
-        }
+      console.log("created:")
+      var _self = this;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
     },
     activated: function () {
       console.log("activated:")
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
-      // _self.initCalcCache();
     },
     methods: {
       goback(){
         this.$router.goBack();
       },
-      toUrl (pagename) {
-        this.$router.push({name: pagename})
+      toUrl (params) {
+        this.$router.push({name: params.pagename})
       },
       toMyResume(){
-          this.$router.push({name:"minejianli",query:{isUserId:1}});
+        var _self = this;
+        if( !common.isNull(_self.userInfo._id) ){
+          _self.$router.push({name:"minejianli",query:{isUserId:1}});
+        } else {
+          console.log('没有获取用户信息');
+          _self.toUrl({pagename:"login"});
+        }
       },
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
       },
-      toUrlAfterLogin(pagename){
+      toUrlAfterLogin(params){
         var _self = this;
-        var user = common.getObjStorage("userInfo") || {};
-        if( !common.isNull(user._id) ){
-            _self.toUrl(pagename);
+        if( !common.isNull(_self.userInfo._id) ){
+            _self.toUrl(params);
         } else {
             console.log('没有获取用户信息');
-            _self.$router.push({name:"login"});
-        }   
+            _self.toUrl({pagename:"login"});
+        }
       },
       // loading
       showLoading() {
@@ -177,14 +186,6 @@
       //头像
       checkAvatar (path) {
         return common.getAvatar(path)
-      },
-      toSet () {
-        var _self = this;
-        if( _self.userInfo._id != null ){
-          _self.toUrl('set');
-        }else{
-          _self.toUrl('login');
-        }
       },
       //		弹窗
       showClearCachePop() {
@@ -218,7 +219,7 @@
       // 修改头像
       modifyAvatar() {
         var _self = this;
-        if( _self.userInfo._id != null ){
+        if( !common.isNull(_self.userInfo._id) ){
           console.log("修改头像。。")
           if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
             uploadImg.init({
@@ -229,7 +230,7 @@
             })
           }
         }else{
-          _self.toUrl('login');
+          _self.toUrl({pagename:'login'});
         }
       },
 
