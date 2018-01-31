@@ -75,22 +75,11 @@
           <div class="xingxi">意见反馈</div>
           <div class="list-right"></div>
         </div>
-<<<<<<< Updated upstream
         <div class="list" v-tap="{methods:showClearCachePop}">
-          <!--<div class="tupiao"></div>-->
           <div class="xingxi">分享夜猫</div>
           <div class="list-right"><span>{{cacheSize}}</span></div>
         </div>
-        <div class="list"@click="toUrl('mineguanyu')">
-=======
-        <!--<div class="list" v-tap="{methods:showClearCachePop}">-->
-          <!--&lt;!&ndash;<div class="tupiao"></div>&ndash;&gt;-->
-          <!--<div class="xingxi">清除缓存</div>-->
-          <!--<div class="list-right"><span>{{cacheSize}}</span></div>-->
-        <!--</div>-->
         <div class="list" v-tap="{methods:toUrl,pagename:'mineguanyu'}">
->>>>>>> Stashed changes
-          <!--<div class="tupiao"></div>-->
           <div class="xingxi">关于夜猫</div>
           <div class="list-right"></div>
         </div>
