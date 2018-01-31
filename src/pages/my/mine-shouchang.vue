@@ -12,7 +12,7 @@
           <span>设计师专辑</span><span>:100</span>
         </div>
         <ul class="renyuan" @click="toUrl('collectionDesigner')">
-          <li>
+          <li v-for="(item,index) in collects.users" :key="index">
             <p class="touxiang">
               <img src="../../../static/images/bj.jpg" />
             </p>
@@ -26,18 +26,9 @@
           <span>项目专辑</span><span>:100</span>
         </div>
         <ul class="renyuan" @click="toUrl('collectionOrder')">
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
+            <li v-for="(item,index) in collects.orders" :key="index">
+                <img src="../../../static/images/bj.jpg" />
+            </li>
         </ul>
       </div>
       <!--问答专辑-->
@@ -46,18 +37,9 @@
           <span>问答专辑</span><span>:100</span>
         </div>
         <ul class="renyuan"  @click="toUrl('collectionQa')">
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
+            <li v-for="(item,index) in collects.qas" :key="index">
+                <img src="../../../static/images/bj.jpg" />
+            </li>
         </ul>
       </div>
       <!--喵学堂专辑-->
@@ -66,18 +48,9 @@
           <span>喵学堂专辑</span><span>:100</span>
         </div>
         <ul class="renyuan"  @click="toUrl('collectionMxt')">
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
+            <li v-for="(item,index) in collects.mxts" :key="index">
+                <img src="../../../static/images/bj.jpg" />
+            </li>
         </ul>
       </div>
       <!--设计师专辑-->
@@ -86,36 +59,11 @@
           <span>简历专辑</span><span>:100</span>
         </div>
         <ul class="renyuan"  @click="toUrl('collectionResume')">
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
+            <li v-for="(item,index) in collects.resumes" :key="index">
+                <p class="touxiang">
+                    <img src="../../../static/images/bj.jpg" />
+                </p>
+            </li>
         </ul>
       </div>
     </div>
@@ -127,7 +75,13 @@
     data () {
       return {
           loaded:false,
-          collects:{},
+          collects:{
+              users:[],
+              orders:[],
+              qas:[],
+              mxts:[],
+              resumes:[]
+          },
       }
     },
     created(){
@@ -167,7 +121,7 @@
                 params: params
                 }, response => {
                     console.log(response);
-                    let data = response.data.collects;
+                    let data = response.data;
                     _self.data = data;
                     if (data) {
                         _self.loaded = true;

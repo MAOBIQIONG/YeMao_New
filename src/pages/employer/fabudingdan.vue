@@ -141,6 +141,7 @@
     store,
     data () {
       return {
+        isInvited:false,
         userInfo:{},
         improve:0,
         order_id:null,
@@ -191,6 +192,12 @@
       this.improve = this.$route.query.improve;
       if(this.$route.query.improve && !common.isNull(this.order_id)) {
           this.loadData();
+      }
+      //判断页面是否来自于邀请
+      let invitation = this.$route.query.invitation;
+      let designerid = this.$route.query.designerid;
+      if(invitation && designerid) {
+          this.isInvited=true;
       }
     },
     methods: {
@@ -379,6 +386,10 @@
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
         }
+
+        if(_self.isInvited){
+            params.data.project_winBidder = _self.designerid;
+        }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -402,6 +413,37 @@
       }
 
     },
+          // 选择设计师
+    //   chooseDesigner() {
+    //     var _self = this;
+    //     var params = {
+    //       interfaceId: common.interfaceIds.updateData,
+    //       coll: common.collections.orderList,
+    //       wheredata: {
+    //         _id: _self.order_id
+    //       },
+    //       data: {
+    //         $set: {
+    //           project_winBidder: _self.project_winBidder,
+    //           project_state: 1,
+    //         }
+    //       }
+    //     }
+    //     _self.$axios.post('/mongoApi', {
+    //       params: params
+    //     }, response => {
+    //       console.log(response)
+    //       var data = response.data;
+    //       if (data.ok > 0) {
+    //         _self.$store.state.indexRefreshMark = 1;
+    //         _self.$store.state.employerRefreshMark = 1;
+    //         _self.showToast('选择成功！');
+    //         setTimeout(function () {
+    //           _self.$router.go(-2)
+    //         }, 1000)
+    //       }
+    //     })
+    //   }
   }
 </script>
 <style>
