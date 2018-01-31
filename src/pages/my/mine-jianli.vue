@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>人才详情</span>
-      <div v-if="isMyResume == false" class="header-right" :class="{'hr-hover':collectFlag==1}" @click="collect()"></div>
+      <div v-if="isMyResume == false" class="header-right" :class="{'hr-hover':resume.collectFlag==1}" @click="collect()"></div>
     </div>
     <div class="content content-p">
       <!--基本信息-->
@@ -144,6 +144,7 @@
         喵 喵 聊 天
       </div>
     </div>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <loading :show="loadingShow" text="加载中"></loading>
   </div>
 </template>
@@ -158,14 +159,18 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
         Loading
     },
     data () {
-      return {
-          loaded:false,
-          resumeId:"",
-          resume:{},
-          loadingShow:false,
-          collectFlag:0,
-          isMyResume:false,
-      }
+        return {
+            loaded:false,
+            resumeId:"",
+            resume:{
+                collectFlag:0
+            },
+            loadingShow:false,
+            isMyResume:false,
+            //toast
+            showMark:false,
+            showMsg:"",
+        }
     },
     watch:{
         pullUpDownStatus:{
@@ -238,6 +243,10 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     //       }
     //     });
     //   },
+        showToast(msg){
+            this.showMark = true;
+            this.showMsg = msg;
+        },
         checkLogin(){
             var _self = this;
             var user = common.getObjStorage("userInfo") || {};
@@ -250,7 +259,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
         },
         collect_dom(param){
             var _self = this;
-            _self.collectFlag == 0 ? _self.collectFlag=1 : _self.collectFlag=0;
+            _self.resume.collectFlag == 0 ? _self.resume.collectFlag=1 : _self.resume.collectFlag=0;
         },
         collect(){
             var _self = this;
@@ -260,14 +269,14 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
                 return;
             }
             
-            console.log(this.collectFlag);
+            console.log(this.resume.collectFlag);
             // return;
             var params = {
                 interfaceId:common.interfaceIds.collect,
                 data:{
                     collect_type: 4,//人才
-                    collect_id:resumeId,
-                    user_id: _self.user._id,
+                    collect_id:_self.resumeId,
+                    user_id: _self.user_id,
                 }
             }
             _self.$axios.post('/mongoApi', {
@@ -276,9 +285,9 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
                 var data = response.data;
                 var tips = '';
                 if( data && data.code == 200 ){
-                tips = _self.chw.collectFlag == 0 ? '取消成功！' : '收藏成功！';
+                tips = _self.resume.collectFlag == 0 ? '取消成功！' : '收藏成功！';
                 }else{
-                tips = _self.chw.collectFlag == 0 ? '取消失败！' : '收藏失败！';
+                tips = _self.resume.collectFlag == 0 ? '取消失败！' : '收藏失败！';
                 }
                 _self.showToast(tips);
             })
