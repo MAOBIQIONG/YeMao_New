@@ -134,7 +134,6 @@ export default {
             },
             isLogin:false,
             comments:[],
-            user_id:null,
             imgs:[],
             index:0,
             pagination:{
@@ -175,6 +174,7 @@ export default {
             is_submit:false,
             comment_placeholder:'填写评论',
             comment_text:'',
+            answer_id:'',
             //toast
             showMark:false,
             showMsg:"",
@@ -332,10 +332,11 @@ export default {
             let params = {
                 interfaceId:common.interfaceIds.addComments,
                 data: {
-                    user_id: _self.user_id,          // 评论人
+                    user_id: _self.user_id,               // 评论人
                     comment_id: _self.chw_id,             // 评论对象ID
                     content: _self.comment_text,          // 评论内容
-                    comment_type: 1,                      // 评论类型：0、喵喵圈，1、案例展示、个人荣誉、我的作品、喵学堂、问答。
+                    comment_type: 4,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
+                    answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
                 }
             };
             this.$axios.post('/mongoApi',{
@@ -401,6 +402,7 @@ export default {
                 chw.user = {};
             }
             _self.chw = chw;
+            _self.answer_id = _self.chw.user._id;
             var imgs = _self.chw.imgs || [];// 图片
             imgs.forEach(function (item,index) {
             _self.imgs.push({img:item});

@@ -293,9 +293,9 @@
           var data = response.data
           if ( data ) {
             if( _self.loadMark == 1 ){
-              _self.honors = data.chws;
+              _self.honors = data.chws || [];
             }else if( _self.loadMark == 2 ){
-              _self.works = data.chws;
+              _self.works = data.chws || [];
             }
             _self.loadMark++;
           }
