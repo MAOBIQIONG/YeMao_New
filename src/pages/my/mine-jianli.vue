@@ -6,7 +6,10 @@
       <span>人才详情</span>
       <div v-if="isMyResume == false" class="header-right" :class="{'hr-hover':resume.collectFlag==1}" @click="collect()"></div>
     </div>
-    <div class="content content-p">
+    <div v-if="noResume">
+       <div style="padding:0.1rem 0;background:transparent;width:2rem;font-size:0.4rem;text-align:center;margin:50%  auto 0 auto">暂无简历</div>
+    </div>
+    <div class="content content-p" v-else>
       <!--基本信息-->
       <div class="jbxx">
         <div class="touxiang">
@@ -167,6 +170,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
             },
             loadingShow:false,
             isMyResume:false,
+            noResume:false,
             //toast
             showMark:false,
             showMsg:"",
@@ -396,6 +400,8 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
                         _self.loaded = true;
                         console.log('数据设置完成');
                     } else {
+                        _self.noResume = true;
+                        _self.loadingShow = false;
                         console.log('noData');
                     }
                 });
