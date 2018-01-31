@@ -274,7 +274,8 @@
           let params = {
               interfaceId:common.interfaceIds.saveDataFun,
               coll:common.collections.resumes,
-              data:_self.dataParams
+              data:_self.dataParams,
+              user_id:_self.user_id,
           };
           _self.$axios.post('/mongoApi', {
                 params: params
