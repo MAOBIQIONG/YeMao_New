@@ -148,6 +148,7 @@
             value2: '2015-10-12',
             value4: '2025-10-12',
             dataParams:{
+                user_id:null,
                 real_name:"",
                 img:"http://yemao/wozuishuai.png",
                 gender:"",
@@ -175,6 +176,7 @@
         
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
+            _self.dataParams.user_id = user._id;
             _self.initData();
         } else {
             console.log('user_id is null');
@@ -274,7 +276,7 @@
           let params = {
               interfaceId:common.interfaceIds.saveDataFun,
               coll:common.collections.resumes,
-              data:_self.dataParams
+              data:_self.dataParams,
           };
           _self.$axios.post('/mongoApi', {
                 params: params

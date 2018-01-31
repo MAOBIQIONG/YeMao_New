@@ -126,8 +126,28 @@
   export default {
     data () {
       return {
-
+          loaded:false,
+          collects:{},
       }
+    },
+    created(){
+        let user = common.getObjStorage("userInfo");
+        if( !common.isNull(user._id) ){
+            this.user_id = user._id;
+            this.requestData();
+        } else {
+            this.$router.push({name:"login"})
+            console.error('未获取用户参数');
+        }      
+    },
+    watch:{
+        loaded:{
+            handler(val,oldval){
+                if(val == true){
+                    this.setData(this.data);
+                }
+            }
+        }
     },
     methods: {
       goback(){
@@ -136,6 +156,32 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
+      requestData(){
+            let _self = this;
+            _self.loadingShow = true;
+            let params = {
+                interfaceId:common.interfaceIds.getCollectsPage,
+                user_id:_self.user_id
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response);
+                    let data = response.data.collects;
+                    _self.data = data;
+                    if (data) {
+                        _self.loaded = true;
+                        console.log('数据设置完成');
+                    } else {
+                        console.log('noData');
+                    }
+                });          
+      },
+      setData(data){
+            let _self = this;
+            _self.collects = data;
+            _self.loadingShow = false;
+      }
     }
   }
 </script>

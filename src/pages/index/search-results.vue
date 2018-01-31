@@ -1,5 +1,5 @@
 <template>
-  <div class="bg p-fixed">
+  <div class="bg"><!-- p-fixed -->
     <div class="top">
       <div class="search">
         <div class="search-input">
@@ -41,10 +41,12 @@
       }
     },
     created: function () {
+      console.log("created:")
       var _self = this;
       var historySearch = common.getObjStorage("historySearch") || [];
-      _self.searchValue = historySearch[0] || '';
-      console.log(_self.searchValue)
+      if( historySearch.length > 0 ){
+        _self.searchValue = historySearch[historySearch.length-1];
+      }
     },
     methods: {
       goback() {
@@ -93,5 +95,6 @@
   }
   .bg{
     background: #f2f2f2;
+    height: 100%;
   }
 </style>

@@ -162,7 +162,7 @@
         honors: [],
         works: [],
         collectFlag:0,
-        isLogin:false,
+        // isLogin:false,
       }
     },
     activated: function () {
@@ -174,6 +174,7 @@
         _self.cases=[];
         _self.honors=[];
         _self.works=[];
+        _self.collectFlag = 0;
         _self.initData();
       }
       _self.isInit = true;
@@ -185,11 +186,9 @@
         _self.initData();
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
-            _self.isLogin = true;
-        } else {
-            console.log('user_id is null');
-            // _self.$router.push({name:'login'});
-        }
+            // _self.isLogin = true;
+            _self.my_id = user._id
+        } 
     },
     methods: {
       goback(){
@@ -202,6 +201,16 @@
         var _self = this;
         _self.$router.push({name: 'anlielist', query:{flag:params.flag}})
       },
+        checkLogin(){
+            var _self = this;
+            var user = common.getObjStorage("userInfo") || {};
+            if(common.isNull(user._id)){
+                console.log('没有获取用户信息');
+                _self.$router.push({name:"login"});
+                return false;
+            }
+            return true;
+        },
       // 项目类型名称
       getNameById (id) {
         return common.getNameByTypeId(id)
@@ -246,7 +255,8 @@
         }
         var params = {
           interfaceId: common.interfaceIds.prsonalCenter,
-          user_id: _self.user_id
+          user_id: _self.user_id,
+          my_id: _self.my_id,
         }
         _self.$axios.post('/mongoApi', {
           params: params
@@ -256,6 +266,7 @@
           if ( data ) {
             _self.user = data.user || {};
             _self.cases = data.cases || [];
+            _self.collectFlag = data.collectFlag;
           }
         })
       },
@@ -282,9 +293,9 @@
           var data = response.data
           if ( data ) {
             if( _self.loadMark == 1 ){
-              _self.honors = data.chws;
+              _self.honors = data.chws || [];
             }else if( _self.loadMark == 2 ){
-              _self.works = data.chws;
+              _self.works = data.chws || [];
             }
             _self.loadMark++;
           }
@@ -297,18 +308,23 @@
         },
         collect(){
             var _self = this;
-            if(_self.isLogin == false){
-                _self.$router.push({name: 'login'});
+            // if(_self.isLogin == false){
+            //     _self.$router.push({name: 'login'});
+            // }
+            if(_self.checkLogin()){
+                _self.collect_dom();
+            } else {
+                return;
             }
-            _self.collect_dom();
+            
             console.log(this.collectFlag);
-            return;
+            // return;
             var params = {
                 interfaceId:common.interfaceIds.collect,
                 data:{
-                    collect_type: 3,//收藏type3：问答
-                    collect_id: _self.chw_id,
-                    user_id: _self.user_id,
+                    collect_type: 1,//设计师收藏
+                    collect_id: _self.user._id,
+                    user_id: _self.my_id,
                 }
             }
             _self.$axios.post('/mongoApi', {

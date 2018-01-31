@@ -67,7 +67,7 @@
           <div class="neirong">
             <span ref="project_describe">{{getMaxlen(order.project_describe)}}</span>
           </div>
-          <div class="chakangengduo" v-tap="{methods:viewMoreFun}">{{viewText}}</div>
+          <div class="chakangengduo" v-tap="{methods:viewMoreFun}" v-if="shoViewMore==true">{{viewText}}</div>
         </div>
       </div>
       <!--抢单列表设计师-->
@@ -156,6 +156,7 @@
         order: {},
         bidders: [],
         imgSize: 0,
+        shoViewMore:false,
         viewMore:false,
         viewText:'点击查看更多',
         showMark:false,
@@ -253,12 +254,18 @@
 
       // 订单详情字数限制
       getMaxlen(text){
+        var str = '';
+        var _self = this;
         var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
         var num = common.getMaxlenInlineNum(width,fontSize,lines);
         if( text && text.length > num ){
-          text = text.substring(0,num-6) + '...';
+          _self.shoViewMore = true;
+          str = text.substring(0,num-6) + '...';
+        }else{
+          _self.shoViewMore = false;
+          str = text;
         }
-        return text;
+        return str;
       },
 
       // 订单详情查看\收起
@@ -295,7 +302,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
+          // console.log(response)
           var data = response.data;
           if( data ){
             _self.collectFlag = common.checkInt(data.collectFlag);

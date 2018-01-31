@@ -517,10 +517,12 @@ const common = {
     addWithdrawalsRecord:'addWithdrawalsRecord',   // 添加提现记录
     getMeowList:'getMeowList',                     // 获取喵喵圈信息
     getMeowDetails:'getMeowDetails',               // 获取喵喵圈动态详情
+    removeMeow:'removeMeow',                       // 删除喵喵圈
     getComments:'getComments',                     // 获取评论列表
     getLikes:'getLikes',                           // 获取点赞列表
     like:'like',                                   // 点赞
     addComments:'addComments',                     // 评论
+    removeComments:'removeComments',               // 删除评论
     getCollects:'getCollects',                     // 收藏列表
     getCollectsPage:'getCollectsPage',             // 我的收藏
     getActivitys:'getActivitys',                   // 活动
@@ -543,6 +545,7 @@ const common = {
     login:"login",                                 // 登录
     updateUserPwd:'updateUserPwd',                 // 修改密码
     feedback:'feedback',                 　　　　　　// 意见反馈
+    getMyComments:'getMyComments',                 // huo
 
   },
 

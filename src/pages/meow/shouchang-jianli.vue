@@ -25,7 +25,7 @@
     >   
     <div>
         <div class="content content-p" style="padding-top:0.2rem;" v-for="(item,index) in list" :key="index">
-            <div class="jianli" @click="toDetail(item._id)">
+            <div class="jianli" @click="toDetail(item._id,item.user_id)">
                 <div class="touxiang">
                     <img src="../../../static/images/bj.jpg"/>
                 </div>
@@ -131,13 +131,14 @@ export default {
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      toDetail(id){
+      toDetail(id,userId){
           this.$router.push({name:"minejianli",query:{id:id}});
+          common.setStorage('resume_user_id',userId);
       },
       toJl(){
-           var _self = this;
+            var _self = this;
             var user = common.getObjStorage("userInfo") || {};
-            if( !common.isNull(user._id) ){
+            if(!common.isNull(user._id)){
                 _self.user_id = user._id;
                 _self.toUrl('tianxiejianli');
             } else {
@@ -175,6 +176,14 @@ export default {
             let _self = this;
             _self.$refs.scroller.enablePullup();
             let list = data.datalist || [];
+            for(let item of list) {
+                if(common.isNull(item.city)){
+                    item.city = [];
+                }
+                if(common.isNull(item.expected_city)){
+                    item.expected_city = [];
+                }
+            }
             //对于没有user情况处理
             // list.forEach((r,i)=>{
             //     if(!r.user){
@@ -249,8 +258,6 @@ export default {
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
-        }else {
-            _self.$router.push({name:"login"});
         }
         this.loadData();
     },

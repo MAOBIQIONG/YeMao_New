@@ -47,7 +47,7 @@
       slider
     },
     mounted:function(){
-      this.toUrl()
+      this.toUrl();
     },
     methods: {
       toUrl:function () {
@@ -58,8 +58,9 @@
             _self.$router.push('index');
             lod = false
           }
-      })
+        })
       },
+
     }
   }
 </script>

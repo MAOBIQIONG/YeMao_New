@@ -268,4 +268,7 @@ import {Scroller,LoadMore,Toast,Loading} from 'vux'
 </script>
 <style scoped>
   @import '../../../static/css/meow/gongzuojingli.css';
+  .scroller{
+      background:#F2F2F2;
+  }
 </style>
