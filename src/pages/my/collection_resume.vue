@@ -154,10 +154,13 @@ export default {
             let _self = this;
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let params = {
-                interfaceId: common.interfaceIds.queryList,
-                coll:common.collections.resumes,
+                interfaceId: common.interfaceIds.getCollects,
                 pageNo:_self.pagination.pageNo,
                 pageSize:_self.pagination.pageSize,
+                where: {
+                    user_id: _self.user_id,
+                    collect_type:4//人才
+                }
             }
             _self.$axios.post('/mongoApi', {
                 params: params
@@ -175,21 +178,8 @@ export default {
         setData(data){
             let _self = this;
             _self.$refs.scroller.enablePullup();
-            let list = data.datalist || [];
-            for(let item of list) {
-                if(common.isNull(item.city)){
-                    item.city = [];
-                }
-                if(common.isNull(item.expected_city)){
-                    item.expected_city = [];
-                }
-            }
-            //对于没有user情况处理
-            // list.forEach((r,i)=>{
-            //     if(!r.user){
-            //         list[i].user = {};
-            //     }
-            // });
+            let list = data.collects || [];
+
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
                 _self.list = list;
