@@ -13,10 +13,10 @@
             <div class="qdsjs-box">
               <div class="qb-top">
                 <div class="qt-touxiang">
-                  <img :src='checkAvatar(item.img)'>
+                  <img :src='checkAvatar(item.user.img)'>
                 </div>
                 <div class="qt-nichen">
-                  <span>{{item.user_name}}</span>
+                  <span>{{item.user.user_name}}</span>
                 </div>
                 <div class="chat"><img src='../../../static/images/employer/miaomiao.png'></div>
                 <div class="qt-jiage">

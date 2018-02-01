@@ -69,7 +69,7 @@
           <div class="xingxi">意见反馈</div>
           <div class="list-right"></div>
         </div>
-        <div class="list" v-tap="{methods:showClearCachePop}">
+        <div class="list" v-tap="{methods:shareApp}">
           <div class="xingxi">分享夜猫</div>
           <div class="list-right"><span>{{cacheSize}}</span></div>
         </div>
@@ -219,26 +219,45 @@
 
       // 加载更多
       uploadAtavar (path) {
-          var _self = this;
-          var params = {
-            interfaceId:common.interfaceIds.updateUserById,
-            user_id: _self.userInfo._id,
-            data:{
-              img: path
-            }
-          };
-          _self.$axios.post('/mongoApi', {
-            params: params
-          }, response => {
-            var data = response.data;
-            if( data && data.code == 200 ){
-              _self.userInfo.img = path;
-              common.setStorage("userInfo",_self.userInfo);
-            }else{
-              _self.showToast('修改失败!');
-            }
-          });
-        },
+        var _self = this;
+        var params = {
+          interfaceId:common.interfaceIds.updateUserById,
+          user_id: _self.userInfo._id,
+          data:{
+            img: path
+          }
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data;
+          if( data && data.code == 200 ){
+            _self.userInfo.img = path;
+            common.setStorage("userInfo",_self.userInfo);
+          }else{
+            _self.showToast('修改失败!');
+          }
+        });
+      },
+
+      // 分享
+      shareApp() {
+        var _self = this;
+        if( !common.isNull(_self.userInfo._id) ){
+          console.log("分享")
+          if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+            myshare.init({
+              href: 'www.baidu.com',
+              title: '测试标题',
+              content: '测试内容',
+              thumbs: ['./static/images/logo.png'],
+            })
+          }
+        }else{
+          _self.toUrl({pagename:'login'});
+        }
+      },
+
     }
   }
 </script>
