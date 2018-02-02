@@ -12,7 +12,7 @@ import common from '../static/js/common.js'
 import uploadImg from '../static/js/uploadImg.js'
 import uploadImg2 from '../static/js/uploadImg-more.js'
 import share from '../static/js/share.js';
-import pay from '../static/js/pay.js';
+import pay from '../static/js/beecloud.js';
 // 引用API文件
 import api from './api/api.js'
 // 全局引入iconfont.css

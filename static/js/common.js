@@ -61,11 +61,16 @@ const common = {
 
   //1.1.3、验证是否为Float：返回Float
   checkFloat:function (str){
-    if( common.isNumber(str) ){
-
-      return parseFloat(str);
-    }
-
+    if( common.isNull(str) ){
+      return 0;
+    } return parseFloat(str);
+  },
+  //1.1.4、验证是否为金额：返回boollen
+  checkMoney: function(money){
+    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+    if (!text.test(money)){
+      return false;
+    } return true;
   },
 
   /*****************1.2、验证(返回值:对应类型)*******************/
@@ -545,7 +550,8 @@ const common = {
     login:"login",                                 // 登录
     updateUserPwd:'updateUserPwd',                 // 修改密码
     feedback:'feedback',                 　　　　　　// 意见反馈
-    getMyComments:'getMyComments',                 // huo
+    getMyComments:'getMyComments',                 // 获取我的评论
+    getPayInfo:'getPayInfo',                       // 获取支付信息
 
   },
 

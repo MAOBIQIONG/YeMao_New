@@ -256,8 +256,9 @@ export default {
             }
         },
         payOrder(order_id){
-            this.order_id = order_id;
-            this.pay();
+          var _self = this;
+          _self.order_id = order_id;
+          _self.$router.push({name: 'payment', query: {id: order_id}})
         },
         pay(){
             let _self = this;
