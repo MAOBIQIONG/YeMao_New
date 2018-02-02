@@ -174,7 +174,7 @@
         }
         _self.loadMoreStatus.tip = _self.loadMoreStatus.tipLoading;
         let params = {
-          interfaceId: 'getCollects',
+          interfaceId: common.interfaceIds.getCollects,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
           where: {

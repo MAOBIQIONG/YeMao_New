@@ -322,7 +322,12 @@
       // 滑动
       onScroll (sroll) {
         // console.log("onScroll:"+JSON.stringify(sroll))
-        this.srollFlag = sroll.top > 100 ? 1 : 0
+        var _self = this;
+        _self.srollFlag = sroll.top > 100 ? 1 : 0;
+        if( sroll.top<-150 && sroll.top>=-400 ){
+          var size = (150-sroll.top-110)/100;
+          $("#page").css('background-size',size+'rem '+size+'rem')
+        }
       },
 
       // 下拉加载下拉加载
@@ -502,5 +507,10 @@
   }
   .page{
     display: flex;
+  }
+  /**首页背景**/
+  #page{
+    background: url('../../../static/images/logo.png') center top 1rem no-repeat;
+    background-size: 1.5rem 1.5rem;
   }
 </style>

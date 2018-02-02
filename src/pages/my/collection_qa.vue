@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
-      <span>问答</span>
+      <span>收藏问答</span>
       <div class="header-right" @click="toUrl('fbwd')">提问</div>
     </div>
     <!--问答专辑-->

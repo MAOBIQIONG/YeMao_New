@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
-      <span>喵学堂</span>
+      <span>收藏喵学堂</span>
     </div>
     <!--问答专辑-->
         <scroller 

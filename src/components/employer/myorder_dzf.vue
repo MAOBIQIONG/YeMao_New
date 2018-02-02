@@ -1,12 +1,12 @@
 <template>
     <div id="dcl">
-    <scroller 
+    <scroller
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"
         :lock-y="lockY"
-        :use-pulldown="true" 
-        :use-pullup="true" 
+        :use-pulldown="true"
+        :use-pullup="true"
         :pulldown-config="pulldownConfig"
         :pullup-config = "pullupConfig"
         @on-scroll="scroll"
@@ -36,9 +36,7 @@
                                 <template v-else>
                                     <div class="db-djs">待支付</div>
                                 </template>
-                               
                             </template>
-                            
                             <div v-else class="db-djs">{{item.project_deadLine | dateDiff}}</div>
                         </div>
                     </div>
@@ -52,7 +50,7 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
-                        
+
                         <div class="db-qrdd" @click="payOrder(item._id)">支付</div>
                     </div>
                 </div>
@@ -79,7 +77,7 @@ import {Scroller,LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} fro
 export default {
     name:"scroll-list",
     directives: {
-        TransferDom 
+        TransferDom
     },
     components:{
         Scroller,
@@ -100,7 +98,7 @@ export default {
                 this.$refs.scroller.reset({top:0});
                 // this.dealDom();
             }
-        );       
+        );
     },
     props:{
         lockX:{
@@ -168,10 +166,10 @@ export default {
             handler:function(val,oldval){
                 if(val.pullupStatus=="loading"){
                     this.loadMoreStatus.show=true;
-                    if(this.hasMore == false){                      
-                        this.loadMoreStatus.showLoading=false; 
+                    if(this.hasMore == false){
+                        this.loadMoreStatus.showLoading=false;
                     } else {
-                        this.loadMoreStatus.showLoading=true; 
+                        this.loadMoreStatus.showLoading=true;
                     }
                 }
             }
@@ -180,16 +178,16 @@ export default {
     filters:{
         dateDiff(date){
             let today = `${new Date().getUTCFullYear()}-${new Date().getUTCMonth()+1}-${new Date().getUTCDate()}`
-            //计算天数差的函数，通用  
-            let DateDiff=function(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式  
-                var  aDate,  oDate1,  oDate2,  iDays  
-                aDate  =  sDate1.split("-")  
-                oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式  
-                aDate  =  sDate2.split("-")  
-                oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])  
+            //计算天数差的函数，通用
+            let DateDiff=function(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
+                var  aDate,  oDate1,  oDate2,  iDays
+                aDate  =  sDate1.split("-")
+                oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
+                aDate  =  sDate2.split("-")
+                oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
                 iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)
-                if (iDays == 0) return '抢单结束'    //把相差的毫秒数转换为天数  
-                return  iDays + "天后截止报名"  
+                if (iDays == 0) return '抢单结束'    //把相差的毫秒数转换为天数
+                return  iDays + "天后截止报名"
             }
             return DateDiff(date,today);
         },
@@ -331,7 +329,7 @@ export default {
         toParts: function (param) {
             this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid,}})
         },
-        dealDom(){         
+        dealDom(){
             let scroller = $('div[id^="vux-scroller-"]');
             // console.log(scroller)
             // scroller.css({
@@ -353,7 +351,7 @@ export default {
                     for (var k in d){
                         d[k] = d[k]
                     }
-                }              
+                }
                 return d;
             };
             return {
@@ -367,11 +365,11 @@ export default {
             let _self = this;
             let result = [];
             if(common.isArray(o1.arr) && common.isArray(o2.arr)){
-                for(let r1 of o1.arr){  
+                for(let r1 of o1.arr){
                     r1.sub = new Array();
-                    for(let r2 of o2.arr){                
+                    for(let r2 of o2.arr){
                         if(r1[o1.field]==r2[o2.field]){
-                            // console.log(r1[o1.field],r2[o2.field]);            
+                            // console.log(r1[o1.field],r2[o2.field]);
                             r1.sub.push(r2);
                         }
                     }
@@ -384,14 +382,14 @@ export default {
             }
         },
         //获取数据
-        loadData(){      
+        loadData(){
             let _self = this;
             // console.log(_self.pagination.pageNo,_self.pagination.pageSize);
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let user_info=JSON.parse(common.op_localStorage().get('userInfo'));
             let user_id = user_info._id;
             let params = {
-                interfaceId:common.interfaceIds.getOrderList,        
+                interfaceId:common.interfaceIds.getOrderList,
                 pageNo: _self.pagination.pageNo,
                 pageSize: _self.pagination.pageSize
             };
@@ -421,7 +419,7 @@ export default {
             let orderList = data.orderList || [];
 
             let list = _self.arryLeftJoin({arr:orderList,field:'_id'},{arr:orderBidders,field:'order_id'});
-            console.log('mergeList',list);        
+            console.log('mergeList',list);
 
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
@@ -430,9 +428,9 @@ export default {
                 _self.orderList.push(...list);
             }
             _self.loadMoreStatus.show=false;
-            _self.loadMoreStatus.showLoading=false;                  
+            _self.loadMoreStatus.showLoading=false;
             _self.$refs.scroller.donePulldown();
-            _self.$refs.scroller.donePullup();   
+            _self.$refs.scroller.donePullup();
             //判断数据是否有一页
             if(orderList.length < _self.pagination.pageSize){
                 _self.hasMore = false;
@@ -443,7 +441,7 @@ export default {
             } else {
                 _self.pagination.pageNo++
             }
-            console.log('设置完成');  
+            console.log('设置完成');
         },
         //下拉刷新
         refreshPageDate(){
@@ -451,7 +449,7 @@ export default {
             _self.pagination.pageNo = 0;
             _self.hasMore = true;
             _self.loadMoreStatus.show=false;
-            _self.$refs.scroller.donePullup();   
+            _self.$refs.scroller.donePullup();
             _self.loadData();
         },
         //上拉加载
@@ -464,13 +462,13 @@ export default {
         },
         pullDownLoading(){
             console.log('on-pull-down-loading');
-            this.refreshPageDate();       
+            this.refreshPageDate();
         },
         pullUpLoading(){
             console.log('on-pull-up-loading');
             this.loadMore();
 
-            
+
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');

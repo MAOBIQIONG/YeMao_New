@@ -11,8 +11,9 @@
         <div class="sjszj-top">
           <span>设计师专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan" @click="toUrl('collectionDesigner')">
-          <li>
+        <div class="noData" v-if="collects.users.length==0">暂无收藏记录</div>
+        <ul class="renyuan" v-else @click="toUrl('collectionDesigner')">
+          <li v-for="(item,index) in collects.users" :key="index">
             <p class="touxiang">
               <img src="../../../static/images/bj.jpg" />
             </p>
@@ -25,19 +26,11 @@
         <div class="xm-top">
           <span>项目专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan" @click="toUrl('collectionOrder')">
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
+        <div class="noData" v-if="collects.orders.length==0">暂无收藏记录</div>
+        <ul class="renyuan" v-else @click="toUrl('collectionOrder')">
+            <li v-for="(item,index) in collects.orders" :key="index">
+                <img src="../../../static/images/bj.jpg" />
+            </li>
         </ul>
       </div>
       <!--问答专辑-->
@@ -45,19 +38,11 @@
         <div class="xm-top">
           <span>问答专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan"  @click="toUrl('collectionQa')">
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
+        <div class="noData" v-if="collects.qas.length==0">暂无收藏记录</div>
+        <ul class="renyuan" v-else @click="toUrl('collectionQa')">
+            <li v-for="(item,index) in collects.qas" :key="index">
+                <img src="../../../static/images/bj.jpg" />
+            </li>
         </ul>
       </div>
       <!--喵学堂专辑-->
@@ -65,19 +50,11 @@
         <div class="xm-top">
           <span>喵学堂专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan"  @click="toUrl('collectionMxt')">
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
-          <li>
-            <img src="../../../static/images/bj.jpg" />
-          </li>
+        <div class="noData" v-if="collects.mxts.length==0">暂无收藏记录</div>
+        <ul class="renyuan" v-else @click="toUrl('collectionMxt')">
+            <li v-for="(item,index) in collects.mxts" :key="index">
+                <img src="../../../static/images/bj.jpg" />
+            </li>
         </ul>
       </div>
       <!--设计师专辑-->
@@ -85,37 +62,13 @@
         <div class="sjszj-top">
           <span>简历专辑</span><span>:100</span>
         </div>
-        <ul class="renyuan"  @click="toUrl('collectionResume')">
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
-          <li>
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
-            </p>
-          </li>
+        <div class="noData" v-if="collects.resumes.length==0">暂无收藏记录</div>
+        <ul class="renyuan" v-else @click="toUrl('collectionResume')">
+            <li v-for="(item,index) in collects.resumes" :key="index">
+                <p class="touxiang">
+                    <img src="../../../static/images/bj.jpg" />
+                </p>
+            </li>
         </ul>
       </div>
     </div>
@@ -127,7 +80,13 @@
     data () {
       return {
           loaded:false,
-          collects:{},
+          collects:{
+              users:[],
+              orders:[],
+              qas:[],
+              mxts:[],
+              resumes:[]
+          },
       }
     },
     created(){
@@ -167,7 +126,7 @@
                 params: params
                 }, response => {
                     console.log(response);
-                    let data = response.data.collects;
+                    let data = response.data;
                     _self.data = data;
                     if (data) {
                         _self.loaded = true;
@@ -189,4 +148,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-shouchang.css';
+  .noData{
+      width:2.5rem;
+      margin:0.3rem auto 0 auto;
+      text-align:center;
+  }
 </style>

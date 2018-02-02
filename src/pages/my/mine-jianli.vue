@@ -8,7 +8,7 @@
     </div>
     <!-- 我的简历无数据 -->
     <div v-if="noResume">
-        <div style="padding:0.1rem 0;background:transparent;width:2rem;font-size:0.4rem;text-align:center;margin:50%  auto 0 auto">暂无简历</div>
+        <!-- <div style="padding:0.1rem 0;background:transparent;width:2rem;font-size:0.4rem;text-align:center;margin:50%  auto 0 auto">暂无简历</div> -->
         <div class="imgNoData">
             <img src="../../../static/images/shuju.png"/>
         </div>
@@ -159,14 +159,12 @@
 
 <script>
 import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddressV4Data} from 'vux'
-import NoData from '@/pages/main/maintain'
   export default {
     components:{
         Scroller,
         LoadMore,
         Toast,
         Loading,
-        NoData
     },
     data () {
         return {
