@@ -91,7 +91,7 @@
         <!--文字滚动广告-->
         <div class="wzgd-box">
           <swiper loop auto height="45px" direction="vertical" :interval=1000 class="text-scroll" :show-dots="false">
-            <swiper-item v-for="item in noticeList">
+            <swiper-item v-for="(item,index) in noticeList" :key="index">
               <div class="notice-img"><img :src="item.user.img" /></div>
               <div class="notice-text">{{item.title}}</div>
             </swiper-item>
