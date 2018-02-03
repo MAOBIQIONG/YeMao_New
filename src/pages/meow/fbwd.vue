@@ -123,6 +123,7 @@
                 _self.is_submit = true;
                 // 设置加载动画
                 _self.showLoad = true;
+                setTimout(()=>{_self.showLoad =false},5000);
                 if( _self.base64Arr.length == 0 ){
                     _self.submit2();
                 }else{
@@ -149,7 +150,7 @@
                                 _self.showToast("发布成功！");
                                 uploadImg2.clearImgArr(true);
                                 setTimeout(function () {
-                                _self.goback();
+                                    _self.goback();
                                 },1000)
                             }else{
                                 _self.showToast("发布失败！");
@@ -169,7 +170,6 @@
                 },
                 successfun:function (path) {
                     _self.params.imgs.push(path);
-                    console.log("path:"+path)
                     if( _self.params.imgs.length == _self.base64Arr.length ){
                     _self.submit2();
                     }

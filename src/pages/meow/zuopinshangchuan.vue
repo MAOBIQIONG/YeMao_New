@@ -4,14 +4,16 @@
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>作品上传</span>
-      <div class="header-right" @click="submit()">完成</div>
+      <div class="header-right" v-tap="{ methods:submit }">完成</div>
     </div>
     <!--编辑工作经历-->
     <div class="content content-p">
       <!--图片上传-->
+      <!--图片上传-->
       <div class="sctp">
-        <div class="st-bottom">
-          <img src="../../../static/images/employer/j.png" />
+        <div class="img-upload">
+          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
     </div>
@@ -21,17 +23,21 @@
 </template>
 
 <script>
-import {Toast} from "vux"
+import {Toast,Loading} from "vux"
 export default {
     components:{
-        Toast
+        Toast,
+        Loading
     },
     data: function () {
       return {
-        resumeParams:{},
+        base64Arr:[],
+        // resumeParams:{},
         toastShow:false,
         toastText:"",
         dataParams:{},
+        loadingShow:false,
+        is_submit:false,
       }
     },
     created(){
@@ -98,6 +104,18 @@ export default {
         submit(){
             let _self = this;
             _self.loadingShow = true;
+            setTimeout(()=>{_self.loadingShow = false},5000);
+            // 避免多次点击提交按钮
+            if( _self.is_submit == true ) return;
+            _self.is_submit = true;
+            if( _self.base64Arr.length == 0 ){
+                _self.submit2();
+            }else{
+                uploadImg2.uploadImgs();
+            }            
+        },
+        submit2(){
+            let _self = this;
             _self.dataParams.status = 1;
             _self.dataParams.is_del = 0;
             let params = {
@@ -109,10 +127,36 @@ export default {
                 params: params
                 }, response => {                  
                     console.log(response);
-                    _self.showToast('提交成功');
-                    setTimeout(()=>{_self.loadingShow = false; _self.toUrl('shouchangjianli');},1500)
+                    var data = response.data;
+                    if( data && response.code == '200' ){
+                        _self.loadingShow = false; 
+                        _self.showToast('提交成功');
+                        uploadImg2.clearImgArr(true);
+                        setTimeout(()=>{_self.toUrl('shouchangjianli');},1500)
+                    } else {
+                        _self.showToast('提交失败');
+                    }
                 });
          },
+        triggerFile(){
+            console.log("trigger:")
+            var _self = this;
+            // 首先清空图片数组
+            _self.dataParams.works_imgs = [];
+            // 调用相机、相册
+            uploadImg2.init({
+            callback:function (path) {
+                console.log("path:"+path)
+                _self.base64Arr.push(path);
+            },
+            successfun:function (path) {
+                _self.dataParams.works_imgs.push(path);
+                if( _self.dataParams.works_imgs.length == _self.base64Arr.length ){
+                _self.submit2();
+                }
+            },
+            });
+        },     
     }
   }
 </script>

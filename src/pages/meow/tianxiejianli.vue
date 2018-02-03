@@ -9,7 +9,9 @@
     <!--发布订单内容-->
     <div class="content content-p">
       <div class="touxiang">
-           <div class="tu"><img src="../../../static/images/meow/xiangji.png" /></div>
+           <div class="tu" v-tap="{ methods:modifyAvatar}" :style="{backgroundImage:`url(${checkAvatar(dataParams.img)})`}">
+               <img src="../../../static/images/meow/xiangji.png" v-if="isNull(dataParams.img)"/>
+            </div>
             <p>上传头像</p>
       </div>
       <div class="ys-time">
@@ -150,7 +152,7 @@
             dataParams:{
                 user_id:null,
                 real_name:"",
-                img:"http://yemao/wozuishuai.png",
+                img:"",
                 gender:"",
                 birthday:"",
                 school_name:"",
@@ -175,6 +177,7 @@
         // var resumeParams1 = common.getObjStorage("resumeParams1")|| {};
         
         if( !common.isNull(user._id) ){
+            _self.userInfo = user;
             _self.user_id = user._id;
             _self.dataParams.user_id = user._id;
             _self.initData();
@@ -222,6 +225,58 @@
             }
             })
         },
+        isNull(data){
+            return common.isNull(data);
+        },
+        // loading
+        showLoading() {
+            var _self = this;
+            _self.loadingShow = true;
+            setTimeout(() => {
+            _self.loadingShow = false;
+            }, 2000)
+        },
+        //头像
+        checkAvatar (path) {
+            var picCamera = "data:image/gif;base64,R0lGODlhAQABAIAAAPLy8gAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
+            return common.getAvatar(path,picCamera)
+        },
+        // 修改头像
+        modifyAvatar() {
+            var _self = this;
+
+            console.log("修改头像。。");
+            if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+                uploadImg.init({
+                    callback:function (path) {
+                        _self.showLoading();
+                        _self.dataParams.img = path;
+                    }
+                })
+            }
+        },
+
+        
+        // uploadAtavar (path) {
+        //     var _self = this;
+        //     var params = {
+        //     interfaceId:common.interfaceIds.updateUserById,
+        //     user_id: _self.user_id,
+        //     data:{
+        //         img: path
+        //     }
+        //     };
+        //     _self.$axios.post('/mongoApi', {
+        //     params: params
+        //     }, response => {
+        //     var data = response.data;
+        //     if( data && data.code == 200 ){
+        //         _self.dataParams.img = path;
+        //     }else{
+        //         _self.showToast('修改失败!');
+        //     }
+        //     });
+        // },
         showPlugin () {
             this.$vux.datetime.show({
             cancelText: '取消',

@@ -17,8 +17,8 @@
     <div class="content content-p" v-else>
       <!--基本信息-->
       <div class="jbxx">
-        <div class="touxiang">
-          <img src="../../../static/images/bj.jpg" />
+        <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(resume.img)})`}">
+          <!-- <img src="../../../static/images/bj.jpg" /> -->
         </div>
         <p>基本信息</p>
         <p class="xingmin"><span>{{resume.real_name}}</span>/<span>{{resume.gender}}</span>/<span>{{getAge(resume.birthday)}}岁</span>/<span>{{getCityName(resume.city)}}</span></p>
@@ -238,6 +238,13 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+        // 头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
       },
       // 收藏效果
     //   dianzan(){

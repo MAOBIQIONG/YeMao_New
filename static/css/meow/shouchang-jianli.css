@@ -9,9 +9,11 @@
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 50%;
-  background: #CCCCCC;
+  background-color: #CCCCCC;
   margin: 0.4rem;
   overflow: hidden;
+  background-position:center center;
+  background-size:cover;
 }
 
 .content .jianli .touxiang img {

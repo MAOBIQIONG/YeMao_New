@@ -15,10 +15,12 @@
 .content .touxiang .tu{
   width:1.5rem;
   height: 1.5rem;
-  background: #f2f2f2;
+  background-color: #f2f2f2;
   display: block;
   border-radius: 50%;
   margin: 0.2rem auto;
+  background-position:center center;
+  background-size:cover;
 }
 .content .touxiang .tu img{
   width:1rem;

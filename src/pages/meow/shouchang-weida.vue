@@ -28,9 +28,9 @@
         <div class="weida-list" v-for="(item,index) in QAList" :key="index">
             <div class="weida" @click="toDetails(item._id)">
             <div class="wd-top">
-            <div class="touxiang">
-                <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
-                <img v-else src="../../../static/images/bj.jpg"/>
+            <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.user.img)}`}">
+                <!-- <img v-if="item.user.img" :src="checkAvatar(item.user.img)"/>
+                <img v-else src="../../../static/images/bj.jpg"/> -->
             </div>
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
@@ -144,6 +144,13 @@ export default {
         },
         toDetails (id) {
             this.$router.push({name: 'wdxq', query: {id: id}})
+        },
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
+        },
+        checkImg(path){
+            return common.getDefultImg(path);
         },
         showToast(msg){
             this.toast.show = true;
