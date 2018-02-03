@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header p-static">
       <span>雇主</span>
-      <div class="header-right "@click="toUrl('message')">
+      <div class="header-right "v-tap="{ methods:toUrl, pagename:'message', flag:true }">
         <img src="../../../static/images/employer/ling.png" />
         <div class="hongdian"></div>
       </div>

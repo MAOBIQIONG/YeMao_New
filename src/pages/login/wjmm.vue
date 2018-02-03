@@ -85,7 +85,7 @@
       panduan(obj) {
         $(obj).blur(function () {
           var username = $.trim($(obj).val());
-          var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+          var myreg = /^1[0-9]{10}$/;
           if (!myreg.test($(obj).val())) {
             $('.tishi').text('请输入有效的手机号码！');
             return false;
@@ -151,7 +151,7 @@
       // 手机验证
       verifyPhone(){
         var _self = this;
-        var reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        var reg = /^1[0-9]{10}$/;
         if ( common.isNull(_self.phone) ) {
           _self.$refs.tips.innerText = '手机号不能为空';
           return false;

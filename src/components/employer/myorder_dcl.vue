@@ -70,14 +70,14 @@
                                 <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}">
                                     确认完善信息
                                 </div>
-                                <div v-else class="db-qrdd"  style="background:white">
+                                <div v-else class="db-qrdd"  style="display: none">
                                     <!-- 等待完善订单 -->
                                 </div>
                             </template>
                         </template>
                         <template v-else>
                             <div class="db-sxdd">刷新订单</div>
-                            <div class="db-qrdd" style="background:white"></div>
+                            <div class="db-qrdd" style="display: none"></div>
                         </template>
 
                     </div>

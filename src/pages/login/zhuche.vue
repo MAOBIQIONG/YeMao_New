@@ -105,7 +105,7 @@
         var validCode = true;
         $(obj).click(function () {
           var username = $.trim($(shouji).val());
-          var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+          var myreg = /^1[0-9]{10}$/;
           var time = 30;
           var code = $(this);
           if (username == "" || username == null || username == undefined) {
@@ -136,7 +136,7 @@
       panduan(obj) {
         $(obj).blur(function () {
           var username = $.trim($(obj).val());
-          var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+          var myreg = /^1[0-9]{10}$/;
           if (!myreg.test($(obj).val())) {
             $('.tishi').text('请输入有效的手机号码！');
             return false;
@@ -224,7 +224,7 @@
           _self.show = true;
           return;
         }
-        let regMobilePhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        let regMobilePhone = /^1[0-9]{10}$/;
         if(!regMobilePhone.test(_self.param.mobile_phone)){
           _self.showText = _self.showTextWrongPhone;
           _self.show = true;
@@ -287,7 +287,7 @@
         nextStep(){
             let _self = this;
             let regNickname = /^[a-zA-Z0-9_-]{4,10}$/;
-            let regMobilePhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            let regMobilePhone = /^1[0-9]{10}$/;
             if(!regNickname.test(_self.param.nickname)){
                 _self.showText = _self.showTextWrongName
                 _self.show = true;
