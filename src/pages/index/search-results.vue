@@ -82,13 +82,15 @@
   @import "../../../static/css/index/search-jieguo.css";
   .content{
     width:7.5rem;
+    padding-top: 1.2rem;
   }
   .top{
     height:0.8rem;
   }
   .tabs{
     position: fixed;
-    top:1.2rem;
+    /*top:1.2rem;*/
+    top:0.88rem;
     left: 0;
     background: white;
     z-index: 99999;

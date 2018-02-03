@@ -2,7 +2,7 @@
   <div class="miaomiao">
     <!--头部导航-->
     <div class="header p-static">
-      <div class="header-left img-back" v-tap="{methods:goback}"></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>喵喵圈</span>
     </div>
     <!--  喵喵列表-->

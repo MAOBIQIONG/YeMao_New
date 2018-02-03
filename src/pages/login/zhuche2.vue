@@ -112,7 +112,7 @@
       login(anniu, shouji, valp) {
         $(anniu).click(function () {
           var username = $.trim($(shouji).val()); //获取到手机号
-          var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+          var myreg = /^1[0-9]{10}$/;
           var mima = /^[0-9a-zA-Z_#]{6,16}$/;
           $("input").each(function () {
             let v = $(this).val();

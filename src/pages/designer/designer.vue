@@ -216,5 +216,6 @@
 
   .on {
     display: block !important;
+    top: 0.8rem !important;
   }
 </style>

@@ -73,7 +73,7 @@
       verifyOldPhone (flag) {
         console.log("verifyOldPhone:"+flag)
         var _self = this;
-        let reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        let reg = /^1[0-9]{10}$/;
         if( common.isNull(_self.old_phone) ){
           _self.showToast('请输入旧手机号码!');
           return;
@@ -116,7 +116,7 @@
       verifyNewPhone(flag){
         console.log("verifyNewPhone:"+flag)
         var _self = this;
-        let reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        let reg = /^1[0-9]{10}$/;
         if( common.isNull(_self.new_phone) ){
           _self.showToast('请输入新手机号码!');
           return;
