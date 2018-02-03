@@ -73,10 +73,12 @@
 	width: 0.8rem;
 	height: 0.8rem;
 	border-radius: 50%;
-	background: #B4C1D2;
+	background-color: #B4C1D2;
 	margin: 0.19rem 0px;
 	margin-left: 0.26rem;
-	overflow: hidden;
+    overflow: hidden;
+    background-position:center center;
+    background-size:cover;
 }
 
 .mm-list .sjse-list .sjs-top .st-touxiang img {

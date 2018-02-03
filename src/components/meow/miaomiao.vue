@@ -42,8 +42,8 @@
           <div class="blank"></div>
           <div class="sjse-list" v-for="(item,index) in meows" v-tap="{methods:toUrl,pagename:'pengyouquanxq',id:item._id}">
             <div class="sjs-top">
-              <div class="st-touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',id:item.user_id}">
-                <img :src="checkAvatar(item.user.img)"/>
+              <div class="st-touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',id:item.user_id}" :style="{backgroundImage:`url(${checkAvatar(item.user.img)})`}">
+                <!-- <img :src="checkAvatar(item.user.img)"/> -->
               </div>
               <div class="st-neirong">
                 <div class="sn-top">

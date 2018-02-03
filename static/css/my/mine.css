@@ -32,10 +32,12 @@
 .mine-top .tu-nicheng .touxiang {
 	width: 1.4rem;
 	height: 1.4rem;
-	background: #CCCCCC;
+	background-color: #CCCCCC;
 	border-radius: 50%;
 	margin: auto;
-	overflow: hidden;
+    overflow: hidden;
+    background-position:center center;
+    background-size:cover;
 }
 
 .mine-top .tu-nicheng .touxiang img {

@@ -139,6 +139,8 @@ textarea,select{
   margin-left: 0.24rem;
   margin-top: -0.1rem;
   overflow: hidden;
+  background-position:center center;
+  background-size:cover;
 }
 .gz-list .gz-top .gz-touxiang img {
   width: 100%;
@@ -249,6 +251,8 @@ textarea,select{
   background-color: #B1B1B1;
   margin: 0.1rem -0.1rem;
   overflow: hidden;
+  background-position:center center;
+  background-size:cover;
 }
 
 .gz-list .gz-bottom .gb-left .gb-tu img {
@@ -368,10 +372,12 @@ textarea,select{
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 50%;
-  background: #B4C1D2;
+  background-color: #B4C1D2;
   margin: 0.19rem 0px;
   margin-left: 0.26rem;
   overflow: hidden;
+  background-position:center center;
+  background-size:cover;
 }
 
 .sjs-list .sjs-top .st-touxiang img {

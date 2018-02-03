@@ -6,8 +6,8 @@
           <img src="../../../static/images/my/shezhi1.png" />
       </div>
       <div class="tu-nicheng">
-        <div class="touxiang" v-tap="{ methods:modifyAvatar }">
-          <img :src="checkAvatar(userInfo.img)" />
+        <div class="touxiang" v-tap="{ methods:modifyAvatar }" :style="{backgroundImage:`url(${checkAvatar(userInfo.img)})`}">
+          <!-- <img :src="checkAvatar(userInfo.img)" /> -->
         </div>
         <div class="nicheng"><span>{{userInfo.user_name || tips}}</span></div>
       </div>

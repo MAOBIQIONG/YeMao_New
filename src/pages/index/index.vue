@@ -115,8 +115,8 @@
         <div class="content"style="padding-bottom:0.2rem">
           <div class="gz-list" v-for="order in orderList" v-tap="{methods:toDetails,id:order._id}">
             <div class="gz-top">
-              <div class="gz-touxiang">
-                <img :src="checkAvatar(order.user.img)" />
+              <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}">
+                <!-- <img :src="checkAvatar(order.user.img)" /> -->
               </div>
               <div class="gz-nicheng">{{order.user.user_name}}</div>
               <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
@@ -136,8 +136,8 @@
             </div>
             <div class="gz-bottom">
               <div class="gb-left">
-                <div class="gb-tu" v-for="bidder in order.bidders">
-                  <img :src="checkAvatar(bidder.user.img)" />
+                <div class="gb-tu" v-for="bidder in order.bidders" :style="{backgroundImage:`url(${checkAvatar(bidder.user.img)})`}">
+                  <!-- <img :src="checkAvatar(bidder.user.img)" /> -->
                 </div>
                 <div class="gb-wz"><span>{{order.bidders.length}}</span>人抢单</div>
               </div>
