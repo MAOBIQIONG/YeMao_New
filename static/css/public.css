@@ -47,11 +47,13 @@ textarea,select{
   -webkit-user-modify:read-write-plaintext-only;
 }
 /*移动端禁用长按选中文本功能*/
-* {
-  -webkit-touch-callout:none;
-  -moz-touch-callout:none;
-  -ms-touch-callout:none;
-  touch-callout:none;
+body,html{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 /*沉浸式样式*/
 .content-p{
