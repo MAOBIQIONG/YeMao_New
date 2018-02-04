@@ -18,7 +18,7 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item._id)">
+                <div class="ds-top"  v-tap="{methods:toDetails,item:item}">
                     <div class="ds-img">
                         <img :src="checkImg(item.imgs[0])">
                     </div>
@@ -181,8 +181,15 @@ export default {
           this.showMsg = msg;
         },
         // 详情页
-        toDetails (id) {
-            this.$router.push({name: 'daichulixq', query: {id: id}})
+        toDetails (item) {
+            console.log(item)
+            let buttonState = {
+                user_type:"employer",
+                state:'ywc',
+                btns_type:0,
+            };
+            common.setStorage('buttonState',buttonState);
+            this.$router.push({name: 'daichulixq', query: {id: item.item._id}})
         },
         // 一键会审
         toCheck (params) {
