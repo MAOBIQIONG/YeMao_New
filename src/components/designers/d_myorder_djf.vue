@@ -200,7 +200,7 @@ export default {
                 pageSize: _self.pagination.pageSize
             };
             params.where = {
-                user_id,
+                project_winBidder:user_id,
                 project_state:{$lt :7, $gte : 4}
             };
             // console.log("user_id",user_id);

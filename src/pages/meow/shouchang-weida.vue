@@ -35,7 +35,7 @@
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
             <div class="tupian" v-if="item.imgs">
-            <img :src="item.imgs[0]"/>
+                <img :src="item.imgs[0]"/>
             </div>
             <div class="neirong">
             <div class="piapti">

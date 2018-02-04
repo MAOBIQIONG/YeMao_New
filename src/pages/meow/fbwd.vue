@@ -123,7 +123,7 @@
                 _self.is_submit = true;
                 // 设置加载动画
                 _self.showLoad = true;
-                setTimout(()=>{_self.showLoad =false},5000);
+                setTimeout(()=>{_self.showLoad =false},5000);
                 if( _self.base64Arr.length == 0 ){
                     _self.submit2();
                 }else{
