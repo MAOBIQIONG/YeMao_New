@@ -20,7 +20,7 @@
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
-                        <img :src="item.imgs[0]">
+                        <img :src="checkImg(item.imgs[0])">
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -36,9 +36,8 @@
                 </div>
                 <div class="ds-bottom">
                     <div class="db-right">
-                        <div class="db-qxdd">取消订单</div>
-                        <div class="db-sxdd">刷新订单</div>
-                        <div class="db-qrdd">选择设计师</div>
+                      <!--<div class="db-sxdd">一键会审</div>-->
+                      <div class="db-qrdd" v-tap="{methods:confirmOrder,id:item._id}">确认交付</div>
                     </div>
                 </div>
             </div>
@@ -171,7 +170,10 @@ export default {
             this.$router.push({name: params})
             console.log("toUrl",params);
         },
-         // 详情页
+        checkImg(path){
+          return common.getDefultImg(path);
+        },
+        // 详情页
         toDetails (id) {
             this.$router.push({name: 'daichulixq', query: {id: id}})
         },
@@ -269,8 +271,23 @@ export default {
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
-        }
+        },
 
+        /**确认交付**/
+        confirmOrder(params){
+          var params = {
+            interfaceId: common.interfaceIds.confirmDelivery,
+            order_id: params.id
+          }
+          this.$axios.post('/mongoApi',{
+            params: params
+          },(response)=>{
+            let data = response.data;
+            if( data ){
+
+            }
+          })
+        }
     }
 }
 </script>

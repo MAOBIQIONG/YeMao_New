@@ -108,7 +108,7 @@
         // 上拉加载
         lockX: true,
         lockY: false,
-        height: "",
+        height: "-60",
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -274,6 +274,7 @@
           console.log(response)
           let data = response.data;
           _self.setInitData(data);
+          _self.loadData();
         })
       },
 
