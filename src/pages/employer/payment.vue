@@ -96,13 +96,16 @@
         }else if( common.checkFloat(_self.order.project_budget) <= 0 || common.isNull(_self.order.project_title) ){
           showToast('订单信息错误,请稍后重试!');
           return;
+        }else if( common.isNull(_self.order.order_number) ){
+          showToast('缺少订单编号!');
+          return;
         }
         var title = _self.order.project_title;
         var payData = {
           channel: _self.pay_type,
           title: title.length > 16 ? title.substring(0,12)+'...' : title,
           total_fee: common.checkFloat(_self.order.project_budget)*100,
-          bill_no: beecloud.genBillNo(),
+          bill_no: _self.order.order_number,
           optional: {},
           bill_timeout: 360,
           return_url: "http://www.jianlianyemao.com/index.html"
