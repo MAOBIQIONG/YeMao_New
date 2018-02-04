@@ -233,6 +233,9 @@ export default {
         isNull(data){
             return common.isNull(data);
         },
+        checkImg(path){
+          return common.getDefultImg(path);
+        },
         cancelOrder(){
             let _self = this;
             var params = {

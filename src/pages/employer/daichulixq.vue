@@ -16,7 +16,7 @@
         <div class="ddxq">
           <div class="ddxq-top">
             <div class="ddxq-img" @click="toUrl('emporderimgs')">
-              <img :src="order.imgs[0]" v-if="imgSize>0">
+              <img :src="checkImg(order.imgs[0])" v-if="imgSize>0">
               <div class="num">{{imgSize}}</div>
             </div>
             <div class="ddxq-jianjie">
@@ -168,15 +168,18 @@
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
       },
-        // 订单详情字数限制
-        getMaxlen(text){
+      // 订单详情字数限制
+      getMaxlen(text){
         var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
         var num = common.getMaxlenInlineNum(width,fontSize,lines);
         if( text && text.length > num ){
             text = text.substring(0,num-6) + '...';
         }
         return text;
-        },
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },
       // 订单详情查看\收起
         viewMoreFun () {
             var _self = this;

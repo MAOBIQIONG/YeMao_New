@@ -20,7 +20,7 @@
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
                     <div class="ds-img">
-                        <img :src="item.imgs[0]" v-if="item.imgs.length>0">
+                        <img :src="checkImg(item.imgs[0])" v-if="item.imgs.length>0">
                         <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0">
                     </div>
                     <div class="ds-jianjie">
@@ -242,6 +242,9 @@ export default {
         },
         isNull(data){
             return common.isNull(data);
+        },
+        checkImg(path){
+          return common.getDefultImg(path);
         },
         refreshOrder(param){
             var params = {

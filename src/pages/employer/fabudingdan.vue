@@ -286,7 +286,7 @@
         // return;
         _self.subParams.project_state=2;// 将状态置为待支付
         var params = {
-            interfaceId:common.interfaceIds.updateData,
+            interfaceId:common.interfaceIds.modifyOrders,
             coll:common.collections.orderList,
             data:_self.subParams,
             wheredata:{
@@ -299,6 +299,14 @@
         }, response => {
             console.log(response)
             var data = response.data;
+            if( data.code == 200 ){
+              _self.showToast("完善成功!");
+              setTimeout(function () {
+                _self.goback();
+              },1000)
+            }else{
+              _self.showToast("完善失败!");
+            }
         });
     },
 
