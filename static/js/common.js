@@ -558,6 +558,7 @@ const common = {
     getMyComments:'getMyComments',                 // 获取我的评论
     getPayInfo:'getPayInfo',                       // 获取支付信息
     orderComments:'orderComments',                 // 订单评价
+    confirmDelivery:'confirmDelivery',             // 确认支付
 
   },
 

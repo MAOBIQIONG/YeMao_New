@@ -19,10 +19,7 @@
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
-                    <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
-                        <!-- <img :src="item.imgs[0]" v-if="item.imgs.length>0">
-                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0"> -->
-                    </div>
+                    <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"></div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
                             {{item.project_describe}}
@@ -50,7 +47,6 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
-
                         <div class="db-qrdd" @click="payOrder(item._id)">支付</div>
                     </div>
                 </div>
@@ -207,6 +203,9 @@ export default {
         showToast(msg){
             this.showMark = true;
             this.showMsg = msg;
+        },
+        checkImg(path){
+          return common.getDefultImg(path);
         },
          // 详情页
         toDetails (id) {
