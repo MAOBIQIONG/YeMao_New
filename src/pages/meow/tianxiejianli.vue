@@ -130,7 +130,7 @@
       CheckerItem,
       XInput,
       Toast,
-      Loading 
+      Loading
     },
     data(){
         return {
@@ -175,7 +175,7 @@
         _self.workyearList = common.getWorkyearsType();
         var user = common.getObjStorage("userInfo") || {};
         // var resumeParams1 = common.getObjStorage("resumeParams1")|| {};
-        
+
         if( !common.isNull(user._id) ){
             _self.userInfo = user;
             _self.user_id = user._id;
@@ -257,7 +257,7 @@
             }
         },
 
-        
+
         // uploadAtavar (path) {
         //     var _self = this;
         //     var params = {
