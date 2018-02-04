@@ -254,14 +254,6 @@ export default {
                     _self.orderList.splice(index,1);
                 }
                 index++
-            }let _self = this;
-            let index = 0;
-            for (let r of _self.orderList) {
-                console.log(_self.orderList[index]);
-                if(r._id == _self.improve_id){
-                    _self.orderList.splice(index,1);
-                }
-                index++
             }
         },
         cancelOrder(){
