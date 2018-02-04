@@ -10,7 +10,7 @@
     <div class="content content-p">
       <div class="touxiang">
            <div class="tu" v-tap="{ methods:modifyAvatar}" :style="{backgroundImage:`url(${checkAvatar(dataParams.img)})`}">
-               <img src="../../../static/images/meow/xiangji.png" v-if="isNull(dataParams.img)"/>
+               <!-- <img src="../../../static/images/meow/xiangji.png" v-if="isNull(dataParams.img)"/> -->
             </div>
             <p>上传头像</p>
       </div>
@@ -238,7 +238,8 @@
         },
         //头像
         checkAvatar (path) {
-            var picCamera = "data:image/gif;base64,R0lGODlhAQABAIAAAPLy8gAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
+            //相机背景图片
+            var picCamera = "../../../static/images/meow/xjbg.png";
             return common.getAvatar(path,picCamera)
         },
         // 修改头像
