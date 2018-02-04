@@ -40,9 +40,9 @@
                 <div class="gb-left">
                   <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
                 </div>
-                <div class="gb-right">
+                <!-- <div class="gb-right">
                   <div class="gb-ljqd" @click.stop="grabOrder(order._id)">立即抢单</div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

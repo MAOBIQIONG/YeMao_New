@@ -19,10 +19,7 @@
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
-                    <div class="ds-img">
-                        <img :src="item.imgs[0]" v-if="item.imgs.length>0">
-                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0">
-                    </div>
+                    <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"  v-if="item.imgs"></div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
                             {{item.project_describe}}
@@ -31,6 +28,7 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
+                            <!--状态信息-->
                             <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
                             <template v-else >
                                 <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
@@ -44,11 +42,12 @@
                     <p v-if="item.bidders.length>0"><span style="color:red">{{item.bidders.length}}</span>位设计师抢单</p>
                     <p v-if="item.bidders.length==0">还没有设计师抢单</p>
                 </div> -->
+                <!--按钮状态-->
                 <div class="ds-bottom">
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <!-- <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div> -->
-                        <div class="db-qrdd" v-if="isNull(item.project_winBidder)">
+                        <div class="db-qrdd" v-if="isNull(item.project_winBidder)" style="background:white;">
                             <!-- 抢单中 -->
                         </div>
                         <template v-else>

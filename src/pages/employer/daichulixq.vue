@@ -15,8 +15,8 @@
         </div>
         <div class="ddxq">
           <div class="ddxq-top">
-            <div class="ddxq-img" @click="toUrl('emporderimgs')">
-              <img :src="checkImg(order.imgs[0])" v-if="imgSize>0">
+            <div class="ddxq-img" @click="toViewImgs(order.imgs,order.imgs.length==0)" :style="{backgroundImage:`url(${checkImg(order.imgs[0])})`}">
+              <!-- <img :src="checkImg(order.imgs[0])" v-if="order.imgs"> -->
               <div class="num">{{imgSize}}</div>
             </div>
             <div class="ddxq-jianjie">
@@ -102,6 +102,7 @@
           <div class="db-qxdd">取消订单</div>
           <div class="db-qrdd" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }">选择设计师</div>
         </div>
+
       </div>
     </div>
   </div>
@@ -168,6 +169,11 @@
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
       },
+        toViewImgs: function (imgs,notAllowed) {
+            if(notAllowed) return;
+            common.setStorage("od_viewImgs",imgs);
+            this.$router.push({name:'emporderimgs',query:{id:this.order_id}})
+        },
       // 订单详情字数限制
       getMaxlen(text){
         var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
@@ -178,6 +184,7 @@
         return text;
       },
       checkImg(path){
+        console.log(common.getDefultImg(path));
         return common.getDefultImg(path);
       },
       // 订单详情查看\收起

@@ -675,6 +675,8 @@ body,html{
   margin: 0.2rem 0.18rem;
   float: left;
   overflow: hidden;
+  background-position:center center;
+  background-size:cover;
 }
 
 .ddxq .ddxq-top .ddxq-img img {
@@ -840,6 +842,8 @@ body,html{
   background-color: #CCCCCC;
   margin: 0.1rem 0.18rem;
   float: left;
+  background-position:center center;
+  background-size:cover;
 }
  .ddlist-sjsdai .ds-top .ds-img img{
   width: 100%;
