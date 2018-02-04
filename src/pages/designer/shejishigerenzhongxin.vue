@@ -204,7 +204,7 @@
       },
       // 默认图片
       getDefultImg (path) {
-        return common.getAvatar(path,'./static/images/bj.jpg')
+        return common.getDefultImg(path)
       },
       // 时间戳转字符串
       getStringDate(date,id){
