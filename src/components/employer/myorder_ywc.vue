@@ -18,14 +18,12 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item._id)">
+                <div class="ds-top" v-tap="{methods:toDetails,id:item._id}">
                     <div class="ds-img">
-                        <img :src="item.imgs[0]">
+                        <img :src="checkImg(item.imgs[0])">
                     </div>
                     <div class="ds-jianjie">
-                        <div class="jianjie-top">
-                            {{item.project_describe}}
-                        </div>
+                        <div class="jianjie-top">{{item.project_describe}}</div>
                         <div class="jianjie-bottom">
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
@@ -36,9 +34,9 @@
                 </div>
                 <div class="ds-bottom">
                     <div class="db-right">
-                        <div class="db-qxdd">取消订单</div>
-                        <div class="db-sxdd">刷新订单</div>
-                        <div class="db-qrdd">选择设计师</div>
+                        <div class="db-qrdd" v-if="item.project_evaluation==0"
+                             v-tap="{methods:toUrl,pagename:'orderpingjia',query:{id:item.case_id}}"
+                        >立即评价</div>
                     </div>
                 </div>
             </div>
@@ -168,12 +166,18 @@ export default {
     },
     methods:{
         toUrl: function (params) {
-            this.$router.push({name: params})
-            console.log("toUrl",params);
+          var _self = this;
+          _self.$router.push({name: params.pagename,query:params.query});
+          params.event.cancelBubble = true;
+          params.event.stop;//阻止冒泡（原声方法）
+          return false
         },
          // 详情页
-        toDetails (id) {
-            this.$router.push({name: 'daichulixq', query: {id: id}})
+        toDetails (params) {
+            this.$router.push({name: 'daichulixq', query: {id: params.id}})
+        },
+        checkImg(path){
+          return common.getDefultImg(path);
         },
         dealDom(){
             let scroller = $('div[id^="vux-scroller-"]');

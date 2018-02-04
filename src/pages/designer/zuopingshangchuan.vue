@@ -33,8 +33,8 @@
         <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
           <img src="../../../static/images/employer/j.png" />
         </div>
-        <div class="img-body" v-for="img in imgList">
-          <img :src="img.src" />
+        <div class="img-body" v-for="img in data.imgs">
+          <img :src="getDefultImg(img)" />
         </div>
       </div>
     </div>
@@ -62,8 +62,8 @@
           collection: 0,
           comments: 0,
           type: 2,
-          cover: "./static/images/img/1.jpg",
-          imgs: ["./static/images/img/1.jpg","./static/images/img/2.jpg","./static/images/img/3.jpg"],
+          cover: "",
+          imgs: [],
           is_del:0
         },
         curr_date:'',
@@ -92,9 +92,19 @@
         this.showMark = true;
         this.showMsg = msg;
       },
+      getDefultImg(path){
+        return common.getDefultImg(path)
+      },
       //上传图片
       triggerFile(){
         console.log("trigger:")
+        var _self = this;
+        uploadImg.init({
+          callback:function (path) {
+            console.log("path："+path)
+            _self.data.imgs.push(path);
+          }
+        });
       },
       // 提交
       submit(){
@@ -120,6 +130,9 @@
         if( common.isNull(_self.data.description) == true ){
           _self.showToast("请详细描述你的作品!");
           return
+        }
+        if( _self.data.imgs.length > 0 ){
+          _self.data.cover = _self.data.imgs[0];
         }
         var params = {
           //批量添加

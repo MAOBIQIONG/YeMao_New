@@ -194,6 +194,9 @@
       checkAvatar(path) {
         return common.getAvatar(path)
       },
+      getDefultImg(path){
+        return common.getDefultImg(path)
+      },
       // 时间戳转日期
       timeStamp2String(time, id) {
         if (common.isNull(id)) {
@@ -285,7 +288,7 @@
         _self.answer_id = _self.chw.user._id;
         var imgs = _self.chw.imgs || [];// 图片
         imgs.forEach(function (item, index) {
-          _self.imgs.push({img: item});
+          _self.imgs.push({img: _self.getDefultImg(item)});
         })
         // 评论
         _self.comments = data.comments || [];

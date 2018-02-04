@@ -516,6 +516,7 @@ const common = {
     getCertification:'getCertification',           // 查询认证
     getPersonalChw:'getPersonalChw',               // 获取personalChw
     getPChwDetails:'getPChwDetails',               // 获取personalChw详情
+    getPChwInfo:'getPChwInfo',                     // 获取personalChw详情
     prsonalCenter:'prsonalCenter',                 // 个人中心
     getMyPurse:'getMyPurse',                       // 我的钱包
     getPayments:'getPayments',                     // 收支明细
@@ -556,6 +557,7 @@ const common = {
     feedback:'feedback',                 　　　　　　// 意见反馈
     getMyComments:'getMyComments',                 // 获取我的评论
     getPayInfo:'getPayInfo',                       // 获取支付信息
+    orderComments:'orderComments',                 // 订单评价
 
   },
 

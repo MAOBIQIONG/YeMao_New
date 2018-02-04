@@ -20,7 +20,8 @@
         <div class="content">
           <div class="list-paizuan" v-for="(item,index) in chws" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
             <div class="tu">
-              <img :src="item.cover"/>
+              <!--<img :src="item.cover"/>-->
+              <div class="bg-cover" :style="'background-image:url('+checkImg(item.cover)+')'"></div>
             </div>
             <div class="zan">
               <div class="left-zan" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,id:item._id,index:index}">

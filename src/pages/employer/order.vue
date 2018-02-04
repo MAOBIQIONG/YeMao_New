@@ -9,7 +9,7 @@
       <div class="ddxq">
         <div class="ddxq-top">
           <div class="ddxq-img" @click="toViewImgs(order.imgs)">
-            <img v-if="imgSize>0" :src='checkImg(order.imgs[0])'>
+            <img :src='checkImg(order.imgs[0])'>
             <div class="num">{{imgSize}}</div>
           </div>
           <div class="ddxq-jianjie">
@@ -216,6 +216,7 @@
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
       },
       toViewImgs: function (imgs) {
+        if( imgs.length == 0 ) return;
         common.setStorage("viewImgs",imgs);
         this.$router.push({name:'emporderimgs',query:{id:this.order_id}})
       },
