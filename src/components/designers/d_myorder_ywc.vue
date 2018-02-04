@@ -19,8 +19,7 @@
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
-                    <div class="ds-img">
-                        <img src=item.imgs[0]>
+                    <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -30,15 +29,15 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <div class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                            <div class="db-djs">已完成</div>
                         </div>
                     </div>
                 </div>
                 <div class="ds-bottom">
                     <div class="db-right">
-                        <div class="db-qxdd">取消订单</div>
+                        <!-- <div class="db-qxdd">取消订单</div>
                         <div class="db-sxdd">刷新订单</div>
-                        <div class="db-qrdd">选择设计师</div>
+                        <div class="db-qrdd">选择设计师</div> -->
                     </div>
                 </div>
             </div>
@@ -187,6 +186,9 @@ export default {
 
             });
         },
+        checkImg(path){
+          return common.getDefultImg(path);
+        },
         //获取数据
         loadData(){      
             let _self = this;
@@ -201,7 +203,7 @@ export default {
             };
             params.where = {
                 project_winBidder:user_id,
-                project_state:{$lt :10, $gte : 7}
+                project_state:{$lt :9, $gte : 7}
             };
             // console.log("user_id",user_id);
             // console.log("user_info",user_info);

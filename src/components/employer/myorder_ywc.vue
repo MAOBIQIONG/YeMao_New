@@ -205,7 +205,7 @@ export default {
             };
             params.where = {
                 user_id,
-                project_state:{$lt :10, $gte : 7}
+                project_state:{$lt :9, $gte : 7}
             };
             // console.log("user_id",user_id);
             // console.log("user_info",user_info);
