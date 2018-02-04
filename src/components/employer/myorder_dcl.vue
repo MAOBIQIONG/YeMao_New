@@ -20,8 +20,6 @@
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item)">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
-                        <!-- <img :src="checkImg(item.imgs[0])" v-if="item.imgs.length>0">
-                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0"> -->
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
