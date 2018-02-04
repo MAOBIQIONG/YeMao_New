@@ -36,8 +36,8 @@
                 </div>
                 <div class="ds-bottom">
                     <div class="db-right">
-                      <!--<div class="db-sxdd">一键会审</div>-->
-                      <div class="db-qrdd" v-tap="{methods:confirmOrder,id:item._id}">确认交付</div>
+                      <div class="db-sxdd" v-tap="{methods: toCheck, id: item._id}">一键会审</div>
+                      <div v-if="item.project_state==5" class="db-qrdd" v-tap="{methods: confirmOrder, id: item._id}">确认交付</div>
                     </div>
                 </div>
             </div>
@@ -47,16 +47,17 @@
     <!-- <div class="noOrder">
         您还没有相关订单
     </div> -->
-
+      <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 <script>
-import {Scroller,LoadMore} from 'vux'
+import {Scroller,LoadMore,Toast} from 'vux'
 export default {
     name:"scroll-list",
     components:{
         Scroller,
-        LoadMore
+        LoadMore,
+        Toast,
     },
     created(){
         console.log('created');
@@ -124,7 +125,9 @@ export default {
                 showLoading:true,
                 show:true,
             },
-            hasMore:true
+            hasMore:true,
+            showMark:false,
+            showMsg:""
         }
     },
     watch:{
@@ -173,9 +176,17 @@ export default {
         checkImg(path){
           return common.getDefultImg(path);
         },
+        showToast(msg){
+          this.showMark = true;
+          this.showMsg = msg;
+        },
         // 详情页
         toDetails (id) {
             this.$router.push({name: 'daichulixq', query: {id: id}})
+        },
+        // 一键会审
+        toCheck (params) {
+          this.$router.push({name: 'yijianhuisheng', query: {id: params.id}})
         },
         dealDom(){
             let scroller = $('div[id^="vux-scroller-"]');
@@ -274,17 +285,25 @@ export default {
         },
 
         /**确认交付**/
-        confirmOrder(params){
+        confirmOrder(param){
+          var _self = this;
           var params = {
             interfaceId: common.interfaceIds.confirmDelivery,
-            order_id: params.id
+            order_id: param.id
           }
-          this.$axios.post('/mongoApi',{
+          _self.$axios.post('/mongoApi',{
             params: params
           },(response)=>{
             let data = response.data;
-            if( data ){
-
+            if( data && data.code == 200 ){
+              _self.showToast("确认成功!");
+              _self.orderList.forEach(function (item,index) {
+                if( param.id == item._id ){
+                  _self.orderList.splice(index,1);
+                }
+              })
+            }else{
+              _self.showToast("确认失败!");
             }
           })
         }

@@ -559,6 +559,7 @@ const common = {
     getPayInfo:'getPayInfo',                       // 获取支付信息
     orderComments:'orderComments',                 // 订单评价
     confirmDelivery:'confirmDelivery',             // 确认支付
+    orderReview:'orderReview',                     // 一键会审
 
   },
 
