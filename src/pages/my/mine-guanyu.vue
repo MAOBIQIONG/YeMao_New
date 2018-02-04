@@ -10,7 +10,7 @@
         <div class="log-img">
           <img src="../../../static/images/logo.png"/>
         </div>
-        <p>版本号：3.3.0</p>
+        <p v-if="version!=''">版本号：{{version}}</p>
       </div>
     </div>
   </div>
@@ -20,7 +20,16 @@
   export default {
     data () {
       return {
-
+        version:''
+      }
+    },
+    created:function () {
+      var _self = this;
+      if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+        // 获取本地应用资源版本号
+        plus.runtime.getProperty(plus.runtime.appid,function(inf){
+          _self.version = inf.version;
+        });
       }
     },
     methods: {
