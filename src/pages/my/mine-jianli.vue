@@ -127,24 +127,17 @@
           </div>
           个人作品
         </div>
-        <div class="fanhui" @click="toUrl('gerenzuoping')">
+        <div class="fanhui" @click="toUrl('gerenzuoping')" v-if="resume.works_imgs">
           <img src="../../../static/images/youhui.png" />
         </div>
         <div class="gzzp-content">
-          <ul>
-            <li>
-              <img src="../../../static/images/bj.jpg" />
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg" />
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg" />
-            </li>
-            <li>
-              <img src="../../../static/images/bj.jpg" />
+          <ul  v-if="resume.works_imgs">
+            <li v-for="(path,index) in resume.works_imgs.slice(0,4)" :key="index">
+                <div class="image" :style="{backgroundImage:`url(${checkImg(path)})`}"></div>
+              <!-- <img :src="checkImg(path)" /> -->
             </li>
           </ul>
+          <div v-else style="font-size:0.3rem;text-align:center;margin-top:1rem;">暂无个人作品</div>
         </div>
       </div>
       <!--聊天-->
@@ -246,19 +239,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
       checkImg(path){
         return common.getDefultImg(path);
       },
-      // 收藏效果
-    //   dianzan(){
-    //     var lr=true
-    //     $(".header-right").click(function(){
-    //       if(lr==true){
-    //         $(".header-right").addClass("hr-hover");
-    //         lr=false
-    //       }else if(lr==false){
-    //         $(".header-right").removeClass("hr-hover");
-    //         lr=true
-    //       }
-    //     });
-    //   },
+
         showToast(msg){
             this.showMark = true;
             this.showMsg = msg;
@@ -421,6 +402,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
         setData(data){
             let _self = this;
             _self.resume = data;
+            common.setStorage('works_imgs',data.works_imgs);
             _self.loadingShow = false;
         }
     }

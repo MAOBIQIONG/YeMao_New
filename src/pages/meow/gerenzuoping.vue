@@ -2,13 +2,14 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>作品展示</span>
     </div>
     <!--作品展示-->
     <div class="content content-p">
         <div class="tupianlist">
-          <img class="previewer-demo-img" v-for="(item, index) in list" :src="item.src" width="100" @click="show(index)">
+          <!-- <img class="previewer-img" v-for="(item, index) in list" :key="index" :src="item.src" width="100" @click="show(index)"> -->
+         <div class="previewer-img" :style="{backgroundImage:`url(${item.src})`}" v-for="(item, i) in list" v-tap="{methods:show,index:i}" :key="i"></div>
           <div v-transfer-dom>
             <previewer :list="list" ref="previewer" :options="options"></previewer>
           </div>
@@ -62,7 +63,7 @@
         options: {
           getThumbBoundsFn(index) {
             // find thumbnail element
-            let thumbnail = document.querySelectorAll('.previewer-demo-img')[index]
+            let thumbnail = document.querySelectorAll('.previewer-img')[index]
             // get window scroll Y
             let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
             // optionally get horizontal scroll
@@ -83,9 +84,32 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      show (index) {
-        this.$refs.previewer.show(index)
-      }
+      show (params) {
+        this.$refs.previewer.show(params.index)
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },
+    },
+    created(){
+        // console.log(this.list);
+        let works_imgs = common.getObjStorage('works_imgs');
+
+        if(works_imgs){
+            let imgArr = [];
+            for(let item of works_imgs){
+                item = {"src":this.checkImg(item)};
+                //    console.log(item);
+                imgArr.push(item);
+            }
+            //    console.log('imgArr',imgArr);
+            this.list = imgArr;
+            //    console.log(this.list);
+        }
+
+    },
+    destroyed(){
+        common.delStorage('works_imgs');
     }
   }
 </script>
@@ -98,5 +122,13 @@
     width:1.8rem;
     height:1.8rem;
     margin: 0 0.01rem;
+  }
+  .previewer-img{
+        width:1.8rem;
+        height:1.8rem;
+        margin: 0 0.01rem;
+        display:inline-block;
+        background-size:cover;
+        background-position:center center
   }
 </style>
