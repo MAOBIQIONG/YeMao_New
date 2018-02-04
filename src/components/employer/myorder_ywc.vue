@@ -18,7 +18,7 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" v-tap="{methods:toDetails,id:item._id}">
+                <div class="ds-top" v-tap="{methods:toDetails,item:item}">
                     <div class="ds-img">
                         <img :src="checkImg(item.imgs[0])">
                     </div>
@@ -28,7 +28,7 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <div class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                            <div class="db-djs">已完成</div>
                         </div>
                     </div>
                 </div>
@@ -173,8 +173,15 @@ export default {
           return false
         },
          // 详情页
-        toDetails (params) {
-            this.$router.push({name: 'daichulixq', query: {id: params.id}})
+        toDetails (item) {
+            console.log(item)
+            let buttonState = {
+                user_type:"employer",
+                state:'ywc',
+                btns_type:0,
+            };
+            common.setStorage('buttonState',buttonState);
+            this.$router.push({name: 'daichulixq', query: {id: item.item._id}})
         },
         checkImg(path){
           return common.getDefultImg(path);
