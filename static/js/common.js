@@ -544,6 +544,9 @@ const common = {
     queryResumeById:'queryResumeById',             // 人才简历详情
     queryWEById:'queryWEById',                     // 工作经历详情
     queryAlumniById:'queryAlumniById',             // 校友会详情
+    queryAlumniByName:'queryAlumniByName',         // 验证是否存在相同名称校友会
+    getUsersByPhone:'getUsersByPhone',             // 根据手机号码查询校友会成员
+    addAlumnis:'addAlumnis',                       // 校友会添加成员
     checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
     registerUser:'registerUser',                   // 注册
     updateUserById:'updateUserById',               // 修改用户信息

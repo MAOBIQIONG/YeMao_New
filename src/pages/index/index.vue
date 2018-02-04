@@ -246,11 +246,11 @@
         var _self = this
         _self.znpxMark = _self.znpxMark == true ? false : true
         _self.sortName = event.target.innerText;
-        if( _self.sortMark != param.value  ){
+        // if( _self.sortMark != param.value  ){
           _self.sortMark = param.value;
           _self.pageNo = 0;
           _self.loadMore();
-        }
+        // }
       },
       // 抢单
       grabOrder (params) {
