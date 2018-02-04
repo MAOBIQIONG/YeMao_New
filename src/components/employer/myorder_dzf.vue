@@ -19,9 +19,9 @@
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
                 <div class="ds-top" @click="toDetails(item._id)">
-                    <div class="ds-img">
-                        <img :src="item.imgs[0]" v-if="item.imgs.length>0">
-                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0">
+                    <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
+                        <!-- <img :src="item.imgs[0]" v-if="item.imgs.length>0">
+                        <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0"> -->
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -214,6 +214,9 @@ export default {
         },
         isNull(data){
             return common.isNull(data);
+        },
+         checkImg(path){
+          return common.getDefultImg(path);
         },
         updateOrderState(p){
             // console.log(param.id);

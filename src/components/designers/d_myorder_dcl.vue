@@ -18,7 +18,7 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item._id)">
+                <div class="ds-top" @click="toDetails(item)">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"  v-if="item.imgs"></div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -32,6 +32,7 @@
                             <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
                             <template v-else >
                                 <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
+                                <div class="db-djs" v-else-if="item.project_state==3">等待雇主支付</div>
                                 <div class="db-djs" v-else>等待设计师完善订单</div>
                             </template>
                         </div>
@@ -223,8 +224,20 @@ export default {
             this.showMsg = msg;
         },
          // 详情页
-        toDetails (id) {
-            this.$router.push({name: 'daichulixq', query: {id: id}})
+        toDetails (item) {
+            let buttonState = {
+                user_type:"designer",
+                state:'dcl',
+                btns_type:0,
+            };
+            //判断是否已选择设计师
+            if(!this.isNull(item.project_winBidder)){
+                if(item.project_winBidder==this.user_id){
+                    buttonState.btns_type = 1;
+                }             
+            } 
+            common.setStorage('buttonState',buttonState);
+            this.$router.push({name: 'daichulixq', query: {id: item._id}})
         },
         improveTheOrder(id){
             this.$router.push({name:'fabudingdan',query:{id:id,improve:1}});
@@ -349,14 +362,14 @@ export default {
             let _self = this;
             _self.$refs.scroller.enablePullup();
              // 订单
+            let orderBidders = data.orderBidders || [];//参与人记录
             let orderList = data.orderList || [];
-
-            console.log('mergeList',orderList);
+            let list = _self.arryLeftJoin({arr:orderList,field:'_id'},{arr:orderBidders,field:'order_id'});
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
-                _self.orderList = orderList;
+                _self.orderList = list;
             } else {
-                _self.orderList.push(...data.orderList);
+                _self.orderList.push(...list);
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;

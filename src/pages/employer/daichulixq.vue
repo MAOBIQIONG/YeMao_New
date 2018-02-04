@@ -98,29 +98,81 @@
       </div>
       <!-- 底部按钮-->
       <div class="dcl-bottom">
-        <div class="db-right">
+        <!-- <div class="db-right">
           <div class="db-qxdd">取消订单</div>
           <div class="db-qrdd" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }">选择设计师</div>
-        </div>
+        </div> -->
+        <template v-if="buttonState.user_type=='employer'">
+            <div class="db-right" v-if="buttonState.state=='dcl'">
+                <div class="db-qxdd" @click="showConfirm(order._id)">取消订单</div>
+                <template v-if="buttonState.btns_type==1">
+                    <div class="db-sxdd">刷新订单</div>
+                    <div class="db-qrdd"
+                        v-tap="{ methods:toParts, id: order._id, uid: order.user_id }"
+                        >
+                        选择设计师
+                    </div>                
+                </template>
+                <template v-else-if="buttonState.btns_type==2">
+                    <div v-if="order.project_state==2" class="db-qrdd" v-tap="{methods:updateOrderState,id:order._id}">
+                        确认完善信息
+                    </div>             
+                </template>
+                <template v-else-if="buttonState.btns_type==3">
+                    <div class="db-sxdd" v-tap="{methods:refreshOrders,id:order._id}">刷新订单</div>             
+                </template>
+            </div>
+        </template>
+        <template v-if="buttonState.user_type=='designer'">
+            <div class="db-right" v-if="buttonState.state=='dcl'">
+                <div v-if="buttonState.btns_type==1" class="db-qrdd" v-tap="{methods:improveTheOrder,id:order._id}">
+                    完善信息
+                </div>      
+            </div>
+        </template>
 
       </div>
+    </div>
+    
+    <toast v-model="showMark" :time="1500" type="text" width="5rem">{{showMsg}}</toast>
+    <div v-transfer-dom>
+        <confirm v-model="confirmShow"
+            @on-confirm = "cancelOrder()"
+        >
+        <p style="text-align:center;">{{confirmMsg}}</p>
+        </confirm>
     </div>
   </div>
 </template>
 
 <script>
+import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
   export default {
+    directives: {
+        TransferDom
+    },
+    components:{
+        Toast,
+        Confirm,
+    },
     data () {
         return {
             order_id:null,
             user_id:null,
             userInfo:null,
-            order:{},
+            order:{
+                imgs:['']
+            },
             hasBidder:false,
             bidders:[],
             imgSize:0,
             viewMore:false,
             viewText:'点击查看更多',
+            buttonState:'',
+            confirmShow:false,
+            confirmMsg:"确定要取消该订单吗",
+            showMark:false,
+            showMsg:"",
         }
     },
     filters:{
@@ -145,7 +197,6 @@
     },
     computed:{
         uuid(){
-            console.log(11);
             return common.uuid();
         },
     },
@@ -154,8 +205,9 @@
       _self.order_id = _self.$route.query.id;
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.user_id = _self.userInfo._id || null;
+      _self.buttonState = common.getObjStorage('buttonState');
       _self.initData();
-      console.log(_self.userInfo);
+    //   console.log(_self.userInfo);
     },
     mounted: function () {
     },
@@ -165,6 +217,10 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      showToast(msg){
+            this.showMark = true;
+            this.showMsg = msg;
       },
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
@@ -184,9 +240,12 @@
         return text;
       },
       checkImg(path){
-        console.log(common.getDefultImg(path));
+        // console.log(common.getDefultImg(path));
         return common.getDefultImg(path);
       },
+      improveTheOrder(p){
+            this.$router.push({name:'fabudingdan',query:{id:p.id,improve:1}});
+        },
       // 订单详情查看\收起
         viewMoreFun () {
             var _self = this;
@@ -194,6 +253,111 @@
             _self.viewText = _self.viewMore==false ? '点击查看更多' : '收起';
             var desc = _self.viewMore==false ? _self.getMaxlen(_self.order.project_describe) : _self.order.project_describe;
             _self.$refs.project_describe.innerHTML = desc;
+        },
+        showConfirm(params){
+            this.confirmShow = true;
+            this.opr_id = params;
+            console.log(this.opr_id);
+        },
+        updateOrderState(p){
+            // console.log(param.id);
+            var _self = this;
+            _self.opr_id = p.id;
+            if(_self.order_id != _self.opr_id){
+                console.error('订单编号错误');
+                return;
+            }
+            // console.log(p);
+            // return;
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                coll:common.collections.orderList,
+                wheredata:{
+                    _id:_self.order_id
+                },
+                data:{
+                    $set: {
+                        project_state: 3, // 取消
+                    }
+                }
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.ok > 0 ){
+                        _self.showToast('请前往支付！');
+                        setTimeout(()=>{
+                            _self.goback();
+                        },1500);
+                    } else {
+                        _self.showToast('取消失败联系管理员');
+                    }
+                })
+        },
+        refreshOrders(p){
+            let _self = this;
+            _self.opr_id = p.id;
+            if(_self.order_id != _self.opr_id){
+                console.error('订单编号错误');
+                return;
+            }
+            var params = {
+                interfaceId:common.interfaceIds.refreshOrders,
+                order_id:_self.order_id,
+            };
+            // console.log(params);
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.code == 200 ){
+                        _self.showToast('已刷新！');
+                        _self.$store.state.indexRefreshMark = 1;
+                        _self.$store.state.employerRefreshMark = 1;
+                        setTimeout(()=>{
+                            _self.goback();
+                        },1500);
+                    } else {
+                        _self.showToast('取消失败联系管理员');
+                    }
+                });
+        },
+        cancelOrder(){
+            let _self = this;
+            if(_self.order_id != _self.opr_id){
+                console.error('订单编号错误');
+                return;
+            }
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                coll:common.collections.orderList,
+                wheredata:{
+                    _id:_self.order_id
+                },
+                data:{
+                    $set: {
+                        project_state: 9, // 取消
+                    }
+                }
+            };
+            // console.log(params);
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.ok > 0 ){
+                        _self.showToast('已取消！');
+                        setTimeout(()=>{
+                            _self.goback();
+                        },1500);
+                    } else {
+                        _self.showToast('取消失败联系管理员');
+                    }
+                });
         },
       //数据初始化
         initData(){
@@ -229,7 +393,7 @@
                     _self.order = order;
                     if( _self.order.imgs ){
                         _self.imgSize = _self.order.imgs.length;
-                    }
+                    }                 
                 });
         }
     }

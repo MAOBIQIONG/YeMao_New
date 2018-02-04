@@ -121,6 +121,18 @@
   margin-right: 0.24rem;
   margin-top: 0.25rem;
 }
+.dcl-bottom .db-right .db-sxdd {
+    float: left;
+    width: 1.7rem;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    text-align: center;
+    border: 1px solid #f75ea7;
+    border-radius: 0.5rem;
+    color: #f75ea7;
+    margin-right: 0.24rem;
+    margin-top: 0.25rem;
+  }
 
 .dcl-bottom .db-right .db-qrdd {
   float: left;
@@ -134,5 +146,6 @@
   margin-top: 0.25rem;
   background: linear-gradient(to right, #f74f9c, #fd7376);
 }
+
 
 /*# sourceMappingURL=daichulixq.css.map */

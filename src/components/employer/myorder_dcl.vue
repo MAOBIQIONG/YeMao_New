@@ -18,8 +18,8 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item._id)">
-                    <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"  v-if="item.imgs">
+                <div class="ds-top" @click="toDetails(item)">
+                    <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
                         <!-- <img :src="checkImg(item.imgs[0])" v-if="item.imgs.length>0">
                         <img src="../../../static/images/bj.jpg" v-if="item.imgs.length==0"> -->
                     </div>
@@ -57,7 +57,7 @@
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
                         <template v-if="item.sub.length>0">
                             <template v-if="isNull(item.project_winBidder)">
-                                <div class="db-sxdd">刷新订单</div>
+                                <div class="db-sxdd" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
                                 <div class="db-qrdd"
                                     v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
                                  >
@@ -78,7 +78,7 @@
                             </template>
                         </template>
                         <template v-else>
-                            <div class="db-sxdd">刷新订单</div>
+                            <div class="db-sxdd" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
                             <div class="db-qrdd" style="display: none"></div>
                         </template>
 
@@ -113,7 +113,6 @@ export default {
         Scroller,
         LoadMore,
         Toast,
-        Confirm,
         Confirm,
     },
     created(){
@@ -239,8 +238,25 @@ export default {
             this.showMsg = msg;
         },
          // 详情页
-        toDetails (id) {
-            this.$router.push({name: 'daichulixq', query: {id: id}})
+        toDetails (item) {
+            let buttonState = {
+                user_type:"employer",
+                state:'dcl',
+                btns_type:0,
+            };
+            //判断是否有人抢单
+            if(item.sub.length>0){
+                //判断是否已选择设计师
+                if(this.isNull(item.project_winBidder)){
+                    buttonState.btns_type = 1;
+                } else {
+                    buttonState.btns_type = 2;
+                }
+            }else{
+                buttonState.btns_type = 3;
+            }
+            common.setStorage('buttonState',buttonState);
+            this.$router.push({name: 'daichulixq', query: {id: item._id}})
         },
         isNull(data){
             return common.isNull(data);
@@ -293,6 +309,31 @@ export default {
                 }
                 index++
             }
+        },
+        refreshOrders(p){
+            let _self = this;
+            _self.order_id = p.id;
+            var params = {
+                interfaceId:common.interfaceIds.refreshOrders,
+                order_id:_self.order_id,
+            };
+            console.log(params);
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.code == 200 ){
+                        _self.showToast('已刷新！');
+                        _self.$store.state.indexRefreshMark = 1;
+                        _self.$store.state.employerRefreshMark = 1;
+                        setTimeout(()=>{
+                            _self.goback();
+                        },1500);
+                    } else {
+                        _self.showToast('取消失败联系管理员');
+                    }
+                });
         },
         cancelOrder(){
             let _self = this;

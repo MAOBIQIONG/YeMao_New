@@ -269,7 +269,7 @@
                 let objectKeys = Object.keys(_self.subParams);
                 objectKeys.reduce(
                     (accumulator,currentValue,currentIndex,array)=>{
-                        console.log(currentValue,accumulator);
+                        // console.log(currentValue,accumulator);
                         _self.subParams[currentValue] = data.order[currentValue];
                     },0
                 );
