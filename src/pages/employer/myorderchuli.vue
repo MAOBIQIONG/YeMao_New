@@ -36,7 +36,8 @@
     },
     data() {
       return {
-        index: 0,
+        isMounted:false,
+        index:0,
         myOrderList:{},
         pageNo:0,
         pageSize:10,
@@ -52,7 +53,27 @@
       }
     },
     created(){
-        console.log("myorderComponent created");
+        console.log("myorderchuli created");
+        
+    },
+    mounted(){
+        console.log("myorderchuli mounted");
+        this.isMounted = true; 
+        
+        this.$store.commit("changeIndexOrder",{type:"employer",index:3});
+        let index = this.$store.state.orderTabIndexEmployer;
+        setTimeout(()=>{this.index = index},10);       
+    },
+    watch:{
+        index:{
+            handler(val,oldval){
+                if(this.isMounted==true){
+                     console.log(val,oldval);
+                     this.changeList();
+                }       
+                
+            }
+        }
     },
     methods: {
         goback() {

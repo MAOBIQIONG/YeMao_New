@@ -18,15 +18,29 @@ const state = {
   // 喵喵圈首页刷新状态
   meowRefreshMark: 0,
   // 设计师首页刷新状态
-  designerRefreshMark: 0
-
+  designerRefreshMark: 0,
+  //雇主我的订单tab状态
+  orderTabIndexEmployer:0,
+  //设计师我的订单tab状态
+  orderTabIndexDesigner:0,
 }
 
 //这里的mutations是固定的写法，意思是改变的，要改变数据的方法，必须写在mutations里。
 const mutations={
-  modifyPageIndex(index){
-    tabbar.pageIndex = index;
-  },
+    modifyPageIndex(index){
+        tabbar.pageIndex = index;
+    },
+    //改变我的订单tab状态
+    changeIndexOrder(state,payload){
+        //判断雇主设计师
+        if(payload.type=="employer"){
+            state.orderTabIndexEmployer=payload.index;
+        }
+        if(payload.type=="designer"){
+            state.orderTabIndexEmployer=payload.index;
+        }
+    },
+
 }
 
 //用export default 封装代码，让外部可以引用。
