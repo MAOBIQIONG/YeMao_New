@@ -30,7 +30,8 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <div class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                            <div class="db-djs" v-if="item.project_state==4">待交付</div>
+                            <div class="db-djs" v-if="item.project_state==5">交付中</div>
                         </div>
                     </div>
                 </div>

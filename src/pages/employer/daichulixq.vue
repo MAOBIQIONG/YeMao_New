@@ -102,6 +102,7 @@
           <div class="db-qxdd">取消订单</div>
           <div class="db-qrdd" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }">选择设计师</div>
         </div> -->
+        <template v-if="!isNull(buttonState)">
         <template v-if="buttonState.user_type=='employer'">
             <div class="db-right" v-if="buttonState.state=='dcl'">
                 <div class="db-qxdd" @click="showConfirm(order._id)">取消订单</div>
@@ -130,6 +131,8 @@
                 </div>      
             </div>
         </template>
+        </template>
+
 
       </div>
     </div>
@@ -205,9 +208,13 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
       _self.order_id = _self.$route.query.id;
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.user_id = _self.userInfo._id || null;
-      _self.buttonState = common.getObjStorage('buttonState');
+      _self.buttonState = common.getObjStorage("buttonState") || {};
+      console.log(_self.buttonState);
       _self.initData();
     //   console.log(_self.userInfo);
+    },
+    destroyed(){
+        common.delStorage("buttonState");
     },
     mounted: function () {
     },
@@ -253,6 +260,9 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             _self.viewText = _self.viewMore==false ? '点击查看更多' : '收起';
             var desc = _self.viewMore==false ? _self.getMaxlen(_self.order.project_describe) : _self.order.project_describe;
             _self.$refs.project_describe.innerHTML = desc;
+        },
+        isNull(data){
+            return common.isNull(data);
         },
         showConfirm(params){
             this.confirmShow = true;

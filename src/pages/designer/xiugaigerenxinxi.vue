@@ -25,7 +25,7 @@
             <span>工作年限</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="years" type="number" placeholder="请输入工作年限" ref="workyears"/>
+            <input v-model="years" type="text" placeholder="请输入工作年限" ref="workyears"/>
           </div>
         </div>
         <div class="ys">
@@ -33,7 +33,7 @@
             <span>时薪</span>
           </div>
           <div class="ys-right">
-            <input v-model="money" type="number" placeholder="请输入时薪" ref="hourlywage"/>
+            <input v-model="money" type="text" placeholder="请输入时薪" ref="hourlywage"/>
           </div>
         </div>
 
@@ -71,8 +71,8 @@
         user_id: null,
         user:{
           user_type: 0,
-          working_years: 0,
-          hourly_wage: 0
+          working_years: '',
+          hourly_wage: ''
         },
         showMark:false,
         showMsg:"",
@@ -118,9 +118,15 @@
         if( common.isNull(_self.user.working_years) ){
           _self.showToast("请输入工作年限!");
           return
+        }else if( !common.isMoney(_self.user.working_years) ){
+          _self.showToast("请重新确认工作年限!");
+          return
         }
         if( common.isNull(_self.user.hourly_wage) ){
           _self.showToast("请输入时薪!");
+          return
+        }else if( !common.isMoney(_self.user.hourly_wage) ){
+          _self.showToast("请重新确认时薪!");
           return
         }
         var params = {
@@ -156,16 +162,14 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          if( newValue >= 100 ){
-            newValue = newValue.substring(0,2);
-            _self.$refs.workyears.value = newValue;
-          }
-          var reg = /^[0-9]+([.][0-9]{1}){0,1}$/;// 验证数字,保留一位小数
-          if ( !reg.test(newValue) ){
-            newValue = newValue.substring(0,newValue.length-1);
-            _self.$refs.workyears.value = newValue;
-          }
-          _self.user.working_years = common.checkFloat(newValue);
+          newValue = newValue.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+          newValue = newValue.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+          newValue = newValue.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+          newValue = newValue.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+          newValue = newValue>=100 ? newValue.substring(0,2) : newValue;
+          newValue = newValue.indexOf('.')>0 ? newValue.substring(0,newValue.indexOf('.')+2) : newValue;
+          _self.$refs.workyears.value = newValue;
+          _self.user.working_years = newValue;
         }
       },
 
@@ -177,16 +181,14 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          var reg = /^[0-9]\d*$|^[0-9]\d*\.\d{1,2}$/;
-          if( newValue >= 100000000 ){
-            newValue = newValue.substring(0,9);
-            _self.$refs.hourlywage.value = newValue;
-          }
-          if ( !reg.test(newValue) ){
-            newValue = newValue.substring(0,newValue.length-1);
-            _self.$refs.hourlywage.value = newValue;
-          }
-          _self.user.hourly_wage = common.checkFloat(newValue);
+          newValue = newValue.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+          newValue = newValue.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+          newValue = newValue.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+          newValue = newValue.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+          newValue = newValue>=100000000 ? newValue.substring(0,9) : newValue;
+          newValue = newValue.indexOf('.')>0 ? newValue.substring(0,newValue.indexOf('.')+3) : newValue;
+          _self.$refs.hourlywage.value = newValue;
+          _self.user.hourly_wage = newValue;
         }
       },
     }
