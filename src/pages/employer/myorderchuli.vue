@@ -112,7 +112,7 @@
                 console.log(this.index);
                 if(this.index===-1){
                     console.log('this.index',this.tabItems.length-1);
-                    this.index = (this.tabItems.length-1);
+                    this.index = 0;
                     console.log('this.index',this.tabItems.length-1);
                 }           
             }
@@ -120,7 +120,7 @@
                 this.index++;
                 console.log('next:index',this.index);
                 if(this.index===this.tabItems.length){
-                    this.index = 0;
+                    this.index = this.tabItems.length-1;
                 }           
             }
             
