@@ -65,6 +65,8 @@
     height: .92rem;
     /*沉浸式样式*/
     top:0.2rem !important;
+    /*非沉浸式样式*/
+    /*top:0rem !important;*/
   }
   .vux-header-right a {
     height: .42rem;
