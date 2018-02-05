@@ -45,7 +45,7 @@
             <span>预算</span>
           </div>
           <div class="ys-right">
-            <input type="text" placeholder="请输入预算金额" v-model="subParams.project_budget"/>
+            <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget"/>
           </div>
         </div>
         <div class="qdtime">
@@ -63,7 +63,7 @@
             <span>设计单位</span>
           </div>
           <div class="xmbt-right">
-            <input type="text" placeholder="请输入设计单位" v-model="subParams.project_unit"/>
+            <input type="text" placeholder="请输入设计单位" v-model="unit" ref="unit"/>
           </div>
         </div>
         <div class="xmmj">
@@ -71,7 +71,7 @@
             <span>设计面积</span>
           </div>
           <div class="xmbt-right">
-            <input type="text"placeholder="请输入设计面积" v-model="subParams.project_area"/>
+            <input type="text"placeholder="请输入设计面积" v-model="area" ref="area"/>
           </div>
         </div>
         <div class="sjsd">
@@ -83,7 +83,7 @@
                 selected-item-class="demo5-item-selected"
                 @on-change="onChange" v-model="subParams.project_depth">
                 <checker-item key="0" value="0" class="fa">方案</checker-item>
-                <checker-item key="1" value="1" class="fa">扩出</checker-item>
+                <checker-item key="1" value="1" class="fa">扩初</checker-item>
                 <checker-item key="2" value="2" class="fa">施工</checker-item>
               </checker>
             </div>
@@ -95,7 +95,7 @@
               <span>工时</span>
             </div>
             <div class="xmbt-right">
-              <input type="text"placeholder="请输入工时" v-model="subParams.project_workHours"/>
+              <input type="text" placeholder="请输入工时" v-model="hours" ref="hours"/>
             </div>
           </div>
           <div class="gsh-bottom">
@@ -421,37 +421,66 @@
       }
 
     },
-          // 选择设计师
-    //   chooseDesigner() {
-    //     var _self = this;
-    //     var params = {
-    //       interfaceId: common.interfaceIds.updateData,
-    //       coll: common.collections.orderList,
-    //       wheredata: {
-    //         _id: _self.order_id
-    //       },
-    //       data: {
-    //         $set: {
-    //           project_winBidder: _self.project_winBidder,
-    //           project_state: 1,
-    //         }
-    //       }
-    //     }
-    //     _self.$axios.post('/mongoApi', {
-    //       params: params
-    //     }, response => {
-    //       console.log(response)
-    //       var data = response.data;
-    //       if (data.ok > 0) {
-    //         _self.$store.state.indexRefreshMark = 1;
-    //         _self.$store.state.employerRefreshMark = 1;
-    //         _self.showToast('选择成功！');
-    //         setTimeout(function () {
-    //           _self.$router.go(-2)
-    //         }, 1000)
-    //       }
-    //     })
-    //   }
+
+    computed: {
+      // 计算属性的 getter
+      hours: {
+        // getter
+        get: function () {
+          return this.subParams.project_workHours;
+        },
+        // setter
+        set: function (newValue) {
+          var _self = this;
+          newValue = common.checkMoney(newValue,10000,2);
+          _self.$refs.hours.value = newValue;
+          _self.subParams.project_workHours = newValue;
+        }
+      },
+
+      unit: {
+        // getter
+        get: function () {
+          return this.subParams.project_unit
+        },
+        // setter
+        set: function (newValue) {
+          var _self = this;
+          newValue = common.checkMoney(newValue,10000,2);
+          _self.$refs.unit.value = newValue;
+          _self.subParams.project_unit = newValue;
+        }
+      },
+
+      area: {
+        // getter
+        get: function () {
+          return this.subParams.project_area
+        },
+        // setter
+        set: function (newValue) {
+          var _self = this;
+          newValue = common.checkMoney(newValue,10000,2);
+          _self.$refs.area.value = newValue;
+          _self.subParams.project_area = newValue;
+        }
+      },
+
+      budget: {
+        // getter
+        get: function () {
+          return this.subParams.project_budget
+        },
+        // setter
+        set: function (newValue) {
+          var _self = this;
+          newValue = common.checkMoney(newValue,100000000,2);
+          _self.$refs.budget.value = newValue;
+          _self.subParams.project_budget = newValue;
+        }
+      },
+    }
+
   }
 </script>
 <style>
