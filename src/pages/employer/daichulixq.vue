@@ -208,10 +208,13 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
       _self.order_id = _self.$route.query.id;
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.user_id = _self.userInfo._id || null;
-      _self.buttonState = this.$store.buttonState;
+      _self.buttonState = common.getObjStorage("buttonState") || {};
       console.log(_self.buttonState);
       _self.initData();
     //   console.log(_self.userInfo);
+    },
+    destroyed(){
+        common.delStorage("buttonState");
     },
     mounted: function () {
     },
