@@ -316,10 +316,10 @@ export default {
 
           let moveDistanceX = Math.abs(this.startEvent.center.x - this.endEvent.center.x);
           let moveTime = this.endEvent.timeStamp - this.startEvent.timeStamp;
-          console.log('touch',this.startEvent,this.endEvent,moveDistanceX,screenWidth,screenWidth*0.58,moveTime);
-          console.log(moveDistanceX > screenWidth.replace('px','')*0.58);
-          console.log(moveDistanceX > screenWidth*0.58,this.startEvent.direction ===4,moveDistanceX > screenWidth*0.6,this.startEvent.direction ===2);
-          console.log(this.startEvent.direction === 4 && (moveDistanceX > screenWidth*0.58 || moveTime < 80),this.startEvent.direction === 2 && (moveDistanceX > screenWidth*0.6 || moveTime < 80));
+        //   console.log('touch',this.startEvent,this.endEvent,moveDistanceX,screenWidth,screenWidth*0.58,moveTime);
+        //   console.log(moveDistanceX > screenWidth.replace('px','')*0.58);
+        //   console.log(moveDistanceX > screenWidth*0.58,this.startEvent.direction ===4,moveDistanceX > screenWidth*0.6,this.startEvent.direction ===2);
+        //   console.log(this.startEvent.direction === 4 && (moveDistanceX > screenWidth*0.58 || moveTime < 80),this.startEvent.direction === 2 && (moveDistanceX > screenWidth*0.6 || moveTime < 80));
           if(this.startEvent.direction === 4 && (moveDistanceX > screenWidth*0.58 || moveTime < 80)){
                this.$emit('on-slide-previous')
           }
