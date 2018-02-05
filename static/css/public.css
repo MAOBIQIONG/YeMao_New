@@ -57,11 +57,11 @@ body,html{
 }
 /*沉浸式样式*/
 .content-p{
-  /*padding-top: 1.2rem;*/
-  padding-top:0.88rem;
+  padding-top: 1.2rem;
+  /*padding-top:0.88rem;*/
 }
 .qujin{
- /*padding-top: 0.3rem;*/
+ padding-top: 0.3rem;
 }
 /**定位**/
 .p-fixed{
@@ -79,8 +79,8 @@ body,html{
   left: 0;
   width: 100%;
   /*沉浸式样式*/
-  /*height: 1.2rem;*/
-  height: 0.88rem;
+  height: 1.2rem;
+  /*height: 0.88rem;*/
   color: #f65aa6;
   border-bottom: 1px solid #F2F2F2;
   font-size: 0.4rem;
@@ -89,7 +89,7 @@ body,html{
   background: white;
   z-index: 999;
   /*沉浸式样式*/
-  /*padding-top: 0.3rem;*/
+  padding-top: 0.3rem;
 }
 .header .header-left {
   position: absolute;
@@ -100,8 +100,8 @@ body,html{
   text-align: center;
   left: 0;
   /*沉浸式样式*/
-  /*top:0.35rem;*/
-  top:0rem;
+  top:0.35rem;
+  /*top:0rem;*/
   background-size: .3rem auto;
   background-position: center center;
   background-repeat: no-repeat;
@@ -120,8 +120,8 @@ body,html{
   line-height: 0.88rem;
   text-align: center;
   /*沉浸式样式*/
-  /*top: 0.32rem;*/
-  top:0;
+  top: 0.32rem;
+  /*top:0;*/
   right:0.2rem;
 }
 .header .header-right img{
@@ -300,8 +300,8 @@ body,html{
 .search {
   width: 100%;
   /*沉浸式样式*/
-  height:0.88rem;
-  /*height: 1.2rem;*/
+  /*height:0.88rem;*/
+  height: 1.2rem;
   line-height: 0.8rem;
   font-size: 0.32rem;
   border-bottom: 1px solid #F2F2F2;
@@ -311,7 +311,7 @@ body,html{
   left:0;
   z-index: 9999;
   /*沉浸式样式*/
-  /*padding-top: 0.3rem;*/
+  padding-top: 0.3rem;
 }
 
 .search .search-input {

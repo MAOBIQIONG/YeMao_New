@@ -2,14 +2,14 @@
 .pinglun-list {
 	width: 7.5rem;
 	height: 1.2rem;
-	border-bottom: 1px solid #F2F2F2;;
+	border-bottom: 0.01rem solid #F2F2F2;
 }
 
 .pinglun-list .pl-left {
 	float: left;
 	width: 0.8rem;
 	height: 0.8rem;
-	border-radius: 50%;
+	/*border-radius: 50%;*/
 	background: #CCCCCC;
 	margin: 0.2rem;
 	overflow: hidden;
@@ -31,18 +31,20 @@
 .pinglun-list .pl-content p {
 	line-height: 0.4rem;
 }
-
+.pinglun-list .pl-content .sezhi{
+color: #3e5c9a;
+}
 .pinglun-list .pl-content .time {
 	font-size: 0.2rem;
-	color: #F2F2F2;
+	color: #b4b4b4;
 }
 
 .pinglun-list .pl-right {
 	float: right;
-	width: 1.2rem;
-	height: 1.2rem;
+	width: 1rem;
+	height: 1rem;
   text-align: center;
-	/*margin: 0.1rem 0.2rem;*/
+	margin: 0.1rem 0.2rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
