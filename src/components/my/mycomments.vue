@@ -31,7 +31,7 @@
                       <img :src="checkAvatar(item.user.img)" />
                     </div>
                     <div class="pl-content">
-                      <p>{{item.user.user_nane}}</p>
+                      <p class="sezhi">{{item.user.user_name}}</p>
                       <p>{{item.content}}</p>
                       <p class="time">{{timeStamp2String(item.create_date)}}</p>
                     </div>
@@ -350,7 +350,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    padding: 0.05rem;;
+    /*padding: 0.05rem;;*/
     color: #999;
     line-height: 0.38rem;
   }
