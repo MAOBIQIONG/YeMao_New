@@ -21,7 +21,7 @@
                 :lock-x="lockX"
                 @on-slide-previous="onSlidePrevious"
                 @on-slide-next="onSlideNext"
-                >
+            >
             </component>
         </transition>
 
@@ -70,17 +70,10 @@
     },
     mounted(){
         let _self = this;
-        console.log("myorderchuli mounted");
-        _self.isMounted = true;     
         let index = _self.$store.state.orderTabIndexEmployer;
         _self.$nextTick(()=>{
             _self.index = index;
         });
-        // setTimeout(()=>{
-        //     this.lockX = true;
-        //     console.log(this.lockX);
-        // },500);
-        // console.log('refs',this.$refs,this.$refs.comp);
     },
     watch:{
         //监控index数值改变回调changeList方法
