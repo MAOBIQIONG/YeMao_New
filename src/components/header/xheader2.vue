@@ -63,7 +63,10 @@
   }
   .vux-header-right{
     height: .92rem;
-    top:0 !important;
+    /*沉浸式样式*/
+    top:0.2rem !important;
+    /*非沉浸式样式*/
+    /*top:0rem !important;*/
   }
   .vux-header-right a {
     height: .42rem;

@@ -3,13 +3,14 @@
     <!--头部导航-->
     <xheader2 :title="title" :rightClass="rightClass" :collectFlag="collectFlag" @upup="collectFun"></xheader2>
     <!--主体内容-->
-    <div class="content content-p">
-       <div class="od-condent">
+    <div class="content">
+       <div class="od-condent content-e">
       <!--订单确认后详情页-->
       <div class="ddxq">
         <div class="ddxq-top">
           <div class="ddxq-img" @click="toViewImgs(order.imgs)">
-            <img :src='checkImg(order.imgs[0])'>
+            <img v-if="order.imgs" :src='checkImg(order.imgs[0])'>
+            <img v-else :src='checkImg("")'>
             <div class="num">{{imgSize}}</div>
           </div>
           <div class="ddxq-jianjie">
@@ -246,7 +247,7 @@
       },
       // 项目深度
       getDepthName(num){
-        return num==0?"方案":num==1?"扩出":num==2?"施工":"";
+        return num==0?"方案":num==1?"扩初":num==2?"施工":"";
       },
       // 项目状态
       getStateName(state){

@@ -25,6 +25,7 @@
 .pj-content .pc-top .pt-tu img{
   width: 100%;
   height: 100%;
+  display:block;
 }
 .pj-content .pc-top .pt-nichen {
   float: left;

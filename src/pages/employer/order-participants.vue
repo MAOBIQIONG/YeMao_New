@@ -3,8 +3,8 @@
     <!--头部导航-->
     <xheader :title="title"></xheader>
     <!--主体内容-->
-    <div class="content content-p">
-      <div class="od-condent">
+    <div class="content">
+      <div class="od-condent content-e">
         <div class="od-list">
           <div class="qdsjs-list" v-for="item in bidders">
             <div class="qdsjs-time">

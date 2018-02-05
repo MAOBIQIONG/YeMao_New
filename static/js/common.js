@@ -66,12 +66,28 @@ const common = {
     } return parseFloat(str);
   },
   //1.1.4、验证是否为金额：返回boollen
-  checkMoney: function(money){
+  isMoney: function(money){
     var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
-    if (!text.test(money)){
+    if (!reg.test(money)){
       return false;
     } return true;
   },
+  //1.1.5、验证是否为金额：返回boollen
+  checkMoney: function(money,max,len){ // money:金额，maxlen:金额最大长度，len:小数点位数
+    money = money.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+    money = money.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+    money = money.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+    money = money.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+    if( common.checkInt(max) > 0 ){
+      money = money>=max ? money.substring(0,max.toString().length-1) : money;
+    }
+    if( common.checkInt(len) > 0 ){
+      len += 1;
+      money = money.indexOf('.')>0 ? money.substring(0,money.indexOf('.')+len) : money;
+    }
+    return money;
+  },
+
 
   /*****************1.2、验证(返回值:对应类型)*******************/
   // 1.2.1、验证身份证号码
