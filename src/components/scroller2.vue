@@ -315,13 +315,15 @@ export default {
           this._xscroll.userConfig.lockX = false
 
           let moveDistanceX = Math.abs(this.startEvent.center.x - this.endEvent.center.x);
-        //   console.log('touch',this.startEvent,this.endEvent,moveDistanceX,screenWidth,screenWidth*0.65);
-        //   console.log(moveDistanceX > screenWidth.replace('px','')*0.65);
-        //   console.log(moveDistanceX > screenWidth*0.6,this.startEvent.direction ===4,moveDistanceX > screenWidth*0.6,this.startEvent.direction ===2);
-          if(moveDistanceX > screenWidth*0.6 && this.startEvent.direction ===4){
+          let moveTime = this.endEvent.timeStamp - this.startEvent.timeStamp;
+          console.log('touch',this.startEvent,this.endEvent,moveDistanceX,screenWidth,screenWidth*0.65,moveTime);
+          console.log(moveDistanceX > screenWidth.replace('px','')*0.65);
+          console.log(moveDistanceX > screenWidth*0.6,this.startEvent.direction ===4,moveDistanceX > screenWidth*0.6,this.startEvent.direction ===2);
+          console.log(this.startEvent.direction === 4 && (moveDistanceX > screenWidth*0.6 || moveTime < 70),this.startEvent.direction === 2 && (moveDistanceX > screenWidth*0.6 || moveTime < 70));
+          if(this.startEvent.direction === 4 && (moveDistanceX > screenWidth*0.6 || moveTime < 70)){
                this.$emit('on-slide-previous')
           }
-          if(moveDistanceX > screenWidth*0.6 && this.startEvent.direction ===2){
+          if(this.startEvent.direction === 2 && (moveDistanceX > screenWidth*0.6 || moveTime < 70)){
                this.$emit('on-slide-next')
           }
         })

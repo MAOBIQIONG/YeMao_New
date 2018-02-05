@@ -188,7 +188,7 @@
     width: 100%;
     top: 0;
     /* position: absolute; */
-    transition: all 260ms;
+    transition: all 160ms;
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
