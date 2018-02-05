@@ -10,12 +10,22 @@
             <tab-item
                 v-for="item in tabItems"
                 :key="item.id"
-                @on-item-click="changeList"
+                @on-item-click="itemClick"
             >
                 {{item.title}}
             </tab-item>
         </tab>
-        <component :is="currentView" ></component>
+        <transition :name="`vux-pop-${$store.state.directionOrderTab==0?'in':'out'}`">
+            <component 
+                :is="currentView" 
+                :lock-x="lockX"
+                @on-slide-previous="onSlidePrevious"
+                @on-slide-next="onSlideNext"
+                >
+            </component>
+        </transition>
+
+
   </div>
 </template>
 
@@ -36,13 +46,15 @@
     },
     data() {
       return {
-        isMounted:false,
-        index:0,
+        lockX:false,
+        lockY:false,
+        //若初始值为0，刚进入页面时watch监控不到变化所以设为-9
+        index:-9,
         myOrderList:{},
         pageNo:0,
         pageSize:10,
         orderList:[],
-        currentView:'MyOrder_dcl',
+        currentView:'',
         tabItems:[
             {id:0,title:'待处理'},
             {id:1,title:'待支付'},
@@ -57,21 +69,26 @@
         
     },
     mounted(){
+        let _self = this;
         console.log("myorderchuli mounted");
-        this.isMounted = true; 
-        
-        this.$store.commit("changeIndexOrder",{type:"employer",index:3});
-        let index = this.$store.state.orderTabIndexEmployer;
-        setTimeout(()=>{this.index = index},10);       
+        _self.isMounted = true;     
+        let index = _self.$store.state.orderTabIndexEmployer;
+        _self.$nextTick(()=>{
+            _self.index = index;
+        });
+        // setTimeout(()=>{
+        //     this.lockX = true;
+        //     console.log(this.lockX);
+        // },500);
+        // console.log('refs',this.$refs,this.$refs.comp);
     },
     watch:{
+        //监控index数值改变回调changeList方法
         index:{
             handler(val,oldval){
-                if(this.isMounted==true){
-                     console.log(val,oldval);
-                     this.changeList();
-                }       
-                
+                if(val>=0 && val<this.tabItems.length){
+                    this.changeList();
+                }            
             }
         }
     },
@@ -88,8 +105,42 @@
         setData(data){
             this.orderList = data;
         },
+        itemClick(){
+            console.log('itemClick');
+        },
         changeList(){
-            this.currentView = this.viewArray[this.index]
+            // console.log('changeList',this.index,this.currentView,this.viewArray[this.index],this.isChanged);
+            this.currentView = this.viewArray[this.index];         
+        },
+        changeList2(type){
+            console.log('changeList2',type);
+            if(type=="previous"){
+                this.index--;
+                console.log(this.index);
+                if(this.index===-1){
+                    console.log('this.index',this.tabItems.length-1);
+                    this.index = (this.tabItems.length-1);
+                    console.log('this.index',this.tabItems.length-1);
+                }           
+            }
+            if(type=="next"){
+                this.index++;
+                console.log('next:index',this.index);
+                if(this.index===this.tabItems.length){
+                    this.index = 0;
+                }           
+            }
+            
+        },
+        onSlidePrevious(){
+            console.log('previous');
+            this.$store.state.directionOrderTab = 1
+            this.changeList2('previous')
+        },
+        onSlideNext(){
+            console.log('next');
+            this.$store.state.directionOrderTab = 0
+             this.changeList2('next')
         }
     }
   }
@@ -142,4 +193,43 @@
     font-size:14px;
     margin-top:-0.21rem;
 }
+  .vux-pop-out-enter-active,
+  /*.vux-pop-out-leave-active,*/
+  .vux-pop-in-enter-active
+  /*.vux-pop-in-leave-active*/
+  {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    /* position: absolute; */
+    transition: all 260ms;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-backface-visibility: hidden; /* Firefox */
+  }
+
+  /**上一页返回**/
+  .vux-pop-out-enter {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  /**上一页离开**/
+  .vux-pop-out-leave-active {
+    opacity: 0;
+    /*transform: translate3d(100%, 0, 0);*/
+  }
+
+  /**下一页进入**/
+  .vux-pop-in-enter {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  /**下一页离开**/
+  .vux-pop-in-leave-active {
+    opacity: 0;
+    /*transform: translate3d(-100%, 0, 0);*/
+  }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div id="dcl">
-    <scroller
+    <scroller2
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"
@@ -9,10 +9,13 @@
         :use-pullup="true"
         :pulldown-config="pulldownConfig"
         :pullup-config = "pullupConfig"
+        :enableHorizontalSwiping="true"
         @on-scroll="scroll"
         @on-scroll-bottom="onScrollBottom"
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
+        @on-slide-next="onSlideNext"
+        @on-slide-previous="onSlidePrevious"
         ref="scroller"
         :class="{scroller:true}"
     >
@@ -61,7 +64,7 @@
                 </confirm>
             </div>
         </div>
-    </scroller>
+    </scroller2>
     <!-- <div class="noOrder">
         您还没有相关订单
     </div> -->
@@ -69,18 +72,18 @@
   </div>
 </template>
 <script>
-import {Scroller,LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
+import {LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
+import scroller2 from '@/components/scroller2'
 export default {
     name:"scroll-list",
     directives: {
         TransferDom
     },
     components:{
-        Scroller,
         LoadMore,
         Toast,
         Confirm,
-        Confirm,
+        scroller2
     },
     created(){
         // console.log('created');
@@ -491,6 +494,12 @@ export default {
                 }
                 index++
             }
+        },
+        onSlidePrevious(){
+            this.$emit('on-slide-previous')
+        },
+        onSlideNext(){
+            this.$emit('on-slide-next')
         }
     }
 }

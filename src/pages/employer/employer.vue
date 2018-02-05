@@ -17,7 +17,7 @@
           <div class="dingdan" v-tap="{ methods:toUrl, pagename:'fabudingdan', flag:true }">
             发 布 项 目
           </div>
-          <div class="shouchang" v-tap="{ methods:toUrl, pagename:'myorderchuli', flag:true }">
+          <div class="shouchang" v-tap="{ methods:toMyorder, pagename:'myorderchuli', flag:true }">
             我 的 订 单
           </div>
         </div>
@@ -118,12 +118,6 @@
     created: function () {
       this.loadMore()
     },
-    mounted: function () {
-      // console.log("employer mounted:")
-      //this.$nextTick(() => {
-      //    this.$refs.scrollerBottom.reset({top: 0})
-      //})
-    },
     methods: {
       toUrl: function (params) {
         var user = common.getObjStorage('userInfo') || {};
@@ -132,6 +126,11 @@
         } else {
           this.$router.push({name: params.pagename})
         }
+      },
+      toMyorder(params){  
+        //myorder页面tabindex设为0；
+        this.$store.commit("changeIndexOrder",{type:"employer",index:0});
+        this.toUrl(params);
       },
       // 详情页
       toDetails (id) {
