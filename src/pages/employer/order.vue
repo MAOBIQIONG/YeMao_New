@@ -3,8 +3,8 @@
     <!--头部导航-->
     <xheader2 :title="title" :rightClass="rightClass" :collectFlag="collectFlag" @upup="collectFun"></xheader2>
     <!--主体内容-->
-    <div class="content content-p">
-       <div class="od-condent">
+    <div class="content">
+       <div class="od-condent content-e">
       <!--订单确认后详情页-->
       <div class="ddxq">
         <div class="ddxq-top">
