@@ -481,7 +481,7 @@
     width: 100%;
   }
   .vux-popup-picker-value{
-    width: 2.9rem;
+    /*width: 2.9rem;*/
     display:block;
     text-align: left;
     height: 0.8rem !important;
