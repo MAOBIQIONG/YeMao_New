@@ -21,7 +21,7 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item._id)">
+                <div class="ds-top" v-tap="{methods:toDetails,item:item}">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"></div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -211,8 +211,14 @@ export default {
           return common.getDefultImg(path);
         },
          // 详情页
-        toDetails (id) {
-            this.$router.push({name: 'daichulixq', query: {id: id}})
+        toDetails (params) {
+            let buttonState = {
+                user_type:"employer",
+                state:'dzf',
+                btns_type:0,
+            };
+            common.setStorage('buttonState',buttonState);
+            this.$router.push({name: 'daichulixq', query: {id: params.item._id}})
         },
         isNull(data){
             return common.isNull(data);

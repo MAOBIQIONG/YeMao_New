@@ -67,7 +67,7 @@
     },
     mounted(){
         let _self = this;
-        let index = _self.$store.state.orderTabIndexEmployer;
+        let index = _self.$store.state.orderTabIndex;
         _self.$nextTick(()=>{
             _self.index = index;
         });
@@ -77,6 +77,11 @@
         index:{
             handler(val,oldval){
                 if(val>=0 && val<this.tabItems.length){
+                    if(val > oldval){
+                        this.$store.state.directionOrderTab = 0
+                    } else{
+                        this.$store.state.directionOrderTab = 1
+                    }
                     this.changeList();
                 }            
             }
@@ -126,7 +131,7 @@
         onSlideNext(){
             console.log('next');
             this.$store.state.directionOrderTab = 0
-             this.changeList2('next')
+            this.changeList2('next')
         }
 
     }

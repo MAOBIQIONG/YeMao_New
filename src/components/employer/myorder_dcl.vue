@@ -21,7 +21,7 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item)">
+                <div class="ds-top" v-tap="{methods:toDetails,item:item}">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
                     </div>
                     <div class="ds-jianjie">
@@ -240,16 +240,16 @@ export default {
             this.showMsg = msg;
         },
          // 详情页
-        toDetails (item) {
+        toDetails (params) {
             let buttonState = {
                 user_type:"employer",
                 state:'dcl',
                 btns_type:0,
             };
             //判断是否有人抢单
-            if(item.sub.length>0){
+            if(params.item.sub.length>0){
                 //判断是否已选择设计师
-                if(this.isNull(item.project_winBidder)){
+                if(this.isNull(params.item.project_winBidder)){
                     buttonState.btns_type = 1;
                 } else {
                     buttonState.btns_type = 2;
@@ -258,7 +258,7 @@ export default {
                 buttonState.btns_type = 3;
             }
             common.setStorage('buttonState',buttonState);
-            this.$router.push({name: 'daichulixq', query: {id: item._id}})
+            this.$router.push({name: 'daichulixq', query: {id: params.item._id}})
         },
         isNull(data){
             return common.isNull(data);

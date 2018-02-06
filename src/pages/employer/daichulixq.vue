@@ -220,8 +220,28 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
     },
     methods: {
       goback(){
-        this.$router.goBack();
+        console.log('goback');
+        let _self = this;
+        if(common.isNull(_self.buttonState)){
+            _self.$router.goBack();
+            // _self.toUrl('myorderchuli');
+        } else {
+            if(_self.buttonState.state=="dcl"){
+                _self.$store.commit("changeIndexOrder",{index:0});
+            } else if(_self.buttonState.state=="dzf"){
+                _self.$store.commit("changeIndexOrder",{index:1});
+            } else if(_self.buttonState.state=="dzf"){
+                _self.$store.commit("changeIndexOrder",{index:2});
+            } else if(_self.buttonState.state=="djf"){
+                _self.$store.commit("changeIndexOrder",{index:3});
+            } else if(_self.buttonState.state=="ywc"){
+                _self.$store.commit("changeIndexOrder",{index:4});
+            } 
+            _self.$router.goBack();
+            // _self.toUrl('myorderchuli');        
+        }            
       },
+
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },

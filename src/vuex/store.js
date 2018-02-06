@@ -19,10 +19,9 @@ const state = {
   meowRefreshMark: 0,
   // 设计师首页刷新状态
   designerRefreshMark: 0,
-  //雇主我的订单tab状态
-  orderTabIndexEmployer:0,
-  //设计师我的订单tab状态
-  orderTabIndexDesigner:0,
+  //我的订单tab状态
+  orderTabIndex:0,
+
   //我的订单页面动画方向
   directionOrderTab:0,
 }
@@ -34,13 +33,7 @@ const mutations={
     },
     //改变我的订单tab状态
     changeIndexOrder(state,payload){
-        //判断雇主设计师
-        if(payload.type=="employer"){
-            state.orderTabIndexEmployer=payload.index;
-        }
-        if(payload.type=="designer"){
-            state.orderTabIndexEmployer=payload.index;
-        }
+        state.orderTabIndex=payload.index;
     },
 
 }

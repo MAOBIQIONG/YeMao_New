@@ -129,7 +129,7 @@
       },
       toMyorder(params){  
         //myorder页面tabindex设为0；
-        this.$store.commit("changeIndexOrder",{type:"employer",index:0});
+        this.$store.commit("changeIndexOrder",{index:0});
         this.toUrl(params);
       },
       // 详情页

@@ -69,8 +69,10 @@
         
     },
     mounted(){
+        console.log('myorderchuli mounted');
         let _self = this;
-        let index = _self.$store.state.orderTabIndexEmployer;
+        let index = _self.$store.state.orderTabIndex;
+        console.log(index);
         _self.$nextTick(()=>{
             _self.index = index;
         });
@@ -80,6 +82,11 @@
         index:{
             handler(val,oldval){
                 if(val>=0 && val<this.tabItems.length){
+                    if(val > oldval){
+                        this.$store.state.directionOrderTab = 0
+                    } else{
+                        this.$store.state.directionOrderTab = 1
+                    }
                     this.changeList();
                 }            
             }
