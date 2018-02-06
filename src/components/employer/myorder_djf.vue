@@ -313,7 +313,8 @@ export default {
                 if( param.id == item._id ){
                   _self.orderList.splice(index,1);
                 }
-              })
+              });
+              _self.$parent.index = 3;
             }else{
               _self.showToast("确认失败!");
             }

@@ -42,7 +42,7 @@
                 <div class="ds-bottom">
                     <div class="db-right">
                         <div class="db-sxdd" v-tap="{methods: toCheck, id: item._id}">一键会审</div>
-                        <div class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}" v-if="item.project_state==4">提交设计</div>
+                        <div class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,msg:'确定提交设计吗？'}" v-if="item.project_state==4">提交设计</div>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
             <div v-transfer-dom>
                 <confirm v-model="confirmShow"
-                    @on-confirm = "cancelOrder()"
+                    @on-confirm = "updateOrderState()"
                 >
                 <p style="text-align:center;">{{confirmMsg}}</p>
                 </confirm>
@@ -204,21 +204,14 @@ export default {
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id:item._id}})
         },
+        showConfirm(params){
+            this.confirmShow = true;
+            this.order_id = params.id;
+            this.confirmMsg = params.msg;
+        },
         // 一键会审
         toCheck (params) {
           this.$router.push({name: 'yijianhuisheng', query: {id: params.id}})
-        },
-        dealDom(){         
-            let scroller = $('div[id^="vux-scroller-"]');
-            // console.log(scroller)
-            // scroller.css({
-            //     "border":"2px solid red",
-            // });
-            scroller.on('touchmove',function(e){
-                let touch = e.touches[0];
-                console.log(touch.pageX,touch.pageY);
-            
-            });
         },
         checkImg(path){
           return common.getDefultImg(path);
@@ -238,10 +231,10 @@ export default {
                 index++
             }
         },
-        updateOrderState(p){
+        updateOrderState(){
             // console.log(param.id);
             var _self = this;
-            _self.order_id = p.id;
+
             var params = {
                 interfaceId:common.interfaceIds.updateData,
                 coll:common.collections.orderList,

@@ -131,6 +131,7 @@ export default {
                 this.$refs.scroller.reset({top:0});
                 // this.dealDom();
             }
+
         );
     },
     props:{
@@ -243,7 +244,7 @@ export default {
         },
         canRefresh(refreshTime){
             let date = Date.parse(new Date());
-            console.log(refreshTime,date);
+            // console.log(refreshTime,date);
             if((refreshTime + 1000*60*60*24)<= date){
                 return true;
             } else{
@@ -306,7 +307,10 @@ export default {
                     var data = response.data;
                     if( data.ok > 0 ){
                         _self.showToast('请前往支付！');
-                        _self.renderAfterConfirmImprove();
+                        // _self.renderAfterConfirmImprove()
+                        setTimeout(()=>{
+                            this.$parent.index=1;
+                        },1000);
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
@@ -378,6 +382,7 @@ export default {
                 })
         },
         toParts: function (param) {
+            common.setStorage('fromOrderDcl',1);
             this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid,}})
         },
         dealDom(){

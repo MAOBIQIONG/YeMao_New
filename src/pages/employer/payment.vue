@@ -112,7 +112,8 @@
         };
         beecloud.payReq(payData, function(result) {
           console.log("pay success:"+JSON.stringify(result))
-          _self.showToast("支付成功！")
+          _self.showToast("支付成功！");
+          _self.$store.commit("changeIndexOrder",{index:2});
           _self.goback();
         }, function(e) {
           console.log("pay error:"+JSON.stringify(e))
