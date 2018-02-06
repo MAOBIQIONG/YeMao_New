@@ -184,6 +184,9 @@ export default {
                 state:'ywc',
                 btns_type:0,
             };
+            if(item.project_evaluation!=0){
+                buttonState.btns_type = -1;
+            }
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: item.item._id}})
         },

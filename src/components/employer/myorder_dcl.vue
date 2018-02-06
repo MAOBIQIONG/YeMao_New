@@ -57,8 +57,9 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
                         <template v-if="item.sub.length>0">
-                            <template v-if="isNull(item.project_winBidder)">
-                                <div class="db-sxdd" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                            <template v-if="isNull(item.project_winBidder)">                   
+                                <div class="db-sxdd" v-if="canRefresh(item.refresh_date)" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                                <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                                 <div class="db-qrdd"
                                     v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
                                  >
@@ -78,8 +79,9 @@
                                 </div>
                             </template>
                         </template>
-                        <template v-else>
-                            <div class="db-sxdd" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                        <template v-else>   
+                            <div class="db-sxdd" v-if="canRefresh()" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                            <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                             <div class="db-qrdd" style="display: none"></div>
                         </template>
 
@@ -239,6 +241,15 @@ export default {
             this.showMark = true;
             this.showMsg = msg;
         },
+        canRefresh(refreshTime){
+            let date = Date.parse(new Date());
+            console.log(refreshTime,date);
+            if((refreshTime + 1000*60*60*24)<= date){
+                return true;
+            } else{
+                return false;
+            }
+        },
          // 详情页
         toDetails (params) {
             let buttonState = {
@@ -329,6 +340,7 @@ export default {
                         _self.showToast('已刷新！');
                         _self.$store.state.indexRefreshMark = 1;
                         _self.$store.state.employerRefreshMark = 1;
+                        _self.isRefreshed = true;
                         setTimeout(()=>{
                             _self.goback();
                         },1500);
@@ -538,5 +550,10 @@ export default {
     }
 }
 </script>
-
+<style scoped>
+.db-sxdd.noRefresh{
+    border:1px solid #cccccc!important;
+    color:#cccccc!important;
+}
+</style>
 

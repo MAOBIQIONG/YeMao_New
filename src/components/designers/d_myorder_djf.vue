@@ -21,7 +21,7 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item._id)">
+                <div class="ds-top" @click="toDetails(item)">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
                     </div>
                     <div class="ds-jianjie">
@@ -38,9 +38,10 @@
                         </div>
                     </div>
                 </div>
+                <!--按钮状态-->
                 <div class="ds-bottom">
                     <div class="db-right">
-                        <div class="db-sxdd">一键会审</div>
+                        <div class="db-sxdd" v-tap="{methods: toCheck, id: item._id}">一键会审</div>
                         <div class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}" v-if="item.project_state==4">提交设计</div>
                     </div>
                 </div>
@@ -194,8 +195,18 @@ export default {
             console.log("toUrl",params);
         },
          // 详情页
-        toDetails (id) {
-            this.$router.push({name: 'daichulixq', query: {id: id}})
+        toDetails (item) {
+            let buttonState = {
+                user_type:"designer",
+                state:'djf',
+                btns_type:1,
+            };
+            common.setStorage('buttonState',buttonState);
+            this.$router.push({name: 'daichulixq', query: {id:item._id}})
+        },
+        // 一键会审
+        toCheck (params) {
+          this.$router.push({name: 'yijianhuisheng', query: {id: params.id}})
         },
         dealDom(){         
             let scroller = $('div[id^="vux-scroller-"]');

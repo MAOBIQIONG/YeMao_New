@@ -21,7 +21,7 @@
     >
         <div>
             <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
-                <div class="ds-top" @click="toDetails(item._id)">
+                <div class="ds-top" @click="toDetails(item)">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
                     </div>
                     <div class="ds-jianjie">
@@ -175,8 +175,14 @@ export default {
             console.log("toUrl",params);
         },
          // 详情页
-        toDetails (id) {
-            this.$router.push({name: 'daichulixq', query: {id: id}})
+        toDetails (item) {
+            let buttonState = {
+                user_type:"designer",
+                state:'ywc',
+                btns_type:-1,
+            };
+            common.setStorage('buttonState',buttonState);
+            this.$router.push({name: 'daichulixq', query: {id:item._id}})
         },
         dealDom(){         
             let scroller = $('div[id^="vux-scroller-"]');

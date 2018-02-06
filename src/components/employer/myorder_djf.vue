@@ -190,7 +190,7 @@ export default {
             console.log(item)
             let buttonState = {
                 user_type:"employer",
-                state:'ywc',
+                state:'djf',
                 btns_type:0,
             };
             common.setStorage('buttonState',buttonState);

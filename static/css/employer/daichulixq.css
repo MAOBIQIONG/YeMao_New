@@ -115,9 +115,9 @@
   height: 0.5rem;
   line-height: 0.5rem;
   text-align: center;
-  border: 1px solid #f75ea7;
+  border: 1px solid #cccccc;
   border-radius: 0.5rem;
-  color: #f75ea7;
+  color: #cccccc;
   margin-right: 0.24rem;
   margin-top: 0.25rem;
 }
@@ -146,6 +146,9 @@
   margin-top: 0.25rem;
   background: linear-gradient(to right, #f74f9c, #fd7376);
 }
-
+.db-sxdd.noRefresh{
+    border:1px solid #cccccc!important;
+    color:#cccccc!important;
+}
 
 /*# sourceMappingURL=daichulixq.css.map */
