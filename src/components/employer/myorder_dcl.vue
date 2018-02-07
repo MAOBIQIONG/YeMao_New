@@ -80,7 +80,7 @@
                             </template>
                         </template>
                         <template v-else>   
-                            <div class="db-sxdd" v-if="canRefresh()" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                            <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
                             <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                             <div class="db-qrdd" style="display: none"></div>
                         </template>
@@ -216,9 +216,9 @@ export default {
             let DateDiff=function(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
                 var  aDate,  oDate1,  oDate2,  iDays
                 aDate  =  sDate1.split("-")
-                oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
+                oDate1  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])    //转换为12/18/2002格式
                 aDate  =  sDate2.split("-")
-                oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
+                oDate2  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])
                 iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)
                 if (iDays == 0) return '抢单结束'    //把相差的毫秒数转换为天数
                 return  iDays + "天后截止报名"
@@ -244,7 +244,8 @@ export default {
         },
         canRefresh(refreshTime){
             let date = Date.parse(new Date());
-            // console.log(refreshTime,date);
+            console.log('refreshTime'+new Date(refreshTime),'date' + new Date(date));
+            console.log((refreshTime + 1000*60*60*24)<= date);
             if((refreshTime + 1000*60*60*24)<= date){
                 return true;
             } else{

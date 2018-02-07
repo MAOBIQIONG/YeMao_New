@@ -107,7 +107,7 @@
                 <div class="db-right" v-if="buttonState.state=='dcl'">
                     <div class="db-qxdd" v-tap ="{methods:showConfirm,id:order._id,type:'cancelOrder',msg:'确定要取消该订单吗'}">取消订单</div>
                     <template v-if="buttonState.btns_type==1">
-                        <div class="db-sxdd" v-if="canRefresh(order.refresh_date)" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                        <div class="db-sxdd" v-if="order.refreshFlag==1" v-tap="{methods:refreshOrders,id:order._id}">刷新订单</div>
                         <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                         <div class="db-qrdd"
                             v-tap="{ methods:toParts, id: order._id, uid: order.user_id }"
@@ -121,7 +121,7 @@
                         </div>             
                     </template>
                     <template v-else-if="buttonState.btns_type==3">
-                        <div class="db-sxdd" v-if="canRefresh(order.refresh_date)" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                        <div class="db-sxdd" v-if="canRefresh(order.refresh_date)" v-tap="{methods:refreshOrders,id:order._id}">刷新订单</div>
                         <div class="db-sxdd noRefresh" v-else>刷新订单</div>          
                     </template>
                 </div>
