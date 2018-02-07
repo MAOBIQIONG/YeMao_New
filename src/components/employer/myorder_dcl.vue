@@ -303,10 +303,12 @@ export default {
                     console.log(response)
                     var data = response.data;
                     if( data.ok > 0 ){
-                        _self.showToast('请前往支付！');
+                        if(this.confirmType =="commitImprove"){
+                            _self.showToast('请前往支付！');
+                        }
                         setTimeout(()=>{
                             this.$parent.index=1;
-                        },1000);
+                        },100);
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }

@@ -72,9 +72,12 @@
       //数据初始化
       _self.initData();
     },
+    destroyed(){
+        common.delStroage('fromMyOrderDetail');
+    },
     methods: {
       goback() {
-        this.$store.commit("changeIndexOrder",{index:2});
+        this.$store.commit("changeIndexOrder",{index:1});
         this.$router.goBack();
       },
       toUrl(name) {
@@ -115,6 +118,10 @@
           console.log("pay success:"+JSON.stringify(result))
           _self.showToast("支付成功！");
           _self.$store.commit("changeIndexOrder",{index:2});
+          if(!common.isNull('fromMyOrderDetail')){
+              _self.$router.go(-2);
+              return;
+          }
           _self.goback();
         }, function(e) {
           console.log("pay error:"+JSON.stringify(e))

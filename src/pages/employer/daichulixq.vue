@@ -287,6 +287,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
           var _self = this;
           _self.order_id = order_id;
           _self.$router.push({name: 'payment', query: {id: order_id}})
+          common.setStorage('fromMyOrderDetail',1);
         },
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
@@ -377,15 +378,17 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                             _self.showToast('提交成功！');
                         } else if (_self.confirmType=="commitImprove"){
                             _self.showToast('请前往支付！');
+                            setTimeout(()=>{
+                                let buttonState = common.getObjStorage('buttonState');
+                                buttonState.state = 'dzf';
+                                common.setStorage('buttonState',buttonState);
+                                _self.$store.commit("changeIndexOrder",{index:1});
+                                _self.goback();
+                            },1500);
                         } else {
                              _self.showToast('已确认');
                         }       
-                        setTimeout(()=>{
-                            let buttonState = common.getObjStorage('buttonState');
-                            buttonState.state = 'dzf';
-                            common.setStorage('buttonState',buttonState);
-                            _self.goback();
-                        },1500);
+
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
