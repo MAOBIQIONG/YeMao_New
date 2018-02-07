@@ -53,6 +53,7 @@
       toMyOrder: function() {
         common.op_localStorage().set("fromRS",1);
         console.log(localStorage);
+        this.$store.commit("changeIndexOrder",{index:0});
         this.toUrl('myorderchuli');
       }
     }
