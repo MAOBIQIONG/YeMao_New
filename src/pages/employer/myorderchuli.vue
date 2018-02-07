@@ -202,7 +202,7 @@
     width: 100%;
     top: 0;
     /* position: absolute; */
-    transition: all 90ms;
+    transition: all 120ms;
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -211,25 +211,25 @@
 
   /**上一页返回**/
   .vux-pop-out-enter {
-    opacity: 0;
+    opacity: 1;
     transform: translate3d(-100%, 0, 0);
   }
 
   /**上一页离开**/
   .vux-pop-out-leave-active {
-    opacity: 0;
+    opacity: 1;
     /*transform: translate3d(100%, 0, 0);*/
   }
 
   /**下一页进入**/
   .vux-pop-in-enter {
-    opacity: 0;
+    opacity: 1;
     transform: translate3d(100%, 0, 0);
   }
 
   /**下一页离开**/
   .vux-pop-in-leave-active {
-    opacity: 0;
+    opacity: 1;
     /*transform: translate3d(-100%, 0, 0);*/
   }
 </style>
