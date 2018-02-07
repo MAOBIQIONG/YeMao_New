@@ -33,7 +33,7 @@
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
                             <div class="db-djs" v-if="item.project_evaluation==0">待评价</div>
-                            <div class="db-djs">已完成</div>
+                            <div class="db-djs" v-else>已完成</div>
                         </div>
                     </div>
                 </div>

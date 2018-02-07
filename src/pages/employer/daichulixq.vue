@@ -180,7 +180,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
     data () {
         return {
             order_id:null,
-            confirmType:"",
+            confirmType:"",//cancelOrder取消订单，submissionDesign提交设计，commitImprove确认完善
             user_id:null,
             userInfo:null,
             order:{
@@ -371,7 +371,15 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                     console.log(response)
                     var data = response.data;
                     if( data.ok > 0 ){
-                        _self.showToast('请前往支付！');
+                        if(_self.confirmType=="cancelOrder"){
+                            _self.showToast('取消成功');
+                        } else if (_self.confirmType=="submissionDesign"){
+                            _self.showToast('提交成功！');
+                        } else if (_self.confirmType=="commitImprove"){
+                            _self.showToast('请前往支付！');
+                        } else {
+                             _self.showToast('已确认');
+                        }       
                         setTimeout(()=>{
                             let buttonState = common.getObjStorage('buttonState');
                             buttonState.state = 'dzf';
