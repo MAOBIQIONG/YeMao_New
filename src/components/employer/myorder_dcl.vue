@@ -55,10 +55,10 @@
                 <div class="ds-bottom">
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
+                        <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'cancelOrder'}">取消订单</div>
                         <template v-if="item.sub.length>0">
                             <template v-if="isNull(item.project_winBidder)">                   
-                                <div class="db-sxdd" v-if="canRefresh(item.refresh_date)" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                                <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                                 <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                                 <div class="db-qrdd"
                                     v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
@@ -71,7 +71,7 @@
                                 <!-- <div class="db-sxdd">
                                     刷新订单
                                 </div> -->
-                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}">
+                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
                                     确认完善信息
                                 </div>
                                 <div v-else class="db-qrdd"  style="display: none">
@@ -80,7 +80,7 @@
                             </template>
                         </template>
                         <template v-else>   
-                            <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                            <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                             <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                             <div class="db-qrdd" style="display: none"></div>
                         </template>
@@ -92,7 +92,7 @@
             <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
             <div v-transfer-dom>
                 <confirm v-model="confirmShow"
-                    @on-confirm = "cancelOrder()"
+                    @on-confirm = "compOnConfirm()"
                 >
                 <p style="text-align:center;">{{confirmMsg}}</p>
                 </confirm>
@@ -150,9 +150,8 @@ export default {
     },
     data(){
         return {
-            cancel_id:null,
+            confirmType:"",//cancelOrder取消订单，commitImprove确认完善,refreshOrders刷新订单
             order_id:null,
-            improve_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -279,25 +278,22 @@ export default {
         checkImg(path){
           return common.getDefultImg(path);
         },
-        refreshOrder(param){
-            var params = {
-                interfaceId:common.interfaceIds.updateData,
-                order_id:param.id
-            };
+        updateStateAfterImprove(){
+            let state = 3;
+            this.updateOrderState({state})
         },
-        updateOrderState(p){
+        updateOrderState(params){
             // console.log(param.id);
             var _self = this;
-            _self.improve_id = p.id;
             var params = {
                 interfaceId:common.interfaceIds.updateData,
                 coll:common.collections.orderList,
                 wheredata:{
-                    _id:_self.improve_id
+                    _id:_self.order_id
                 },
                 data:{
                     $set: {
-                        project_state: 3, // 取消
+                        project_state: params.state, // 取消
                     }
                 }
             };
@@ -308,7 +304,6 @@ export default {
                     var data = response.data;
                     if( data.ok > 0 ){
                         _self.showToast('请前往支付！');
-                        // _self.renderAfterConfirmImprove()
                         setTimeout(()=>{
                             this.$parent.index=1;
                         },1000);
@@ -317,20 +312,8 @@ export default {
                     }
                 })
         },
-        renderAfterConfirmImprove(){
+        refreshOrders(){
             let _self = this;
-            let index = 0;
-            for (let r of _self.orderList) {
-                console.log(_self.orderList[index]);
-                if(r._id == _self.improve_id){
-                    _self.orderList.splice(index,1);
-                }
-                index++
-            }
-        },
-        refreshOrders(p){
-            let _self = this;
-            _self.order_id = p.id;
             var params = {
                 interfaceId:common.interfaceIds.refreshOrders,
                 order_id:_self.order_id,
@@ -360,7 +343,7 @@ export default {
                 interfaceId:common.interfaceIds.updateData,
                 coll:common.collections.orderList,
                 wheredata:{
-                    _id:_self.cancel_id
+                    _id:_self.order_id
                 },
                 data:{
                     $set: {
@@ -376,7 +359,7 @@ export default {
                     var data = response.data;
                     if( data.ok > 0 ){
                         _self.showToast('已取消！');
-                        _self.renderAfterCanceled();
+                        _self.renderAfterOperate();
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
@@ -532,16 +515,23 @@ export default {
         },
         showConfirm(params){
             this.confirmShow = true;
-            this.cancel_id = params;
-            this.order_id = params;
-            console.log(this.cancel_id);
+            this.order_id = params.id;
+            this.confirmType = params.type
+            if(params.type == "cancelOrder"){
+                this.confirmMsg = "确定要取消该订单吗?"
+            } else if(params.type == "refreshOrders"){
+                this.confirmMsg = '确认刷新订单吗?'
+            } else if(params.type == "commitImprove"){
+                this.confirmMsg = '确认信息已完善吗?'
+            }
+            console.log(this.order_id);
         },
-        renderAfterCanceled(){
+        renderAfterOperate(){
             let _self = this;
             let index = 0;
             for (let r of _self.orderList) {
                 console.log(_self.orderList[index]);
-                if(r._id == _self.cancel_id){
+                if(r._id == _self.order_id){
                     _self.orderList.splice(index,1);
                 }
                 index++
@@ -552,7 +542,18 @@ export default {
         },
         onSlideNext(){
             this.$emit('on-slide-next')
-        }
+        },
+        compOnConfirm(){
+            if(this.confirmType=="cancelOrder"){
+                this.cancelOrder();
+            }
+            if(this.confirmType =="refreshOrders"){
+                this.refreshOrders();
+            }
+            if(this.confirmType =="commitImprove"){
+                this.updateStateAfterImprove();
+            }
+        },       
     }
 }
 </script>

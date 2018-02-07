@@ -74,6 +74,7 @@
     },
     methods: {
       goback() {
+        this.$store.commit("changeIndexOrder",{index:2});
         this.$router.goBack();
       },
       toUrl(name) {
