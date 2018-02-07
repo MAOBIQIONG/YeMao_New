@@ -122,7 +122,7 @@
               _self.$router.go(-2);
               return;
           }
-          _self.goback();
+          _self.$router.go(-1);
         }, function(e) {
           console.log("pay error:"+JSON.stringify(e))
           _self.showToast("支付失败！")
