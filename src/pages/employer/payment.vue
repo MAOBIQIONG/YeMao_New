@@ -73,7 +73,7 @@
       _self.initData();
     },
     destroyed(){
-        common.delStroage('fromMyOrderDetail');
+        common.delStorage('fromMyOrderDetail');
     },
     methods: {
       goback() {

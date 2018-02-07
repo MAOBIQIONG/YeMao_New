@@ -200,6 +200,9 @@
           this.isInvited=true;
       }
     },
+    destroyed(){
+        common.delStorage('fromMyOrderDetail');
+    },
     methods: {
       goback(){
         this.$router.goBack();
@@ -302,6 +305,10 @@
             if( data.code == 200 ){
               _self.showToast("完善成功!");
               setTimeout(function () {
+                if(!common.isNull('fromMyOrderDetail')){
+                    _self.$router.go(-2);
+                    return;
+                }
                 _self.goback();
               },1000)
             }else{

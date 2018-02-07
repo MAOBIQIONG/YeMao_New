@@ -105,7 +105,7 @@
         <template v-if="!isNull(buttonState)">
             <template v-if="buttonState.user_type=='employer'">
                 <div class="db-right" v-if="buttonState.state=='dcl'">
-                    <div class="db-qxdd" v-tap ="{methods:showConfirm,id:order._id,type:'cancelOrder',msg:'确定要取消该订单吗'}">取消订单</div>
+                    <div class="db-qxdd" v-tap ="{methods:showConfirm,id:order._id,type:'cancelOrder',msg:'确定要取消该订单吗？'}">取消订单</div>
                     <template v-if="buttonState.btns_type==1">
                         <div class="db-sxdd" v-if="order.refreshFlag==1" v-tap="{methods:refreshOrders,id:order._id}">刷新订单</div>
                         <div class="db-sxdd noRefresh" v-else>刷新订单</div>
@@ -116,7 +116,7 @@
                         </div>                
                     </template>
                     <template v-else-if="buttonState.btns_type==2">
-                        <div v-if="order.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'commitImprove',msg:'确认信息已完善吗'}">
+                        <div v-if="order.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'commitImprove',msg:'确认信息已完善吗？'}">
                             确认完善信息
                         </div>             
                     </template>
@@ -126,7 +126,7 @@
                     </template>
                 </div>
                 <div class="db-right" v-if="buttonState.state=='dzf'">
-                    <div class="db-qxdd" v-tap ="{methods:showConfirm,id:order._id,type:'cancelOrder',msg:'确定要取消该订单吗'}">取消订单</div>
+                    <div class="db-qxdd" v-tap ="{methods:showConfirm,id:order._id,type:'cancelOrder',msg:'确定要取消该订单吗？'}">取消订单</div>
                     <div class="db-qrdd" @click="payOrder(order._id)">支付</div>
                 </div>
                 <div class="db-right" v-if="buttonState.state=='djf'">
@@ -247,7 +247,11 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             // _self.toUrl('myorderchuli');
         } else {
             if(_self.buttonState.state=="dcl"){
-                _self.$store.commit("changeIndexOrder",{index:0});
+                if(_self.buttonState.btns_type == 2 && _self.buttonState.user_type =='employer'){
+                    _self.$store.commit("changeIndexOrder",{index:1});
+                }else {
+                    _self.$store.commit("changeIndexOrder",{index:0});
+                }
             } else if(_self.buttonState.state=="dzf"){
                 _self.$store.commit("changeIndexOrder",{index:1});
             } else if(_self.buttonState.state=="djf"){
@@ -311,6 +315,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
         return common.getDefultImg(path);
       },
       improveTheOrder(p){
+            common.setStorage('fromMyOrderDetail',1);
             this.$router.push({name:'fabudingdan',query:{id:p.id,improve:1}});
         },
       // 订单详情查看\收起
@@ -378,17 +383,16 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                             _self.showToast('提交成功！');
                         } else if (_self.confirmType=="commitImprove"){
                             _self.showToast('请前往支付！');
-                            setTimeout(()=>{
-                                let buttonState = common.getObjStorage('buttonState');
-                                buttonState.state = 'dzf';
-                                common.setStorage('buttonState',buttonState);
-                                _self.$store.commit("changeIndexOrder",{index:1});
-                                _self.goback();
-                            },1500);
+                            console.log(_self.$store.state);
                         } else {
                              _self.showToast('已确认');
                         }       
-
+                            // let buttonState = common.getObjStorage('buttonState');
+                            // buttonState.state = 'dzf';
+                            // common.setStorage('buttonState',buttonState);
+                            setTimeout(()=>{
+                                _self.goback();
+                            },1500);
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
