@@ -118,11 +118,12 @@
           console.log("pay success:"+JSON.stringify(result))
           _self.showToast("支付成功！");
           _self.$store.commit("changeIndexOrder",{index:2});
-          if(!common.isNull('fromMyOrderDetail')){
-              _self.$router.go(-2);
-              return;
+          if(!common.isNull(common.getStorage('fromMyOrderDetail'))){
+            _self.$router.go(-2);
+          } else {
+              _self.$router.go(-1);
           }
-          _self.$router.go(-1);
+
         }, function(e) {
           console.log("pay error:"+JSON.stringify(e))
           _self.showToast("支付失败！")

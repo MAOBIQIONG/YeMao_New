@@ -180,6 +180,8 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
     data () {
         return {
             order_id:null,
+            //订单装填完善标志位
+            improved:0,
             confirmType:"",//cancelOrder取消订单，submissionDesign提交设计，commitImprove确认完善
             user_id:null,
             userInfo:null,
@@ -247,7 +249,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             // _self.toUrl('myorderchuli');
         } else {
             if(_self.buttonState.state=="dcl"){
-                if(_self.buttonState.btns_type == 2 && _self.buttonState.user_type =='employer'){
+                if(_self.improved==1){
                     _self.$store.commit("changeIndexOrder",{index:1});
                 }else {
                     _self.$store.commit("changeIndexOrder",{index:0});
@@ -382,8 +384,8 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                         } else if (_self.confirmType=="submissionDesign"){
                             _self.showToast('提交成功！');
                         } else if (_self.confirmType=="commitImprove"){
+                            _self.improved = 1;
                             _self.showToast('请前往支付！');
-                            console.log(_self.$store.state);
                         } else {
                              _self.showToast('已确认');
                         }       

@@ -35,6 +35,7 @@
                             </div>
                             <div class="db-djs" v-if="item.project_state==4">待交付</div>
                             <div class="db-djs" v-if="item.project_state==5">交付中</div>
+                            <div class="db-djs" v-if="item.project_state==6">审核中</div>
                         </div>
                     </div>
                 </div>
@@ -51,18 +52,29 @@
     <!-- <div class="noOrder">
         您还没有相关订单
     </div> -->
-      <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+        <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+        <div v-transfer-dom>
+            <confirm v-model="confirmShow"
+                @on-confirm = "compOnConfirm()"
+            >
+            <p style="text-align:center;">{{confirmMsg}}</p>
+            </confirm>
+        </div>
   </div>
 </template>
 <script>
-import {LoadMore,Toast} from 'vux'
+import {LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
 import scroller2 from '@/components/scroller2'
 export default {
     name:"scroll-list",
+    directives: {
+        TransferDom
+    },
     components:{
         LoadMore,
         Toast,
-        scroller2
+        scroller2,
+        Confirm
     },
     created(){
         console.log('created');
@@ -95,6 +107,8 @@ export default {
     },
     data(){
         return {
+            confirmType:'submissionConfirm',//submissionConfirm 确认提交
+            order_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -132,7 +146,9 @@ export default {
             },
             hasMore:true,
             showMark:false,
-            showMsg:""
+            showMsg:"",
+            confirmShow:false,
+            confirmMsg:"",
         }
     },
     watch:{
@@ -295,7 +311,20 @@ export default {
         onScrollBottom(){
             // console.log('on-scroll-bottom');
         },
-
+        showConfirm(params){
+            this.confirmShow = true;
+            this.order_id = params.id;
+            this.confirmType = params.type
+            if(params.type == "cancelOrder"){
+                this.confirmMsg = "确定要取消该订单吗?"
+            }
+            console.log(this.order_id);
+        },
+        compOnConfirm(){
+            if(this.confirmType=="submissionConfirm"){
+                this.confirmOrder();
+            }
+        },  
         /**确认交付**/
         confirmOrder(param){
           var _self = this;
