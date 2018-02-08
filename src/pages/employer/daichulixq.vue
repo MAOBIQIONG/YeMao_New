@@ -131,7 +131,7 @@
                 </div>
                 <div class="db-right" v-if="buttonState.state=='djf'">
                     <div class="db-sxdd" v-tap="{methods: toCheck, id: order._id}">一键会审</div>
-                    <div v-if="order.project_state==5" class="db-qrdd" v-tap="{methods:showConfirm, id: order._id,type:'submissionConfirm',msg:'确认交付'}">确认交付</div>
+                    <div v-if="order.project_state==5" class="db-qrdd" v-tap="{methods:showConfirm, id: order._id,type:'submissionConfirm',msg:'确认交付？'}">确认交付</div>
                 </div>
                 <div class="db-right" v-if="buttonState.state=='ywc'">
                     <div class="db-qrdd" v-if="order.project_evaluation==0" v-tap="{methods:toStar,pagename:'orderpingjia',query:{id:order.case_id}}" >
@@ -147,7 +147,7 @@
                 </div>
                 <div class="db-right" v-if="buttonState.state=='djf'">
                     <div class="db-sxdd" v-tap="{methods: toCheck, id: order._id}">一键会审</div>
-                    <div class="db-qrdd"  v-tap="{methods:showConfirm,id:order._id,type:'submissionDesign',msg:'确认提交设计吗'}" v-if="order.project_state==4">提交设计</div> 
+                    <div class="db-qrdd"  v-tap="{methods:showConfirm,id:order._id,type:'submissionDesign',msg:'确认提交设计吗？'}" v-if="order.project_state==4">提交设计</div> 
                 </div>
             </template>
         </template>
@@ -196,7 +196,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             viewText:'点击查看更多',
             buttonState:'',
             confirmShow:false,
-            confirmMsg:"确定要取消该订单吗",
+            confirmMsg:"确定要取消该订单吗？",
             showMark:false,
             showMsg:"",
         }

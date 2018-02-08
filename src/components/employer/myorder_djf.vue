@@ -338,7 +338,7 @@ export default {
             let data = response.data;
             if( data && data.code == 200 ){
                 _self.showToast("确认成功!");
-                renderAfterOperate();
+                _self.renderAfterOperate();
                  _self.$parent.index = 3;
             }else{
               _self.showToast("确认失败!");

@@ -149,7 +149,7 @@ export default {
             showMark:false,
             showMsg:"",
             confirmShow:false,
-            confirmMsg:"确定要取消该订单吗",
+            confirmMsg:"确定要取消该订单吗？",
         }
     },
     watch:{

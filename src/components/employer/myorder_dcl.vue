@@ -520,11 +520,11 @@ export default {
             this.order_id = params.id;
             this.confirmType = params.type
             if(params.type == "cancelOrder"){
-                this.confirmMsg = "确定要取消该订单吗?"
+                this.confirmMsg = "确定要取消该订单吗？"
             } else if(params.type == "refreshOrders"){
-                this.confirmMsg = '确认刷新订单吗?'
+                this.confirmMsg = '确认刷新订单吗？'
             } else if(params.type == "commitImprove"){
-                this.confirmMsg = '确认信息已完善吗?'
+                this.confirmMsg = '确认信息已完善吗？'
             }
             console.log(this.order_id);
         },
