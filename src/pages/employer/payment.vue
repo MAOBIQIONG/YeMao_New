@@ -119,9 +119,13 @@
           _self.showToast("支付成功！");
           _self.$store.commit("changeIndexOrder",{index:2});
           if(!common.isNull(common.getStorage('fromMyOrderDetail'))){
-            _self.$router.go(-2);
+              setTimeout(function () {
+                    _self.$router.go(-2);
+                },1000)
           } else {
-              _self.$router.go(-1);
+              setTimeout(function () {
+                    _self.$router.go(-1);
+                },1000)
           }
 
         }, function(e) {

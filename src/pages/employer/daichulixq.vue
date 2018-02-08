@@ -131,7 +131,7 @@
                 </div>
                 <div class="db-right" v-if="buttonState.state=='djf'">
                     <div class="db-sxdd" v-tap="{methods: toCheck, id: order._id}">一键会审</div>
-                    <div v-if="order.project_state==5" class="db-qrdd" v-tap="{methods: confirmOrder, id: order._id}">确认交付</div>
+                    <div v-if="order.project_state==5" class="db-qrdd" v-tap="{methods:showConfirm, id: order._id,type:'submissionConfirm',msg:'确认交付'}">确认交付</div>
                 </div>
                 <div class="db-right" v-if="buttonState.state=='ywc'">
                     <div class="db-qrdd" v-if="order.project_evaluation==0" v-tap="{methods:toStar,pagename:'orderpingjia',query:{id:order.case_id}}" >
@@ -182,7 +182,8 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             order_id:null,
             //订单装填完善标志位
             improved:0,
-            confirmType:"",//cancelOrder取消订单，submissionDesign提交设计，commitImprove确认完善
+            isSubmissionConfirmed:0,
+            confirmType:"",//cancelOrder取消订单，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交
             user_id:null,
             userInfo:null,
             order:{
@@ -257,7 +258,11 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             } else if(_self.buttonState.state=="dzf"){
                 _self.$store.commit("changeIndexOrder",{index:1});
             } else if(_self.buttonState.state=="djf"){
-                _self.$store.commit("changeIndexOrder",{index:2});
+                if(_self.isSubmissionConfirmed == 1){
+                     _self.$store.commit("changeIndexOrder",{index:3});
+                }else {
+                    _self.$store.commit("changeIndexOrder",{index:2});             
+                }
             } else if(_self.buttonState.state=="ywc"){
                 _self.$store.commit("changeIndexOrder",{index:3});
             } 
@@ -271,6 +276,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
       },
       toStar(params){
           var _self = this;
+          common.setStorage('fromMyOrderDetail',1);
           _self.$router.push({name: params.pagename,query:params.query});
           params.event.cancelBubble = true;
           params.event.stop;//阻止冒泡（原声方法）
@@ -400,6 +406,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                     }
                 })
         },
+
         /**确认交付**/
         confirmOrder(){
           var _self = this;
@@ -412,12 +419,11 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
           },(response)=>{
             let data = response.data;
             if( data && data.code == 200 ){
-              _self.showToast("确认成功!");
-              _self.orderList.forEach(function (item,index) {
-                if( param.id == item._id ){
-                  _self.orderList.splice(index,1);
-                }
-              })
+                 _self.showToast("确认成功!");
+                 _self.isSubmissionConfirmed=1;
+                setTimeout(()=>{
+                    _self.goback();
+                },1500);
             }else{
               _self.showToast("确认失败!");
             }
@@ -499,6 +505,9 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             }
             if(this.confirmType =="commitImprove"){
                 this.updateStateAfterImprove();
+            }
+            if(this.confirmType =="submissionConfirm"){
+                this.confirmOrder();
             }
         },
       //数据初始化

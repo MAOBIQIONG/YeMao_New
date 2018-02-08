@@ -42,7 +42,7 @@
                 <div class="ds-bottom">
                     <div class="db-right">
                       <div class="db-sxdd" v-tap="{methods: toCheck, id: item._id}">一键会审</div>
-                      <div v-if="item.project_state==5" class="db-qrdd" v-tap="{methods: confirmOrder, id: item._id}">确认交付</div>
+                      <div v-if="item.project_state==5" class="db-qrdd" v-tap="{methods: showConfirm, type:'submissionConfirm',id:item._id}">确认交付</div>
                     </div>
                 </div>
             </div>
@@ -315,8 +315,8 @@ export default {
             this.confirmShow = true;
             this.order_id = params.id;
             this.confirmType = params.type
-            if(params.type == "cancelOrder"){
-                this.confirmMsg = "确定要取消该订单吗?"
+            if(params.type == "submissionConfirm"){
+                this.confirmMsg = "确认交付?"
             }
             console.log(this.order_id);
         },
@@ -326,28 +326,35 @@ export default {
             }
         },  
         /**确认交付**/
-        confirmOrder(param){
+        confirmOrder(){
           var _self = this;
           var params = {
             interfaceId: common.interfaceIds.confirmDelivery,
-            order_id: param.id
+            order_id: _self.order_id
           }
           _self.$axios.post('/mongoApi',{
             params: params
           },(response)=>{
             let data = response.data;
             if( data && data.code == 200 ){
-              _self.showToast("确认成功!");
-              _self.orderList.forEach(function (item,index) {
-                if( param.id == item._id ){
-                  _self.orderList.splice(index,1);
-                }
-              });
-              _self.$parent.index = 3;
+                _self.showToast("确认成功!");
+                renderAfterOperate();
+                 _self.$parent.index = 3;
             }else{
               _self.showToast("确认失败!");
             }
           })
+        },
+        renderAfterOperate(){
+            let _self = this;
+            let index = 0;
+            for (let r of _self.orderList) {
+                console.log(_self.orderList[index]);
+                if(r._id == _self.order_id){
+                    _self.orderList.splice(index,1);
+                }
+                index++
+            }
         },
         onSlidePrevious(){
             this.$emit('on-slide-previous')
