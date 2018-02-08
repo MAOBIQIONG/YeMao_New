@@ -70,6 +70,20 @@
 
       }
     },
+    mounted(){
+        console.log('tongxunluhaoyouMounted');
+        if(process.env.NODE_ENV === 'production'){
+            if(plus){
+                // 扩展API加载完毕，现在可以正常调用扩展API
+                plus.contacts.getAddressBook( plus.contacts.ADDRESSBOOK_PHONE, function( addressbook ) {
+                    // 可通过addressbook进行通讯录操作
+                    alert( "Get address book success!" );
+                }, function ( e ) {
+                    alert( "Get address book failed: " + e.message );
+                } );
+            }       
+        }      
+    },
     methods: {
       goback () {
         this.$router.goBack()
