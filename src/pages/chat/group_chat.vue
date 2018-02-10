@@ -68,6 +68,7 @@
         ownerAvatarUrl: '',
         contactAvatarUrl: '',
         dataArray: [],
+        userArray: [],
         isReset:false,
         // 加载
         lockX:true,
@@ -288,9 +289,6 @@
   @import "../../../static/css/employer/liaotian.css";
   .liaotian {
     background-color: #f2f2f2;
-  }
-  .content{
-    padding-bottom: 1rem;
   }
   .message{
     width: 7.1rem;

@@ -25,7 +25,9 @@
               </div>
               <div class="jianjie-bottom">
                 <div class="db-yushuan"><span>预算</span> <span class="yushuan">￥</span><span class="yushuan">{{order.project_budget}}</span></div>
-                <div class="db-miaomiao"><span><img src='../../../static/images/employer/miaomiao.png'></span><span>喵喵</span></div>
+                <div class="db-miaomiao" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.user._id,name:order.user.user_name,img:order.user.img}}">
+                  <span><img src='../../../static/images/employer/miaomiao.png'></span><span>喵喵</span>
+                </div>
               </div>
             </div>
           </div>
@@ -113,16 +115,16 @@
                             v-tap="{ methods:toParts, id: order._id, uid: order.user_id }"
                             >
                             选择设计师
-                        </div>                
+                        </div>
                     </template>
                     <template v-else-if="buttonState.btns_type==2">
                         <div v-if="order.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'commitImprove',msg:'确认信息已完善吗？'}">
                             确认完善信息
-                        </div>             
+                        </div>
                     </template>
                     <template v-else-if="buttonState.btns_type==3">
                         <div class="db-sxdd" v-if="canRefresh(order.refresh_date)" v-tap="{methods:refreshOrders,id:order._id}">刷新订单</div>
-                        <div class="db-sxdd noRefresh" v-else>刷新订单</div>          
+                        <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                     </template>
                 </div>
                 <div class="db-right" v-if="buttonState.state=='dzf'">
@@ -143,11 +145,11 @@
                 <div class="db-right" v-if="buttonState.state=='dcl'">
                     <div v-if="buttonState.btns_type==1" class="db-qrdd" v-tap="{methods:improveTheOrder,id:order._id}">
                         完善信息
-                    </div>      
+                    </div>
                 </div>
                 <div class="db-right" v-if="buttonState.state=='djf'">
                     <div class="db-sxdd" v-tap="{methods: toCheck, id: order._id}">一键会审</div>
-                    <div class="db-qrdd"  v-tap="{methods:showConfirm,id:order._id,type:'submissionDesign',msg:'确认提交设计吗？'}" v-if="order.project_state==4">提交设计</div> 
+                    <div class="db-qrdd"  v-tap="{methods:showConfirm,id:order._id,type:'submissionDesign',msg:'确认提交设计吗？'}" v-if="order.project_state==4">提交设计</div>
                 </div>
             </template>
         </template>
@@ -155,7 +157,7 @@
 
       </div>
     </div>
-    
+
     <toast v-model="showMark" :time="1500" type="text" width="5rem">{{showMsg}}</toast>
     <div v-transfer-dom>
         <confirm v-model="confirmShow"
@@ -261,18 +263,21 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                 if(_self.isSubmissionConfirmed == 1){
                      _self.$store.commit("changeIndexOrder",{index:3});
                 }else {
-                    _self.$store.commit("changeIndexOrder",{index:2});             
+                    _self.$store.commit("changeIndexOrder",{index:2});
                 }
             } else if(_self.buttonState.state=="ywc"){
                 _self.$store.commit("changeIndexOrder",{index:3});
-            } 
+            }
             _self.$router.goBack();
-            // _self.toUrl('myorderchuli');        
-        }            
+            // _self.toUrl('myorderchuli');
+        }
       },
 
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      oUrl2: function (params) {
+        this.$router.push({name: params.pagename,query:params.query || {}})
       },
       toStar(params){
           var _self = this;
@@ -394,7 +399,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                             _self.showToast('请前往支付！');
                         } else {
                              _self.showToast('已确认');
-                        }       
+                        }
                             // let buttonState = common.getObjStorage('buttonState');
                             // buttonState.state = 'dzf';
                             // common.setStorage('buttonState',buttonState);
@@ -544,7 +549,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                     _self.order = order;
                     if( _self.order.imgs ){
                         _self.imgSize = _self.order.imgs.length;
-                    }                 
+                    }
                 });
         }
     }

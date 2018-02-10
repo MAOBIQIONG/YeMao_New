@@ -327,6 +327,8 @@
   font-size: 0.28rem;
   background: #f65aa6;
   color: white;
+  position: fixed;
+  bottom: 0;
 }
 
 /*# sourceMappingURL=mine-jianli.css.map */

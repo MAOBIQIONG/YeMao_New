@@ -87,12 +87,14 @@
           <div class="qdsjs-box">
             <div class="qb-top">
               <div class="qt-touxiang">
-                <img :src='checkAvatar(bid.img)'>
+                <img :src='checkAvatar(bid.user.img)'>
               </div>
               <div class="qt-nichen">
-                <span>{{bid.user_name}}</span>
+                <span>{{bid.user.user_name}}</span>
               </div>
-              <div class="chat"><img src='../../../static/images/employer/miaomiao.png'></div>
+              <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:bid.user._id,name:bid.user.user_name,img:bid.user.img}}">
+                <img src='../../../static/images/employer/miaomiao.png'>
+              </div>
               <div class="qt-jiage">
                 <div class="qt-time"><span>{{bid.taskTime}}小时</span></div>
                 <div class="qt-jingqian"><span>￥</span><span>{{bid.quotation}}</span></div>
@@ -108,7 +110,7 @@
     </div>
     <!--底部-->
     <div class="od-botton" v-if="userInfo._id!=order.user_id">
-      <div class="mmliaotian">
+      <div class="mmliaotian" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.user._id,name:order.user.user_name,img:order.user.img}}">
         <span><img src='../../../static/images/employer/miaomiao.png'></span>
         <span>喵喵聊天</span>
       </div>
@@ -212,6 +214,9 @@
       },
       toUrl: function (param) {
         this.$router.push({name: param.pagename,query:{id:this.order_id}})
+      },
+      toUrl2: function (params) {
+        this.$router.push({name: params.pagename,query:params.query || {}})
       },
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
