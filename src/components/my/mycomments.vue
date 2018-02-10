@@ -36,12 +36,13 @@
                       <p class="time">{{timeStamp2String(item.create_date)}}</p>
                     </div>
                     <div class="pl-right"
-                         v-tap="{methods:toDetails,type:item.comment_type,id:item.data._id}"
-                         v-if="item.data.imgs.length>0"
-                         :style="'background-image:url('+checkImg(item.data.imgs[0])+')'"></div>
+                         v-if="item.data && item.data.imgs && item.data.imgs.length>0"
+                         :style="'background-image:url('+checkImg(item.data.imgs[0])+')'"
+                         v-tap="{methods:toDetails,type:item.comment_type,id:item.data._id}"></div>
                     <div class="pl-right"
                          v-tap="{methods:toDetails,type:item.comment_type,id:item.data._id}"
-                         v-else>{{item.data.title}}</div>
+                         v-else-if="item.data">{{item.data.title}}</div>
+                    <div class="pl-right del" v-else>已删除</div>
                   </div>
                 </div>
               </swipeout-item>
@@ -346,12 +347,16 @@
 <style scoped>
   @import '../../../static/css/my/mine-pinlun.css';
   .pinglun-list .pl-right{
-    /*background: url("/static/images/bj.jpg");*/
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    /*padding: 0.05rem;;*/
     color: #999;
     line-height: 0.38rem;
+  }
+  .pinglun-list .pl-right.del{
+    line-height: 0.8rem;
+    background-color: #F2F2F2;
+    font-size: 0.22rem;
+    color: #c7c7c7;
   }
 </style>

@@ -48,7 +48,11 @@ const webpackConfig = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test')],
+        exclude: resolve('src/sdk'),
+        query: {
+          presets: []
+        }
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

@@ -416,6 +416,16 @@ const common = {
     return name;
   },
 
+  /**图片添加后缀**/
+  addSuffixToImage: function(path,suffix){
+    if( common.isNull(suffix) ){
+      suffix = '_min1x';
+    }
+    var firstPath = path.substr(0,path.lastIndexOf("."));
+    var lastPath = path.substr(path.lastIndexOf("."));
+    return firstPath+suffix+lastPath;
+  },
+
   // 用户头像验证
   getAvatar: function (path,local){
     if( common.isNull(local) == true ){
@@ -424,7 +434,7 @@ const common = {
     if( common.isNull(path) == true ){
       path = local;
     }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
-      path = root + path;
+      path = root + common.addSuffixToImage(path);
     }
     return path;
   },
@@ -437,7 +447,7 @@ const common = {
     if( common.isNull(path) == true ){
       path = local;
     }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
-      path = root + path;
+      path = root + common.addSuffixToImage(path);
     }
     return path;
   },
@@ -576,6 +586,9 @@ const common = {
     orderComments:'orderComments',                 // 订单评价
     confirmDelivery:'confirmDelivery',             // 确认支付
     orderReview:'orderReview',                     // 一键会审
+    getMyConvers:'getMyConversation',              // 查询我的会话列表
+    getChatRecord:'getChatRecord',                 // 查询聊天记录
+    addChatRecord:'addChatRecord',                 // 新增聊天记录
 
   },
 

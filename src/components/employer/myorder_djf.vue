@@ -41,8 +41,15 @@
                 </div>
                 <div class="ds-bottom">
                     <div class="db-right">
+<<<<<<< Updated upstream
                       <div class="db-sxdd" v-tap="{methods: toCheck, id: item._id}">一键会审</div>
                       <div v-if="item.project_state==5" class="db-qrdd" v-tap="{methods: showConfirm, type:'submissionConfirm',id:item._id}">确认交付</div>
+                      <!--<div class="db-sxdd">一键会审</div>-->
+                      <!--<div class="db-qrdd" v-tap="{methods:confirmOrder,id:item._id}">确认交付</div>-->
+=======
+                      <!--<div class="db-sxdd">一键会审</div>-->
+                      <div class="db-qrdd" v-tap="{methods:confirmOrder,id:item._id}">确认交付</div>
+>>>>>>> Stashed changes
                     </div>
                 </div>
             </div>
@@ -324,7 +331,7 @@ export default {
             if(this.confirmType=="submissionConfirm"){
                 this.confirmOrder();
             }
-        },  
+        },
         /**确认交付**/
         confirmOrder(){
           var _self = this;

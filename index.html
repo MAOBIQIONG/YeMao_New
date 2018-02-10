@@ -11,6 +11,18 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    //运行环境从前台切换到后台事件
+    document.addEventListener("pause", function() {
+      //0、前台运行，1、后台运行
+      common.setStorage('appStatus',1);
+    }, false);
+    //运行环境从后台切换到前台事件
+    document.addEventListener("resume", function() {
+      //0、前台运行，1、后台运行
+      common.setStorage('appStatus',0);
+    }, false);
+  </script>
   <style>
     body{
       margin:0;
