@@ -32,9 +32,11 @@
 	width: 0.8rem;
 	height: 0.8rem;
 	border-radius: 50%;
-	background: #CCCCCC;
+	background-color: #CCCCCC;
 	margin: 0px 0.2rem;
-	overflow: hidden;
+    overflow: hidden;
+    background-position:center center;
+    background-size:cover;
 }
 
 .sjszj .renyuan li .touxiang img {

@@ -2,7 +2,7 @@
   <div >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>收藏专辑</span>
     </div>
     <div class="content content-p">
@@ -14,10 +14,10 @@
         <div class="noData" v-if="collects.users.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionDesigner')">
           <li v-for="(item,index) in collects.users" :key="index">
-            <p class="touxiang">
-              <img src="../../../static/images/bj.jpg" />
+            <p class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
+              <!-- <img src="../../../static/images/bj.jpg" /> -->
             </p>
-            <p class="nicheng">昵称</p>
+            <p class="nicheng">{{item.user_name}}</p>
           </li>
         </ul>
       </div>
@@ -65,8 +65,8 @@
         <div class="noData" v-if="collects.resumes.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionResume')">
             <li v-for="(item,index) in collects.resumes" :key="index">
-                <p class="touxiang">
-                    <img src="../../../static/images/bj.jpg" />
+                <p class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
+                    <!-- <img src="../../../static/images/bj.jpg" /> -->
                 </p>
             </li>
         </ul>
@@ -135,6 +135,10 @@
                         console.log('noData');
                     }
                 });          
+      },
+        // 头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
       },
       setData(data){
             let _self = this;
