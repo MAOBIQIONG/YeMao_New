@@ -6,24 +6,22 @@
     </div>
     <!--  信息表-->
     <div class="content">
-      <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom">
+      <scroller lock-x height="" ref="scrollerBottom">
         <div class="message">
         <ul>
           <li v-for="(message, index) in dataArray" :key="message.id" :class="message.direction==2?'an-move-right':'an-move-left'">
             <p class="time"> <span v-text="message.ctime"></span></p>
-            <p class="time system" v-if="message.type==10000"> <span v-html="message.content">fgdfg</span> </p>
+            <p class="time system" v-if="message.type==10000"> <span>{{message.content}}</span> </p>
             <div :class="'main' + (message.direction==2?' self':'')" v-else>
-              <img class="avatar" width="45" height="45" :src="message.direction==2? ownerAvatarUrl: contactAvatarUrl">
+              <img class="avatar" :src="message.direction==2? ownerAvatarUrl: contactAvatarUrl">
               <!-- 文本 -->
-              <div class="text" v-emotion="message.content" v-if="message.type==1">
-                <span>dgdfgdfg</span>
+              <div class="text" v-if="message.type==1">
+                <span>{{message.content}}</span>
               </div>
-
-              <!-- 图片 -->
+              <!--&lt;!&ndash; 图片 &ndash;&gt;-->
               <div class="text" v-else-if="message.type==2">
                 <img :src="message.content" class="image" alt="聊天图片">
               </div>
-
               <!-- 其他 -->
               <div class="text" v-else-if="message.type!=10000" v-text="'[暂未支持的消息类型:'+ message.type +']\n\r' + message.content">
 
@@ -160,6 +158,8 @@
   }
   .message .avatar {
     float: left;
+    width: 0.9rem;
+    height: 0.9rem;
     margin: 0 10px 0 0;
     border-radius: 3px;
     background: #fff;
