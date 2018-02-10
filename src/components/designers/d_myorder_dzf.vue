@@ -31,29 +31,15 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <template  v-if="item.sub.length>0">
-                                <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
-                                <template v-else>
-                                    <div class="db-djs">待支付</div>
-                                </template>
-                               
-                            </template>
-                            
-                            <div v-else class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                            <!-- 订单状态 -->
+                            <div class="db-djs">等待雇主支付</div>
+
                         </div>
                     </div>
                 </div>
-                <!-- <div class="od-renshu myorder">
-                    <div class="tu"></div>
-                    <p v-if="item.bidders.length>0"><span style="color:red">{{item.bidders.length}}</span>位设计师抢单</p>
-                    <p v-if="item.bidders.length==0">还没有设计师抢单</p>
-                </div> -->
+
                 <div class="ds-bottom">
                     <div class="db-right">
-                        <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <!-- <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div> -->
-                        
-                        <!-- <div class="db-qrdd">支付</div> -->
                     </div>
                 </div>
             </div>
@@ -162,6 +148,7 @@ export default {
             confirmMsg:"确定要取消该订单吗",
         }
     },
+
     watch:{
         pullUpDownStatus:{
             handler:function(val,oldval){
@@ -212,21 +199,10 @@ export default {
          // 详情页
         toDetails (item) {
             let buttonState = {
-                user_type:"employer",
-                state:'dcl',
-                btns_type:0,
+                user_type:"designer",
+                state:'dzf',
+                btns_type:-1,
             };
-            //判断是否有人抢单
-            if(item.sub.length>0){
-                //判断是否已选择设计师
-                if(this.isNull(item.project_winBidder)){
-                    buttonState.btns_type = 1;
-                } else {
-                    buttonState.btns_type = 2;
-                }
-            }else{
-                buttonState.btns_type = 3;
-            }
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: item._id}})
         },

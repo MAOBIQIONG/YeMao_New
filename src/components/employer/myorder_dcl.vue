@@ -55,10 +55,11 @@
                 <div class="ds-bottom">
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>
+                        <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'cancelOrder'}">取消订单</div>
                         <template v-if="item.sub.length>0">
-                            <template v-if="isNull(item.project_winBidder)">
-                                <div class="db-sxdd" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                            <template v-if="isNull(item.project_winBidder)">                   
+                                <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
+                                <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                                 <div class="db-qrdd"
                                     v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
                                  >
@@ -70,7 +71,7 @@
                                 <!-- <div class="db-sxdd">
                                     刷新订单
                                 </div> -->
-                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:updateOrderState,id:item._id}">
+                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
                                     确认完善信息
                                 </div>
                                 <div v-else class="db-qrdd"  style="display: none">
@@ -78,8 +79,9 @@
                                 </div>
                             </template>
                         </template>
-                        <template v-else>
-                            <div class="db-sxdd" v-tap="{methods:refreshOrders,id:item._id}">刷新订单</div>
+                        <template v-else>   
+                            <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
+                            <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                             <div class="db-qrdd" style="display: none"></div>
                         </template>
 
@@ -90,7 +92,7 @@
             <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
             <div v-transfer-dom>
                 <confirm v-model="confirmShow"
-                    @on-confirm = "cancelOrder()"
+                    @on-confirm = "compOnConfirm()"
                 >
                 <p style="text-align:center;">{{confirmMsg}}</p>
                 </confirm>
@@ -129,6 +131,7 @@ export default {
                 this.$refs.scroller.reset({top:0});
                 // this.dealDom();
             }
+
         );
     },
     props:{
@@ -147,9 +150,8 @@ export default {
     },
     data(){
         return {
-            cancel_id:null,
+            confirmType:"",//cancelOrder取消订单，commitImprove确认完善,refreshOrders刷新订单
             order_id:null,
-            improve_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -213,9 +215,9 @@ export default {
             let DateDiff=function(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
                 var  aDate,  oDate1,  oDate2,  iDays
                 aDate  =  sDate1.split("-")
-                oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
+                oDate1  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])    //转换为12/18/2002格式
                 aDate  =  sDate2.split("-")
-                oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
+                oDate2  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])
                 iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)
                 if (iDays == 0) return '抢单结束'    //把相差的毫秒数转换为天数
                 return  iDays + "天后截止报名"
@@ -238,6 +240,16 @@ export default {
         showToast(msg){
             this.showMark = true;
             this.showMsg = msg;
+        },
+        canRefresh(refreshTime){
+            let date = Date.parse(new Date());
+            console.log('refreshTime'+new Date(refreshTime),'date' + new Date(date));
+            console.log((refreshTime + 1000*60*60*24)<= date);
+            if((refreshTime + 1000*60*60*24)<= date){
+                return true;
+            } else{
+                return false;
+            }
         },
          // 详情页
         toDetails (params) {
@@ -266,25 +278,22 @@ export default {
         checkImg(path){
           return common.getDefultImg(path);
         },
-        refreshOrder(param){
-            var params = {
-                interfaceId:common.interfaceIds.updateData,
-                order_id:param.id
-            };
+        updateStateAfterImprove(){
+            let state = 3;
+            this.updateOrderState({state})
         },
-        updateOrderState(p){
+        updateOrderState(params){
             // console.log(param.id);
             var _self = this;
-            _self.improve_id = p.id;
             var params = {
                 interfaceId:common.interfaceIds.updateData,
                 coll:common.collections.orderList,
                 wheredata:{
-                    _id:_self.improve_id
+                    _id:_self.order_id
                 },
                 data:{
                     $set: {
-                        project_state: 3, // 取消
+                        project_state: params.state, // 取消
                     }
                 }
             };
@@ -294,27 +303,19 @@ export default {
                     console.log(response)
                     var data = response.data;
                     if( data.ok > 0 ){
-                        _self.showToast('请前往支付！');
-                        _self.renderAfterConfirmImprove();
+                        if(this.confirmType =="commitImprove"){
+                            _self.showToast('请前往支付！');
+                        }
+                        setTimeout(()=>{
+                            this.$parent.index=1;
+                        },100);
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
                 })
         },
-        renderAfterConfirmImprove(){
+        refreshOrders(){
             let _self = this;
-            let index = 0;
-            for (let r of _self.orderList) {
-                console.log(_self.orderList[index]);
-                if(r._id == _self.improve_id){
-                    _self.orderList.splice(index,1);
-                }
-                index++
-            }
-        },
-        refreshOrders(p){
-            let _self = this;
-            _self.order_id = p.id;
             var params = {
                 interfaceId:common.interfaceIds.refreshOrders,
                 order_id:_self.order_id,
@@ -329,6 +330,7 @@ export default {
                         _self.showToast('已刷新！');
                         _self.$store.state.indexRefreshMark = 1;
                         _self.$store.state.employerRefreshMark = 1;
+                        _self.isRefreshed = true;
                         setTimeout(()=>{
                             _self.goback();
                         },1500);
@@ -343,7 +345,7 @@ export default {
                 interfaceId:common.interfaceIds.updateData,
                 coll:common.collections.orderList,
                 wheredata:{
-                    _id:_self.cancel_id
+                    _id:_self.order_id
                 },
                 data:{
                     $set: {
@@ -359,13 +361,14 @@ export default {
                     var data = response.data;
                     if( data.ok > 0 ){
                         _self.showToast('已取消！');
-                        _self.renderAfterCanceled();
+                        _self.renderAfterOperate();
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
                 })
         },
         toParts: function (param) {
+            common.setStorage('fromOrderDcl',1);
             this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid,}})
         },
         dealDom(){
@@ -514,16 +517,23 @@ export default {
         },
         showConfirm(params){
             this.confirmShow = true;
-            this.cancel_id = params;
-            this.order_id = params;
-            console.log(this.cancel_id);
+            this.order_id = params.id;
+            this.confirmType = params.type
+            if(params.type == "cancelOrder"){
+                this.confirmMsg = "确定要取消该订单吗？"
+            } else if(params.type == "refreshOrders"){
+                this.confirmMsg = '确认刷新订单吗？'
+            } else if(params.type == "commitImprove"){
+                this.confirmMsg = '确认信息已完善吗？'
+            }
+            console.log(this.order_id);
         },
-        renderAfterCanceled(){
+        renderAfterOperate(){
             let _self = this;
             let index = 0;
             for (let r of _self.orderList) {
                 console.log(_self.orderList[index]);
-                if(r._id == _self.cancel_id){
+                if(r._id == _self.order_id){
                     _self.orderList.splice(index,1);
                 }
                 index++
@@ -534,9 +544,25 @@ export default {
         },
         onSlideNext(){
             this.$emit('on-slide-next')
-        }
+        },
+        compOnConfirm(){
+            if(this.confirmType=="cancelOrder"){
+                this.cancelOrder();
+            }
+            if(this.confirmType =="refreshOrders"){
+                this.refreshOrders();
+            }
+            if(this.confirmType =="commitImprove"){
+                this.updateStateAfterImprove();
+            }
+        },       
     }
 }
 </script>
-
+<style scoped>
+.db-sxdd.noRefresh{
+    border:1px solid #cccccc!important;
+    color:#cccccc!important;
+}
+</style>
 

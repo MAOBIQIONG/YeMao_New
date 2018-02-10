@@ -1,0 +1,216 @@
+<template>
+  <div>
+    <div class="msg-content content-p">
+      <div class="tab_box">
+        <!--通知列表-->
+        <div class="tongzhi">
+          <scroller
+            id="scroller"
+            v-model="pullUpDownStatus"
+            :height="height"
+            :lock-x="lockX"
+            :lock-y="lockY"
+            :use-pulldown="true"
+            :use-pullup="true"
+            :pulldown-config="pulldownConfig"
+            :pullup-config = "pullupConfig"
+            @on-scroll="scroll"
+            @on-scroll-bottom="onScrollBottom"
+            @on-pulldown-loading="pullDownLoading"
+            @on-pullup-loading="pullUpLoading"
+            ref="scroller"
+          >
+            <div>
+              <div class="tongzhi-list" v-tap="{ methods:toUrl , pagename:'informxitong'}">
+                <div class="tl-touxiang">
+                  <img src="../../../static/images/index/tongzhi_xitong.png">
+                </div>
+                <div class="tl-right">
+                  系统通知
+                </div>
+              </div>
+            </div>
+          </scroller>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {LoadMore, Scroller,} from 'vux'
+  export default {
+    components: {
+      Scroller,
+      LoadMore
+    },
+    data () {
+      return {
+        dataList: [],
+        // 加载
+        lockX:true,
+        lockY:false,
+        height: '-90',
+        pagination: {
+          pageNo: 0,
+          pageSize: 10
+        },
+        pullUpDownStatus: {
+          pulldownStatus: 'default',
+          pullupStatus: 'default'
+        },
+        pulldownConfig:{
+          content: '下拉刷新',
+          height: 60,
+          autoRefresh: false,
+          downContent: '下拉刷新',
+          upContent: '放开刷新',
+          loadingContent: '刷新中...',
+          clsPrefix: 'xs-plugin-pulldown-'
+        },
+        pullupConfig:{
+          content: '上拉加载',
+          pullUpHeight: 60,
+          height: 40,
+          autoRefresh: false,
+          downContent: '放开加载',
+          upContent: '上拉加载',
+          loadingContent: '',
+          clsPrefix: 'xs-plugin-pullup-'
+        },
+        loadMoreStatus:{
+          tip:"正在加载",
+          tipNoData:"没有更多数据了",
+          tipLoading:"正在加载",
+          showLoading:true,
+          show:true,
+        },
+        hasMore:true,
+      }
+    },
+    watch:{
+      pullUpDownStatus:{
+        handler:function(val,oldval){
+          if(val.pullupStatus=="loading"){
+            this.loadMoreStatus.show=true;
+            if(this.hasMore == false){
+              this.loadMoreStatus.showLoading=false;
+            } else {
+              this.loadMoreStatus.showLoading=true;
+            }
+          }
+        }
+      }
+    },
+    created: function () {
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
+    },
+    methods: {
+      goback() {
+        this.$router.goBack();
+      },
+      toUrl: function (params) {
+        this.$router.push({name: params.pagename})
+      },
+      getDataStr(date){
+        return common.timeStamp2String(date,'ymdhm');
+      },
+      // 头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      //下拉刷新
+      refreshPageDate(){
+        let _self = this
+        _self.pagination.pageNo = 0;
+        _self.hasMore = true;
+        _self.loadMoreStatus.show=false;
+        _self.$refs.scroller.donePullup();
+        _self.loadData();
+      },
+      //上拉加载
+      loadMore(){
+        let _self = this;
+        _self.loadData();
+      },
+      scroll(position){
+        // console.log("on-scroll",position);
+      },
+      pullDownLoading(){
+        console.log('on-pull-down-loading');
+        this.refreshPageDate();
+      },
+      pullUpLoading(){
+        console.log('on-pull-up-loading');
+        this.loadMore();
+      },
+      onScrollBottom(){
+        // console.log('on-scroll-bottom');
+      },
+      //获取数据
+      loadData(){
+        let _self = this;
+        if( common.isNull(_self.user._id) ){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.showLoading=false;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          return;
+        }
+        _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
+        let params = {
+          interfaceId:common.interfaceIds.getMyConvers,
+          pageNo: _self.pagination.pageNo,
+          pageSize: _self.pagination.pageSize,
+          where:{
+            user_id: _self.user._id,
+          }
+        };
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          console.log(response);
+          let data = response.data;
+          _self.setData(data);
+        })
+      },
+      setData(data){
+        let _self = this;
+        _self.$refs.scroller.enablePullup();
+        // 订单
+        let convers = data.convers || [];
+        //判断页码是否为0
+        if(_self.pagination.pageNo == 0) {
+          _self.dataList = convers;
+        } else {
+          _self.dataList.push(...convers);
+        }
+        _self.loadMoreStatus.show=false;
+        _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePulldown();
+        _self.$refs.scroller.donePullup();
+        //判断数据是否有一页
+        if(convers.length < _self.pagination.pageSize){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.showLoading=false;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.$refs.scroller.disablePullup();
+        } else {
+          _self.pagination.pageNo++
+        }
+        /****/
+        setTimeout(function () {
+          _self.resetHeight(125);
+        },200)
+      },
+
+    }
+  }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+  @import '../../../static/css/index/message.css';
+</style>

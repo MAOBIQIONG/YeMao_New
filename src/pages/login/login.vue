@@ -137,7 +137,7 @@
               var t = setInterval(function () {
                 time--;
                 code.html(time + "秒后重新获取");
-                if (time == 0) {
+                if (time <= 0) {
                   clearInterval(t);
                   code.html("重新获取");
                   validCode = true;

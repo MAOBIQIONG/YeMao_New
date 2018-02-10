@@ -84,6 +84,9 @@
       _self.user_id = _self.userInfo._id || null;
       _self.initData();
     },
+    destroyed(){
+        common.delStorage('fromOrderDcl');
+    },
     methods: {
       /**************************************/
       onCancel() {
@@ -186,9 +189,16 @@
             _self.$store.state.indexRefreshMark = 1;
             _self.$store.state.employerRefreshMark = 1;
             _self.showToast('选择成功！');
-            setTimeout(function () {
-              _self.$router.go(-2)
-            }, 1000)
+            if(!common.isNull(common.getStorage('fromOrderDcl'))){
+                setTimeout(function () {
+                    _self.$router.go(-1)
+                }, 1000)
+            }else{
+                setTimeout(function () {
+                _self.$router.go(-2)
+                }, 1000)
+            }
+
           }
         })
       }

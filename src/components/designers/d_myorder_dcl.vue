@@ -34,9 +34,12 @@
                             <!--状态信息-->
                             <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
                             <template v-else >
-                                <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
-                                <div class="db-djs" v-else-if="item.project_state==3">等待雇主支付</div>
-                                <div class="db-djs" v-else>等待设计师完善订单</div>
+                                <template v-if="item.project_winBidder == user_id">
+                                    <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
+                                    <div class="db-djs" v-else-if="item.project_state==3">等待雇主支付</div>
+                                    <div class="db-djs" v-else>等待设计师完善订单</div>
+                                </template>
+                                <div class="db-djs" v-else>抢单失败</div>
                             </template>
                         </div>
                     </div>
@@ -49,20 +52,10 @@
                 <!--按钮状态-->
                 <div class="ds-bottom">
                     <div class="db-right">
-                        <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
-                        <!-- <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div> -->
-                        <div class="db-qrdd" v-if="isNull(item.project_winBidder)" style="background:white;">
-                            <!-- 抢单中 -->
-                        </div>
-                        <template v-else>
+                        <template  v-if="!isNull(item.project_winBidder)" >
                             <template v-if="item.project_winBidder == user_id" >
-                                <div class="db-qrdd" v-if="item.project_state==2" style="background:white;">
-                                    <!-- 完善订单 -->
-                                </div>
-                                <div class="db-qrdd" v-else @click="improveTheOrder(item._id)">完善订单</div>
+                                <div class="db-qrdd" v-if="item.project_state==1"  @click="improveTheOrder(item._id)">完善订单</div>
                             </template>
-
-                            <div class="db-qrdd" v-else>抢单失败</div>
                         </template>
                     </div>
                 </div>
@@ -219,7 +212,7 @@ export default {
     },
     methods:{
         toUrl: function (params) {
-            this.$router.push({name: params})
+            this.$router.push({name: params})   
             console.log("toUrl",params);
         },
         showToast(msg){
@@ -231,12 +224,14 @@ export default {
             let buttonState = {
                 user_type:"designer",
                 state:'dcl',
-                btns_type:0,
+                btns_type:-1,
             };
             //判断是否已选择设计师
             if(!this.isNull(item.project_winBidder)){
                 if(item.project_winBidder==this.user_id){
-                    buttonState.btns_type = 1;
+                    if(item.project_state==1) {
+                        buttonState.btns_type = 1;
+                    }             
                 }             
             } 
             common.setStorage('buttonState',buttonState);

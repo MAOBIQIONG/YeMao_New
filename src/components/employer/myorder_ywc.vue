@@ -31,7 +31,8 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <div class="db-djs">已完成</div>
+                            <div class="db-djs" v-if="item.project_evaluation==0">待评价</div>
+                            <div class="db-djs" v-else>已完成</div>
                         </div>
                     </div>
                 </div>
@@ -177,15 +178,18 @@ export default {
           return false
         },
          // 详情页
-        toDetails (item) {
-            console.log(item)
+        toDetails (params) {
+            console.log('params',params)
             let buttonState = {
                 user_type:"employer",
                 state:'ywc',
                 btns_type:0,
             };
+            if(params.item.project_evaluation!=0){
+                buttonState.btns_type = -1;
+            }
             common.setStorage('buttonState',buttonState);
-            this.$router.push({name: 'daichulixq', query: {id: item.item._id}})
+            this.$router.push({name: 'daichulixq', query: {id: params.item._id}})
         },
         checkImg(path){
           return common.getDefultImg(path);

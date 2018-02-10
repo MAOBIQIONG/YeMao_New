@@ -21,7 +21,6 @@ const state = {
   designerRefreshMark: 0,
   //我的订单tab状态
   orderTabIndex:0,
-
   //我的订单页面动画方向
   directionOrderTab:0,
 }

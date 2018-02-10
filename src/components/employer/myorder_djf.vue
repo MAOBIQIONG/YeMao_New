@@ -35,13 +35,16 @@
                             </div>
                             <div class="db-djs" v-if="item.project_state==4">待交付</div>
                             <div class="db-djs" v-if="item.project_state==5">交付中</div>
+                            <div class="db-djs" v-if="item.project_state==6">审核中</div>
                         </div>
                     </div>
                 </div>
                 <div class="ds-bottom">
                     <div class="db-right">
                       <div class="db-sxdd" v-tap="{methods: toCheck, id: item._id}">一键会审</div>
-                      <div v-if="item.project_state==5" class="db-qrdd" v-tap="{methods: confirmOrder, id: item._id}">确认交付</div>
+                      <div v-if="item.project_state==5" class="db-qrdd" v-tap="{methods: showConfirm, type:'submissionConfirm',id:item._id}">确认交付</div>
+                      <!--<div class="db-sxdd">一键会审</div>-->
+                      <!--<div class="db-qrdd" v-tap="{methods:confirmOrder,id:item._id}">确认交付</div>-->
                     </div>
                 </div>
             </div>
@@ -51,18 +54,29 @@
     <!-- <div class="noOrder">
         您还没有相关订单
     </div> -->
-      <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+        <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+        <div v-transfer-dom>
+            <confirm v-model="confirmShow"
+                @on-confirm = "compOnConfirm()"
+            >
+            <p style="text-align:center;">{{confirmMsg}}</p>
+            </confirm>
+        </div>
   </div>
 </template>
 <script>
-import {LoadMore,Toast} from 'vux'
+import {LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
 import scroller2 from '@/components/scroller2'
 export default {
     name:"scroll-list",
+    directives: {
+        TransferDom
+    },
     components:{
         LoadMore,
         Toast,
-        scroller2
+        scroller2,
+        Confirm
     },
     created(){
         console.log('created');
@@ -95,6 +109,8 @@ export default {
     },
     data(){
         return {
+            confirmType:'submissionConfirm',//submissionConfirm 确认提交
+            order_id:null,
             orderList: [],
             pagination: {
                 pageNo: 0,
@@ -132,7 +148,9 @@ export default {
             },
             hasMore:true,
             showMark:false,
-            showMsg:""
+            showMsg:"",
+            confirmShow:false,
+            confirmMsg:"",
         }
     },
     watch:{
@@ -190,7 +208,7 @@ export default {
             console.log(item)
             let buttonState = {
                 user_type:"employer",
-                state:'ywc',
+                state:'djf',
                 btns_type:0,
             };
             common.setStorage('buttonState',buttonState);
@@ -295,29 +313,50 @@ export default {
         onScrollBottom(){
             // console.log('on-scroll-bottom');
         },
-
+        showConfirm(params){
+            this.confirmShow = true;
+            this.order_id = params.id;
+            this.confirmType = params.type
+            if(params.type == "submissionConfirm"){
+                this.confirmMsg = "确认交付?"
+            }
+            console.log(this.order_id);
+        },
+        compOnConfirm(){
+            if(this.confirmType=="submissionConfirm"){
+                this.confirmOrder();
+            }
+        },
         /**确认交付**/
-        confirmOrder(param){
+        confirmOrder(){
           var _self = this;
           var params = {
             interfaceId: common.interfaceIds.confirmDelivery,
-            order_id: param.id
+            order_id: _self.order_id
           }
           _self.$axios.post('/mongoApi',{
             params: params
           },(response)=>{
             let data = response.data;
             if( data && data.code == 200 ){
-              _self.showToast("确认成功!");
-              _self.orderList.forEach(function (item,index) {
-                if( param.id == item._id ){
-                  _self.orderList.splice(index,1);
-                }
-              })
+                _self.showToast("确认成功!");
+                _self.renderAfterOperate();
+                 _self.$parent.index = 3;
             }else{
               _self.showToast("确认失败!");
             }
           })
+        },
+        renderAfterOperate(){
+            let _self = this;
+            let index = 0;
+            for (let r of _self.orderList) {
+                console.log(_self.orderList[index]);
+                if(r._id == _self.order_id){
+                    _self.orderList.splice(index,1);
+                }
+                index++
+            }
         },
         onSlidePrevious(){
             this.$emit('on-slide-previous')

@@ -31,7 +31,7 @@
               </p>
               <p>认证中心</p>
             </li>
-            <li v-tap="{methods:toWhere,pagename:'myorderdesigner'}">
+            <li v-tap="{methods:toMyOrder,pagename:'myorderdesigner'}">
               <p>
                 <img src="../../../static/images/designer/dingdan.png"/>
               </p>
@@ -123,6 +123,15 @@
         if (common.isNull(user._id) == true) {
           this.$router.push({name: 'login'})
         } else {
+          this.$router.push({name: params.pagename})
+        }
+      },
+      toMyOrder(params){
+        var user = common.getObjStorage('userInfo') || {};
+        if (common.isNull(user._id) == true) {
+          this.$router.push({name: 'login'})
+        } else {
+          this .$store.commit("changeIndexOrder",{index:0});
           this.$router.push({name: params.pagename})
         }
       },

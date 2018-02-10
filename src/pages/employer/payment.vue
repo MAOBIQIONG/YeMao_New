@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span>支付</span>
-      <div class="header-right" v-tap="{methods:goback}">完成</div>
+      <!-- <div class="header-right" v-tap="{methods:goback}">完成</div> -->
     </div>
     <div class="content content-p">
       <div class="ddxq xzffs">
@@ -72,8 +72,12 @@
       //数据初始化
       _self.initData();
     },
+    destroyed(){
+        common.delStorage('fromMyOrderDetail');
+    },
     methods: {
       goback() {
+        this.$store.commit("changeIndexOrder",{index:1});
         this.$router.goBack();
       },
       toUrl(name) {
@@ -112,8 +116,18 @@
         };
         beecloud.payReq(payData, function(result) {
           console.log("pay success:"+JSON.stringify(result))
-          _self.showToast("支付成功！")
-          _self.goback();
+          _self.showToast("支付成功！");
+          _self.$store.commit("changeIndexOrder",{index:2});
+          if(!common.isNull(common.getStorage('fromMyOrderDetail'))){
+              setTimeout(function () {
+                    _self.$router.go(-2);
+                },1000)
+          } else {
+              setTimeout(function () {
+                    _self.$router.go(-1);
+                },1000)
+          }
+
         }, function(e) {
           console.log("pay error:"+JSON.stringify(e))
           _self.showToast("支付失败！")

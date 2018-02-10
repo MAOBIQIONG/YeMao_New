@@ -92,7 +92,7 @@
         <div class="wzgd-box">
           <swiper loop auto height="45px" direction="vertical" :interval=1000 class="text-scroll" :show-dots="false">
             <swiper-item v-for="(item,index) in noticeList" :key="index">
-              <div class="notice-img"><img :src="item.user.img" /></div>
+              <div class="notice-img"><img :src="checkAvatar(item.user.img)" /></div>
               <div class="notice-text">{{item.title}}</div>
             </swiper-item>
           </swiper>
@@ -193,14 +193,23 @@
     },
     activated: function () {
       // console.log("index activated:")
-      this.$refs.scrollerBottom.reset()
-      var irm = this.$store.state.indexRefreshMark
+      var _self = this;
+      _self.$refs.scrollerBottom.reset()
+      var irm = _self.$store.state.indexRefreshMark
       if ( irm > 0 ) {
-        this.$store.state.indexRefreshMark = 0
-        this.pageNo = 0;
-        this.pageSize = 10;
-        this.onFetching = true;
-        this.initData()
+        _self.$store.state.indexRefreshMark = 0
+        _self.pageNo = 0;
+        _self.pageSize = 10;
+        _self.onFetching = true;
+        _self.initData()
+      }
+      // 初始化im
+      var user = common.getObjStorage("userInfo") || {};
+      if( !common.isNull(user.wy_token) && wyim.nim == null ){
+        wyim.init({
+          account: user._id,
+          token: user.wy_token,
+        });
       }
     },
     created: function () {

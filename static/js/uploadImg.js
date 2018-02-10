@@ -10,6 +10,7 @@ const uploadImg ={
     uploadPath: 'appUploadImg/imgBase64',             //上传接口
     isUpload: true,                                   //是否上传
     flag:0,                                           //拍照类型：0、拍照；1、相册;
+    waiting: null,                                    //加载动画
 
     //检测数据
     isNull:function(ele){
@@ -17,6 +18,15 @@ const uploadImg ={
         return false;
       else
           return true;
+    },
+
+    //加载动画
+    showWait:function(flag){
+      if( flag == true ){
+        uploadImg.waiting = plus.nativeUI.showWaiting();
+      }else if( uploadImg.waiting != null ){
+        uploadImg.waiting.close();
+      }
     },
 
     init:function(param){
@@ -106,6 +116,8 @@ const uploadImg ={
 
     //上传头像图片
     uploadHead:function(imgPath,flag) {
+      //加载动画
+      uploadImg.showWait(true);
       // window.alert("uploadHead:");
       var Orientation = null;
       var image = new Image();
@@ -127,9 +139,15 @@ const uploadImg ={
     },
 
     uploadFun:function(imgData){
+      setTimeout(function () {
+        //加载动画
+        uploadImg.showWait(false);
+      },5000)
       // window.alert("uploadFun：");
       var params = Qs.stringify({ "img":imgData})// 解决后台接收参数错误问题
       webapi.post(uploadImg.uploadPath, params, function (data) {
+        //加载动画
+        uploadImg.showWait(false);
         if( data && data.code == "01" ){
           uploadImg.callback(data.result);
         }else{
