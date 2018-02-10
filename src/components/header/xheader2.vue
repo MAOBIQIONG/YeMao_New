@@ -62,9 +62,9 @@
     color: #f65aa6 !important;
   }
   .vux-header-right{
-    height: .92rem;
+    /*height: .92rem;*/
     /*沉浸式样式*/
-    top:0.2rem !important;
+    top:0.05rem !important;
     /*非沉浸式样式*/
     /*top:0rem !important;*/
   }
