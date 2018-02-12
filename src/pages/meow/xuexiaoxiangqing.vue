@@ -97,6 +97,7 @@ import {Loading} from 'vux';
         requestData(){
             let _self = this;
             _self.loadingShow = true;
+            setTimeout(()=>{_self.loadingShow = false},2000);
             let params = {
                 interfaceId:common.interfaceIds.queryAlumniById,
                 _id:_self.itemId

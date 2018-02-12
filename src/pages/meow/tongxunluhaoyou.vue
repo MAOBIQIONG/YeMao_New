@@ -84,9 +84,16 @@
                         // item.phoneNumbers = contacts.phoneNumbers;
                         // _self.contactsArrData.push(item);
                         _self.contactsArrData = contacts
-                        
+                        let phoneArr = [];
+                        _self.contactsArrData.reduce(function(a,c,i,arr){
+                            console.log(a,c,i,arr);
+                            c.phoneNumbers.forEach(function(item,index){
+                                phoneArr.push(item.value);
+                            })
+                        },undefined);
+                        console.log(phoneArr);
                         alert(JSON.stringify(contacts));
-                        _self.getUsers();
+                        _self.getUsers(phoneArr);
                     }, function () {
                         alert("查找通讯录失败");
                     },{multiple:true});
@@ -95,20 +102,8 @@
                 });
             }       
         }
-        
-        let arr = [
-            {name:'a',phoneNumbers:[{type:'mobile',value:'1'},{type:'mobile',value:'4'}]},
-            {name:'b',phoneNumbers:[{type:'mobile',value:'2'}]},
-            {name:'c',phoneNumbers:[{type:'mobile',value:'3'}]}
-        ];
-        let pa = [];
-        arr.reduce(function(a,c,i,arr){
-            console.log(a,c,i,arr);
-            c.phoneNumbers.forEach(function(item,index){
-                pa.push(item.value);
-            })
-        },undefined);
-        console.log(pa);
+
+
     },
     mounted(){
         console.log('tongxunluhaoyouMounted');   
