@@ -54,7 +54,7 @@
         showText:"请正确填写信息",
         showTextNoType:"请选择设计类型",
         showTextNoPhone:"请输入手机号",
-        showTextWrongName:"昵称须为2到10位（字母，数字，下划线，减号,汉字）！",
+        showTextWrongName:"昵称须为2到10个字符,可由中英文、数字、'_'、'-'组成",
         showTextWrongPhone:"请输入有效的手机号码",
         typeList:common.getProjectTypes(),
 
@@ -164,7 +164,7 @@
         $(valp).blur(function() {
           var myreg = /^[a-zA-Z0-9\u4e00-\u9fa5_-]{2,10}$/;
           if(!myreg.test($(valp).val())) {
-            $('.tishi').text('昵称须为2到10位（字母，数字，下划线，减号,汉字）！');
+            $('.tishi').text("昵称须为2到10个字符,可由中英文、数字、'_'、'-'组成");
           } else {
             $('.tishi').text("");
           }
