@@ -20,7 +20,21 @@
       </div>
     </div>
     <!-- 上拉加载 -->
-    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
+    <scroller
+      v-model="pullUpDownStatus"
+      :height="height"
+      :lock-x="lockX"
+      :lock-y="lockY"
+      :use-pulldown="true"
+      :use-pullup="true"
+      :pulldown-config="pulldownConfig"
+      :pullup-config = "pullupConfig"
+      @on-scroll="scroll"
+      @on-scroll-bottom="onScrollBottom"
+      @on-pulldown-loading="pullDownLoading"
+      @on-pullup-loading="pullUpLoading"
+      ref="scroller"
+    >
       <div>
         <!--banner-->
         <swiper loop auto height="4rem" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange"></swiper>
@@ -115,9 +129,7 @@
         <div class="content"style="padding-bottom:0.2rem">
           <div class="gz-list" v-for="order in orderList" v-tap="{methods:toDetails,id:order._id}">
             <div class="gz-top">
-              <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}">
-                <!-- <img :src="checkAvatar(order.user.img)" /> -->
-              </div>
+              <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}"></div>
               <div class="gz-nicheng">{{order.user.user_name}}</div>
               <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
             </div>
@@ -147,7 +159,7 @@
             </div>
           </div>
         </div>
-        <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
       </div>
     </scroller>
   </div>
@@ -181,25 +193,55 @@
         value: ['上海市'],
         city: '',
 
-        pageNo: 0,
-        pageSize: 10,
         onFetching: true,
-        showLoading: false,
-        loadtext: '上拉加载',
-        loadmore: '上拉加载',
-        loadrefresh: '正在加载...',
-        loadnomore: '没有更多数据了'
+        lockX:true,
+        lockY:false,
+        height:"-60",
+        pagination: {
+          pageNo: 0,
+          pageSize: 10
+        },
+        pullUpDownStatus: {
+          pulldownStatus: 'default',
+          pullupStatus: 'default'
+        },
+        pulldownConfig:{
+          content: '', // '下拉刷新',
+          height: 120,
+          autoRefresh: false,
+          downContent: '', // '下拉刷新',
+          upContent: '', // '放开刷新',
+          loadingContent: '', // '刷新中...',
+          clsPrefix: 'xs-plugin-pulldown-'
+        },
+        pullupConfig:{
+          content: '上拉加载',
+          pullUpHeight: 60,
+          height: 40,
+          autoRefresh: false,
+          downContent: '放开加载',
+          upContent: '上拉加载',
+          loadingContent: '',
+          clsPrefix: 'xs-plugin-pullup-'
+        },
+        loadMoreStatus:{
+          tip:"正在加载",
+          tipNoData:"没有更多数据了",
+          tipLoading:"正在加载",
+          showLoading:true,
+          show:true,
+        },
+        hasMore:true,
       }
     },
     activated: function () {
       // console.log("index activated:")
       var _self = this;
-      _self.$refs.scrollerBottom.reset()
       var irm = _self.$store.state.indexRefreshMark
       if ( irm > 0 ) {
         _self.$store.state.indexRefreshMark = 0
-        _self.pageNo = 0;
-        _self.pageSize = 10;
+        _self.pagination.pageNo = 0;
+        _self.pagination.pageSize = 10;
         _self.onFetching = true;
         _self.initData()
       }
@@ -216,10 +258,27 @@
       // console.log('created:')
       this.initData()
     },
-    mounted: function () {
-      this.$nextTick(() => {
-        this.$refs.scrollerBottom.reset({top: 0})
-      })
+    mounted(){
+      this.$nextTick(
+        ()=>{
+          this.$refs.scroller.disablePullup();
+          this.$refs.scroller.reset({top:0});
+        }
+      );
+    },
+    watch:{
+      pullUpDownStatus:{
+        handler:function(val,oldval){
+          if(val.pullupStatus=="loading"){
+            this.loadMoreStatus.show=true;
+            if(this.hasMore == false){
+              this.loadMoreStatus.showLoading=false;
+            } else {
+              this.loadMoreStatus.showLoading=true;
+            }
+          }
+        }
+      }
     },
     methods: {
       toUrl: function (params) {
@@ -257,7 +316,7 @@
         _self.sortName = event.target.innerText;
         // if( _self.sortMark != param.value  ){
           _self.sortMark = param.value;
-          _self.pageNo = 0;
+          _self.pagination.pageNo = 0;
           _self.loadMore();
         // }
       },
@@ -321,37 +380,14 @@
           _self.city = city.trim();
           // console.log('city', _self.city)
           // 按城市查询订单
-          _self.pageNo = 0;
+          _self.pagination.pageNo = 0;
           _self.loadMore();
         }
       },
       logShow (str) {
         console.log('on-show', str)
       },
-      // 滑动
-      onScroll (sroll) {
-        // console.log("onScroll:"+JSON.stringify(sroll))
-        var _self = this;
-        _self.srollFlag = sroll.top > 100 ? 1 : 0;
-        if( sroll.top<-150 && sroll.top>=-400 ){
-          var size = (150-sroll.top-110)/100;
-          $("#page").css('background-size',size+'rem '+size+'rem')
-        }
-      },
 
-      // 下拉加载下拉加载
-      onScrollBottom () {
-        // console.log("onScrollBottom:")
-        var _self = this
-        if (_self.onFetching) {
-          // do nothing
-        } else {
-          _self.onFetching = true
-          setTimeout(() => {
-            _self.loadMore()
-          }, 100)
-        }
-      },
       /**
        * interface
        * */
@@ -374,13 +410,56 @@
         })
       },
 
+      //下拉刷新
+      refreshPageDate(){
+        let _self = this
+        _self.pagination.pageNo = 0;
+        _self.hasMore = true;
+        _self.loadMoreStatus.show=false;
+        _self.loadData();
+      },
+      //上拉加载
+      loadMore(){
+        let _self = this;
+        _self.loadData();
+      },
+      scroll(position){
+        // console.log("on-scroll",position);
+        var _self = this;
+        _self.srollFlag = position.top > 100 ? 1 : 0;
+        if( position.top<-150 && position.top>=-400 ){
+          var size = (150-position.top-110)/100;
+          $("#page").css('background-size',size+'rem '+size+'rem')
+        }
+      },
+      pullDownLoading(){
+        console.log('on-pull-down-loading');
+        this.refreshPageDate();
+      },
+      pullUpLoading(){
+        console.log('on-pull-up-loading');
+        this.loadMore();
+      },
+      onScrollBottom(){
+        // console.log('on-scroll-bottom');
+        var _self = this
+        if (_self.onFetching) {
+          // do nothing
+        } else {
+          _self.onFetching = true
+          setTimeout(() => {
+            _self.loadMore()
+          }, 100)
+        }
+      },
+
       // 加载更多
-      loadMore () {
+      loadData () {
         var _self = this;
         var params = {
           interfaceId: common.interfaceIds.getOrderList,
-          pageNo: _self.pageNo,
-          pageSize: _self.pageSize,
+          pageNo: _self.pagination.pageNo,
+          pageSize: _self.pagination.pageSize,
           where:{}
         }
         // 排序
@@ -389,9 +468,6 @@
         if( !common.isNull(_self.city) ){
           params.where.project_region = _self.city;
         }
-        //上拉加载
-        _self.loadtext = _self.loadrefresh;
-        _self.showLoading = true;
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -428,24 +504,25 @@
           })
         });
         //判断页码是否为0
-        if( _self.pageNo == 0 ){
+        if( _self.pagination.pageNo == 0 ){
           _self.orderList = orderList;
         }else{
           _self.orderList = [..._self.orderList, ...orderList];
         }
-        //重置页面滚动距离
-        _self.$nextTick(() => {
-          _self.$refs.scrollerBottom.reset()
-        })
-        //底部加载动画
-        _self.showLoading = false;
         //判断数据是否有一页
-        if ( orderList.length < _self.pageSize ) {
-          _self.loadtext = _self.loadnomore;
+        _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePulldown();
+        _self.$refs.scroller.donePullup();
+        console.log(orderList.length +"<>"+ _self.pagination.pageSize)
+        if( orderList.length < _self.pagination.pageSize ){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.$refs.scroller.disablePullup();
         } else {
-          _self.loadtext = _self.loadmore;
           _self.onFetching = false
-          _self.pageNo++;
+          _self.pagination.pageNo++;
+          _self.loadMoreStatus.show=false;
         }
       }
 
