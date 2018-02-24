@@ -54,7 +54,7 @@
         showText:"请正确填写信息",
         showTextNoType:"请选择设计类型",
         showTextNoPhone:"请输入手机号",
-        showTextWrongName:"昵称为4到10位（字母，数字，下划线，减号）",
+        showTextWrongName:"昵称须为2到10个字符,可由中英文、数字、'_'、'-'组成",
         showTextWrongPhone:"请输入有效的手机号码",
         typeList:common.getProjectTypes(),
 
@@ -162,9 +162,9 @@
       //判断昵称格式是否正确
       nichen(valp) {
         $(valp).blur(function() {
-          var myreg = /^[a-zA-Z0-9_-]{4,10}$/;
+          var myreg = /^[a-zA-Z0-9\u4e00-\u9fa5_-]{2,10}$/;
           if(!myreg.test($(valp).val())) {
-            $('.tishi').text('昵称为4到10位（字母，数字，下划线，减号）！');
+            $('.tishi').text("昵称须为2到10个字符,可由中英文、数字、'_'、'-'组成");
           } else {
             $('.tishi').text("");
           }
@@ -286,7 +286,7 @@
 
         nextStep(){
             let _self = this;
-            let regNickname = /^[a-zA-Z0-9_-]{4,10}$/;
+            let regNickname = /^[a-zA-Z0-9\u4e00-\u9fa5_-]{2,10}$/;
             let regMobilePhone = /^1[0-9]{10}$/;
             if(!regNickname.test(_self.param.nickname)){
                 _self.showText = _self.showTextWrongName

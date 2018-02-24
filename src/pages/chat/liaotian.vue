@@ -290,7 +290,7 @@
     background-color: #f2f2f2;
   }
   .content{
-    padding-bottom: 1rem;
+    /*padding-bottom: 1rem;*/
   }
   .message{
     width: 7.1rem;

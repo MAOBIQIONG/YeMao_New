@@ -453,7 +453,7 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          newValue = common.checkMoney(newValue,10000,2);
+          newValue = common.checkMoney(newValue,100000000,2);
           _self.$refs.unit.value = newValue;
           _self.subParams.project_unit = newValue;
         }
@@ -467,7 +467,7 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          newValue = common.checkMoney(newValue,10000,2);
+          newValue = common.checkMoney(newValue,100000000,2);
           _self.$refs.area.value = newValue;
           _self.subParams.project_area = newValue;
         }

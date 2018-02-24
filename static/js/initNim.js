@@ -145,6 +145,8 @@ const im = {
       }else{
         // 震动
         plus.device.vibrate( 50 );
+        // 凤鸣
+        plus.device.beep();
       }
     }else{
       console.log("Now it's the development environment!")
