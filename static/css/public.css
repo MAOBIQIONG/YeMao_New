@@ -1076,8 +1076,8 @@ body,html{
   overflow: auto
 }
 .emoji-small{
-  height: 0.7rem;
-  width: 0.7rem;
+  height: 0.6rem;
+  width: 0.6rem;
   vertical-align: middle;
 }
 .emoji-thumbnail{
