@@ -88,10 +88,12 @@
                         _self.contactsArrData.reduce(function(a,c,i,arr){
                             console.log(a,c,i,arr);
                             c.phoneNumbers.forEach(function(item,index){
-                                phoneArr.push(item.value);
+                                if(item.type=="mobile"){
+                                    phoneArr.push(item.value);
+                                }
                             })
                         },undefined);
-                        console.log(phoneArr);
+                        alert(phoneArr);
                         alert(JSON.stringify(contacts));
                         _self.getUsers(phoneArr);
                     }, function () {
@@ -102,6 +104,7 @@
                 });
             }       
         }
+        // _self.getUsers(['13501644417','']);
 
 
     },
@@ -129,6 +132,7 @@
                 params: params
             }, response => {
                 console.log(response);
+                alert(response);
                 var data = response.data
                 if ( data ) {
                     
