@@ -35,6 +35,7 @@
                             
                             <div class="db-djs" v-if="item.project_state==4">待交付</div>
                             <div class="db-djs" v-if="item.project_state==5">交付中</div>
+                            <div class="db-djs" v-if="item.project_state==6">审核中</div>                      
                         </div>
                     </div>
                 </div>
@@ -148,7 +149,7 @@ export default {
             showMark:false,
             showMsg:"",
             confirmShow:false,
-            confirmMsg:"确定要取消该订单吗",
+            confirmMsg:"确定要取消该订单吗？",
         }
     },
     watch:{

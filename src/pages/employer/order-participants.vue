@@ -18,7 +18,9 @@
                 <div class="qt-nichen">
                   <span>{{item.user.user_name}}</span>
                 </div>
-                <div class="chat"><img src='../../../static/images/employer/miaomiao.png'></div>
+                <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:item.user._id,name:item.user.user_name,img:item.user.img}}">
+                  <img src='../../../static/images/employer/miaomiao.png'>
+                </div>
                 <div class="qt-jiage">
                   <div class="qt-time"><span>{{item.taskTime}}小时</span></div>
                   <div class="qt-jingqian"><span>￥</span><span>{{item.quotation}}</span></div>
@@ -113,6 +115,9 @@
       /**************************************/
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      toUrl2: function (params) {
+        this.$router.push({name: params.pagename,query:params.query || {}})
       },
       //头像
       checkAvatar(path) {

@@ -71,10 +71,12 @@
   float: left;
   width: 0.9rem;
   height: 0.9rem;
-  background: #CCCCCC;
+  background-color: #CCCCCC;
   margin: 0.35rem 0.3rem;
   border-radius: 50%;
   overflow: hidden;
+  background-position:center center;
+  background-size:cover;
 }
 
 .jl-list .jianli .touxiang img {

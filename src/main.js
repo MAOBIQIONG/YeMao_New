@@ -6,7 +6,7 @@ import router from './router'
 import vueTap from 'v-tap'
 import { Datetime, Group } from 'vux'
 import $ from '../static/js/jquery-3.2.1.min'
-// import axios from 'axios'
+import im from '../static/js/initNim'
 import store from './vuex/store'
 import common from '../static/js/common.js'
 import uploadImg from '../static/js/uploadImg.js'
@@ -34,6 +34,7 @@ window.uploadImg = uploadImg
 window.uploadImg2 = uploadImg2
 window.myshare = share
 window.mypay = pay
+window.wyim = im
 
 router.beforeEach(function (to, from, next) {
   // 如果isBack为true时，证明是用户点击了回退，执行slide-right动画

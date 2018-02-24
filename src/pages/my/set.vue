@@ -51,8 +51,10 @@
         this.$router.push({name: params.pagename})
       },
       logout(){
-        localStorage.setItem("userInfo",'{}');
+        common.setStorage("userInfo",'{}');
         this.goback();
+        // im登出
+        wyim.logout();
       }
     }
   }

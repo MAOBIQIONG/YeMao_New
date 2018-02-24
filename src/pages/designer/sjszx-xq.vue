@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="xiaoxi">
+            <div class="xiaoxi" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:user._id,name:user.user_name,img:user.img}}">
                 <img src="../../../static/images/designer/xiangqing_liaotian.png" alt="">
             </div>
         </div>
@@ -188,7 +188,7 @@
         if( !common.isNull(user._id) ){
             // _self.isLogin = true;
             _self.my_id = user._id
-        } 
+        }
     },
     methods: {
       goback(){
@@ -196,6 +196,9 @@
       },
       toUrl: function (param) {
         this.$router.push({name: param.pagename,query:{id:param.id}})
+      },
+      toUrl2: function (params) {
+        this.$router.push({name: params.pagename,query:params.query || {}})
       },
       toChws: function (params) {
         var _self = this;
@@ -316,7 +319,7 @@
             } else {
                 return;
             }
-            
+
             console.log(this.collectFlag);
             // return;
             var params = {

@@ -416,6 +416,16 @@ const common = {
     return name;
   },
 
+  /**图片添加后缀**/
+  addSuffixToImage: function(path,suffix){
+    if( common.isNull(suffix) ){
+      suffix = '_min1x';
+    }
+    var firstPath = path.substr(0,path.lastIndexOf("."));
+    var lastPath = path.substr(path.lastIndexOf("."));
+    return firstPath+suffix+lastPath;
+  },
+
   // 用户头像验证
   getAvatar: function (path,local){
     if( common.isNull(local) == true ){
@@ -424,7 +434,7 @@ const common = {
     if( common.isNull(path) == true ){
       path = local;
     }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
-      path = root + path;
+      path = root + common.addSuffixToImage(path);
     }
     return path;
   },
@@ -437,7 +447,7 @@ const common = {
     if( common.isNull(path) == true ){
       path = local;
     }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
-      path = root + path;
+      path = root + common.addSuffixToImage(path);
     }
     return path;
   },
@@ -560,10 +570,12 @@ const common = {
     queryList:'queryList',                         // 分页查询数据
     queryResumeById:'queryResumeById',             // 人才简历详情
     queryWEById:'queryWEById',                     // 工作经历详情
+    addAA:'addAlumniAssoc',                        // 添加校友会
     queryAlumniById:'queryAlumniById',             // 校友会详情
     queryAlumniByName:'queryAlumniByName',         // 验证是否存在相同名称校友会
     getUsersByPhone:'getUsersByPhone',             // 根据手机号码查询校友会成员
     addAlumnis:'addAlumnis',                       // 校友会添加成员
+    getAlumnis:'getAlumnis',                       // 查询校友会成员
     checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
     registerUser:'registerUser',                   // 注册
     updateUserById:'updateUserById',               // 修改用户信息
@@ -576,6 +588,9 @@ const common = {
     orderComments:'orderComments',                 // 订单评价
     confirmDelivery:'confirmDelivery',             // 确认支付
     orderReview:'orderReview',                     // 一键会审
+    getMyConvers:'getMyConversation',              // 查询我的会话列表
+    getChatRecord:'getChatRecord',                 // 查询聊天记录
+    addChatRecord:'addChatRecord',                 // 新增聊天记录
 
   },
 

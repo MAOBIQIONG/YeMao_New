@@ -89,6 +89,9 @@
       _self.commentdata.user_id = _self.userInfo._id;
       _self.initData();
     },
+    destroyed(){
+        common.delStorage('fromMyOrderDetail');
+    },
     methods: {
       goback(){
         this.$router.goBack();
@@ -180,9 +183,16 @@
           let data = response.data;
           if( data.code == 200 ){
             _self.showToast("评价成功!")
-            setTimeout(function () {
-              _self.goback();
-            },1000)
+            if(!common.isNull(common.getStorage('fromMyOrderDetail'))){
+                setTimeout(function () {
+                    _self.$router.go(-2);
+                },1000)
+            } else {
+                setTimeout(function () {
+                    _self.$router.go(-1);
+                },1000)
+            }
+
           }else{
             _self.showToast("评价失败!")
           }

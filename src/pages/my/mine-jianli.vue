@@ -141,9 +141,7 @@
         </div>
       </div>
       <!--聊天-->
-      <div class="mmlt">
-        喵 喵 聊 天
-      </div>
+      <div class="mmlt" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:resume.user_id,name:resume.real_name,img:resume.img}}">喵 喵 聊 天</div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <loading :show="loadingShow" text="加载中"></loading>
@@ -204,7 +202,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
             this.user_id = user._id;
         } else {
             console.log('未获取用户参数');
-        }            
+        }
         if(resumeId){
             this.resumeId = resumeId;
             let resume_user_id = common.getStorage('resume_user_id');
@@ -216,10 +214,10 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
         }
         if(isUserId){
             this.isMyResume = true;
-            this.requestData2();        
+            this.requestData2();
         }
-        
-        
+
+
     },
     mounted: function () {
     //   this.dianzan();
@@ -231,6 +229,9 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      toUrl2: function (params) {
+        this.$router.push({name: params.pagename,query:params.query || {}})
       },
         // 头像
       checkAvatar (path) {
@@ -251,7 +252,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
                 console.log('没有获取用户信息');
                 _self.$router.push({name:"login"});
                 return false;
-            } 
+            }
             return true;
         },
         collect_dom(param){
@@ -265,7 +266,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
             } else {
                 return;
             }
-            
+
             console.log(this.resume.collectFlag);
             // return;
             var params = {
@@ -305,54 +306,54 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
                 // console.error("参数需要字符串");
                 return;
             }
-            var returnAge;  
-            var strBirthdayArr=strBirthday.split("-");  
-            var birthYear = strBirthdayArr[0];  
-            var birthMonth = strBirthdayArr[1];  
-            var birthDay = strBirthdayArr[2];  
-            
-            var d = new Date();  
-            var nowYear = d.getFullYear();  
-            var nowMonth = d.getMonth() + 1;  
-            var nowDay = d.getDate();  
-            
-            if(nowYear == birthYear){  
-                returnAge = 0;//同年 则为0岁  
-            }  
-            else{  
-                var ageDiff = nowYear - birthYear ; //年之差  
-                if(ageDiff > 0){  
-                    if(nowMonth == birthMonth) {  
-                        var dayDiff = nowDay - birthDay;//日之差  
-                        if(dayDiff < 0)  
-                        {  
-                            returnAge = ageDiff - 1;  
-                        }  
-                        else  
-                        {  
-                            returnAge = ageDiff ;  
-                        }  
-                    }  
-                    else  
-                    {  
-                        var monthDiff = nowMonth - birthMonth;//月之差  
-                        if(monthDiff < 0)  
-                        {  
-                            returnAge = ageDiff - 1;  
-                        }  
-                        else  
-                        {  
-                            returnAge = ageDiff ;  
-                        }  
-                    }  
-                }  
-                else  
-                {  
-                    returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天  
-                }  
-            }  
-            
-            return returnAge;//返回周岁年龄            
+            var returnAge;
+            var strBirthdayArr=strBirthday.split("-");
+            var birthYear = strBirthdayArr[0];
+            var birthMonth = strBirthdayArr[1];
+            var birthDay = strBirthdayArr[2];
+
+            var d = new Date();
+            var nowYear = d.getFullYear();
+            var nowMonth = d.getMonth() + 1;
+            var nowDay = d.getDate();
+
+            if(nowYear == birthYear){
+                returnAge = 0;//同年 则为0岁
+            }
+            else{
+                var ageDiff = nowYear - birthYear ; //年之差
+                if(ageDiff > 0){
+                    if(nowMonth == birthMonth) {
+                        var dayDiff = nowDay - birthDay;//日之差
+                        if(dayDiff < 0)
+                        {
+                            returnAge = ageDiff - 1;
+                        }
+                        else
+                        {
+                            returnAge = ageDiff ;
+                        }
+                    }
+                    else
+                    {
+                        var monthDiff = nowMonth - birthMonth;//月之差
+                        if(monthDiff < 0)
+                        {
+                            returnAge = ageDiff - 1;
+                        }
+                        else
+                        {
+                            returnAge = ageDiff ;
+                        }
+                    }
+                }
+                else
+                {
+                    returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+                }
+            }
+
+            return returnAge;//返回周岁年龄
         },
         requestData(){
             let _self = this;

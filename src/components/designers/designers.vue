@@ -33,7 +33,7 @@
             </div>
             <div class="sjs-bottom">
               <div class="sjs-yysj"v-tap="{methods:toUrl,pagename:'maintain'}">应邀设计</div>
-              <div class="sjs-mmlt"v-tap="{methods:toUrl,pagename:'maintain'}">喵喵聊天</div>
+              <div class="sjs-mmlt"v-tap="{methods:toUrl,pagename:'liaotian',query:{id:item._id,name:item.user_name,img:item.img}}">喵喵聊天</div>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
     },
     methods: {
       toUrl: function (params) {
-        this.$router.push({name: params.pagename})
+        this.$router.push({name: params.pagename,query:params.query || {}})
       },
       // 详情页
       toDetails (param) {
