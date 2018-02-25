@@ -279,6 +279,10 @@ const common = {
       return "<span>"+month2+"  </span><span style='font-size:.7em;'>"+date2+"日</span>";
     }
   },
+  //3.2.1、字符串时间格式转时间戳
+  string2TimeStamp:function (dateStr){
+    return new Date(dateStr.replace(/-/g,"/")).getTime();
+  },
   //3.3、时间比较
   dateCompare:function (start,end){
     var a = new Date(start.replace(/-/g,"/"));
@@ -300,7 +304,7 @@ const common = {
     return common.timeStamp2String(resultdate.getTime(),"ymd");
   },
 
-  //6.3、根据时间戳获取发布时间
+  //3.5、根据时间戳获取发布时间
   getDateDiff: function (dateTimeStamp){
     var result = '';
     var minute = 1000 * 60;

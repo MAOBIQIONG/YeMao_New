@@ -134,7 +134,7 @@
               <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
             </div>
             <div class="gz-timeleixin">
-              <div class="gz-time"><span><img src="../../../static/images/index/time.png"/></span><span>{{order.project_deadLine}}过期</span></div>
+              <div class="gz-time"><span><img src="../../../static/images/index/time.png"/></span><span>{{getDateDiff(order.refresh_date)}}</span></div>
               <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
             </div>
             <div class="gz-content">
@@ -303,6 +303,9 @@
       },
       checkImg(path){
         return common.getDefultImg(path);
+      },
+      getDateDiff(date){
+        return common.getDateDiff(date)
       },
       // 智能排序
       znbx () {

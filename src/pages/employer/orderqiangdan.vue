@@ -10,11 +10,11 @@
       <div class="oq-content">
         <div class="oq-list">
           <div class="oq-left"><span>我的报价</span></div>
-          <div class="oq-right"><input type="text" placeholder="请输入报价" v-model="subParams.quotation"/></div>
+          <div class="oq-right"><input type="text" placeholder="请输入报价" v-model="budget" ref="budget"/></div>
         </div>
         <div class="oq-list">
           <div class="oq-left"><span>任务时长</span></div>
-          <div class="oq-right"><input type="text" placeholder="请输入时长" v-model="subParams.taskTime"/></div>
+          <div class="oq-right"><input type="text" placeholder="请输入时长" v-model="hours" ref="hours" /></div>
         </div>
         <div class="fangan">
           <div class="tle"><span>方案说明</span></div>
@@ -38,13 +38,13 @@
       return {
         subParams:{
           order_id:null,
-          user_id:"",
-          quotation:"",
-          taskTime:"",
-          schemeExplains:"",
+          user_id: '',
+          quotation: '',
+          taskTime: '',
+          schemeExplains: '',
         },
         showMark:false,
-        showMsg:"",
+        showMsg: '',
       }
     },
     created: function () {
@@ -102,6 +102,37 @@
           }
         })
       }
+    },
+
+    computed: {
+      // 计算属性的 getter
+      hours: {
+        // getter
+        get: function () {
+          return this.subParams.taskTime;
+        },
+        // setter
+        set: function (newValue) {
+          var _self = this;
+          newValue = common.checkMoney(newValue,100000,2);
+          _self.$refs.hours.value = newValue;
+          _self.subParams.taskTime = newValue;
+        }
+      },
+
+      budget: {
+        // getter
+        get: function () {
+          return this.subParams.quotation;
+        },
+        // setter
+        set: function (newValue) {
+          var _self = this;
+          newValue = common.checkMoney(newValue,1000000000,2);
+          _self.$refs.budget.value = newValue;
+          _self.subParams.quotation = newValue;
+        }
+      },
     }
   }
 </script>
