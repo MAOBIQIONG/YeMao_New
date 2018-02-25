@@ -93,6 +93,7 @@
                                 }
                             })
                         },undefined);
+                        alert('phoneArr:')
                         alert(phoneArr);
                         alert(JSON.stringify(contacts));
                         _self.getUsers(phoneArr);
@@ -131,10 +132,10 @@
             _self.$axios.post('/mongoApi', {
                 params: params
             }, response => {
-                console.log(response);
-                alert(response);
+                console.log(JSON.stringify(response));
+                alert(JSON.stringify(response));
                 var data = response.data
-                if ( data ) {
+                if (data) {
                     
                 }
             });
