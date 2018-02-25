@@ -30,6 +30,7 @@
     },
     props:{
       to: String,              // 发送人/群id
+      scene: String,           // 聊天场景:p2p,team
     },
     data () {
       return {
@@ -110,16 +111,18 @@
           _self.emojiFlag = false;
           _self.comment_text = '';
           _self.saveChatRecord(msg);
-        });
+        },_self.scene);
       },
 
       saveChatRecord(msg){
         var _self = this;
+        var scene = _self.scene=='team' ? 1 : 0;
         let params = {
           interfaceId:common.interfaceIds.addChatRecord,
           sender: msg.from,
           recipient: msg.to,
-          content: msg.text
+          content: msg.text,
+          scene: scene
         };
         _self.$axios.post('/mongoApi',{
           params

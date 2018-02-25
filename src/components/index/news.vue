@@ -22,7 +22,7 @@
           >
             <div>
               <!--消息列表-->
-              <div class="xiaoxi-list" v-for="item in dataList" v-tap="{methods:toUrl,pagename:'liaotian',query:{id:item.user.id,name:item.user.name,img:item.user.img}}">
+              <div class="xiaoxi-list" v-for="item in dataList" v-tap="{methods:toUrl,scene:item.scene,query:{id:item.user.id,name:item.user.name,img:item.user.img}}">
                 <div class="xl-touxiang">
                   <img :src="checkAvatar(item.user.img)" />
                 </div>
@@ -117,7 +117,9 @@
         this.$router.goBack();
       },
       toUrl: function (params) {
-        this.$router.push({name: params.pagename,query:params.query || {}})
+        console.log("params.scene:"+params.scene)
+        var pagename = common.checkInt(params.scene)==1 ? 'groupchat' : 'liaotian';
+        this.$router.push({name: pagename,query:params.query || {}})
       },
       getDataStr(date){
         return common.timeStamp2String(date,'ymdhm');

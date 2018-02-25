@@ -27,28 +27,17 @@
             <ul>
               <li v-for="(message, index) in dataArray" :key="index" :class="message.from==user._id?'an-move-right':'an-move-left'">
                 <p class="time"> <span v-text="getDataStr(message.create_date)"></span></p>
-                <!--<p class="time system" v-if="message.from!=user._id"> <span>{{message.text}}</span> </p>-->
                 <div class="main" :class="message.sender==user._id?'self':''">
-                  <img class="avatar" :src="message.sender==user._id? ownerAvatarUrl: contactAvatarUrl">
-                  <!-- 文本 -->
+                  <img class="avatar" :src="message.sender==user._id?ownerAvatarUrl:checkAvatar(message.user.img)">
                   <div class="text" v-html="filterImgs(message.content)"></div>
-                  <!--<div class="text" v-if="message.type=='text'" v-html="message.content"></div>-->
-                  <!-- 图片 -->
-                  <!--<div class="text" v-else-if="message.type=='image'">-->
-                    <!--<img :src="message.text" class="image" alt="聊天图片">-->
-                  <!--</div>-->
-                  <!--&lt;!&ndash; 其他 &ndash;&gt;-->
-                  <!--<div class="text" v-else v-text="'[暂未支持的消息类型:'+ message.type +']\n\r' + message.text">-->
-                  <!--</div>-->
                 </div>
               </li>
-
             </ul>
           </div>
         </div>
       </scroller>
     </div>
-    <chat :to="target_id" @upup="sended"></chat>
+    <chat :to="target_id" :scene="scene" @upup="sended"></chat>
   </div>
 </template>
 
@@ -63,6 +52,7 @@
     },
     data () {
       return {
+        scene: 'team',
         target_id:'',
         target_name: '',
         ownerAvatarUrl: '',
@@ -128,7 +118,6 @@
     created(){
       var _self = this;
       _self.target_id = _self.$route.query.id;
-      console.log("target_id:"+_self.target_id)
       _self.target_name = _self.$route.query.name;
       _self.contactAvatarUrl = _self.checkAvatar(_self.$route.query.img);
       _self.user = common.getObjStorage("userInfo") || {};
@@ -174,7 +163,8 @@
           sender: msg.from,            // 发送者ID
           recipient: msg.to,           // 接收者ID
           content: msg.text,           // 最新聊天内容
-          create_date: msg.time        // 会话创建时间
+          create_date: msg.time,       // 会话创建时间
+          user: msg.user || {}
         }
         _self.dataArray.push(record);
         _self.resetHeight(200);
@@ -182,8 +172,17 @@
       // 接收消息后，保存消息
       receiveMsg(msg){
         var _self = this;
-        if( _self.target_id == msg.from ){
+        if( _self.dataArray.length > 0 ){
+          _self.dataArray.forEach(function (item,index) {
+            if( msg.from == item.user.id ){
+              msg.user = item.user;
+            }
+          })
+        }
+        if( msg.user ){
           _self.sended(msg);
+        }else{
+          _self.getUserById(msg);
         }
       },
       //下拉刷新
@@ -230,11 +229,12 @@
         }
         _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
         let params = {
-          interfaceId:common.interfaceIds.getChatRecord,
+          interfaceId: common.interfaceIds.getChatRecord,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
-          where:{
-            sender: _self.user._id,
+          scene: 1,
+          where: {
+            // sender: _self.user._id,
             recipient: _self.target_id,
           }
         };
@@ -279,6 +279,24 @@
             _self.resetHeight(125);
           },200)
         }
+      },
+      //获取用户信息
+      getUserById(msg){
+        let _self = this;
+        let params = {
+          interfaceId: common.interfaceIds.queryUserById,
+          user_id: msg.from,
+        };
+        _self.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          let data = response.data;
+          if( data ){
+            var id = data._id.toString();
+            msg.user = {id: id,name: data.user_name,img: data.img};
+            _self.sended(msg);
+          }
+        })
       },
     }
   }
