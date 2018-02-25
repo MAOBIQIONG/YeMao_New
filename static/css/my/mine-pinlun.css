@@ -35,7 +35,7 @@
 color: #3e5c9a;
 }
 .pinglun-list .pl-content .time {
-	font-size: 0.2rem;
+	font-size: 0.24rem;
 	color: #b4b4b4;
 }
 
@@ -48,7 +48,7 @@ color: #3e5c9a;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  font-size: 0.27rem;
+  font-size: 0.28rem;
   padding: 0.1rem;
 	overflow: hidden;
 }

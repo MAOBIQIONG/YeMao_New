@@ -236,6 +236,8 @@ const common = {
   timeStamp2String:function (time, id) {
     if( common.isNull(time) == true ){
       return "";
+    }else if( common.isString(time) ){
+      return time;
     }
     //y=年;ymd=年月日;ymdhm年月日时分;ymdhms年月日时分秒
     var datetime = new Date();
@@ -279,6 +281,10 @@ const common = {
       return "<span>"+month2+"  </span><span style='font-size:.7em;'>"+date2+"日</span>";
     }
   },
+  //3.2.1、字符串时间格式转时间戳
+  string2TimeStamp:function (dateStr){
+    return new Date(dateStr.replace(/-/g,"/")).getTime();
+  },
   //3.3、时间比较
   dateCompare:function (start,end){
     var a = new Date(start.replace(/-/g,"/"));
@@ -300,7 +306,7 @@ const common = {
     return common.timeStamp2String(resultdate.getTime(),"ymd");
   },
 
-  //6.3、根据时间戳获取发布时间
+  //3.5、根据时间戳获取发布时间
   getDateDiff: function (dateTimeStamp){
     var result = '';
     var minute = 1000 * 60;
@@ -591,6 +597,7 @@ const common = {
     getMyConvers:'getMyConversation',              // 查询我的会话列表
     getChatRecord:'getChatRecord',                 // 查询聊天记录
     addChatRecord:'addChatRecord',                 // 新增聊天记录
+    queryUserById:'queryUserById',                 // 根据用户ID查询用户信息
 
   },
 

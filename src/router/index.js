@@ -30,6 +30,7 @@ import shoucangsjs from '@/pages/employer/shoucangsjs'
 import zfcg from '@/pages/employer/zfcg'
 import payment from '@/pages/employer/payment'
 import liaotian from '@/pages/chat/liaotian'
+import groupchat from '@/pages/chat/group_chat'
 import daizhifu from '@/pages/employer/daizhifu'
 import daijiaofu from '@/pages/employer/daijiaofu'
 import yiwancheng from '@/pages/employer/yiwancheng'
@@ -490,6 +491,10 @@ const routeArray = [
   { path: '/liaotian',
     name: 'liaotian',
     component: liaotian
+  },
+  { path: '/groupchat',
+    name: 'groupchat',
+    component: groupchat
   },
   // index模块
   { path: '/fenlei',

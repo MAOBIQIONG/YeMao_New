@@ -14,7 +14,7 @@
         </div>
         <div class="mingcheng">
           <div class="xuexiao">{{alumni.school_name}}</div>
-          <div class="jrxs"><span>+&nbsp;加入学校</span><span>+&nbsp;校友交流</span></div>
+          <div class="jrxs"><span>+&nbsp;加入学校</span><span v-tap="{methods:toUrl2,pagename:'groupchat',query:{id:'343647591',name:'内部群001',img:'./static/images/logo.png'}}">+&nbsp;校友交流</span></div>
         </div>
       </div>
       <div class="xxjj">
@@ -94,6 +94,10 @@ import {Loading} from 'vux';
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
+        toUrl2: function (params) {
+          console.log("params.pagename:"+params.pagename)
+          this.$router.push({name: params.pagename, query: params.query})
+        },
         requestData(){
             let _self = this;
             _self.loadingShow = true;
@@ -109,8 +113,8 @@ import {Loading} from 'vux';
                     let data = response.data.alumni
                     _self.data = data;
                     if (data) {
-                        _self.loaded = true;                       
-                        
+                        _self.loaded = true;
+
                     } else {
                         console.log('noData');
                     }

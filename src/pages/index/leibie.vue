@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <div class="header p-static">
       <div class="header-left"v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>{{title}}</span>
@@ -7,7 +7,7 @@
     <!--雇主列表-->
     <div class="content">
       <!-- 上拉加载 -->
-      <scroller lock-x height="-30px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100">
+      <scroller lock-x height="-60" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100">
         <div>
           <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
             <div class="gz-top">
@@ -18,7 +18,7 @@
               <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
             </div>
             <div class="gz-timeleixin">
-              <div class="gz-time"><span><img src="../../../static/images/index/time.png"/></span><span>{{order.project_deadLine}}过期</span></div>
+              <div class="gz-time"><span><img src="../../../static/images/index/time.png"/></span><span>{{getDateDiff(order.refresh_date)}}</span></div>
               <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
             </div>
             <div class="gz-content">
@@ -98,6 +98,9 @@
       },
       checkImg(path){
         return common.getDefultImg(path);
+      },
+      getDateDiff(date){
+        return common.getDateDiff(date)
       },
       // 抢单
       grabOrder (id) {
@@ -207,7 +210,7 @@
   .content{
     width: 100%;
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: 0px;
     background: #f2f2f2;
   }
 </style>

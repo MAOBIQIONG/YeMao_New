@@ -242,20 +242,20 @@
 
       // 分享
       shareApp() {
-        var _self = this;
-        if( !common.isNull(_self.userInfo._id) ){
-          console.log("分享")
-          if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
-            myshare.init({
-              href: 'www.baidu.com',
-              title: '测试标题',
-              content: '测试内容',
-              thumbs: ['./static/images/logo.png'],
-            })
-          }
+        var downloadHref = '';
+        if( common.browser.versions.ios ){
+          downloadHref = 'https://itunes.apple.com/cn/app/%E5%BB%BA%E8%81%94%E5%A4%9C%E7%8C%AB/id1268232893?mt=8';
+        }else if( common.browser.versions.android ){
+          downloadHref = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.scu.jlyemao&from=singlemessage';
         }else{
-          _self.toUrl({pagename:'login'});
+          return;
         }
+        myshare.init({
+          href: downloadHref,
+          title: '建联夜猫',
+          content: '欢迎下载建联夜猫APP!',
+          thumbs: ['./static/images/logo.png'],
+        })
       },
 
     }

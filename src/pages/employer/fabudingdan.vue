@@ -53,7 +53,7 @@
             <span>抢单截止日期</span>
           </div>
           <div class="qdtime-right">
-              <datetime v-model="subParams.project_deadLine"class="shijian"></datetime>
+              <datetime v-model="deadLine"class="shijian"></datetime>
           </div>
         </div>
       </div>
@@ -103,14 +103,14 @@
               <span>设计起止时间</span>
             </div>
             <div class="gb-right">
-              <span><datetime v-model="subParams.project_startTime" class="shijian"></datetime></span> / <span><datetime v-model="subParams.project_endTime" class="shijian"></datetime></span>
+              <span><datetime v-model="startTime" class="shijian"></datetime></span> / <span><datetime v-model="endTime" class="shijian"></datetime></span>
             </div>
           </div>
         </div>
       </div>
       <div class="sctp">
         <div class="sc-top">上传图片</div>
-        <div class="img-body" v-for="img in imgList">
+        <div class="img-body" v-for="img in subParams.imgs">
           <img :src="getDefultImg(img.src)" />
         </div>
         <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
@@ -127,7 +127,6 @@
 <script>
   import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast } from 'vux'
   import store from '@/vuex/store'
-  import uploadImg from "../../../static/js/uploadImg";
 
   export default {
     components: {
@@ -141,63 +140,60 @@
     store,
     data () {
       return {
-        isInvited:false,
-        userInfo:{},
-        improve:0,
-        order_id:null,
-        imgList:[],
-        isShow:true,
-        typeList:[],
-        city:['上海市'],
+        isInvited: false,
+        userInfo: {},
+        improve: 0,
+        order_id: null,
+        isShow: true,
+        typeList: [],
+        city: ['上海市'],
+        deadLine: common.getSomeday(),
+        startTime: common.getSomeday(-1),
+        endTime: common.getSomeday(-2),
         subParams:{
-          user_id:"",
-          project_type:"",
+          user_id: '',
+          project_type: '',
           project_region:"上海市",
-          project_title:"",
-          project_describe:"",
-          project_budget:"",
-          project_deadLine:"",
-          project_unit:"",
-          project_area:"",
-          project_depth:[],
-          project_workHours:"",
-          project_startTime:"",
-          project_endTime:"",
-          project_participants:0,
-          project_winBidder:"",
-          project_state:0,
-          imgs:[]
+          project_title: '',
+          project_describe: '',
+          project_budget: '',
+          project_deadLine: 0,
+          project_unit: '',
+          project_area: '',
+          project_depth: [],
+          project_workHours: '',
+          project_startTime: 0,
+          project_endTime: 0,
+          project_participants: 0,
+          project_winBidder: '',
+          project_state: 0,
+          imgs: []
         },
         is_submit: false,
-        showMark:false,
-        showMsg:"",
+        showMark: false,
+        showMsg: '',
         addressData: ChinaAddressV4Data,
       }
     },
     created: function () {
       console.log("fbdd created:")
+      var _self = this;
       // 用户信息
-      this.userInfo = common.getObjStorage("userInfo");
-      this.subParams.user_id = this.userInfo._id;
-      // 初始化日期
-      var timeStamp = common.getCurrentTimeStamp();
-      var dateStr = common.timeStamp2String(timeStamp,"ymd");
-      this.subParams.project_deadLine=dateStr;
-      this.subParams.project_startTime=dateStr;
-      this.subParams.project_endTime=dateStr;
+      _self.userInfo = common.getObjStorage("userInfo");
+      _self.subParams.user_id = _self.userInfo._id;
       // 项目类型
-      this.typeList = common.getProjectTypes();
+      _self.typeList = common.getProjectTypes();
       //判断是否页面来自于设计师完善
-      this.order_id = this.$route.query.id;
-      this.improve = this.$route.query.improve;
-      if(this.$route.query.improve && !common.isNull(this.order_id)) {
-          this.loadData();
+      _self.order_id = _self.$route.query.id;
+      _self.improve = _self.$route.query.improve;
+      if(_self.$route.query.improve && !common.isNull(_self.order_id)) {
+        _self.loadData();
       }
       //判断页面是否来自于邀请
-      let invitation = this.$route.query.invitation;
-      let designerid = this.$route.query.designerid;
+      let invitation = _self.$route.query.invitation;
+      let designerid = _self.$route.query.designerid;
       if(invitation && designerid) {
-          this.isInvited=true;
+        _self.isInvited=true;
       }
     },
     destroyed(){
@@ -217,7 +213,7 @@
         uploadImg.init({
           callback:function (path) {
             console.log("path："+path)
-            _self.imgList.push({src:path});
+            _self.subParams.imgs.push({src:path});
           }
         });
       },
@@ -351,6 +347,11 @@
         _self.showToast("请输入预算金额!");
         return false
       }
+      var currdate = common.getSomeday();
+      if( !common.dateCompare(currdate,_self.deadLine) ){
+        _self.showToast("抢单截止日期不能小于当前日期!");
+        return false
+      }
       if( common.isNull(_self.subParams.project_unit) == true ){
         _self.showToast("请输入设计单位!");
         return false
@@ -367,11 +368,11 @@
         _self.showToast("请输入工时!");
         return false
       }
-      if( common.dateCompare(_self.subParams.project_deadLine,_self.subParams.project_startTime) == false ){
+      if( !common.dateCompare(_self.deadLine,_self.startTime) ){
         _self.showToast("开始时间不能小于抢单截止日期!");
         return false
       }
-      if( common.dateCompare(_self.subParams.project_startTime,_self.subParams.project_endTime) == false ){
+      if( !common.dateCompare(_self.startTime,_self.endTime) ){
         _self.showToast("截止时间不能小于开始日期!");
         return false
       }
@@ -385,31 +386,20 @@
         // 避免多次点击提交按钮
         if( _self.is_submit == true ) return;
         _self.is_submit = true;
-        // 设置加载动画
-        _self.showLoad = true;
-        setTimeout(function () {
-          _self.showLoad = false;
-        },5000)
-        // 图片
-        if( _self.imgList.length > 0 ){
-          _self.imgList.forEach(function (item,index) {
-            _self.subParams.imgs.push(item.src);
-          })
-        }
+        // 字符串转时间戳
+        _self.subParams.project_deadLine = common.string2TimeStamp(_self.deadLine);
+        _self.subParams.project_startTime = common.string2TimeStamp(_self.startTime);
+        _self.subParams.project_endTime = common.string2TimeStamp(_self.endTime);
+        // 参数
         var params = {
-        //批量添加
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
         }
-
-        if(_self.isInvited){
-            params.data.project_winBidder = _self.designerid;
-        }
+        // 邀请设计师
+        params.data.project_winBidder = _self.isInvited==true ? _self.designerid : '';
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          // 取消加载动画
-          _self.showLoad = false;
           // 提交标识
           _self.is_submit = true;
           // 返回数据
@@ -439,7 +429,7 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          newValue = common.checkMoney(newValue,10000,2);
+          newValue = common.checkMoney(newValue,100000000,2);
           _self.$refs.hours.value = newValue;
           _self.subParams.project_workHours = newValue;
         }

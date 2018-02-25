@@ -174,7 +174,7 @@ body,html{
   float: left;
   height: 0.8rem;
   line-height: 0.8rem;
-  font-size: 0.3rem;
+  font-size: 0.32rem;
   margin-left: 0.1rem;
 }
 
@@ -256,7 +256,7 @@ body,html{
 .gz-list .gz-bottom {
   width: 100%;
   height: 0.8rem;
-  font-size: 0.22rem;
+  font-size: 0.24rem;
   margin-top: 0.1rem;
 }
 
@@ -444,7 +444,7 @@ body,html{
 
 .sjs-list .sjs-top .st-neirong .sn-bottom {
   height: 0.4rem;
-  font-size: 0.2rem;
+  font-size: 0.24rem;
 }
 
 .sjs-list .sjs-top .st-neirong .sn-bottom .sb-nianling {
@@ -649,7 +649,7 @@ body,html{
 
 .qdsjs-list .qdsjs-box .qb-content {
   width: 7rem;
-  font-size: 0.26rem;
+  font-size: 0.28rem;
   margin-left: 0.12rem;
   margin-top: 0.24rem;
   line-height: 0.46rem;
@@ -726,7 +726,7 @@ body,html{
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-top {
   width: 100%;
   height: 1rem;
-  font-size: 0.26rem;
+  font-size: 0.28rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -737,7 +737,7 @@ body,html{
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom {
   width: 100%;
   height: 0.6rem;
-  font-size: 0.2rem;
+  font-size: 0.24rem;
 }
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-mianji {
   float: left;
@@ -775,7 +775,7 @@ body,html{
 .ddxq .ddxq-list .ddxq-box {
   width: 7.1rem;
   height: 0.8rem;
-  font-size: 0.3rem;
+  font-size: 0.32rem;
   margin-left: 0.2rem;
   border-bottom: 1px solid #f2f2f2;
 }
@@ -815,7 +815,7 @@ body,html{
 
 .ddxq .ddxq-bottom {
   width: 100%;
-  font-size: 0.3rem;
+  font-size: 0.28rem;
   margin-top: 0.2rem;
   background: white;
   position: relative;
@@ -834,7 +834,7 @@ body,html{
 }
 
 .ddxq .ddxq-bottom .chakangengduo {
-  font-size: 0.22rem;
+  font-size: 0.24rem;
   position: absolute;
   bottom: 0.1rem;
   right: 0.28rem;
@@ -889,7 +889,7 @@ body,html{
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom {
   width: 100%;
   height: 0.6rem;
-  font-size: 0.2rem;
+  font-size: 0.24rem;
 }
 
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin {
@@ -911,7 +911,7 @@ body,html{
 .ddlist-sjsdai .ds-bottom {
   width: 100%;
   height: 0.8rem;
-  font-size: 0.22rem;
+  font-size: 0.24rem;
 }
 
 .ddlist-sjsdai .ds-bottom .db-right {

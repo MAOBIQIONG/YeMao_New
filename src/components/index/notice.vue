@@ -163,9 +163,7 @@
           interfaceId:common.interfaceIds.getMyConvers,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
-          where:{
-            user_id: _self.user._id,
-          }
+          user_id: _self.user._id,
         };
         this.$axios.post('/mongoApi',{
           params
@@ -200,10 +198,6 @@
         } else {
           _self.pagination.pageNo++
         }
-        /****/
-        setTimeout(function () {
-          _self.resetHeight(125);
-        },200)
       },
 
     }
