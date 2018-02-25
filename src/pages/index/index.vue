@@ -516,7 +516,6 @@
         _self.loadMoreStatus.showLoading=false;
         _self.$refs.scroller.donePulldown();
         _self.$refs.scroller.donePullup();
-        console.log(orderList.length +"<>"+ _self.pagination.pageSize)
         if( orderList.length < _self.pagination.pageSize ){
           _self.hasMore = false;
           _self.loadMoreStatus.show=true;

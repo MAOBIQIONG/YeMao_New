@@ -57,7 +57,7 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'cancelOrder'}">取消订单</div>
                         <template v-if="item.sub.length>0">
-                            <template v-if="isNull(item.project_winBidder)">                   
+                            <template v-if="isNull(item.project_winBidder)">
                                 <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                                 <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                                 <div class="db-qrdd"
@@ -79,7 +79,7 @@
                                 </div>
                             </template>
                         </template>
-                        <template v-else>   
+                        <template v-else>
                             <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                             <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                             <div class="db-qrdd" style="display: none"></div>
@@ -214,12 +214,16 @@ export default {
             //计算天数差的函数，通用
             let DateDiff=function(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
                 var  aDate,  oDate1,  oDate2,  iDays
-                aDate  =  sDate1.split("-")
-                oDate1  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])    //转换为12/18/2002格式
+                if( common.isString(sDate1) ){
+                  aDate  =  sDate1.split("-")
+                  oDate1  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])    //转换为12/18/2002格式
+                }else{
+                  oDate1 = sDate1
+                }
                 aDate  =  sDate2.split("-")
                 oDate2  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])
-                iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)
-                if (iDays == 0) return '抢单结束'    //把相差的毫秒数转换为天数
+                iDays  =  parseInt((oDate1  -  oDate2)  /  1000  /  60  /  60  /24) //Math.abs
+                if (iDays < 0) return '抢单结束'    //把相差的毫秒数转换为天数
                 return  iDays + "天后截止报名"
             }
             return DateDiff(date,today);
@@ -555,7 +559,7 @@ export default {
             if(this.confirmType =="commitImprove"){
                 this.updateStateAfterImprove();
             }
-        },       
+        },
     }
 }
 </script>

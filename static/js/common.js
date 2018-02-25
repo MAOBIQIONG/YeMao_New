@@ -236,6 +236,8 @@ const common = {
   timeStamp2String:function (time, id) {
     if( common.isNull(time) == true ){
       return "";
+    }else if( common.isString(time) ){
+      return time;
     }
     //y=年;ymd=年月日;ymdhm年月日时分;ymdhms年月日时分秒
     var datetime = new Date();
