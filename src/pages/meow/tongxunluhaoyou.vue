@@ -32,9 +32,9 @@
           <div class="jieshao">
             <!-- <p class="name">{{item.user_name}}</p> -->
             
-            <p class="xinge"><span>联系人：</span><span>{{item.displayName}}</span></p>
+            <p class="xinge"><span>联系人：</span><span>{{item.user_name}}</span></p>
             <p class="name"><span>手机号：</span>{{item.phoneNumbers[0].value}}</p>
-            <div class="biaoqian">
+            <div class="biaoqian" v-if="item.canJoin==1">
               加入校友
             </div>
           </div>
@@ -124,7 +124,8 @@
                     nickName:null,
                     phoneNumbers:[
                         {value:'1234',type:'mobile'}
-                    ]
+                    ],
+                    canJoin:1
                 },
                 {
                     id:3,
@@ -135,7 +136,8 @@
                     nickName:null,
                     phoneNumbers:[
                         {value:'9012',type:'mobile'}
-                    ]
+                    ],
+                    canJoin:1
                 },
                 {
                     id:4,
@@ -146,7 +148,8 @@
                     nickName:null,
                     phoneNumbers:[
                         {value:'3456',type:'mobile'}
-                    ]
+                    ],
+                    canJoin:1
                 },
             ],
             searchText:''
@@ -224,6 +227,9 @@
                         _self.contactsArrData.reduce(function(a,c,i,arr){
                             // console.log(a,c,i,arr);
                             if(c.phoneNumbers.length!=0){
+                                c.user_name = c.displayName;
+                                c.canJoin = 0;
+                                // console.log(JSON.stringify(c));
                                 _self.contactsArrData1.push(c);
                             }
                             c.phoneNumbers.forEach(function(item,index){
@@ -232,7 +238,11 @@
                                 }
                             });
                         },undefined);
-                        _self.contactsArr = _self.contactsArrData1;
+                        // _self.contactsArrData1.reduce(function(a,c,i,arr){
+                        //     c.user_name = c.displayName;
+                        //     c.canJoin = 0;
+                        // },undefined);
+                        // _self.contactsArr = _self.contactsArrData1;
                         // alert('phoneArr:')
                         // alert(phoneArr);
                         // alert(JSON.stringify(contacts));
@@ -278,10 +288,29 @@
                 alert(JSON.stringify(response));
                 var data = response.data
                 if (data) {
-                    
+                   _self.setData(data);
                 }
             });
         },
+        setData(data){
+            let _self = this;
+            alert('start setData');
+            _self.contactsArrData1.reduce(function(a1,c1,i1,arr1){
+                data.reduce(function(a2,c2,i2,arr2){
+                    c1.phoneNumbers.reduce(function(a3,c3,i3,arr3){
+                        console.log('phoneNumbers-c3:'+JSON.stringify(c3));
+                        if(c3==c2.phone){
+                            console.log('data-c2:'+JSON.stringify(c2));
+                            c1.user_name = c2.user_name;
+                            c1.canJoin = 1;
+                        }
+                    },undefined);             
+                },undefined);
+                console.log('contactsArrData1-c1:'+JSON.stringify(c1));
+            },undefined);
+            _self.contactsArr = _self.contactsArrData1;
+            alert('end setData');
+        }
     }
   }
 </script>
