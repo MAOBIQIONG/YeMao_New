@@ -1,11 +1,12 @@
 <template>
   <div>
+<div style="position:fixed;width:100%;z-index:999;">
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static;">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>通讯录好友</span>
     </div>
-    <div class="content content-p">
+
       <!--搜索-->
       <div class="shousuo">
         <div class="sskuang">
@@ -19,16 +20,18 @@
         <div class="dshy-right">
           全部加入
         </div>
-      </div>
+      </div>    
+</div>
+    <div class="content" style="padding-top:3rem;">   
       <!--列表-->
       <div class="jl-list">
-        <div class="jianli" v-for="(item,index) in contactsArr" :key="index">
+        <div class="jianli" v-for="(item,index) in contactsArr" :key="index"  v-if="!isNull(item.phoneNumbers)">
           <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
             <!-- <img src="../../../static/images/bj.jpg" /> -->
           </div>
           <div class="jieshao">
             <!-- <p class="name">{{item.user_name}}</p> -->
-            <p class="name" v-if="!isNull(phoneNumbers)">{{item.phoneNumbers[0].value}}</p>
+            <p class="name">{{item.phoneNumbers[0].value}}</p>
             <p class="xinge"><span>联系人：</span><span>{{item.displayName}}</span></p>
             <div class="biaoqian">
               加入校友
@@ -59,47 +62,54 @@
             ],
             contactsArrData:[
                 {
+                    id:1,
                     //userInfo
                     img:'',
                     user_name:'****',
                     //contact
-                    name:'***',
+                    displayName:null,
+                    name:null,
+                    nickName:null,
                     phoneNumbers:[
                         {value:'***********',type:'mobile'}
                     ]
                 },
-            //test
+                //test
                 {
-                    //userInfo
+                    id:2,
                     img:'',
-                    user_name:'aaaa',
-                    //contact
-                    name:'aaaar',
+                    user_name:'aaa',
+                    displayName:'aaar',
+                    name:null,
+                    nickName:null,
                     phoneNumbers:[
                         {value:'1234',type:'mobile'}
                     ]
                 },
                 {
-                    //userInfo
+                    id:3,
                     img:'',
-                    user_name:'bbbb',
-                    //contact
-                    name:'bbbbr',
+                    user_name:'bbb',
+                    displayName:'bbbr',
+                    name:null,
+                    nickName:null,
                     phoneNumbers:[
-                        {value:'5678',type:'mobile'}
+                        {value:'9012',type:'mobile'}
                     ]
                 },
                 {
-                    //userInfo
+                    id:4,
                     img:'',
-                    user_name:'cccc',
-                    //contact
-                    name:'ccccr',
+                    user_name:'ccc',
+                    displayName:'cccr',
+                    name:null,
+                    nickName:null,
                     phoneNumbers:[
-                        {value:'9012',type:'mobile'},
-                        {value:'901211',type:'mobile'}
+                        {value:'3456',type:'mobile'}
                     ]
                 },
+            ],
+            contactsArrData1:[
             ],
             searchText:''
       }
@@ -113,14 +123,15 @@
                 _self.contactsArr = [];
                 //搜索框为空时显示所有
                 if(_self.isNull(val)){
-                    _self.contactsArr = _self.contactsArrData;
+                    _self.contactsArr = _self.contactsArrData1;
                     return;
                 }
                 //联系人数据源
-                _self.contactsArrData.reduce(function(a1,c1,i1,arr1){
+                _self.contactsArrData1.reduce(function(a1,c1,i1,arr1){
                     //跳出循环标志位
                     let continueState = 0;
                     //遍历每条记录的属性
+                    // console.log(Object.keys(c1));
                     Object.keys(c1).reduce(function(a2,c2,i2,arr2){                   
                         if(c2=="phoneNumbers"){
                             if(continueState == 1){
@@ -141,8 +152,9 @@
                         } else{
                             let pvalue = c1[c2];
                             // console.log("key:"+c2,',',"value:"+pvalue,',','continueState:'+continueState)
+                            // console.log("!pavlueIsNull:"+!_self.isNull(pvalue),"pavlue=='':" + (pvalue==''));
                             if(!_self.isNull(pvalue)){
-                                if(pvalue.match(val)&&continueState == 0){
+                                if(new String(pvalue).match(val) && continueState == 0){
                                     _self.contactsArr.push(c1);
                                     continueState = 1;
                                 }
@@ -168,22 +180,26 @@
                         // item.name = contacts.name;
                         // item.phoneNumbers = contacts.phoneNumbers;
                         // _self.contactsArrData.push(item);
+                        alert(contacts.length)
                         _self.contactsArrData = contacts;
-                        _self.contactsArr = contacts;
                         let phoneArr = [];
                         _self.contactsArrData.reduce(function(a,c,i,arr){
                             // console.log(a,c,i,arr);
+                            if(c.phoneNumbers.length!=0){
+                                _self.contactsArrData1.push(c);
+                            }
                             c.phoneNumbers.forEach(function(item,index){
                                 if(item.type=="mobile"){
                                     phoneArr.push(item.value.replace(/\s/g,''));
                                 }
-                            })
+                            });
                         },undefined);
-                        alert('phoneArr:')
-                        alert(phoneArr);
-                        alert(JSON.stringify(contacts));
-                        alert(JSON.stringify(_self.contactsArrData));
-                        alert(JSON.stringify(_self.contactsArr));
+                        _self.contactsArr = _self.contactsArrData1;
+                        // alert('phoneArr:')
+                        // alert(phoneArr);
+                        // alert(JSON.stringify(contacts));
+                        // alert(JSON.stringify(_self.contactsArrData));
+                        // alert(JSON.stringify(_self.contactsArr));
                         _self.getUsers(phoneArr);
                     }, function () {
                         alert("查找通讯录失败");
