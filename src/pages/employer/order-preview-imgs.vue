@@ -29,7 +29,7 @@
     created: function () {
       console.log("views:")
       var _self = this;
-      var imgs = common.getObjStorage("od_viewImgs")||[];
+      var imgs = common.getObjStorage("viewImgs")||[];
       imgs.forEach(function (item,i) {
         _self.imgList.push({"img": _self.checkImg(item)})
       })

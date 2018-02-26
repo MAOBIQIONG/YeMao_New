@@ -117,17 +117,18 @@
       saveChatRecord(msg){
         var _self = this;
         var scene = _self.scene=='team' ? 1 : 0;
+        var interfaceId = _self.scene=='team' ? common.interfaceIds.addGroupRecord : common.interfaceIds.addChatRecord;
         let params = {
-          interfaceId:common.interfaceIds.addChatRecord,
+          interfaceId: interfaceId,
           sender: msg.from,
           recipient: msg.to,
           content: msg.text,
-          scene: scene
+          sender_name: msg.fromNick
         };
         _self.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response);
+          // console.log(response);
           var data = response.data;
           if( data.code == 200 ){
             _self.$emit('upup', msg)// 主动触发upup方法，'hehe'为向父组件传递的数据
