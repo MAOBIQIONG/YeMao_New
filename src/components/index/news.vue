@@ -143,13 +143,18 @@
       },
       // 接收消息后，保存消息
       receiveMsg(msg){
-        console.log("msg:"+JSON.stringify(msg))
         var _self = this;
         _self.dataList.forEach(function (item,index) {
-          if( msg.from == item.sender ){
-            item.recipient_unread_count += 1;
-          }else if( msg.from == item.recipient ){
-            item.sender_unread_count += 1;
+          if( msg.scene == 'team' ){
+            if( msg.to == item.recipient ){
+              item.sender_unread_count += 1;
+            }
+          }else{
+            if( msg.from == item.sender ){
+              item.recipient_unread_count += 1;
+            }else if( msg.from == item.recipient ){
+              item.sender_unread_count += 1;
+            }
           }
         })
       },

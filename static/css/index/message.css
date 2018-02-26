@@ -101,11 +101,9 @@
 }
 
 .msg-content .tab_box .xiaoxi-list .xiao-right .xr-bottom .content{
-  -webkit-box-flex:1;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
   color: #666666;
+  -webkit-box-flex:1;
+  display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .msg-content .tab_box .xiaoxi-list .xiao-right .xr-bottom .badge{
   height: 0.4rem;
