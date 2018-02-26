@@ -311,7 +311,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
       },
         toViewImgs: function (imgs,notAllowed) {
             if(notAllowed) return;
-            common.setStorage("od_viewImgs",imgs);
+            common.setStorage("viewImgs",imgs);
             this.$router.push({name:'emporderimgs',query:{id:this.order_id}})
         },
       // 订单详情字数限制

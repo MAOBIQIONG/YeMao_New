@@ -31,8 +31,9 @@
           </div>
           <div class="jieshao">
             <!-- <p class="name">{{item.user_name}}</p> -->
-            <p class="name">{{item.phoneNumbers[0].value}}</p>
+            
             <p class="xinge"><span>联系人：</span><span>{{item.displayName}}</span></p>
+            <p class="name"><span>手机号：</span>{{item.phoneNumbers[0].value}}</p>
             <div class="biaoqian">
               加入校友
             </div>
@@ -47,6 +48,7 @@
   export default {
     data: function () {
         return {
+            //搜索数据源
             contactsArr:[
                 // {
                 //     //userInfo
@@ -60,6 +62,7 @@
                 // },
 
             ],
+            //数据源
             contactsArrData:[
                 {
                     id:1,
@@ -109,7 +112,42 @@
                     ]
                 },
             ],
+            //处理后数据源
             contactsArrData1:[
+            //test
+                {
+                    id:2,
+                    img:'',
+                    user_name:'aaa',
+                    displayName:'aaar',
+                    name:null,
+                    nickName:null,
+                    phoneNumbers:[
+                        {value:'1234',type:'mobile'}
+                    ]
+                },
+                {
+                    id:3,
+                    img:'',
+                    user_name:'bbb',
+                    displayName:'bbbr',
+                    name:null,
+                    nickName:null,
+                    phoneNumbers:[
+                        {value:'9012',type:'mobile'}
+                    ]
+                },
+                {
+                    id:4,
+                    img:'',
+                    user_name:'ccc',
+                    displayName:'cccr',
+                    name:null,
+                    nickName:null,
+                    phoneNumbers:[
+                        {value:'3456',type:'mobile'}
+                    ]
+                },
             ],
             searchText:''
       }
@@ -180,7 +218,7 @@
                         // item.name = contacts.name;
                         // item.phoneNumbers = contacts.phoneNumbers;
                         // _self.contactsArrData.push(item);
-                        alert(contacts.length)
+                        // alert(contacts.length)
                         _self.contactsArrData = contacts;
                         let phoneArr = [];
                         _self.contactsArrData.reduce(function(a,c,i,arr){
