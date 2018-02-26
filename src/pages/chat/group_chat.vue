@@ -115,7 +115,11 @@
         }
       }
     },
+    activated: function () {
+      console.log("group_chat activated:")
+    },
     created(){
+      console.log("group_chat created:")
       var _self = this;
       _self.target_id = _self.$route.query.id;
       _self.target_name = _self.$route.query.name;
@@ -172,13 +176,11 @@
       // 接收消息后，保存消息
       receiveMsg(msg){
         var _self = this;
-        if( _self.dataArray.length > 0 ){
-          _self.dataArray.forEach(function (item,index) {
-            if( msg.from == item.user.id ){
-              msg.user = item.user;
-            }
-          })
-        }
+        _self.dataArray.forEach(function (item,index) {
+          if( msg.from == item.user.id ){
+            msg.user = item.user;
+          }
+        })
         if( msg.user ){
           _self.sended(msg);
         }else{
@@ -234,7 +236,7 @@
           pageSize: _self.pagination.pageSize,
           scene: 1,
           where: {
-            // sender: _self.user._id,
+            sender: _self.user._id,
             recipient: _self.target_id,
           }
         };

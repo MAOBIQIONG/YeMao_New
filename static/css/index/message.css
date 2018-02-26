@@ -98,10 +98,24 @@
   height: 0.8rem;
   line-height: 0.8rem;
   display: -webkit-box;
+}
+
+.msg-content .tab_box .xiaoxi-list .xiao-right .xr-bottom .content{
+  -webkit-box-flex:1;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
   color: #666666;
+}
+.msg-content .tab_box .xiaoxi-list .xiao-right .xr-bottom .badge{
+  height: 0.4rem;
+  line-height: 0.4rem;
+  width: 0.4rem;
+  margin-top: 0.2rem;
+  text-align: center;
+  color: #fff;
+  border-radius: 50%;
+  background-color: #f74c31;
 }
 
 .msg-content .tab_box .tongzhi-list {

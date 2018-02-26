@@ -122,8 +122,8 @@ const im = {
     // console.log("send:"+JSON.stringify(msg))
   },
   sendMsgDone : function (error, msg) {
-    console.log(error);
-    console.log(msg);
+    // console.log(error);
+    // console.log(msg);
     //console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error?'成功':'失败') + ', id=' + msg.idClient);
     im.pushMsg(msg);
     if(!error){//发送成功
