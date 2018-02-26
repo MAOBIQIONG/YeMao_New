@@ -194,11 +194,9 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
-      //
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
       },
-
       // 点赞效果
       dianzan(param){
         var _self = this;
@@ -253,7 +251,16 @@
         this.loadMore();
       },
       onScrollBottom(){
-        // console.log('on-scroll-bottom');
+        console.log('on-scroll-bottom');
+        var _self = this
+        if (_self.onFetching) {
+          // do nothing
+        } else {
+          _self.onFetching = true
+          setTimeout(() => {
+            _self.loadMore()
+          }, 100)
+        }
       },
       //获取数据
       loadData(){
@@ -294,7 +301,6 @@
         } else {
           _self.meows.push(...data.meows);
         }
-        _self.loadMoreStatus.show=false;
         _self.loadMoreStatus.showLoading=false;
         _self.$refs.scroller.donePulldown();
         _self.$refs.scroller.donePullup();
@@ -302,11 +308,12 @@
         if(meows.length < _self.pagination.pageSize){
           _self.hasMore = false;
           _self.loadMoreStatus.show=true;
-          _self.loadMoreStatus.showLoading=false;
           _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
           _self.$refs.scroller.disablePullup();
         } else {
+          _self.onFetching = false;
           _self.pagination.pageNo++
+          _self.loadMoreStatus.show=false;
         }
       },
 

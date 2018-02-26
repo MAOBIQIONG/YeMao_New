@@ -22,16 +22,20 @@
           >
             <div>
               <!--消息列表-->
-              <div class="xiaoxi-list" v-for="item in dataList" v-tap="{methods:toUrl,pagename:'liaotian',query:{id:item.user.id,name:item.user.name,img:item.user.img}}">
+              <div class="xiaoxi-list" v-for="item in dataList" v-tap="{methods:toUrl,scene:item.scene,query:{id:item.user.id,name:item.user.name,img:item.user.img}}">
                 <div class="xl-touxiang">
                   <img :src="checkAvatar(item.user.img)" />
                 </div>
                 <div class="xiao-right">
                   <div class="xr-top">
                     <span class="name">{{item.user.name}}</span>
-                    <span class="time">{{getDataStr(item.create_date)}}</span>
+                    <span class="time">{{getDataStr(item.refresh_date)}}</span>
                   </div>
-                  <div class="xr-bottom" v-html="filterImgs(item.content)"></div>
+                  <div class="xr-bottom">
+                    <div class="content" v-html="filterImgs(item.content)"></div>
+                    <div class="badge" v-if="item.sender==user._id && item.sender_unread_count>0">{{item.sender_unread_count}}</div>
+                    <div class="badge" v-else-if="item.sender!=user._id && item.recipient_unread_count>0">{{item.recipient_unread_count}}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -107,17 +111,25 @@
         }
       }
     },
+    activated: function () {
+      console.log("news activated:")
+    },
     created: function () {
+      console.log("news created:")
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
       _self.loadData();
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     methods: {
       goback() {
         this.$router.goBack();
       },
       toUrl: function (params) {
-        this.$router.push({name: params.pagename,query:params.query || {}})
+        console.log("params.scene:"+params.scene)
+        var pagename = common.checkInt(params.scene)==1 ? 'groupchat' : 'liaotian';
+        this.$router.push({name: pagename,query:params.query || {}})
       },
       getDataStr(date){
         return common.timeStamp2String(date,'ymdhm');
@@ -128,6 +140,23 @@
       },
       filterImgs(text){
         return wyim.filterEmoji2(text);
+      },
+      // 接收消息后，保存消息
+      receiveMsg(msg){
+        var _self = this;
+        _self.dataList.forEach(function (item,index) {
+          if( msg.scene == 'team' ){
+            if( msg.to == item.recipient ){
+              item.sender_unread_count += 1;
+            }
+          }else{
+            if( msg.from == item.sender ){
+              item.recipient_unread_count += 1;
+            }else if( msg.from == item.recipient ){
+              item.sender_unread_count += 1;
+            }
+          }
+        })
       },
       //下拉刷新
       refreshPageDate(){

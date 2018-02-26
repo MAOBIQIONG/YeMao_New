@@ -198,13 +198,14 @@
       // 倒计时
       count_down(time){
         var _self = this;
+        _self.$refs.verify_btn.innerText = time + "秒后重新获取";
         var interval = setInterval(function () {
           if( !_self.$refs.verify_btn ) return;
           // 开始
           time--;
           _self.$refs.verify_btn.innerText = time + "秒后重新获取";
-          if( time == 0 ) {
-            clearInterval(t);
+          if( time <= 0 ) {
+            clearInterval(interval);
             _self.$refs.verify_btn.innerText = "重新获取";
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
@@ -254,7 +255,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          _self.is_verify = false;
+          // _self.is_verify = false;
           var data = response.data;
           if( data ) {
             if( data.code == 201 ){

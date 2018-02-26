@@ -98,10 +98,22 @@
   height: 0.8rem;
   line-height: 0.8rem;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
+}
+
+.msg-content .tab_box .xiaoxi-list .xiao-right .xr-bottom .content{
   color: #666666;
+  -webkit-box-flex:1;
+  display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.msg-content .tab_box .xiaoxi-list .xiao-right .xr-bottom .badge{
+  height: 0.4rem;
+  line-height: 0.4rem;
+  width: 0.4rem;
+  margin-top: 0.2rem;
+  text-align: center;
+  color: #fff;
+  border-radius: 50%;
+  background-color: #f74c31;
 }
 
 .msg-content .tab_box .tongzhi-list {

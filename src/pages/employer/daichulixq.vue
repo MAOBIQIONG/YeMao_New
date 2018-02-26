@@ -276,7 +276,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      oUrl2: function (params) {
+      toUrl2: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
       },
       toStar(params){

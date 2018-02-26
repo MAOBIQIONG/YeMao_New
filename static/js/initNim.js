@@ -99,13 +99,20 @@ const im = {
   onCustomMsg : function (msg) {
     // 处理自定义消息
   },
+  // 处理群通知消息
+  onTeamNotificationMsg : function (msg) {
+    console.log("msg:"+JSON.stringify(msg))
+  },
 
-//发送文字消息
-  sendTextMsg : function (to,content,callback) {
+  //发送文字消息
+  sendTextMsg : function (to,content,callback,scene) {
+    if( scene == null || scene == undefined ){
+      scene = 'p2p';
+    }
     // 设置返回函数
     im.callback = callback;
     var msg = im.nim.sendText({
-      scene: 'p2p',
+      scene: scene,
       to: to,
       text: content,
       done: im.sendMsgDone
@@ -115,8 +122,8 @@ const im = {
     // console.log("send:"+JSON.stringify(msg))
   },
   sendMsgDone : function (error, msg) {
-    //console.log(error);
-    //console.log(msg);
+    // console.log(error);
+    // console.log(msg);
     //console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error?'成功':'失败') + ', id=' + msg.idClient);
     im.pushMsg(msg);
     if(!error){//发送成功

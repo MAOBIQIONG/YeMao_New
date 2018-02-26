@@ -20,14 +20,14 @@
         </div>
         <p>选择支付方式</p>
         <div class="ddxq-list">
-          <!--<div class="ddxq-box">-->
-            <!--<div class="box-left">-->
-              <!--<span><img src="../../../static/images/employer/weixin.png"/></span><span>微信</span>-->
-            <!--</div>-->
-            <!--<div class="box-right">-->
-              <!--<input v-model="pay_type" type="radio" name="zhifu" class="r" value="WX_APP" />-->
-            <!--</div>-->
-          <!--</div>-->
+          <div class="ddxq-box">
+            <div class="box-left">
+              <span><img src="../../../static/images/employer/weixin.png"/></span><span>微信</span>
+            </div>
+            <div class="box-right">
+              <input v-model="pay_type" type="radio" name="zhifu" class="r" value="WX_APP" />
+            </div>
+          </div>
           <div class="ddxq-box">
             <div class="box-left">
               <span><img src="../../../static/images/employer/zhifubao.png"/></span><span>支付宝</span>

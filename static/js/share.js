@@ -31,6 +31,11 @@ const myshare ={
   },
 
   init:function(params){
+    console.log("分享")
+    if(process.env.NODE_ENV === 'development'){ // production:生产环境,development:开发环境
+      console.log("Now it's the development environment!");
+      return;
+    }
     // 初始化分享
     console.log("shares:"+JSON.stringify(myshare.shares))
     if( JSON.stringify(myshare.shares) === "{}" ){
@@ -45,11 +50,12 @@ const myshare ={
       }
       // 分享参数
       myshare.msg = {
-        href: myshare.href,
-        title: myshare.title,
-        content: myshare.content,
-        thumbs: myshare.thumbs,
+        href: params.href,
+        title: params.title,
+        content: params.content,
+        thumbs: params.thumbs,
       }
+      console.log("myshare.msg:"+JSON.stringify(myshare.msg))
       // 回调函数
       if( !myshare.isNull(params.callback) ){
         myshare.callback = params.callback;
