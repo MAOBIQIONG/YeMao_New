@@ -3,7 +3,7 @@
     <!--导航栏-->
     <div class="header-static">
       <div class="header">
-        <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+        <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
               </div>
               <div class="sjs-bottom sjs-bottom1">
                 <ul>
-                  <li v-for="(item, index) in list"@click.stop="show(index)">
+                  <li v-for="(item,index) in list" @click.stop="show(index)" :key="index">
                     <!-- <img class="previewer-demo-img":src="item.src"width="100%"> -->
                     <div class="previewer-img" :style="'background-image:url('+checkImg(item.src)+')'"></div>
                   </li>
@@ -66,7 +66,7 @@
           </div>
           <!--评价列表-->
           <div class="liuyan">
-            <div class="comment-box" v-for="com in comments">
+            <div class="comment-box" v-for="(com,index) in comments" :key="index">
               <div class="left">
                 <div class="img"><img :src="checkAvatar(com.user.img)"/></div>
               </div>
@@ -77,7 +77,7 @@
                     <span class="pd-0">{{getDateDiff(com.create_date)}}</span>
                     <span>·</span>
                     <span v-if="userInfo._id!=null&&userInfo._id==com.user._id" :id="com._id" class="pd-0" v-tap="{methods:deleteSth,id:com._id,floor:0,flag:1}">删除</span>
-                    <span v-else="" :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}">评论</span>
+                    <span v-else :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}">评论</span>
                   </div>
                 </div>
                 <div class="comment-content">{{com.content}}</div>
