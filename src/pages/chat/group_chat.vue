@@ -153,7 +153,8 @@
         var _self = this;
         var sh = _self.$refs.message.scrollHeight;
         var ch = document.documentElement.clientHeight;
-        var height = sh-ch+common.checkInt(num); // div高度-屏幕高度-头部-底部高度
+        var bh = document.getElementById("inputBox").offsetHeight;
+        var height = sh-ch+bh*2.5; // div高度-屏幕高度+头部+底部高度
         var h = height > 0 ? height : 0;
         _self.$nextTick(
           ()=>{
@@ -172,7 +173,9 @@
           user: msg.user || {}
         }
         _self.dataArray.push(record);
-        _self.resetHeight(200);
+        setTimeout(function () {
+          _self.resetHeight();
+        },100)
       },
       // 接收消息后，保存消息
       receiveMsg(msg){
@@ -280,8 +283,8 @@
         if( _self.isReset == false ){
           _self.isReset = true;
           setTimeout(function () {
-            _self.resetHeight(125);
-          },200)
+            _self.resetHeight();
+          },100)
         }
       },
       //获取用户信息

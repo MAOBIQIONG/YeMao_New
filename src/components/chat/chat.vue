@@ -2,7 +2,7 @@
   <div>
     <div class="chat-box">
       <!-- 评论输入框 -->
-      <div class="input-box">
+      <div id="inputBox" class="input-box">
         <div class="input">
           <input id="commentInput" v-model="comment_text" type="text" :placeholder="comment_placeholder" @focus="inputFocus()" ref="commentInput">
         </div>
