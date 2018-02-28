@@ -1076,12 +1076,17 @@ body,html{
   overflow: auto
 }
 .emoji-small{
-  height: 0.6rem;
-  width: 0.6rem;
+  height: 0.55rem;
+  width: 0.55rem;
+  vertical-align: middle;
+}
+.xiaoxi-list .emoji-small{
+  height: 0.5rem;
+  width: 0.5rem;
   vertical-align: middle;
 }
 .chat-box .emoji-small{
-  margin: 0.2rem;
+  margin: 0.2rem 0.225rem;
 }
 .emoji-thumbnail{
   max-width: 100%;

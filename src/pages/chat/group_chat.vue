@@ -176,6 +176,7 @@
       },
       // 接收消息后，保存消息
       receiveMsg(msg){
+        if( msg.scene == 'p2p') return;
         var _self = this;
         _self.dataArray.forEach(function (item,index) {
           if( msg.from == item.user.id ){

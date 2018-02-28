@@ -111,16 +111,21 @@ const im = {
     }
     // 设置返回函数
     im.callback = callback;
-    var msg = im.nim.sendText({
-      scene: scene,
-      to: to,
-      text: content,
-      isPushable:true,
-      done: im.sendMsgDone
-    });
-    //console.log('正在发送p2p text消息, id=' + msg.idClient);
-    im.pushMsg(msg);
-    // console.log("send:"+JSON.stringify(msg))
+    if( im && im.nim ){
+      var msg = im.nim.sendText({
+        scene: scene,
+        to: to,
+        text: content,
+        isPushable:true,
+        done: im.sendMsgDone
+      });
+      //console.log('正在发送p2p text消息, id=' + msg.idClient);
+      im.pushMsg(msg);
+    }else if( process.env.NODE_ENV === 'production' ){
+      plus.nativeUI.toast("身份标识过期,请重新登录!");
+    }else{
+      console.log("身份标识过期,请重新登录!")
+    }
   },
   sendMsgDone : function (error, msg) {
     console.log(error);

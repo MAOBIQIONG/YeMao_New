@@ -181,8 +181,9 @@
       },
       // 接收消息后，保存消息
       receiveMsg(msg){
+        console.log("msg:"+JSON.stringify(msg))
         var _self = this;
-        if( _self.target_id == msg.from ){
+        if( _self.target_id == msg.from && msg.scene == 'p2p' ){
           _self.sended(msg);
         }
       },
