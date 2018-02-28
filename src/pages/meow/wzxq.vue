@@ -88,14 +88,16 @@
         </div>
     </scroller>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
-    <!-- 评论输入框 -->
-    <div class="input-box">
-        <div class="input">
-            <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
-        </div>
-        <div class="send-btn" :class="is_submit?'hover':''">
-            <div class="btn" v-tap="{methods:commentchw}">发送</div>
-        </div>
+    <div class="chat-box">
+      <!-- 评论输入框 -->
+      <div class="input-box">
+          <div class="input">
+              <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
+          </div>
+          <div class="send-btn" :class="is_submit?'hover':''">
+              <div class="btn" v-tap="{methods:commentchw}">发送</div>
+          </div>
+      </div>
     </div>
   </div>
 </template>

@@ -992,14 +992,17 @@ body,html{
 }
 
 /**评论输入框**/
+.chat-box{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+}
 .input-box{
   height: 1rem;
   width:100%;
   font-size: 0.32rem;
   background: #fff;
-  position: fixed;
-  bottom: 0;
-  z-index: 10;
   border-top: 0.55px solid #F2F2F2;
   display:-webkit-box;
 }
@@ -1063,20 +1066,22 @@ body,html{
 }
 
 .emoji-box{
-  height: 2.5rem;
-  width:100%;
+  background: #F2F2F2;
+}
+.emoji-box .emoji-item{
+  height: 3.8rem;
+  padding: 0.25rem 0.25rem;
   font-size: 0.32rem;
-  background: #fff;
-  position: fixed;
-  bottom: 1rem;
-  z-index: 10;
-  border-top: 0.55px solid #F2F2F2;
+  background: #F2F2F2;
   overflow: auto
 }
 .emoji-small{
   height: 0.6rem;
   width: 0.6rem;
   vertical-align: middle;
+}
+.chat-box .emoji-small{
+  margin: 0.2rem;
 }
 .emoji-thumbnail{
   max-width: 100%;
@@ -1089,7 +1094,6 @@ body,html{
     line-height:60px!important;
 }
 .scroller{
-    /* background:#F2F2F2; */
     background:transparent;
 }
 
@@ -1193,4 +1197,35 @@ body,html{
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+
+/**动画**/
+@-webkit-keyframes animation0 {
+  from {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes animation0 {
+  from {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  to {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }

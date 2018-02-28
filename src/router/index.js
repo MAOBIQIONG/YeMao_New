@@ -511,7 +511,8 @@ const routeArray = [
   },
   { path: '/message',
     name: 'message',
-    component: message
+    component: message,
+    meta: { keepAlive: true }
   },
   { path: '/search',
     name: 'search',

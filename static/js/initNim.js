@@ -115,6 +115,7 @@ const im = {
       scene: scene,
       to: to,
       text: content,
+      isPushable:true,
       done: im.sendMsgDone
     });
     //console.log('正在发送p2p text消息, id=' + msg.idClient);
@@ -122,8 +123,8 @@ const im = {
     // console.log("send:"+JSON.stringify(msg))
   },
   sendMsgDone : function (error, msg) {
-    // console.log(error);
-    // console.log(msg);
+    console.log(error);
+    console.log(msg);
     //console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error?'成功':'失败') + ', id=' + msg.idClient);
     im.pushMsg(msg);
     if(!error){//发送成功
@@ -152,8 +153,8 @@ const im = {
       }else{
         // 震动
         plus.device.vibrate( 50 );
-        // 凤鸣
-        plus.device.beep();
+        // 蜂鸣
+        // plus.device.beep();
       }
     }else{
       console.log("Now it's the development environment!")

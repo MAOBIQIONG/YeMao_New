@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="msg-content content-p">
+    <div class="header-static"></div>
+    <div class="msg-content">
       <div class="tab_box">
         <!--通知列表-->
         <div class="tongzhi">
@@ -50,7 +51,7 @@
         // 加载
         lockX:true,
         lockY:false,
-        height: '-90',
+        height: '-55',
         pagination: {
           pageNo: 0,
           pageSize: 10

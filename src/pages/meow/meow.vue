@@ -1,7 +1,7 @@
 <template>
   <div class="meow">
     <!--导航栏-->
-    <div class="header">
+    <div class="header p-static">
       <div class="hd-cont">
         <ul>
           <li class="tab miaomiao cur" @click="toggleTab(0)"ref="miaomiao">喵喵圈</li>
@@ -11,9 +11,7 @@
       </div>
     </div>
     <!--内容-->
-    <div class="content content-p">
-      <miaomiao :is="currentTab" keep-alive></miaomiao>
-    </div>
+    <miaomiao :is="currentTab" keep-alive></miaomiao>
   </div>
 </template>
 

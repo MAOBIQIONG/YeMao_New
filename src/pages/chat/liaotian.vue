@@ -1,11 +1,12 @@
 <template>
   <div class="liaotian">
-    <div class="header p-static">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span v-text="target_name"></span>
     </div>
     <!--  信息表-->
-    <div class="content">
+    <div id="content" class="content">
       <scroller
         id="scroller"
         v-model="pullUpDownStatus"
@@ -288,9 +289,11 @@
   @import "../../../static/css/employer/liaotian.css";
   .liaotian {
     background-color: #f2f2f2;
+    overflow: hidden;
   }
+  /**解决软件盘弹出，文本框被顶起**/
   .content{
-    /*padding-bottom: 1rem;*/
+    overflow: hidden;
   }
   .message{
     width: 7.1rem;

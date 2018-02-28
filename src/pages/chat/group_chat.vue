@@ -1,11 +1,12 @@
 <template>
   <div class="liaotian">
-    <div class="header p-static">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span v-text="target_name"></span>
     </div>
     <!--  信息表-->
-    <div class="content">
+    <div id="content" class="content">
       <scroller
         id="scroller"
         v-model="pullUpDownStatus"
@@ -119,7 +120,7 @@
       console.log("group_chat activated:")
     },
     created(){
-      console.log("group_chat created:")
+
       var _self = this;
       _self.target_id = _self.$route.query.id;
       _self.target_name = _self.$route.query.name;
@@ -309,6 +310,10 @@
   @import "../../../static/css/employer/liaotian.css";
   .liaotian {
     background-color: #f2f2f2;
+    overflow: hidden;
+  }
+  .content{
+    overflow: hidden;
   }
   .message{
     width: 7.1rem;
