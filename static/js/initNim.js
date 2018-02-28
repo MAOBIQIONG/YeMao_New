@@ -177,7 +177,7 @@ const im = {
       console.log("Now it's the development environment!")
     }
   },
-  // 过滤
+  // 过滤:聊天页面中使用
   filterEmoji:function (showText) {
     if (/\[[^\]]+\]/.test(showText)) {
       var emojiItems = showText.match(/\[[^\]]+\]/g);
@@ -194,13 +194,13 @@ const im = {
     // console.log("showText:"+showText)
     return showText;
   },
-  // 过滤
+  // 过滤:会话列表页面中使用
   filterEmoji2:function (showText) {
     if (/\[[^\]]+\]/.test(showText)) {
       var emojiItems = showText.match(/\[[^\]]+\]/g);
       emojiItems.forEach(function (text) {
         var emojiCnt = emoji.emojiList.emoji;
-       if( text.indexOf(".png") >= 0 ){
+        if( text.indexOf(".png") >= 0 ){
           var path = text.substring(1,text.length-1);
           showText = showText.replace(path, '图片');
         }else if (emojiCnt[text]) {
@@ -211,7 +211,7 @@ const im = {
     // console.log("showText:"+showText)
     return showText;
   },
-  // 过滤图片
+  // 过滤图片：创建本地消息时使用
   filterImgs:function (showText){
     if (/\[[^\]]+\]/.test(showText)) {
       var emojiItems = showText.match(/\[[^\]]+\]/g);
@@ -224,6 +224,19 @@ const im = {
     }
     // console.log("showText:"+showText)
     return showText;
-  }
+  },
+  // 过滤图片地址
+  filterImgPath:function (showText){
+    var paths = [];
+    if (/\[[^\]]+\]/.test(showText)) {
+      var emojiItems = showText.match(/\[[^\]]+\]/g);
+      emojiItems.forEach(function (text) {
+        if ( text.indexOf(".png")>=0 ) {
+          paths.push(text.substring(1,text.length-1))
+        }
+      });
+    }
+    return paths;
+  },
 }
 export default im;
