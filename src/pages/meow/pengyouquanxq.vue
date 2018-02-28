@@ -83,7 +83,7 @@
                 <div class="comment-content">{{com.content}}</div>
                 <div class="arr-up" v-if="com.replys && com.replys.length>0"></div>
                 <div class="comment-reply" v-if="com.replys && com.replys.length>0">
-                  <div class="reply" v-tap="{methods:replyFun,id:com._id,aid:rep._id,name:rep.user.user_name,uid:rep.user._id,floor:2}" :id="rep._id" v-for="rep in com.replys">
+                  <div class="reply" v-tap="{methods:replyFun,id:com._id,aid:rep._id,name:rep.user.user_name,uid:rep.user._id,floor:2}" :id="rep._id" v-for="(rep,index) in com.replys" :key="index">
                     <p v-if="rep.floor==1"><span class="replier">{{rep.user.user_name}}</span>&nbsp;:&nbsp;<span>{{rep.content}}</span></p>
                     <p v-if="rep.floor==2">
                       <span class="replier">{{rep.user.user_name}}</span>
