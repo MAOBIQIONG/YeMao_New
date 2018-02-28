@@ -12,6 +12,43 @@
     <!-- built files will be auto injected -->
   </body>
   <script>
+    // 解决ios软件盘弹出,底部输入框被顶起
+    window.onresize=function(){
+      console.log("onresize:")
+      //软键盘弹起与隐藏  都会引起窗口的高度发生变化
+      var  resizeHeight=document.documentElement.clientHeight || document.body.clientHeight;
+      console.log("resizeHeight:"+resizeHeight)
+      var content = document.getElementById("content");
+      if( content && common.browser.versions.ios ){
+        var h = resizeHeight > 100 ? resizeHeight-100 : resizeHeight;
+        content.style.height = h+'px';
+      }
+    }
+    document.addEventListener( "plusready", function(){
+      console.log("app.vue addEventListener plusready:");
+      // 弹出解决软件盘，顶部header被顶起
+      if( common.browser.versions.ios ){
+        console.log("currentWebview:"+plus.webview.currentWebview().id)
+        plus.webview.currentWebview().setStyle({
+          softinputMode: "adjustResize"  // 弹出软键盘时自动改变webview的高度
+        });
+      }
+      // 通知栏消息点击监听
+      plus.push.addEventListener("click", function (msg) {
+        console.log("addEventListener click msg:"+JSON.stringify(msg))
+      });
+      // 透穿消息监听
+      plus.push.addEventListener( "receive", function(msg) {
+        /**
+         * msg内容：
+         * 1、ios:
+         * {"payload":"请输入需要透传的内容","title":"标题","content":"内容","type":"receive","aps":"null"}
+         * 2、android:
+         * {"_UUID_":"androidPushMsg53788265","title":"标题","content":"内容","payload":"请输入需要透传的内容"}
+         * */
+        console.log("addEventListener receive msg:"+JSON.stringify(msg))
+      });
+    })
     //运行环境从前台切换到后台事件
     document.addEventListener("pause", function() {
       //0、前台运行，1、后台运行
@@ -26,6 +63,7 @@
   <style>
     body{
       margin:0;
+      position: relative;
     }
   </style>
 </html>

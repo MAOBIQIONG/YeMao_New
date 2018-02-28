@@ -104,15 +104,17 @@
       <previewer :list="list" ref="previewer" :options="options"></previewer>
     </div>
     <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete"></actionsheet>
-    <!-- 评论输入框 -->
-    <div class="input-box">
-      <div class="input">
-        <input v-model="comment_text" type="text" :placeholder="comment_placeholder" v-on:blur.lazy="commentBlur" ref="commentInput">
-      </div>
-      <div class="send-btn" :class="is_submit?'hover':''">
-        <div class="btn" v-tap="{methods:commentMeow}">发送</div>
-      </div>
-    </div>
+    <div class="chat-box">
+       <!-- 评论输入框 -->
+       <div class="input-box">
+         <div class="input">
+           <input v-model="comment_text" type="text" :placeholder="comment_placeholder" v-on:blur.lazy="commentBlur" ref="commentInput">
+         </div>
+         <div class="send-btn" :class="is_submit?'hover':''">
+           <div class="btn" v-tap="{methods:commentMeow}">发送</div>
+         </div>
+       </div>
+     </div>
   </div>
 </template>
 

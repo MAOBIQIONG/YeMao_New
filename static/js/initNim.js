@@ -111,19 +111,25 @@ const im = {
     }
     // 设置返回函数
     im.callback = callback;
-    var msg = im.nim.sendText({
-      scene: scene,
-      to: to,
-      text: content,
-      done: im.sendMsgDone
-    });
-    //console.log('正在发送p2p text消息, id=' + msg.idClient);
-    im.pushMsg(msg);
-    // console.log("send:"+JSON.stringify(msg))
+    if( im && im.nim ){
+      var msg = im.nim.sendText({
+        scene: scene,
+        to: to,
+        text: content,
+        isPushable:true,
+        done: im.sendMsgDone
+      });
+      //console.log('正在发送p2p text消息, id=' + msg.idClient);
+      im.pushMsg(msg);
+    }else if( process.env.NODE_ENV === 'production' ){
+      plus.nativeUI.toast("身份标识过期,请重新登录!");
+    }else{
+      console.log("身份标识过期,请重新登录!")
+    }
   },
   sendMsgDone : function (error, msg) {
-    // console.log(error);
-    // console.log(msg);
+    console.log(error);
+    console.log(msg);
     //console.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error?'成功':'失败') + ', id=' + msg.idClient);
     im.pushMsg(msg);
     if(!error){//发送成功
@@ -152,8 +158,8 @@ const im = {
       }else{
         // 震动
         plus.device.vibrate( 50 );
-        // 凤鸣
-        plus.device.beep();
+        // 蜂鸣
+        // plus.device.beep();
       }
     }else{
       console.log("Now it's the development environment!")
@@ -171,7 +177,7 @@ const im = {
       console.log("Now it's the development environment!")
     }
   },
-  // 过滤
+  // 过滤:聊天页面中使用
   filterEmoji:function (showText) {
     if (/\[[^\]]+\]/.test(showText)) {
       var emojiItems = showText.match(/\[[^\]]+\]/g);
@@ -188,13 +194,13 @@ const im = {
     // console.log("showText:"+showText)
     return showText;
   },
-  // 过滤
+  // 过滤:会话列表页面中使用
   filterEmoji2:function (showText) {
     if (/\[[^\]]+\]/.test(showText)) {
       var emojiItems = showText.match(/\[[^\]]+\]/g);
       emojiItems.forEach(function (text) {
         var emojiCnt = emoji.emojiList.emoji;
-       if( text.indexOf(".png") >= 0 ){
+        if( text.indexOf(".png") >= 0 ){
           var path = text.substring(1,text.length-1);
           showText = showText.replace(path, '图片');
         }else if (emojiCnt[text]) {
@@ -205,7 +211,7 @@ const im = {
     // console.log("showText:"+showText)
     return showText;
   },
-  // 过滤图片
+  // 过滤图片：创建本地消息时使用
   filterImgs:function (showText){
     if (/\[[^\]]+\]/.test(showText)) {
       var emojiItems = showText.match(/\[[^\]]+\]/g);
@@ -218,6 +224,19 @@ const im = {
     }
     // console.log("showText:"+showText)
     return showText;
-  }
+  },
+  // 过滤图片地址
+  filterImgPath:function (showText){
+    var paths = [];
+    if (/\[[^\]]+\]/.test(showText)) {
+      var emojiItems = showText.match(/\[[^\]]+\]/g);
+      emojiItems.forEach(function (text) {
+        if ( text.indexOf(".png")>=0 ) {
+          paths.push(text.substring(1,text.length-1))
+        }
+      });
+    }
+    return paths;
+  },
 }
 export default im;

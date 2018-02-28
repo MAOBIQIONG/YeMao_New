@@ -1,11 +1,12 @@
 <template>
   <div class="liaotian">
-    <div class="header p-static">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span v-text="target_name"></span>
     </div>
     <!--  信息表-->
-    <div class="content">
+    <div id="content" class="content">
       <scroller
         id="scroller"
         v-model="pullUpDownStatus"
@@ -31,7 +32,7 @@
                 <div class="main" :class="message.sender==user._id?'self':''">
                   <img class="avatar" :src="message.sender==user._id? ownerAvatarUrl: contactAvatarUrl">
                   <!-- 文本 -->
-                  <div class="text" v-html="filterImgs(message.content)"></div>
+                  <div class="text" v-tap="{methods:show,text:message.content}" v-html="filterImgs(message.content)"></div>
                   <!--<div class="text" v-if="message.type=='text'" v-html="message.content"></div>-->
                   <!-- 图片 -->
                   <!--<div class="text" v-else-if="message.type=='image'">-->
@@ -49,14 +50,21 @@
       </scroller>
     </div>
     <chat :to="target_id" @upup="sended"></chat>
+    <div v-transfer-dom>
+      <previewer :list="list" ref="previewer" :options="options"></previewer>
+    </div>
   </div>
 </template>
 
 <script>
-  import {LoadMore, Scroller,} from 'vux'
+  import {LoadMore, Scroller, Previewer, TransferDom,} from 'vux'
   import chat from '../../components/chat/chat.vue'
   export default {
+    directives: {
+      TransferDom
+    },
     components: {
+      Previewer,
       Scroller,
       LoadMore,
       chat
@@ -69,6 +77,24 @@
         contactAvatarUrl: '',
         dataArray: [],
         isReset:false,
+        // 预览图片
+        list:[],
+        imgList:[],
+        options: {
+          getThumbBoundsFn (index) {
+            // find thumbnail element
+            let thumbnail = document.querySelectorAll('.emoji-thumbnail')[index]
+            // get window scroll Y
+            let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
+            // optionally get horizontal scroll
+            // get position of element relative to viewport
+            let rect = thumbnail.getBoundingClientRect()
+            // w = width
+            return {x: rect.left, y: rect.top + pageYScroll, w: rect.width}
+            // Good guide on how to get element coordinates:
+            // http://javascript.info/tutorial/coordinates
+          }
+        },
         // 加载
         lockX:true,
         lockY:false,
@@ -150,15 +176,37 @@
       checkAvatar (path) {
         return common.getAvatar(path)
       },
-      filterImgs(text){
+      checkImg(path){
+        return common.getDefultImg(path);
+      },
+      filterImgs (text){
         return wyim.filterEmoji(text);
       },
+      filterPaths (text){
+        return wyim.filterImgPath(text);
+      },
+      show (param) {
+        var _self = this;
+        var arr = _self.filterPaths(param.text);
+        if( arr.length > 0 ){
+          var i = _self.imgList.indexOf(arr[0]);
+          _self.list = [];//清除缓存
+          _self.imgList.forEach(function (img, j) {
+            _self.list.push({src: _self.checkImg(img)});
+          })
+          _self.$refs.previewer.show(i)
+        }
+        param.event.cancelBubble = true;
+        param.event.stop;//阻止冒泡（原声方法）
+        return false
+      },
       // 重新计算滚动高度
-      resetHeight(num){
+      resetHeight(){
         var _self = this;
         var sh = _self.$refs.message.scrollHeight;
         var ch = document.documentElement.clientHeight;
-        var height = sh-ch+common.checkInt(num); // div高度-屏幕高度-头部-底部高度
+        var bh = document.getElementById("inputBox").offsetHeight;
+        var height = sh-ch+bh*2.5; // div高度-屏幕高度+头部+底部高度
         var h = height > 0 ? height : 0;
         _self.$nextTick(
           ()=>{
@@ -176,12 +224,15 @@
           create_date: msg.time        // 会话创建时间
         }
         _self.dataArray.push(record);
-        _self.resetHeight(200);
+        setTimeout(function () {
+          _self.resetHeight();
+        },100)
       },
       // 接收消息后，保存消息
       receiveMsg(msg){
+        console.log("msg:"+JSON.stringify(msg))
         var _self = this;
-        if( _self.target_id == msg.from ){
+        if( _self.target_id == msg.from && msg.scene == 'p2p' ){
           _self.sended(msg);
         }
       },
@@ -271,12 +322,23 @@
         } else {
           _self.pagination.pageNo++
         }
+        // 过滤预览图片地址
+        records.forEach(function (item,index) {
+          var arr = _self.filterPaths(item.content);
+          if( arr.length > 0 ){
+            arr.forEach(function (img,i) {
+              if( _self.imgList.indexOf(img) < 0 ){
+                _self.imgList.push(img);
+              }
+            })
+          }
+        })
         /**置底**/
         if( _self.isReset == false ){
           _self.isReset = true;
           setTimeout(function () {
-            _self.resetHeight(125);
-          },200)
+            _self.resetHeight();
+          },100)
         }
       },
     }
@@ -288,9 +350,11 @@
   @import "../../../static/css/employer/liaotian.css";
   .liaotian {
     background-color: #f2f2f2;
+    overflow: hidden;
   }
+  /**解决软件盘弹出，文本框被顶起**/
   .content{
-    /*padding-bottom: 1rem;*/
+    overflow: hidden;
   }
   .message{
     width: 7.1rem;

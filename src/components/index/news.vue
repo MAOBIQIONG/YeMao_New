@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="msg-content content-p">
+    <div class="header-static"></div>
+    <div class="msg-content">
       <div class="tab_box">
         <!--通知列表-->
         <div class="xiaoxi">
@@ -34,7 +35,7 @@
                   <div class="xr-bottom">
                     <div class="content" v-html="filterImgs(item.content)"></div>
                     <div class="badge" v-if="item.sender==user._id && item.sender_unread_count>0">{{item.sender_unread_count}}</div>
-                    <div class="badge" v-else-if="item.sender!=user._id && item.recipient_unread_count>0">{{item.recipient_unread_count}}</div>
+                    <div class="badge" v-else-if="item.recipient==user._id && item.recipient_unread_count>0">{{item.recipient_unread_count}}</div>
                   </div>
                 </div>
               </div>
@@ -59,7 +60,7 @@
         // 加载
         lockX:true,
         lockY:false,
-        height: '-90',
+        height: '-55',
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -112,10 +113,15 @@
       }
     },
     activated: function () {
-      console.log("news activated:")
+      // console.log("news activated:")
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
+      _self.refreshPageDate();
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     created: function () {
-      console.log("news created:")
+      // console.log("news created:")
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
       _self.loadData();
@@ -147,12 +153,18 @@
         _self.dataList.forEach(function (item,index) {
           if( msg.scene == 'team' ){
             if( msg.to == item.recipient ){
+              item.content = msg.text;
+              item.refresh_date = common.getCurrentTimeStamp();
               item.sender_unread_count += 1;
             }
           }else{
             if( msg.from == item.sender ){
+              item.content = msg.text;
+              item.refresh_date = common.getCurrentTimeStamp();
               item.recipient_unread_count += 1;
             }else if( msg.from == item.recipient ){
+              item.content = msg.text;
+              item.refresh_date = common.getCurrentTimeStamp();
               item.sender_unread_count += 1;
             }
           }

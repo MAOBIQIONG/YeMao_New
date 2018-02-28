@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap={methods:goback}><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
@@ -103,7 +103,7 @@
               <span>设计起止时间</span>
             </div>
             <div class="gb-right">
-              <span><datetime v-model="startTime" class="shijian"></datetime></span> / <span><datetime v-model="endTime" class="shijian"></datetime></span>
+              <span><datetime v-model="subParams.project_startTime" class="shijian"></datetime></span> / <span><datetime v-model="subParams.project_endTime" class="shijian"></datetime></span>
             </div>
           </div>
         </div>
@@ -348,7 +348,7 @@
         return false
       }
       var currdate = common.getSomeday();
-      if( !common.dateCompare(currdate,_self.deadLine) ){
+      if( !common.dateCompare(currdate,_self.subParams.project_deadLine) ){
         _self.showToast("抢单截止日期不能小于当前日期!");
         return false
       }
@@ -368,11 +368,11 @@
         _self.showToast("请输入工时!");
         return false
       }
-      if( !common.dateCompare(_self.deadLine,_self.startTime) ){
+      if( !common.dateCompare(_self.subParams.project_deadLine,_self.subParams.project_startTime) ){
         _self.showToast("开始时间不能小于抢单截止日期!");
         return false
       }
-      if( !common.dateCompare(_self.startTime,_self.endTime) ){
+      if( !common.dateCompare(_self.subParams.project_startTime,_self.subParams.project_endTime) ){
         _self.showToast("截止时间不能小于开始日期!");
         return false
       }
@@ -386,11 +386,13 @@
         // 避免多次点击提交按钮
         if( _self.is_submit == true ) return;
         _self.is_submit = true;
-        // 字符串转时间戳
-        _self.subParams.project_deadLine = common.string2TimeStamp(_self.deadLine);
-        _self.subParams.project_startTime = common.string2TimeStamp(_self.startTime);
-        _self.subParams.project_endTime = common.string2TimeStamp(_self.endTime);
         // 参数
+        console.log("_self.subParams:"+JSON.stringify(_self.subParams))
+        _self.subParams.project_deadLine = common.string2TimeStamp(_self.subParams.project_deadLine);
+        _self.subParams.project_startTime = common.string2TimeStamp(_self.subParams.project_startTime);
+        _self.subParams.project_endTime = common.string2TimeStamp(_self.subParams.project_endTime);
+        console.log("_self.subParams:"+JSON.stringify(_self.subParams))
+        return;
         var params = {
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
@@ -429,7 +431,7 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          newValue = common.checkMoney(newValue,100000000,2);
+          newValue = common.checkMoney(newValue,10000,2);
           _self.$refs.hours.value = newValue;
           _self.subParams.project_workHours = newValue;
         }
