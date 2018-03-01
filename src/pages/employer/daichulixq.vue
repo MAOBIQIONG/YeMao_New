@@ -53,7 +53,7 @@
                 <span><img src="../../../static/images/employer/leixin.png"/></span><span>预计完成：</span>
               </div>
               <div class="box-right">
-                <span>{{order.project_endTime}}</span>
+                <span>{{getStringDate(order.project_endTime,'ymd')}}</span>
               </div>
             </div>
             <div class="ddxq-box">
@@ -211,9 +211,6 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                 }
             }
         },
-        getStringDate(date,id){
-            return common.timeStamp2String(date,id)
-        },
         // 项目状态
         getStateName(state){
             return common.getProjectStateName(state);
@@ -326,6 +323,9 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
       checkImg(path){
         // console.log(common.getDefultImg(path));
         return common.getDefultImg(path);
+      },
+      getStringDate(date,id){
+        return common.timeStamp2String(date,id)
       },
       improveTheOrder(p){
             common.setStorage('fromMyOrderDetail',1);

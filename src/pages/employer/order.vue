@@ -16,7 +16,7 @@
           <div class="ddxq-jianjie">
             <div class="jianjie-top">{{order.project_title}}</div>
             <div class="jianjie-bottom">
-              <div class="db-mianji"><span>{{getNameById(order.project_type)}}</span>/<span class="mianji">500</span><span class="mianji">m²</span></div>
+              <div class="db-mianji"><span>{{getNameById(order.project_type)}}</span>/<span class="mianji">{{order.project_area}}</span><span class="mianji">m²</span></div>
               <div class="db-yushuan"><span>预算</span><span class="jiage">￥</span><span class="jiage">{{order.project_budget}}</span></div>
             </div>
           </div>

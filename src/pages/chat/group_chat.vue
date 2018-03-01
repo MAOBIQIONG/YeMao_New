@@ -33,6 +33,7 @@
                   <div class="text" v-tap="{methods:show,text:message.content}" v-html="filterImgs(message.content)"></div>
                 </div>
               </li>
+              <li class="bot-li"></li>
             </ul>
           </div>
         </div>
@@ -391,6 +392,9 @@
     left:0;
     position: relative;
     display:inline-block;
+  }
+  .bot-li{
+    height: 0.5rem;
   }
   .message .time {
     margin: 0.2rem 0;

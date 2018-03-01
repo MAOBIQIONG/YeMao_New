@@ -43,7 +43,7 @@
                   <!--</div>-->
                 </div>
               </li>
-
+              <li class="bot-li"></li>
             </ul>
           </div>
         </div>
@@ -371,6 +371,9 @@
     left:0;
     position: relative;
     display:inline-block;
+  }
+  .bot-li{
+    height: 0.5rem;
   }
   .message .time {
     margin: 0.2rem 0;
