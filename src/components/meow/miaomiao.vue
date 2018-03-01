@@ -243,6 +243,9 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       // 时间戳转日期
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
@@ -265,12 +268,7 @@
       show (param) {
         var _self = this;
         console.log("param.index:"+param.index);
-        // _self.list = [];
         _self.options.previewer = '.previewer'+param.index;
-        // var imgs = _self.meows[param.index].imgs || [];
-        // imgs.forEach(function (img, j) {
-        //   _self.list.push({src: _self.checkImg(img)})
-        // })
         _self.$refs.previewer[param.index].show(param.i)
         param.event.cancelBubble = true;
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
@@ -358,7 +356,7 @@
           item.prevImgs = [];
           if( item.imgs && item.imgs.length > 0 ){
             item.imgs.forEach(function (img, j) {
-              item.prevImgs.push({src: _self.checkImg(img)});
+              item.prevImgs.push({src: _self.getRealPath(img)});
             })
           }else{
             item.prevImgs = [{src:_self.checkImg(''),w:800,h:400}];

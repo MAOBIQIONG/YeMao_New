@@ -264,6 +264,9 @@
       checkImg (path) {
         return common.getDefultImg(path)
       },
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       // 时间戳转日期
       timeStamp2String(time,id){
         return common.timeStamp2String(time,'ymd');
@@ -403,7 +406,7 @@
         // 图片
         var imgs = _self.meow.imgs || [];
         imgs.forEach(function (item,index) {
-          _self.list.push({src:_self.checkImg(item)})
+          _self.list.push({src:_self.getRealPath(item)})
         })
         // 评论
         _self.comments = data.comments || [];

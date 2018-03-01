@@ -179,6 +179,9 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       filterImgs (text){
         return wyim.filterEmoji(text);
       },
@@ -192,7 +195,7 @@
           var i = _self.imgList.indexOf(arr[0]);
           _self.list = [];//清除缓存
           _self.imgList.forEach(function (img, j) {
-            _self.list.push({src: _self.checkImg(img)});
+            _self.list.push({src: _self.getRealPath(img)});
           })
           _self.$refs.previewer.show(i)
         }

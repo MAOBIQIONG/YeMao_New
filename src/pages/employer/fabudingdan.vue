@@ -387,9 +387,12 @@
         if( _self.is_submit == true ) return;
         _self.is_submit = true;
         // 参数
+        console.log("_self.subParams:"+JSON.stringify(_self.subParams))
         _self.subParams.project_deadLine = common.string2TimeStamp(_self.deadLine);
-        _self.subParams.project_startTime = common.string2TimeStamp(_self.startTime);
-        _self.subParams.project_endTime = common.string2TimeStamp(_self.endTime);
+        _self.subParams.project_startTime = common.string2TimeStamp(_self.subParams.project_startTime);
+        _self.subParams.project_endTime = common.string2TimeStamp(_self.subParams.project_endTime);
+        console.log("_self.subParams:"+JSON.stringify(_self.subParams))
+        return;
         var params = {
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
@@ -428,7 +431,7 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          newValue = common.checkMoney(newValue,100000000,2);
+          newValue = common.checkMoney(newValue,10000,2);
           _self.$refs.hours.value = newValue;
           _self.subParams.project_workHours = newValue;
         }
@@ -470,7 +473,7 @@
         // setter
         set: function (newValue) {
           var _self = this;
-          newValue = common.checkMoney(newValue,10000000000,2);
+          newValue = common.checkMoney(newValue,100000000,2);
           _self.$refs.budget.value = newValue;
           _self.subParams.project_budget = newValue;
         }

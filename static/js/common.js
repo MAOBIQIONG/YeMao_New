@@ -434,10 +434,10 @@ const common = {
 
   // 用户头像验证
   getAvatar: function (path,local){
-    if( common.isNull(local) == true ){
+    if( common.isNull(local) ){
       local = './static/images/bj.jpg';
     }
-    if( common.isNull(path) == true ){
+    if( common.isNull(path) ){
       path = local;
     }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
       path = root + common.addSuffixToImage(path);
@@ -445,15 +445,28 @@ const common = {
     return path;
   },
 
-  // 默认图片
+  // 默认图片:缩率图
   getDefultImg: function (path,local){
-    if( common.isNull(local) == true ){
+    if( common.isNull(local) ){
       local = './static/images/bj.jpg';
     }
-    if( common.isNull(path) == true ){
+    if( common.isNull(path) ){
       path = local;
     }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
       path = root + common.addSuffixToImage(path);
+    }
+    return path;
+  },
+
+  // 原图
+  getRealImgPath: function (path,local){
+    if( common.isNull(local) ){
+      local = './static/images/bj.jpg';
+    }
+    if( common.isNull(path) ){
+      path = local;
+    }else if( path.indexOf("http") < 0 && path.indexOf("base64,") < 0 && path.indexOf("./") < 0 ) {
+      path = root + path;
     }
     return path;
   },
