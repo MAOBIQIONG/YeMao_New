@@ -61,10 +61,10 @@
     <!--意见反馈-->
     <div class="yijian">
       <div class="liebiao">
-        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">
-          <div class="xingxi">客服中心</div>
-          <div class="list-right"></div>
-        </div>
+        <!--<div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">-->
+          <!--<div class="xingxi">客服中心</div>-->
+          <!--<div class="list-right"></div>-->
+        <!--</div>-->
         <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'yijian'}">
           <div class="xingxi">意见反馈</div>
           <div class="list-right"></div>

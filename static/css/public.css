@@ -45,6 +45,7 @@ textarea,select{
   -webkit-appearance: none;
   background:white;
   -webkit-user-modify:read-write-plaintext-only;
+  font-size: 0.28rem;
 }
 /*移动端禁用长按选中文本功能*/
 body,html{
@@ -442,7 +443,7 @@ body,html{
 
 .sjs-list .sjs-top .st-neirong .sn-bottom {
   height: 0.4rem;
-  font-size: 0.24rem;
+  font-size: 0.20rem;
 }
 
 .sjs-list .sjs-top .st-neirong .sn-bottom .sb-nianling {
@@ -724,7 +725,7 @@ body,html{
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-top {
   width: 100%;
   height: 1rem;
-  font-size: 0.28rem;
+  font-size: 0.32rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -735,7 +736,7 @@ body,html{
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom {
   width: 100%;
   height: 0.6rem;
-  font-size: 0.24rem;
+  font-size: 0.28rem;
 }
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-mianji {
   float: left;
@@ -745,7 +746,7 @@ body,html{
 
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-mianji .mianji {
   color: #f8b92c;
-  font-size: 0.24rem;
+  font-size: 0.28rem;
 }
 
 .ddxq .ddxq-top .ddxq-jianjie .jianjie-bottom .db-yushuan {
