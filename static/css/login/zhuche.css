@@ -39,6 +39,7 @@
   margin-left: 0.58rem;
   margin-top: 0.2rem;
   position: relative;
+  font-size: 0.24rem;
 }
 /*.ls-shouji .xmlx-left {*/
   /*float: left;*/
@@ -52,7 +53,7 @@
 .ls-shouji .xmlx-right {
   float: left;
   height: 0.8rem;
-  margin-left: 0.24rem
+  margin-left: 0.3rem
 }
   .xmlx-right .xmlx-kuang {
   width: 5.8rem;
@@ -60,8 +61,8 @@
   border: none;
   display: block;
   border: none;
-  font-size: 0.28rem;
-  color: #999;
+  font-size: 0.24rem;
+  color: #757575;
   background: white;
   outline: medium;
 }
