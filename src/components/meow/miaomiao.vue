@@ -75,6 +75,11 @@
               <p class="comments"><span></span><span>{{item.comments}}</span></p>
               <!--<div class="more more-icon"></div>-->
             </div>
+            <!--<div v-if="item.prevImgs && item.prevImgs.length > 0" >-->
+              <div v-transfer-dom>
+                <previewer :list="item.prevImgs" ref="previewer" :options="options"></previewer>
+              </div>
+            <!--</div>-->
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
           <div class="blank_bottom"></div>
@@ -82,9 +87,9 @@
       </scroller>
     </div>
     <div class="tianjia" v-tap="{methods:toRelease}"></div>
-    <div v-transfer-dom>
-      <previewer :list="list" ref="previewer" :options="options"></previewer>
-    </div>
+    <!--<div v-transfer-dom>-->
+      <!--<previewer :list="list" ref="previewer" :options="options" @on-close="closePrevImg()"></previewer>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -259,17 +264,21 @@
 
       show (param) {
         var _self = this;
-        _self.list = [];
+        console.log("param.index:"+param.index);
+        // _self.list = [];
         _self.options.previewer = '.previewer'+param.index;
-        var imgs = _self.meows[param.index].imgs || [];
-        imgs.forEach(function (img, j) {
-          _self.list.push({src: _self.checkImg(img)})
-        })
-        _self.$refs.previewer.show(param.i)
+        // var imgs = _self.meows[param.index].imgs || [];
+        // imgs.forEach(function (img, j) {
+        //   _self.list.push({src: _self.checkImg(img)})
+        // })
+        _self.$refs.previewer[param.index].show(param.i)
         param.event.cancelBubble = true;
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）
         return false
+      },
+      closePrevImg(){
+        console.log("closePrevImg:")
       },
       //下拉刷新
       refreshPageDate(){
@@ -345,6 +354,16 @@
         } else {
           _self.pagination.pageNo++
         }
+        _self.meows.forEach(function (item,index) {
+          item.prevImgs = [];
+          if( item.imgs && item.imgs.length > 0 ){
+            item.imgs.forEach(function (img, j) {
+              item.prevImgs.push({src: _self.checkImg(img)});
+            })
+          }else{
+            item.prevImgs = [{src:_self.checkImg(''),w:800,h:400}];
+          }
+        });
       },
 
       //点赞
@@ -381,6 +400,10 @@
   @import '../../../static/css/meow/miaomiao.css';
   .cur{
     border-bottom: 1px solid #f65aa6;
+  }
+  .sjs-bottom{
+    overflow: auto;
+    zoom: 1;
   }
   .sjs-bottom ul li {
     float: left;

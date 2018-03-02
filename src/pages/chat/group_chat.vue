@@ -30,23 +30,31 @@
                 <p class="time"> <span v-text="getDataStr(message.create_date)"></span></p>
                 <div class="main" :class="message.sender==user._id?'self':''">
                   <img class="avatar" :src="message.sender==user._id?ownerAvatarUrl:checkAvatar(message.user.img)">
-                  <div class="text" v-html="filterImgs(message.content)"></div>
+                  <div class="text" v-tap="{methods:show,text:message.content}" v-html="filterImgs(message.content)"></div>
                 </div>
               </li>
+              <li class="bot-li"></li>
             </ul>
           </div>
         </div>
       </scroller>
     </div>
     <chat :to="target_id" :scene="scene" @upup="sended"></chat>
+    <div v-transfer-dom>
+      <previewer :list="list" ref="previewer" :options="options"></previewer>
+    </div>
   </div>
 </template>
 
 <script>
-  import {LoadMore, Scroller,} from 'vux'
+  import {LoadMore, Scroller, Previewer, TransferDom,} from 'vux'
   import chat from '../../components/chat/chat.vue'
   export default {
+    directives: {
+      TransferDom
+    },
     components: {
+      Previewer,
       Scroller,
       LoadMore,
       chat
@@ -61,6 +69,24 @@
         dataArray: [],
         userArray: [],
         isReset:false,
+        // 预览图片
+        list:[],
+        imgList:[],
+        options: {
+          getThumbBoundsFn (index) {
+            // find thumbnail element
+            let thumbnail = document.querySelectorAll('.emoji-thumbnail')[index]
+            // get window scroll Y
+            let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
+            // optionally get horizontal scroll
+            // get position of element relative to viewport
+            let rect = thumbnail.getBoundingClientRect()
+            // w = width
+            return {x: rect.left, y: rect.top + pageYScroll, w: rect.width}
+            // Good guide on how to get element coordinates:
+            // http://javascript.info/tutorial/coordinates
+          }
+        },
         // 加载
         lockX:true,
         lockY:false,
@@ -145,8 +171,29 @@
       checkAvatar (path) {
         return common.getAvatar(path)
       },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },
       filterImgs(text){
         return wyim.filterEmoji(text);
+      },
+      filterPaths (text){
+        return wyim.filterImgPath(text);
+      },
+      show (param) {
+        var _self = this;
+        var arr = _self.filterPaths(param.text);
+        if( arr.length > 0 ){
+          var i = _self.imgList.indexOf(arr[0]);
+          _self.list = [];//清除缓存
+          _self.imgList.forEach(function (img, j) {
+            _self.list.push({src: _self.checkImg(img)});
+          })
+          _self.$refs.previewer.show(i)
+        }
+        param.event.cancelBubble = true;
+        param.event.stop;//阻止冒泡（原声方法）
+        return false
       },
       // 重新计算滚动高度
       resetHeight(num){
@@ -279,6 +326,17 @@
         } else {
           _self.pagination.pageNo++
         }
+        // 过滤预览图片地址
+        records.forEach(function (item,index) {
+          var arr = _self.filterPaths(item.content);
+          if( arr.length > 0 ){
+            arr.forEach(function (img,i) {
+              if( _self.imgList.indexOf(img) < 0 ){
+                _self.imgList.push(img);
+              }
+            })
+          }
+        })
         /**置底**/
         if( _self.isReset == false ){
           _self.isReset = true;
@@ -334,6 +392,9 @@
     left:0;
     position: relative;
     display:inline-block;
+  }
+  .bot-li{
+    height: 0.5rem;
   }
   .message .time {
     margin: 0.2rem 0;

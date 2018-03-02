@@ -47,7 +47,7 @@
         emojis:[],
         emojiFlag:false,
         is_submit:false,
-        comment_placeholder:'填写评论',
+        comment_placeholder:'', // 填写评论
         comment_id:'',
         comment_text:'',
         showMark:false,

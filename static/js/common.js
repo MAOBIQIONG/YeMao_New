@@ -597,7 +597,7 @@ const common = {
     getMyConvers:'getMyConversation',              // 查询我的会话列表
     getChatRecord:'getChatRecord',                 // 查询聊天记录
     addChatRecord:'addChatRecord',                 // 新增聊天记录
-    addGroupRecord:'addGroupChatRecord',           // 新增聊天记录
+    addGroupRecord:'addGroupChatRecord',       // 新增聊天记录
     queryUserById:'queryUserById',                 // 根据用户ID查询用户信息
 
   },
