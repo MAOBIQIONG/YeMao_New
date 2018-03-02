@@ -14,7 +14,8 @@
         </div>
         <div class="mingcheng">
           <div class="xuexiao">{{alumni.school_name}}</div>
-          <div class="jrxs"><span>+&nbsp;加入学校</span><span v-tap="{methods:toUrl2,pagename:'groupchat',query:{id:'343647591',name:'内部群001',img:'./static/images/logo.png'}}">+&nbsp;校友交流</span></div>
+          <!--  v-tap="{methods:toUrl2,pagename:'groupchat',query:{id:'343647591',name:'内部群001',img:'./static/images/logo.png'}}" -->
+          <div class="jrxs"><span>+&nbsp;加入学校</span><span>+&nbsp;校友交流</span></div>
         </div>
       </div>
       <div class="xxjj">
