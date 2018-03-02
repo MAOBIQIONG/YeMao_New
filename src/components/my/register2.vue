@@ -1,13 +1,7 @@
 <template>
   <div class="">
-    <div class="header">
-      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
-    </div>
-    <div class="zc-piaoti">
-      <span>欢迎注册成为夜猫会员</span>
-    </div>
     <div class="login-shuru">
-      <p class="tishi"></p>
+      <p class="my-toast" v-if="show" v-text="toastText"></p>
       <div class="ls-shouji">
         <input v-model="param.password" type="password" class="shouji mima" placeholder="密码"/>
         <span class="del" v-if="param.password.length>0" v-tap="{methods:clearInput,index:0}">×</span>
@@ -18,13 +12,10 @@
       </div>
     </div>
     <div class="log-btn" v-tap="{methods:register}"><span>完成</span></div>
-    <toast v-model="show" type="text" width="4em" :text="toastText"></toast>
   </div>
 </template>
 
 <script>
-  import { Toast, Group, XSwitch, XButton } from 'vux'
-  import md5 from 'js-md5';
   export default {
     data () {
       return {
@@ -40,14 +31,6 @@
         toastSuccess:"注册成功",
         toastFail:"注册失败"
       }
-    },
-    components: {
-        Toast,
-        Group,
-        XSwitch,
-        XButton
-    },
-    mounted: function () {
     },
     methods: {
       goback () {
@@ -67,7 +50,6 @@
       register(){
         var _self = this;
         var regpwd =/^[0-9a-zA-Z_#]{6,16}$/;
-
         if(!regpwd.test(_self.param.password)){
           _self.toastText = _self.toastNotReg;
           _self.show=true;
@@ -101,7 +83,7 @@
             _self.toastText=_self.toastSuccess;
             _self.show=true;
             setTimeout(function () {
-              _self.$router.go(-2)
+              _self.$emit('upup', 1)// 主动触发upup方法，'hehe'为向父组件传递的数据
             },1000)
           }else{
             _self.toastText=_self.toastFail;

@@ -14,6 +14,7 @@ import wjmm from '@/pages/login/wjmm'
 import login from '@/pages/login/zhlogin'
 import zhuche from '@/pages/login/zhuche'
 import zhuche2 from '@/pages/login/zhuche2'
+import register from '@/pages/login/register'
 import fenlei from '@/pages/index/fenlei'
 import informxitong from '@/pages/index/informxitong'
 import leibie from '@/pages/index/leibie'
@@ -546,6 +547,10 @@ const routeArray = [
   { path: '/zhuche2',
     name: 'zhuche2',
     component: zhuche2
+  },
+  { path: '/register',
+    name: 'register',
+    component: register
   },
     {
         path: '/collectionDesigner',

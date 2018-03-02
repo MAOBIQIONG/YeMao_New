@@ -1,5 +1,5 @@
-import webapi from '../../src/api/webapi'
-import EXIF from './exif'
+import webapi from '../../../src/api/webapi'
+import EXIF from '../es5/exif'
 import Qs from 'qs'
 
 const uploadImg ={

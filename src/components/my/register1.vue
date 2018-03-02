@@ -1,13 +1,7 @@
 <template>
   <div class="">
-    <div class="header">
-      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
-    </div>
-    <div class="zc-piaoti">
-      <span>欢迎注册成为夜猫会员</span>
-    </div>
     <div class="login-shuru">
-      <p class="tishi"></p>
+      <p class="my-toast" v-if="show" v-text="showText"></p>
       <div class="ls-shouji">
         <input type="text"class="shouji nicheng" placeholder="昵称" v-model="param.nickname"/>
         <span class="del" v-if="param.nickname.length>0" v-tap="{methods:clearInput,index:0}">×</span>
@@ -30,18 +24,13 @@
       </div>
     </div>
     <div class="log-btn" v-tap="{methods:nextStep}"><span>下一步</span></div>
-    <toast v-model="show" type="text" width="4em" :text="showText"></toast>
   </div>
 </template>
 
 <script>
-    import  { Toast } from 'vux'
-    import interfaces from '../../../static/js/es6/interface'
-    import md5 from 'js-md5';
-    export default {
-      components:{
-          Toast
-      },
+  import interfaces from '../../../static/js/es6/interface'
+  import md5 from 'js-md5';
+  export default {
     data () {
       return {
         param:{
@@ -54,7 +43,7 @@
         showText:"请正确填写信息",
         showTextNoType:"请选择设计类型",
         showTextNoPhone:"请输入手机号",
-        showTextWrongName:"昵称须为2到10个字符,可由中英文、数字、'_'、'-'组成",
+        showTextWrongName:"昵称须为2到10个字符,中英文、数字、'_'、'-'组成",
         showTextWrongPhone:"请输入有效的手机号码",
         typeList:common.getProjectTypes(),
 
@@ -62,19 +51,6 @@
         verify_code:'', // 加密验证码
         verify_phone:'' // 验证手机号
       }
-    },
-    mounted: function () {
-      //输入框内有内容时显示清空按钮
-//      this.checkNumber(".nicheng");
-//      this.checkNumber(".sjh");
-//      //获取焦点时触发判断事件
-//      this.panduan(".sjh");
-//      //获取短信验证码
-//      this.huoquyanzhengma(".msgs",".sjh");
-//      //判断输入框不能为空
-//      this.loge(".log-btn");
-//      //判断昵称格式是否正确
-//      this.nichen(".nicheng");
     },
     methods: {
       goback() {
@@ -90,94 +66,6 @@
           this.param.mobile_phone = '';
         }
       },
-      //输入框内有内容时显示清空按钮
-      checkNumber(obj) {
-        $(obj).bind('input propertychange', function () {
-          var sj = $(this).val()
-          if (sj == '') {
-            $(obj).next('.del').css('display', 'none')
-          } else {
-            $(obj).next('.del').css('display', 'block')
-          }
-        });
-        //点击消除按钮清空
-        $(obj).next('.del').on('click', function () {
-          $('.tishi').text('')
-          $(obj).val('')
-          $(obj).next('.del').css('display', 'none')
-        })
-      },
-      //获取短信验证码
-      huoquyanzhengma(obj, shouji) {
-        var validCode = true;
-        $(obj).click(function () {
-          var username = $.trim($(shouji).val());
-          var myreg = /^1[0-9]{10}$/;
-          var time = 30;
-          var code = $(this);
-          if (username == "" || username == null || username == undefined) {
-            $('.tishi').text("手机号不能为空");
-          } else if (!myreg.test($(shouji).val())) {
-            $('.tishi').text('请输入有效的手机号码！');
-            return false;
-          } else {
-            $('.tishi').text('')
-            if (validCode) {
-              validCode = false;
-              code.addClass("msgs1"); //可以改变当前颜色的类名
-              var t = setInterval(function () {
-                time--;
-                code.html(time + "秒后重新获取");
-                if (time == 0) {
-                  clearInterval(t);
-                  code.html("重新获取");
-                  validCode = true;
-                  code.removeClass("msgs1");
-                }
-              }, 1000)
-            }
-          }
-        })
-      },
-      //获取焦点时触发判断事件
-      panduan(obj) {
-        $(obj).blur(function () {
-          var username = $.trim($(obj).val());
-          var myreg = /^1[0-9]{10}$/;
-          if (!myreg.test($(obj).val())) {
-            $('.tishi').text('请输入有效的手机号码！');
-            return false;
-          } else {
-            $('.tishi').text('')
-          }
-        });
-      },
-      //判断输入框不能为空
-      loge(anniu) {
-        var obj=this;
-        $(anniu).click(function() {
-          $("input").each(function() {
-            if($("input").val() == "" || $("input").val() == null || $("input").val() == undefined) {
-              $('.tishi').text("输入框不能为空");
-            } else {
-              $('.tishi').text("");
-            //   obj.toUrl('zhuche2');
-            }
-          })
-        })
-      },
-      //判断昵称格式是否正确
-      nichen(valp) {
-        $(valp).blur(function() {
-          var myreg = /^[a-zA-Z0-9\u4e00-\u9fa5_-]{2,10}$/;
-          if(!myreg.test($(valp).val())) {
-            $('.tishi').text("昵称须为2到10个字符,可由中英文、数字、'_'、'-'组成");
-          } else {
-            $('.tishi').text("");
-          }
-        })
-      },
-
       /*************************************/
       // 验证码验证
       verifyCode(){
@@ -267,7 +155,7 @@
               _self.show = true;
             }
           }else{
-
+            _self.is_verify = false;
             _self.showText = '网络异常，请重试!';
             _self.show = true;
           }
@@ -318,15 +206,15 @@
             _self.show = true;
             return;
         }
-//        if( !_self.verifyCode() ){
-//            return;
-//        }
+        if( !_self.verifyCode() ){
+            return;
+        }
         common.setStorage("nickname",_self.param.nickname)
         common.setStorage("mobile_phone",_self.param.mobile_phone)
         common.setStorage("verifying_code",_self.param.verifying_code)
         common.setStorage("user_type",_self.param.user_type)
         setTimeout(function () {
-          _self.toUrl('zhuche2');
+          _self.$emit('upup', 0)// 主动触发upup方法，'hehe'为向父组件传递的数据
         },50)
 
       },

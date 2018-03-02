@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{ methods:goback }"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
@@ -387,12 +387,9 @@
         if( _self.is_submit == true ) return;
         _self.is_submit = true;
         // 参数
-        console.log("_self.subParams:"+JSON.stringify(_self.subParams))
         _self.subParams.project_deadLine = common.string2TimeStamp(_self.deadLine);
-        _self.subParams.project_startTime = common.string2TimeStamp(_self.subParams.project_startTime);
-        _self.subParams.project_endTime = common.string2TimeStamp(_self.subParams.project_endTime);
-        console.log("_self.subParams:"+JSON.stringify(_self.subParams))
-        return;
+        _self.subParams.project_startTime = common.string2TimeStamp(_self.startTime);
+        _self.subParams.project_endTime = common.string2TimeStamp(_self.endTime);
         var params = {
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
@@ -483,6 +480,10 @@
   }
 </script>
 <style>
+  /**解决软件盘弹出，文本框被顶起**/
+  .content{
+    overflow: hidden;
+  }
   /*地区*/
   .vux-no-group-title {
     margin-top:0 !important;

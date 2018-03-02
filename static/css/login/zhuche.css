@@ -30,6 +30,13 @@
   color: #f65aa6;
 }
 
+.my-toast{
+  width: 6.35rem;
+  margin: 0 auto;
+  font-size: 0.28rem;
+  color: #f65aa6;
+}
+
 .login-shuru .ls-shouji,
 .login-shuru .ls-yanzheng {
   width: 6.35rem;
@@ -92,8 +99,8 @@
   right: 0.2rem;
   font-size: 0.4rem;
   color: #999;
-  display: inline-block;
-  display: none;
+  /*display: inline-block;*/
+  /*display: none;*/
 }
 
 .login-shuru .ls-shouji .dj-shuru,

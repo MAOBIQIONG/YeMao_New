@@ -47,7 +47,7 @@
 
 <script>
   import { Toast } from 'vux'
-  import beecloud from '../../../static/js/beecloud'
+  import beecloud from '../../../static/js/es6/beecloud'
   export default {
     components: {
       Toast

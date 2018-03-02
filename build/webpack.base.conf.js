@@ -48,7 +48,7 @@ const webpackConfig = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')],
+        include: [resolve('src'), resolve('test'), resolve('static/js/es6')],
         exclude: resolve('src/sdk'),
         query: {
           presets: []

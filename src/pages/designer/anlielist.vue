@@ -37,7 +37,7 @@
 
 <script>
   import { LoadMore, Scroller } from 'vux'
-  import common from "../../../static/js/common";
+  import common from "../../../static/js/es6/common";
   export default {
     components: {
       Scroller,

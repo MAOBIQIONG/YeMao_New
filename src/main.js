@@ -5,14 +5,14 @@ import App from './App'
 import router from './router'
 import vueTap from 'v-tap'
 import { Datetime, Group } from 'vux'
-import $ from '../static/js/jquery-3.2.1.min'
-import im from '../static/js/initNim'
+import $ from '../static/js/es5/jquery-3.2.1.min'
+import im from '../static/js/es6/initNim'
 import store from './vuex/store'
-import common from '../static/js/common.js'
-import uploadImg from '../static/js/uploadImg.js'
-import uploadImg2 from '../static/js/uploadImg-more.js'
-import share from '../static/js/share.js';
-import pay from '../static/js/beecloud.js';
+import common from '../static/js/es6/common.js'
+import uploadImg from '../static/js/es6/uploadImg.js'
+import uploadImg2 from '../static/js/es6/uploadImg-more.js'
+import share from '../static/js/es6/share.js';
+import pay from '../static/js/es6/beecloud.js';
 // 引用API文件
 import api from './api/api.js'
 // 全局引入iconfont.css

@@ -1,4 +1,4 @@
-import webapi from '../../src/api/webapi'
+import webapi from '../../../src/api/webapi'
 import Qs from 'qs'
 
 const interfaces ={

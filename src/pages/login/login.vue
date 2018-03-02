@@ -58,7 +58,7 @@
 <script>
   import { Toast, } from 'vux'
   import store from '@/vuex/store'
-  import interfaces from  '../../../static/js/interface'
+  import interfaces from '../../../static/js/es6/interface'
   import md5 from 'js-md5';
   export default {
     components: {

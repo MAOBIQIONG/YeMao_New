@@ -50,7 +50,7 @@
 
 <script>
   import { Toast } from 'vux'
-  import uploadImg from "../../../static/js/uploadImg";
+  import uploadImg from "../../../static/js/es6/uploadImg";
   export default {
     components: {
       Toast

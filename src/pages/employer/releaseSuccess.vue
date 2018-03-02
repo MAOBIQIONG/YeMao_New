@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import common from '../../../static/js/common';
+  import common from '../../../static/js/es6/common';
   import store from '@/vuex/store'
   export default {
     // 引入组件

@@ -1,5 +1,5 @@
 import Qs from 'qs'
-import api from '../../src/api/wxapi.js'
+import api from '../../../src/api/wxapi.js'
 
 // 7dd519fe-2651-4a07-817d-599fe2066180
 var appid = '7dd519fe-2651-4a07-817d-599fe2066180';

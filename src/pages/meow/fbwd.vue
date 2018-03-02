@@ -32,7 +32,7 @@
 
 <script>
     import { Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
-    import uploadImg2 from "../../../static/js/uploadImg-more";
+    import uploadImg2 from "../../../static/js/es6/uploadImg-more";
     export default {
         directives: {
             TransferDom
@@ -175,7 +175,7 @@
                     }
                 },
                 });
-            },         
+            },
         }
     }
 </script>

@@ -9,7 +9,7 @@
 </template>
 
 <script type="text/babel">
-  import common from '../../../static/js/common.js'
+  import common from '../../../static/js/es6/common.js'
   export default {
     name: 'navigate-bar',
     data () {

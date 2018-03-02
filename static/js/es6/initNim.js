@@ -1,4 +1,4 @@
-import SDK from '../../src/sdk/NIM_Web_NIM_v4.3.0.js'
+import SDK from '../../../src/sdk/NIM_Web_NIM_v4.3.0.js'
 import emoji from './emoji.js'
 
 const im = {

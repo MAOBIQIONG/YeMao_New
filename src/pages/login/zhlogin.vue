@@ -2,7 +2,7 @@
   <div class="">
     <div class="header">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
-      <div class="header-right" v-tap="{ methods:toUrl , pagename:'zhuche'}">注册</div>
+      <div class="header-right" v-tap="{ methods:toUrl , pagename:'register'}">注册</div>
     </div>
     <div class="log">
       <div class="log-img">

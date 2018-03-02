@@ -31,7 +31,7 @@
 
 <script>
   import { Toast,Swiper,SwiperItem } from 'vux'
-  import emoji from '../../../static/js/emoji.js'
+  import emoji from '../../../static/js/es6/emoji.js'
   export default {
     components: {
       Toast,
