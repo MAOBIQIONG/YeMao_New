@@ -74,24 +74,40 @@
             <p>热门评论</p>
             <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
                 <div class="top-pinlun">
-                <div class="tp-left">
-                    <span><img src="../../../static/images/bj.jpg"/></span><span>{{item.user.user_name}}</span>
-                </div>
-                <div class="tp-right">
-                    <span>{{item.comments}}</span><span><img src="../../../static/images/zan.png"/></span>
-                </div>
+                    <div class="tp-left">
+                        <span><img src="../../../static/images/bj.jpg"/></span><span>{{item.user.user_name}}</span>
+                    </div>
+                    <div class="tp-right">
+                        <span>{{item.comments}}</span><span><img src="../../../static/images/zan.png"/></span>
+                    </div>
                 </div>
                 <div class="neirong">
                     {{item.content}}
-                </div>
+                </div>  
                 <div class="bottom">
-                <div class="left-bt">
-                    {{item.create_date | dateToStringSecond}}
+                    <div class="left-bt">
+                        {{item.create_date | dateToStringSecond}}
+                    </div>
+                    <div class="right-bt">
+                        <span>100条回复 .</span>
+                        <span v-if="userInfo._id!=null&&userInfo._id==item.user._id" :id="com._id" class="pd-0" v-tap="{methods:deleteSth,id:com._id,floor:0,flag:1}">删除</span>
+                        <span v-else :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}">评论</span>
+                        <!-- <span v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}" >评论</span> -->
+                    </div>
                 </div>
-                <div class="right-bt">
-                    100条回复
+
+    <div class="comment-box">
+        <div class="right" v-if="item.replys && item.replys.length>0">
+            <div class="arr-up"></div>
+            <div class="comment-reply">
+                <div class="reply">
+                    评论123123312133132
                 </div>
-                </div>
+            </div>
+        </div>
+    </div>
+
+
             </div>
             </div>
             <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
@@ -102,7 +118,7 @@
       <!-- 评论输入框 -->
       <div class="input-box">
           <div class="input">
-              <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
+              <input v-model="comment_text" type="text" :placeholder="comment_placeholder" @blur="commentBlur" ref="commentInput">
           </div>
           <div class="send-btn" :class="is_submit?'hover':''">
               <div class="btn" v-tap="{methods:commentchw}">发送</div>
@@ -137,6 +153,7 @@ export default {
         },
     data: function () {
         return {
+            userInfo:{},
             chw_id:null,
             chw:{
                 likeFlag:0,
@@ -149,6 +166,9 @@ export default {
             likes:[],
             likes_num:0,
             comments:[],
+            floor:0,
+            answer_id:'',
+            answer_name:'',
             user_id:null,
             imgs:[],
             index:0,
@@ -358,6 +378,7 @@ export default {
                     content: _self.comment_text,          // 评论内容
                     comment_type: 5,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
                     answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
+                    floor: _self.floor                   // 评论层级
                 }
             };
             this.$axios.post('/mongoApi',{
@@ -376,8 +397,7 @@ export default {
         // 添加评论html
         addCommentHmtl(data){
             var _self = this;
-            // 修改评论数量
-            _self.chw.comments += 1;
+
             // 添加评论记录
             data.user = {
                 authenticating_state: _self.userInfo.authenticating_state,
@@ -386,9 +406,83 @@ export default {
                 _id: _self.userInfo._id
             };
             data.create_date = new Date().getTime();
-            _self.comments.unshift(data);
+            if( data.floor == 0 ){ // 一级评论
+                // 修改评论数量
+                _self.chw.comments += 1;
+                _self.comments.push(data);
+            }else{
+                if( data.floor == 2 ){ // 回复
+                    data.answer = {
+                        user_name: _self.answer_name,
+                        _id: _self.answer_id
+                    };
+                }
+            }
+            // 添加回复记录
+            _self.comments.forEach(function (item,index) {
+                if( data.comment_id == item._id.toString() ){
+                    if( item.replys ){
+                        item.replys.push(data);
+                    }else{
+                        item.replys = [data];
+                    }
+                }
+            })
             // 重置评论框内容
             _self.comment_text = '';
+        },
+
+        // 删除：喵喵圈、评论
+        deleteSth(params){
+            var _self = this;
+            _self.showSheet = true;
+            _self.deleteId = params.id;
+            _self.deleteFlag = params.flag;
+            _self.deleteFloor = params.floor;
+        },
+        // 回复
+        replyFun(params){
+            var _self = this;
+            // 删除自己的评论、回复
+            if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
+                if( _self.userInfo._id == params.uid ){
+                    var delParams = {id:params.aid,flag:1,floor:1};
+                    _self.deleteSth(delParams);
+                    return;
+                }
+            }
+            // 评论、回复
+            var id = "#"+params.id;
+            _self.comment_id = params.id;
+            _self.floor = common.checkInt(params.floor);
+            if( !common.isNull(params.aid) && !common.isNull(params.name) ){
+                id = "#"+params.aid;
+                _self.answer_id = params.uid;
+                _self.answer_name = params.name;
+                _self.comment_placeholder = '回复'+_self.answer_name+':';
+            }
+            if( !$(id).hasClass('bg-clo-1') ){
+                $(id).addClass('bg-clo-1');
+                setTimeout(function () {
+                    $(id).removeClass('bg-clo-1');
+                    _self.commentOnBlur();
+                },100)
+            }
+        },
+        // 失去焦点
+        commentBlur(){
+            console.log("blur:")
+            var _self = this;
+            _self.comment_placeholder = '填写评论';
+            // _self.comment_id = _self.miao_id;
+            // _self.answer_id = _self.meow.user._id;
+            // _self.floor = 0;
+        },
+        // 获取焦点
+        commentOnBlur(params){
+            console.log("focus:")
+            var _self = this;
+            _self.$refs['commentInput'].focus();
         },
         onIndexChange(index) {
             this.index = index
@@ -537,5 +631,8 @@ export default {
     .confirmColor{
         color:#f65aa6;
         background: #ffffff !important;
+    }
+    .comment-reply{
+        font-size:0.28rem;
     }
 </style>
