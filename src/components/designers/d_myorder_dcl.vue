@@ -54,7 +54,10 @@
                     <div class="db-right">
                         <template  v-if="!isNull(item.project_winBidder)" >
                             <template v-if="item.project_winBidder == user_id" >
-                                <div class="db-qrdd" v-if="item.project_state==1"  @click="improveTheOrder(item._id)">完善订单</div>
+                                <template v-if="item.project_state==1">
+                                    <div class="db-qrdd" @click="improveTheOrder(item._id)">完善订单</div>
+                                    <div class="db-qrdd"  v-tap="{methods:showConfirm,id:item._id,type:'confirmTheOrderByDesigner'}">确认订单</div>
+                                </template>
                             </template>
                         </template>
                     </div>
@@ -64,7 +67,7 @@
             <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
             <div v-transfer-dom>
                 <confirm v-model="confirmShow"
-                    @on-confirm = "cancelOrder()"
+                    @on-confirm = "compOnConfirm()"
                 >
                 <p style="text-align:center;">{{confirmMsg}}</p>
                 </confirm>
@@ -128,7 +131,9 @@ export default {
     },
     data(){
         return {
+            confirmType:"",//confirmTheOrderByDesigner 设计师确认订单
             cancel_id:null,
+            order_id:null,
             orderList: [],
             user_id:null,
             pagination: {
@@ -415,10 +420,54 @@ export default {
         onScrollBottom(){
             // console.log('on-scroll-bottom');
         },
+        confirmTheOrderByDesigner(){
+            let state = 2;
+            this.updateOrderState({state})
+        },
+        updateOrderState(params){
+            // console.log(param.id);
+            var _self = this;
+            var params = {
+                interfaceId:common.interfaceIds.updateData,
+                coll:common.collections.orderList,
+                wheredata:{
+                    _id:_self.order_id
+                },
+                data:{
+                    $set: {
+                        project_state: params.state, // 取消
+                    }
+                }
+            };
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response)
+                    var data = response.data;
+                    if( data.ok > 0 ){
+                        if(this.confirmType =="confirmTheOrderByDesigner"){
+                            _self.showToast('等待雇主确认订单');
+                        }
+                        setTimeout(()=>{
+                            this.$parent.index=1;
+                        },100);
+                    } else {
+                        _self.showToast('取消失败联系管理员');
+                    }
+                })
+        },
         showConfirm(params){
             this.confirmShow = true;
-            this.cancel_id = params;
-            console.log(this.cancel_id);
+            this.order_id = params.id;
+            this.confirmType = params.type
+            if(params.type == "confirmTheOrderByDesigner"){
+                this.confirmMsg = "确定该订单吗？"
+            } 
+        },
+        compOnConfirm(){
+            if(this.confirmType=="confirmTheOrderByDesigner"){
+                this.confirmTheOrderByDesigner();
+            }
         },
         renderAfterCanceled(){
             let _self = this;

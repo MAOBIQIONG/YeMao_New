@@ -143,9 +143,15 @@
             </template>
             <template v-if="buttonState.user_type=='designer'">
                 <div class="db-right" v-if="buttonState.state=='dcl'">
-                    <div v-if="buttonState.btns_type==1" class="db-qrdd" v-tap="{methods:improveTheOrder,id:order._id}">
-                        完善信息
-                    </div>
+                    <template v-if="buttonState.btns_type==1">
+                        <div class="db-qrdd" v-tap="{methods:improveTheOrder,id:order._id}">
+                            完善信息
+                        </div>
+                        <div class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'confirmTheOrderByDesigner',msg:'确认该订单吗？'}">
+                            确认订单
+                        </div>
+                    </template>
+
                 </div>
                 <div class="db-right" v-if="buttonState.state=='djf'">
                     <div class="db-sxdd" v-tap="{methods: toCheck, id: order._id}">一键会审</div>
@@ -185,7 +191,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             //订单装填完善标志位
             improved:0,
             isSubmissionConfirmed:0,
-            confirmType:"",//cancelOrder取消订单，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交
+            confirmType:"",//cancelOrder取消订单，confirmTheOrderByDesigner设计师确认订单 ，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交
             user_id:null,
             userInfo:null,
             order:{
@@ -311,25 +317,30 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             common.setStorage("viewImgs",imgs);
             this.$router.push({name:'emporderimgs',query:{id:this.order_id}})
         },
-      // 订单详情字数限制
-      getMaxlen(text){
-        var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
-        var num = common.getMaxlenInlineNum(width,fontSize,lines);
-        if( text && text.length > num ){
-            text = text.substring(0,num-6) + '...';
-        }
-        return text;
-      },
-      checkImg(path){
-        // console.log(common.getDefultImg(path));
-        return common.getDefultImg(path);
-      },
-      getStringDate(date,id){
-        return common.timeStamp2String(date,id)
-      },
-      improveTheOrder(p){
+        // 订单详情字数限制
+        getMaxlen(text){
+            var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
+            var num = common.getMaxlenInlineNum(width,fontSize,lines);
+            if( text && text.length > num ){
+                text = text.substring(0,num-6) + '...';
+            }
+            return text;
+        },
+        checkImg(path){
+            // console.log(common.getDefultImg(path));
+            return common.getDefultImg(path);
+        },
+        getStringDate(date,id){
+            return common.timeStamp2String(date,id)
+        },
+        improveTheOrder(p){
             common.setStorage('fromMyOrderDetail',1);
             this.$router.push({name:'fabudingdan',query:{id:p.id,improve:1}});
+        },
+        confirmTheOrderByDesigner(){
+            let p = {}
+            p.state = 2;
+            this.updateOrderState(p);
         },
       // 订单详情查看\收起
         viewMoreFun () {
@@ -504,6 +515,9 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
         compOnConfirm(type){
             if(this.confirmType=="cancelOrder"){
                 this.cancelOrder();
+            }
+            if(this.confirmType=="confirmTheOrderByDesigner"){
+                this.confirmTheOrderByDesigner();
             }
             if(this.confirmType =="submissionDesign"){
                 this.updateStateAfterDoneWork();
