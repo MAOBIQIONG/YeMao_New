@@ -25,7 +25,7 @@
               </div>
               <div class="jianjie-bottom">
                 <div class="db-yushuan"><span>预算</span> <span class="yushuan">￥</span><span class="yushuan">{{order.project_budget}}</span></div>
-                <div class="db-miaomiao" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.user._id,name:order.user.user_name,img:order.user.img}}">
+                <div class="db-miaomiao" v-if="order.winner" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.winner._id,name:order.winner.user_name,img:order.winner.img}}">
                   <span><img src='../../../static/images/employer/miaomiao.png'></span><span>喵喵</span>
                 </div>
               </div>
@@ -533,19 +533,16 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                     if(!data) return;
                     let order = data.order || {};
                     let orderBidders = data.orderBidders || [];
-                    let bidders = data.bidders || [];
-                    for(let m1 of orderBidders){
-                        if(_self.user_id == m1.user_id){
-                            _self.hasBidder = true;
+                    if( common.checkInt(order.project_state) > 0 ){
+                      for(let obj of orderBidders){
+                        if( order._id==obj.order_id && obj.user ){
+                          console.log(obj.user._id +"<>"+ order.project_winBidder)
+                          if( obj.user._id == order.project_winBidder ){
+                            order.winner = obj.user;
+                          }
                         }
-                        for(let m2 of bidders) {
-                            if(m1._id == m2._id){
-                                m1.user_name = m2.user_name;
-                                m1.img = m2.img
-                            }
-                        }
+                      }
                     }
-                    _self.bidder = orderBidders;
                     _self.order = order;
                     if( _self.order.imgs ){
                         _self.imgSize = _self.order.imgs.length;
