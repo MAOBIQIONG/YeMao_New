@@ -102,7 +102,7 @@ import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
 import guide from '@/pages/main/guide'
 import maintain from '@/pages/main/maintain'
-
+import apiTest from '@/pages/test/api-test'
 
 Vue.use(Router)
 
@@ -115,6 +115,11 @@ Router.prototype.goBack = function (num) {
 }
 
 const routeArray = [
+    {
+        path:'/apiTest',
+        name:'apiTest',
+        component:apiTest
+    },
   // 1、打包后，浏览器运行首页空白
   {
     path: '/dist/index.html',
