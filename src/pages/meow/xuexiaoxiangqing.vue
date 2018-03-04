@@ -37,14 +37,15 @@
           </div>
           <!--<div class="list-right"><img src="../../../static/images/jiangou.png"></div>-->
         </div>
-        <div class="list tz"@click="toUrl('dianzhan')">
+        <div class="list tz" v-tap="{methods:toUrlAfterLogin,pagename:'alumniList'}">
           <div class="xingxi">校友成员</div>
           <div class="xycy">
             <div class="renshu">
-              <span>0</span>人
+              <span v-if="alumniList.length>0">{{alumniList.length}}</span>
+              <span v-else>0</span>人
             </div>
-            <ul class="cylist">
-              <li><img src="../../../static/images/bj.jpg" /></li>
+            <ul class="cylist" v-for="(item,index) in alumniList" :key="index">
+              <li><img :src="checkAvatar(item.user.img)" /></li>
             </ul>
           </div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
@@ -81,6 +82,7 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
         confirmType:'',//addAlumnis 校友会添加成员
         confirmMsg:'',
         user_id:null,
+        alumniList:[],
       }
     },
     watch:{
@@ -114,10 +116,10 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
         toUrlAfterLogin(params){
             var _self = this;
             if( !common.isNull(_self.user._id) ){
-                _self.toUrl(params);
+                _self.toUrl2(params);
             } else {
                 console.log('没有获取用户信息');
-                _self.toUrl({pagename:"login"});
+                _self.toUrl2({pagename:"login"});
             }
          },
         toPhoneList(param){
@@ -126,8 +128,12 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
                  _self.$router.push({name:'tongxunluhaoyou',query:{aa_id:param.aa_id}})
             } else {
                 console.log('没有获取用户信息');
-                _self.toUrl({pagename:"login"});
+                _self.toUrl2({pagename:"login"});
             }
+        },
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
         },
         requestData(){
             let _self = this;
@@ -146,6 +152,25 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
                     if (data) {
                         _self.loaded = true;
 
+                    } else {
+                        console.log('noData');
+                    }
+                });
+            this.getAlumnis();
+        },
+        getAlumnis(){
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.getAlumnis,
+                aa_id:_self.itemId
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    let data = response.data.alumnis
+                    common.setStorage('alumnisList',data);
+                    if (data) {
+                        _self.alumniList = data;
                     } else {
                         console.log('noData');
                     }

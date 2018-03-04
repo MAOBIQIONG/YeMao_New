@@ -3,17 +3,17 @@
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
-      <span>点赞列表</span>
+      <span>成员列表</span>
     </div>
     <div class="content content-p">
-      <div class="dzlist" v-for="(item,index) in list" :key="index">
-        <div class="left"></div>
-        <div class="right">设计师昵称</div>
-        <div class="renzheng">
+      <div class="dzlist" v-for="(item,index) in alumnisList" :key="index">
+        <div class="left" :style="{backgroundImage:`url(${checkAvatar(item.user.img)})`}"></div>
+        <div class="right">{{item.user.user_name}}</div>
+        <!-- <div class="renzheng">
           <div class="sb-qian">签</div>
           <div class="sb-ysm">已实名</div>
           <div class="sb-yrz">已认证</div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
   export default {
     data: function () {
       return {
-          list:[]
+          alumnisList:[]
       }
     },
     methods: {
@@ -40,15 +40,22 @@
     },
     created(){
         let _self = this;
-        let likers = JSON.parse(common.getStorage('likes_chwdetail'));
-        if(!common.isNull(likers)){
-            _self.likers = likers;
+        let alumnisList = common.getObjStorage('alumnisList');
+        console.log(alumnisList);
+        if(!common.isNull(alumnisList)){
+            _self.alumnisList = alumnisList;
         }
-        console.log('kk',likers);
-        common.delStorage('likes_chwdetail');
+        console.log('alumnisList',alumnisList);
+    },
+    destroyed(){
+        common.delStorage('alumnisList');
     }
   }
 </script>
 <style scoped>
   @import '../../../static/css/meow/dianzhan.css';
+  .left{
+      background-size:cover!important;
+      background-position:center center!important;
+  }
 </style>
