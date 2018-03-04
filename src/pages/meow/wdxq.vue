@@ -90,9 +90,8 @@
                     </div>
                     <div class="right-bt">
                         <span>100条回复 .</span>
-                        <span v-if="userInfo._id!=null&&userInfo._id==item.user._id" :id="com._id" class="pd-0" v-tap="{methods:deleteSth,id:com._id,floor:0,flag:1}">删除</span>
-                        <span v-else :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}">评论</span>
-                        <!-- <span v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}" >评论</span> -->
+                        <span v-if="userInfo._id!=null&&userInfo._id==item.user._id" :id="item._id" class="pd-0" v-tap="{methods:deleteSth,id:item._id,floor:0,flag:1}">删除</span>
+                        <span v-else :id="item._id" class="pd-0" v-tap="{methods:replyFun,id:item._id,uid:item.user._id,floor:1}">评论</span>
                     </div>
                 </div>
 
