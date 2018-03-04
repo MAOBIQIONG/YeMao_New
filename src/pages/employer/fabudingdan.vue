@@ -16,7 +16,7 @@
         <div class="xmlx-right">
           <select class="xmlx-kuang" v-model="subParams.project_type">
             <option value="">请选择类型</option>
-            <option v-for="item in typeList" :value="item._id">{{item.type_name}}</option>
+            <option v-for="(item,index) in typeList" :value="item._id" :key="index">{{item.type_name}}</option>
           </select>
         </div>
       </div>
@@ -53,7 +53,7 @@
             <span>抢单截止日期</span>
           </div>
           <div class="qdtime-right">
-              <datetime v-model="deadLine"class="shijian"></datetime>
+              <datetime v-model="deadLine" class="shijian"></datetime>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
             <span>设计面积</span>
           </div>
           <div class="xmbt-right">
-            <input type="text"placeholder="请输入设计面积" v-model="area" ref="area"/>
+            <input type="text" placeholder="请输入设计面积" v-model="area" ref="area"/>
           </div>
         </div>
         <div class="sjsd">
@@ -110,7 +110,7 @@
       </div>
       <div class="sctp">
         <div class="sc-top">上传图片</div>
-        <div class="img-body" v-for="img in subParams.imgs">
+        <div class="img-body" v-for="(img,index) in subParams.imgs" :key="index">
           <img :src="getDefultImg(img.src)" />
         </div>
         <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
@@ -147,7 +147,7 @@
         isShow: true,
         typeList: [],
         city: ['上海市'],
-        deadLine: common.getSomeday(),
+        deadLine: common.getSomeday(-1),
         startTime: common.getSomeday(-1),
         endTime: common.getSomeday(-2),
         subParams:{
@@ -348,8 +348,8 @@
         return false
       }
       var currdate = common.getSomeday();
-      if( !common.dateCompare(currdate,_self.deadLine) ){
-        _self.showToast("抢单截止日期不能小于当前日期!");
+      if( !common.dateCompare(currdate,_self.deadLine)|| currdate == _self.deadLine){
+        _self.showToast("抢单截止日期不能小于等于当前日期!");
         return false
       }
       if( common.isNull(_self.subParams.project_unit) == true ){
