@@ -25,9 +25,13 @@ export default{
                 interfaceId:common.interfaceIds.queryList,
                 coll:coll,
                 // user_id: '5a9a635c5844423e439d833e',
+                // 5a5edb3f9bc0184eb7fb2848
+                //comment_id:5a7c4aace0459a776897fcf1
+                //answer_id:'5a5edb3f9bc0184eb7fb2848'
                 where:{
-                    user_id:'5a5edb3f9bc0184eb7fb2848',
-                    floor:2
+                    user_id:'5a9a635c5844423e439d833e',
+                    floor:{$gt:0},
+                    answer_id:'5a5edb3f9bc0184eb7fb2848'
                 },
                 pageNo:this.pageNo,
                 pageSize:this.pageSize
