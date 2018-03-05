@@ -26,28 +26,42 @@
       <div class="pinlunlist">
         <div class="top-pinlun">
           <div class="tp-left">
-            <span><img src="../../../static/images/bj.jpg"/></span><span>用户昵称</span>
+            <span><img src="../../../static/images/bj.jpg"/></span><span>{{chw.user.user_name}}</span>
           </div>
           <div class="tp-right">
-            <span>100</span><span><img src="../../../static/images/zan.png"/></span>
+            <span>{{chw.like}}</span><span><img src="../../../static/images/zan.png"/></span>
           </div>
         </div>
         <div class="neirong">
-          评论内容评论内容评论内容评论内容评论内容评
-          评论内容评论内容评论内容评论内容评论内容评
+          {{chw.content}}
         </div>
-        <div class="pinlunlist pinlunlist1">
+        <div class="bottom">
+            <div class="left-bt">
+                <!-- {{item.create_date | dateToStringSecond}} -->
+                {{getDataStr(chw.create_date)}}
+            </div>
+            <div class="right-bt">
+                <span v-if="userInfo._id!=null&&userInfo._id==chw.user._id" :id="chw._id" class="pd-0" v-tap="{methods:deleteSth,id:chw._id,floor:0,flag:1}">删除</span>
+                <span v-else :id="chw._id" class="pd-0" v-tap="{methods:replyFun,id:chw._id,uid:chw.user._id,floor:1}">评论</span>
+            </div>
+        </div>
+        <div class="pinlunlist pinlunlist1" v-for="(item,index) in replys" :key="index">
           <div class="top-pinlun">
-            <div class="tp-left tp-left2">
-              <span>用户昵称1</span>回复<span>用户昵称2</span>
+            <div class="tp-left tp-left2" v-tap="{methods:replyFun,id:comment_id,aid:item._id,name:item.user.user_name,uid:item.user._id,floor:2}" :id="item._id">
+                <p v-if="item.floor==1"><span class="replier">{{item.user.user_name}}</span></p>
+                <p v-if="item.floor==2">
+                    <span class="replier">{{item.user.user_name}}</span>
+                    <span>回复</span>
+                    <span class="replier" v-if="item.answer">{{item.answer.user_name}}</span>
+                    <!-- &nbsp;:&nbsp;<span>{{item.content}}</span> -->
+                </p>
             </div>
             <div class="tp-right">
-              <span>2017-12-21</span>
+              <span>{{getDataStr(item.create_date)}}</span>
             </div>
           </div>
-          <div class="neirong neirong1">
-            评论内容评论内容评论内容评论内容评论内容评
-            评论内容评论内容评论内容评论内容评论内容评
+          <div class="neirong neirong1" style="padding-left:0.2rem;">
+            {{item.content}}
           </div>
         </div>
       </div>
@@ -55,6 +69,7 @@
     </div>
     </scroller>
     <toast v-model="toastShow" :time="1000" type="text" width="5rem">{{toastMsg}}</toast>
+    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete"></actionsheet>
     <div class="chat-box">
       <!-- 评论输入框 -->
       <div class="input-box">
@@ -71,9 +86,10 @@
 </template>
 
 <script>
-import {Scroller,LoadMore,Toast} from 'vux'
+import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
   export default {
     components: {
+        Actionsheet,
         Scroller,
         LoadMore,
         Toast
@@ -95,10 +111,12 @@ import {Scroller,LoadMore,Toast} from 'vux'
     data: function () {
         return {
             isLogin:false,
+            loadPageEnd:false,
             userInfo:{},
             chw_id:'',
+            chw:{user:{}},
             // 评论
-            comments:[],
+            replys:[],
             is_submit:false,
             comment_placeholder:'填写评论',
             comment_text:'',
@@ -109,8 +127,13 @@ import {Scroller,LoadMore,Toast} from 'vux'
             //toast
             toastShow:false,
             toastMsg:"",
+            //sheet
+            showSheet: false,
+            menus: {
+                delete: '<span style="color:red">删除</span>',
+            },
             pagination:{
-                pageNo:0,
+                pageNo:1,
                 pageSize:10,
             },
             pullUpDownStatus: {
@@ -176,8 +199,6 @@ import {Scroller,LoadMore,Toast} from 'vux'
         _self.chw_id = _self.$route.query.chw_id;
         _self.comment_id = _self.$route.query.comment_id;
         _self.initData();
-        _self.loadData();
-
     },
     methods: {
         goback () {
@@ -190,44 +211,24 @@ import {Scroller,LoadMore,Toast} from 'vux'
             this.toastShow = true;
             this.toastMsg = msg;
         },
-        //评论
-        commentchw(){
-            var _self = this;
-            if( !_self.is_submit ){
-            }else if( common.isNull(_self.user_id) ){
-                _self.$router.push({name: 'login'});
-            }else {
-                _self.addComment();
-            }
+        getDataStr(date){
+            return common.timeStamp2String(date,'ymdhm');
         },
-        // 失去焦点
-        commentBlur(){
-            console.log("blur:")
-            var _self = this;
-            _self.comment_placeholder = '填写评论';
-            // _self.comment_id = _self.miao_id;
-            // _self.answer_id = _self.meow.user._id;
-            // _self.floor = 0;
-        },
-        // 获取焦点
-        commentOnBlur(params){
-            console.log("focus:")
-            var _self = this;
-            _self.$refs['commentInput'].focus();
-        },
+
         //下拉刷新
         refreshPageDate(){
             let _self = this
-            _self.pagination.pageNo = 0;
+            _self.pagination.pageNo = 1;
             _self.loadMoreStatus.show=false;
+            _self.$refs.scroller.enablePullup();
             _self.$refs.scroller.donePullup();
-            setTimeout(()=>{_self.loadData();},10);
+            _self.$refs.scroller.donePulldown();
+            setTimeout(()=>{_self.initData();},10);
 
         },
         //上拉加载
         loadMore(){
             let _self = this;
-            // _self.loadData();
             _self.loadData();
         },
         scroll(position){
@@ -250,7 +251,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
             let params = {
                 interfaceId:common.interfaceIds.getCommentById ,
                 user_id:_self.user_id,
-                 _id: _self.comment_id
+                id: _self.comment_id
             };
             this.$axios.post('/mongoApi',{
                 params
@@ -262,24 +263,15 @@ import {Scroller,LoadMore,Toast} from 'vux'
         },
         setInitData(data){
             let _self = this;
-            let chw = data.chw || {};
+            let chw = data.comment || {};
             if(!chw.user){
                 chw.user = {};
             }
             _self.chw = chw;
             _self.answer_id = _self.chw.user._id;
-            var imgs = _self.chw.imgs || [];// 图片
-            imgs.forEach(function (item,index) {
-                _self.imgs.push({img:item});
-            });
-            //点赞人列表
-            // console.log('data.chw.likes',data.likes);
-            let likes = data.likes;
-            common.setStorage('likes_chwdetail',likes);
-            _self.likes = likes.slice(0,7);
-            _self.likes_num = likes.length;
-            console.log(data.likes);
-            console.log(_self.likes);
+            _self.replys = chw.replys;
+            _self.$refs.scroller.donePulldown();
+            this.loadMoreStatus.show=false;
             console.log('初始化数据完成');
         },
         //读取分页数据
@@ -289,11 +281,11 @@ import {Scroller,LoadMore,Toast} from 'vux'
             let _self = this;
             _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
             let params = {
-                interfaceId:common.interfaceIds.getComments,
+                interfaceId:common.interfaceIds.getReplyByPages,
                 pageNo: _self.pagination.pageNo,
                 pageSize: _self.pagination.pageSize,
                 where:{
-                    comment_id: _self.chw_id
+                   comment_id: _self.comment_id
                 }
             };
             this.$axios.post('/mongoApi',{
@@ -307,30 +299,214 @@ import {Scroller,LoadMore,Toast} from 'vux'
         },   
         setData(data){
             let _self = this;
+             _self.loadMoreStatus.showLoading=true;
             _self.$refs.scroller.enablePullup();
             // 订单
-            let comments = data.comments || [];
+            let replys = data.replys || [];
             //判断页码是否为0
             if(_self.pagination.pageNo == 0) {
-                _self.comments = comments;
+                _self.replys = replys;
             } else {
-                _self.comments.push(...data.comments);
+                _self.replys.push(...data.replys);
             }
             _self.loadMoreStatus.show=false;
             _self.loadMoreStatus.showLoading=false;
             _self.$refs.scroller.donePullup();
             _self.$refs.scroller.donePulldown();
             //判断数据是否有一页
-            if(comments.length < _self.pagination.pageSize){
+            if(replys.length < _self.pagination.pageSize){
                 _self.loadMoreStatus.show=true;
                 _self.loadMoreStatus.showLoading=false;
                 _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-
+                _self.loadPageEnd= true;
                 _self.$refs.scroller.disablePullup();
             } else {
+                _self.loadPageEnd= false;
                 _self.pagination.pageNo++
             }
-        },     
+        }, 
+        //评论
+        commentchw(){
+            var _self = this;
+            if( !_self.is_submit ){
+            }else if( common.isNull(_self.user_id) ){
+                _self.$router.push({name: 'login'});
+            }else {
+                _self.addComment();
+            }
+        },
+
+        addComment(){
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.addComments,
+                data: {
+                    user_id: _self.user_id,               // 评论人
+                    comment_id: _self.comment_id,             // 评论对象ID
+                    content: _self.comment_text,          // 评论内容
+                    comment_type: 5,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
+                    answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
+                    floor: _self.floor                   // 评论层级
+                }
+            };
+            this.$axios.post('/mongoApi',{
+                params
+            },(response)=>{
+                console.log(response)
+                let data = response.data;
+                if( data.code == 200 || (data.code == 400 && data.result.ok == 1)){
+                    _self.showToast("评论成功!")
+                    _self.addCommentHmtl(params.data);
+                }else{
+                    _self.showToast("评论失败!")
+                }
+            })
+        },
+        // 添加评论html
+        addCommentHmtl(data){
+            console.log(data);
+            console.log(data);
+            var _self = this;
+
+            // 添加评论记录
+            data.user = {
+                authenticating_state: _self.userInfo.authenticating_state,
+                img: _self.userInfo.img,
+                user_name: _self.userInfo.user_name,
+                _id: _self.userInfo._id
+            };
+            data.create_date = new Date().getTime();
+            if( data.floor == 0 ){ // 一级评论
+                // 修改评论数量
+                _self.chw.replys += 1;
+                _self.replys.push(data);
+            }else{
+                if( data.floor == 2 ){ // 回复
+                    data.answer = {
+                        user_name: _self.answer_name,
+                        _id: _self.answer_id
+                    };
+                }
+            }
+            console.log(_self.loadPageEnd);
+            // 添加回复记录
+            if(_self.loadPageEnd == true){
+                _self.replys.push(data);
+            }
+
+            // _self.replys.forEach(function (item,index) {
+            //     if( data.comment_id == item._id.toString() ){
+            //         if( item.replys ){
+            //             item.replys.push(data);
+            //         }else{
+            //             item.replys = [data];
+            //         }
+            //     }
+            // })
+            // 重置评论框内容
+            _self.comment_text = '';
+        }, 
+        // 删除：喵喵圈、评论
+        deleteSth(params){
+            var _self = this;
+            _self.showSheet = true;
+            _self.deleteId = params.id;
+            _self.deleteFlag = params.flag;
+            _self.deleteFloor = params.floor;
+        },
+        // 回复
+        replyFun(params){
+                        
+            var _self = this;
+            // 删除自己的评论、回复
+            if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
+                if( _self.userInfo._id == params.uid ){
+                    var delParams = {id:params.aid,flag:1,floor:1};
+                    _self.deleteSth(delParams);
+                    return;
+                }
+            }
+            // 评论、回复
+            var id = "#"+params.id;
+            _self.comment_id = params.id;
+            _self.floor = common.checkInt(params.floor);
+
+            if( !common.isNull(params.aid) && !common.isNull(params.name) ){
+                id = "#"+params.aid;
+                _self.answer_id = params.uid;
+                _self.answer_name = params.name;
+                _self.comment_placeholder = '回复'+_self.answer_name+':';
+            }
+            if( !$(id).hasClass('bg-clo-1') ){
+                $(id).addClass('bg-clo-1');
+                setTimeout(function () {
+                    $(id).removeClass('bg-clo-1');
+                    _self.commentOnBlur();
+                },100)
+            }
+        },
+        // 失去焦点
+        commentBlur(){
+            console.log("blur:")
+            var _self = this;
+            _self.comment_placeholder = '填写评论';
+            // _self.comment_id = _self.miao_id;
+            // _self.answer_id = _self.meow.user._id;
+            // _self.floor = 0;
+        },
+        // 获取焦点
+        commentOnBlur(params){
+            console.log("focus:")
+            var _self = this;
+            _self.$refs['commentInput'].focus();
+        }, 
+      onDelete(){
+        var _self = this;
+        _self.removeComment();
+      },
+
+      //删除评论
+      removeComment(){
+        let _self = this;
+        let params = {
+          interfaceId:common.interfaceIds.removeComments,
+          _id: _self.deleteId,                 // 评论对象ID
+          floor: _self.deleteFloor,            // 评论层级
+        };
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          let data = response.data;
+          if( data.code == 200 ){
+            _self.showToast("删除成功!")
+            _self.removeCommentHmtl(params);
+          }else{
+            _self.showToast("删除失败!")
+          }
+        })
+      },
+      // 清除页面html
+      removeCommentHmtl(params){
+          console.log('removeCommentHtml',params);
+        let _self = this;
+        // 一级评论删除
+        if( params.floor == 0 ){
+          _self.comments.forEach(function (item,index) {
+            if( params._id == item._id.toString() ){
+              _self.comments.splice(index,1);
+            }
+          })
+        }else{
+          _self.replys.forEach(function (item,index) {
+              if( params._id == item._id.toString() ){
+                _self.replys.splice(index,1);
+              }
+            })
+        }
+      },
+
+
+        
     }
   }
 </script>

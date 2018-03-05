@@ -64,7 +64,7 @@
             <div class="dsr">
                 <ul>
                 <li v-for="(l,i) in likes" :key="i">
-                    <img :src="checkAvatar()"/>
+                    <img :src="checkAvatar(l.user.img)"/>
                 </li>
                 </ul>
                 <div class="dianzhan" @click="toUrl('dianzhan')">
@@ -497,6 +497,9 @@ export default {
         // 头像
         checkAvatar (path) {
             return common.getAvatar(path)
+        },
+        getDataStr(date){
+            return common.timeStamp2String(date,'ymdhm');
         },
         //数据初始化
         initData(){
