@@ -1237,3 +1237,18 @@ body,html{
     transform: scale(1);
   }
 }
+
+/***********日历**********/
+.vux-prev-icon,.vux-next-icon{
+  border-left: 1px solid #f65aa6 !important;
+  border-bottom: 1px solid #f65aa6 !important;
+}
+.inline-calendar td.is-today{
+  color: #f65aa6 !important;
+}
+.inline-calendar td.current > span.vux-calendar-each-date{
+  background-color: #f65aa6 !important;
+}
+.inline-calendar-demo td.current > span.vux-calendar-each-date{
+  background-color: #cccccc !important;
+}

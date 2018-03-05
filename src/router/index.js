@@ -41,6 +41,7 @@ import sjszxxq from '@/pages/designer/sjszx-xq'
 import myorderdesigner from '@/pages/designer/myorder-designer'
 import shejishigerenzhongxin from '@/pages/designer/shejishigerenzhongxin'
 import xiugaigerenxinxi from '@/pages/designer/xiugaigerenxinxi'
+import restday from '@/pages/designer/restday'
 import jianjiexiugai from '@/pages/designer/jianjiexiugai'
 import rongyushangcuan from '@/pages/designer/rongyushangcuan'
 import zuopingshangchuan from '@/pages/designer/zuopingshangchuan'
@@ -274,7 +275,7 @@ const routeArray = [
     name: 'dianzhan',
     component: dianzhan
   },
-    { 
+    {
         path: '/alumniList',
         name: 'alumniList',
         component: alumniList
@@ -424,6 +425,10 @@ const routeArray = [
   { path: '/xiugaigerenxinxi',
     name: 'xiugaigerenxinxi',
     component: xiugaigerenxinxi
+  },
+  { path: '/restday',
+    name: 'restday',
+    component: restday
   },
   { path: '/jianjiexiugai',
     name: 'jianjiexiugai',

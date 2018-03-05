@@ -2,9 +2,9 @@
   <div >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>个人信息</span>
-      <div class="header-right" v-tap="{ methods:submit }"><span>确定</span></div>
+      <div class="header-right" v-tap="{methods:submit}"><span>确定</span></div>
     </div>
     <!--发布订单内容-->
     <div class="content content-p">
@@ -36,18 +36,21 @@
             <input v-model="money" type="text" placeholder="请输入时薪" ref="hourlywage"/>
           </div>
         </div>
-
       </div>
       <div class="liebiao">
-        <div class="list"@click="toUrl('jianjiexiugai')">
+        <div class="list" v-tap="{methods:toUrl,pagename:'restday'}">
+          <div class="xingxi">休息日</div>
+          <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
+        </div>
+        <div class="list" v-tap="{methods:toUrl,pagename:'jianjiexiugai'}">
           <div class="xingxi">个人简介</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
         </div>
-        <div class="list tz"@click="toUrl('rongyushangcuan')">
+        <div class="list tz" v-tap="{methods:toUrl,pagename:'rongyushangcuan'}">
           <div class="xingxi">上传荣誉</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
         </div>
-        <div class="list"@click="toUrl('zuopingshangchuan')">
+        <div class="list" v-tap="{methods:toUrl,pagename:'zuopingshangchuan'}">
           <div class="xingxi">上传作品</div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
         </div>
@@ -95,8 +98,9 @@
       goback(){
         this.$router.goBack();
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (params) {
+        console.log("params.pagename:"+params.pagename)
+        this.$router.push({name: params.pagename,query: params.query || {}})
       },
       showToast(msg){
         this.showMark = true;
