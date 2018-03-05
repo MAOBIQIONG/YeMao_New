@@ -32,7 +32,7 @@
                 </div> -->
             <div class="nichengshijian">
                 <div class="ns-left">
-                <span><img :src="checkAvatar(null)"/></span><span>{{chw.user.user_name}}</span>
+                <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
                 </div>
                 <div class="tm-right">
                 <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
@@ -65,7 +65,7 @@
             <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
                 <div class="top-pinlun">
                 <div class="tp-left">
-                    <span><img src="../../../static/images/bj.jpg"/></span><span>{{item.user.user_name}}</span>
+                    <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
                 </div>
                 <div class="tp-right">
                     <span>{{item.comments}}</span><span><img src="../../../static/images/zan.png"/></span>
@@ -79,7 +79,11 @@
                     {{item.create_date | dateToStringSecond}}
                 </div>
                 <div class="right-bt">
-                    100条回复
+                    <span v-tap="{methods:toCommentDetail,comment_id:item._id,chw_id:chw_id}">
+                        <span v-if="item.replys.length>0">{{item.replys.length}}</span>
+                        <span v-else>0</span>
+                        <span>条回复</span>
+                    </span>
                 </div>
                 </div>
             </div>
@@ -242,8 +246,11 @@ export default {
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
+        toCommentDetail:function(param){
+            this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
+        },
         //点赞
-        like_dom(param){
+        likelike_dom(param){
             var _self = this;
             if(_self.chw.likeFlag==0) {
                 _self.chw.likeFlag = 1;
