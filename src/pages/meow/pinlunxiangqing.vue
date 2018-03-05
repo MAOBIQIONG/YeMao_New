@@ -175,6 +175,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
         }
         _self.chw_id = _self.$route.query.chw_id;
         _self.comment_id = _self.$route.query.comment_id;
+        _self.initData();
         _self.loadData();
 
     },
@@ -242,6 +243,44 @@ import {Scroller,LoadMore,Toast} from 'vux'
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
+        },
+        //数据初始化
+        initData(){
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.getCommentById ,
+                user_id:_self.user_id,
+                 _id: _self.comment_id
+            };
+            this.$axios.post('/mongoApi',{
+                params
+            },(response)=>{
+                console.log(response)
+                let data = response.data;
+                _self.setInitData(data);
+            })
+        },
+        setInitData(data){
+            let _self = this;
+            let chw = data.chw || {};
+            if(!chw.user){
+                chw.user = {};
+            }
+            _self.chw = chw;
+            _self.answer_id = _self.chw.user._id;
+            var imgs = _self.chw.imgs || [];// 图片
+            imgs.forEach(function (item,index) {
+                _self.imgs.push({img:item});
+            });
+            //点赞人列表
+            // console.log('data.chw.likes',data.likes);
+            let likes = data.likes;
+            common.setStorage('likes_chwdetail',likes);
+            _self.likes = likes.slice(0,7);
+            _self.likes_num = likes.length;
+            console.log(data.likes);
+            console.log(_self.likes);
+            console.log('初始化数据完成');
         },
         //读取分页数据
         loadData(){
