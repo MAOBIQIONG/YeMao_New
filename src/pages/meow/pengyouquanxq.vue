@@ -298,7 +298,7 @@
       // 回复
       replyFun(params){
         var _self = this;
-        // 删除自己的评论、回复
+        // 二级回复点击到自己的回复,显示是否删除
         if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
           if( _self.userInfo._id == params.uid ){
             var delParams = {id:params.aid,flag:1,floor:1};
@@ -306,10 +306,11 @@
             return;
           }
         }
-        // 评论、回复
+        // 二级评论
         var id = "#"+params.id;
         _self.comment_id = params.id;
         _self.floor = common.checkInt(params.floor);
+        // 回复
         if( !common.isNull(params.aid) && !common.isNull(params.name) ){
           id = "#"+params.aid;
           _self.answer_id = params.uid;
