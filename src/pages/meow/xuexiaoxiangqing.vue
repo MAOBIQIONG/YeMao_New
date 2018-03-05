@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
       <span>学校详情</span>
-      <div class="header-right"@click="toUrl('tongxunluhaoyou')">邀请</div>
+      <div class="header-right" v-tap="{methods:toPhoneList,aa_id:this.itemId}">邀请</div>
     </div>
     <!--学校详情-->
     <div class="content content-p">
@@ -37,18 +37,15 @@
           </div>
           <!--<div class="list-right"><img src="../../../static/images/jiangou.png"></div>-->
         </div>
-        <div class="list tz"@click="toUrl('dianzhan')">
+        <div class="list tz" v-tap="{methods:toUrlAfterLogin,pagename:'alumniList'}">
           <div class="xingxi">校友成员</div>
           <div class="xycy">
             <div class="renshu">
-              <span>234</span>人
+              <span v-if="alumniList.length>0">{{alumniList.length}}</span>
+              <span v-else>0</span>人
             </div>
-            <ul class="cylist">
-              <li><img src="../../../static/images/bj.jpg" /></li>
-              <li><img src="../../../static/images/bj.jpg" /></li>
-              <li><img src="../../../static/images/bj.jpg" /></li>
-              <li><img src="../../../static/images/bj.jpg" /></li>
-              <li><img src="../../../static/images/bj.jpg" /></li>
+            <ul class="cylist" v-for="(item,index) in alumniList" :key="index">
+              <li><img :src="checkAvatar(item.user.img)" /></li>
             </ul>
           </div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
@@ -56,20 +53,36 @@
       </div>
     </div>
     <loading :show="loadingShow" text="加载中"></loading>
+    <div v-transfer-dom>
+        <confirm v-model="confirmShow"
+            @on-confirm = "compOnConfirm()"
+        >
+        <p style="text-align:center;">{{confirmMsg}}</p>
+        </confirm>
+    </div>
   </div>
 </template>
 
 <script>
-import {Loading} from 'vux';
+import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
   export default {
     components:{
         Loading,
+        Confirm
+    },
+    directives: {
+        TransferDom
     },
     data: function () {
       return {
         loaded:false,
         alumni:{},
         loadingShow:false,
+        confirmShow:false,
+        confirmType:'',//addAlumnis 校友会添加成员
+        confirmMsg:'',
+        user_id:null,
+        alumniList:[],
       }
     },
     watch:{
@@ -82,6 +95,7 @@ import {Loading} from 'vux';
         }
     },
     created(){
+        this.user = common.getObjStorage("userInfo") || {};
         let itemId = this.$route.query.id;
         if(itemId){
             this.itemId = itemId;
@@ -98,6 +112,28 @@ import {Loading} from 'vux';
         toUrl2: function (params) {
           console.log("params.pagename:"+params.pagename)
           this.$router.push({name: params.pagename, query: params.query})
+        },
+        toUrlAfterLogin(params){
+            var _self = this;
+            if( !common.isNull(_self.user._id) ){
+                _self.toUrl2(params);
+            } else {
+                console.log('没有获取用户信息');
+                _self.toUrl2({pagename:"login"});
+            }
+         },
+        toPhoneList(param){
+            var _self = this;
+            if( !common.isNull(_self.user._id) ){
+                 _self.$router.push({name:'tongxunluhaoyou',query:{aa_id:param.aa_id}})
+            } else {
+                console.log('没有获取用户信息');
+                _self.toUrl2({pagename:"login"});
+            }
+        },
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
         },
         requestData(){
             let _self = this;
@@ -120,6 +156,25 @@ import {Loading} from 'vux';
                         console.log('noData');
                     }
                 });
+            this.getAlumnis();
+        },
+        getAlumnis(){
+            let _self = this;
+            let params = {
+                interfaceId:common.interfaceIds.getAlumnis,
+                aa_id:_self.itemId
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    let data = response.data.alumnis
+                    common.setStorage('alumnisList',data);
+                    if (data) {
+                        _self.alumniList = data;
+                    } else {
+                        console.log('noData');
+                    }
+                });
         },
         setData(data){
             console.log('set Data');
@@ -128,7 +183,21 @@ import {Loading} from 'vux';
             _self.loadingShow = false;
             _self.alumni = data;
             console.log('数据设置完成');
-        }
+        },
+        showConfirm(params){
+            this.confirmShow = true;
+            this.user_id = params.uid;
+            this.confirmType = params.type
+            if(params.type == "addAlumnis"){
+                this.confirmMsg = "校友会添加该用户吗？"
+            } 
+        },
+        compOnConfirm(){
+            if(this.confirmType=="addAlumnis"){
+                this.addAlumnis();
+            }
+        },
+        addAlumnis(){}
     }
   }
 </script>

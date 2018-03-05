@@ -83,7 +83,7 @@
             _self.toastText=_self.toastSuccess;
             _self.show=true;
             setTimeout(function () {
-              _self.$emit('upup', 1)// 主动触发upup方法，'hehe'为向父组件传递的数据
+              _self.goback();
             },1000)
           }else{
             _self.toastText=_self.toastFail;

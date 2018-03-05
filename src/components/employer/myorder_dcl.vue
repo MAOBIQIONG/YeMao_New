@@ -42,7 +42,7 @@
 
                             </template>
 
-                            <div v-else class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                            <div v-else class="db-djs"><counterboard  :endtime="item.project_deadLine" ><span slot="footer">后截止抢单</span></counterboard></div>
                         </div>
                     </div>
                 </div>
@@ -108,6 +108,7 @@
 <script>
 import {LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
 import scroller2 from '@/components/scroller2'
+import counterboard from '@/components/counterboard'
 export default {
     name:"scroll-list",
     directives: {
@@ -117,7 +118,8 @@ export default {
         LoadMore,
         Toast,
         Confirm,
-        scroller2
+        scroller2,
+        counterboard
     },
     created(){
         // console.log('created');
