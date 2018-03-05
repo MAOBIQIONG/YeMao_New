@@ -82,6 +82,7 @@ import bianjigongzuojinli from '@/pages/meow/bianjigongzuojinli'
 import chuangjianxiaoyouhui from '@/pages/meow/chuangjianxiaoyouhui'
 import ddsh from '@/pages/meow/ddsh'
 import dianzhan from '@/pages/meow/dianzhan'
+import alumniList from '@/pages/meow/alumniList'
 import gongzuojinli from '@/pages/meow/gongzuojinli'
 import fbwd from '@/pages/meow/fbwd'
 import pengyouquanxq from '@/pages/meow/pengyouquanxq'
@@ -273,6 +274,11 @@ const routeArray = [
     name: 'dianzhan',
     component: dianzhan
   },
+    { 
+        path: '/alumniList',
+        name: 'alumniList',
+        component: alumniList
+    },
   { path: '/ddsh',
     name: 'ddsh',
     component: ddsh
