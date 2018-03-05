@@ -89,13 +89,17 @@
                         {{item.create_date | dateToStringSecond}}
                     </div>
                     <div class="right-bt">
-                        <span>100条回复 .</span>
-                        <span v-if="userInfo._id!=null&&userInfo._id==item.user._id" :id="item._id" class="pd-0" v-tap="{methods:deleteSth,id:item._id,floor:0,flag:1}">删除</span>
-                        <span v-else :id="item._id" class="pd-0" v-tap="{methods:replyFun,id:item._id,uid:item.user._id,floor:1}">评论</span>
+                        <span v-tap="{methods:toCommentDetail,comment_id:item._id,chw_id:chw_id}">
+                            <span v-if="item.replys.length>0">{{item.replys.length}}</span>
+                            <span v-else>0</span>
+                            <span>条回复</span>
+                        </span>
+                        <!-- <span v-if="userInfo._id!=nuchw_idll&&userInfo._id==item.user._id" :id="item._id" class="pd-0" v-tap="{methods:deleteSth,id:item._id,floor:0,flag:1}">删除</span>
+                        <span v-else :id="item._id" class="pd-0" v-tap="{methods:replyFun,id:item._id,uid:item.user._id,floor:1}">评论</span> -->
                     </div>
                 </div>
 
-    <div class="comment-box">
+    <!-- <div class="comment-box">
         <div class="right" v-if="item.replys && item.replys.length>0">
             <div class="arr-up"></div>
             <div class="comment-reply">
@@ -104,7 +108,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
             </div>
@@ -165,9 +169,6 @@ export default {
             likes:[],
             likes_num:0,
             comments:[],
-            floor:0,
-            answer_id:'',
-            answer_name:'',
             user_id:null,
             imgs:[],
             index:0,
@@ -210,6 +211,9 @@ export default {
             comment_placeholder:'填写评论',
             comment_text:'',
             answer_id:'',
+            comment_id:'',
+            floor:0,
+            answer_name:'',
             //toast
             showMark:false,
             showMsg:"",
@@ -259,6 +263,7 @@ export default {
             _self.isLogin = true;
         }
         _self.chw_id = _self.$route.query.id;
+        _self.comment_id = _self.$route.query.id;
         _self.initData();
         _self.loadData();
 
@@ -275,6 +280,9 @@ export default {
         },
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
+        },
+        toCommentDetail:function(param){
+            this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
         },
         // 头像
         checkAvatar (path) {
@@ -373,7 +381,7 @@ export default {
                 interfaceId:common.interfaceIds.addComments,
                 data: {
                     user_id: _self.user_id,               // 评论人
-                    comment_id: _self.chw_id,             // 评论对象ID
+                    comment_id: _self.comment_id,             // 评论对象ID
                     content: _self.comment_text,          // 评论内容
                     comment_type: 5,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
                     answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
@@ -385,7 +393,7 @@ export default {
             },(response)=>{
                 console.log(response)
                 let data = response.data;
-                if( data.code == 200 ){
+                if( data.code == 200 || (data.code == 400 && data.result.ok == 1)){
                     _self.showToast("评论成功!")
                     _self.addCommentHmtl(params.data);
                 }else{
