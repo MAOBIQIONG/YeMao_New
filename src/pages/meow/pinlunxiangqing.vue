@@ -26,10 +26,14 @@
       <div class="pinlunlist">
         <div class="top-pinlun">
           <div class="tp-left">
-            <span><img src="../../../static/images/bj.jpg"/></span><span>{{chw.user.user_name}}</span>
+            <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
           </div>
-          <div class="tp-right">
-            <span>{{chw.like}}</span><span><img src="../../../static/images/zan.png"/></span>
+          <div class="tp-right" v-tap="{methods:chwLike}">
+            <span>{{chw.like}}</span>
+            <span>
+                <img v-if="chw.likeFlag==0" src="../../../static/images/zan.png"/>
+                <img v-if="chw.likeFlag==1" src="../../../static/images/zan001.png"/>
+            </span>
           </div>
         </div>
         <div class="neirong">
@@ -41,7 +45,7 @@
                 {{getDataStr(chw.create_date)}}
             </div>
             <div class="right-bt">
-                <span v-if="userInfo._id!=null&&userInfo._id==chw.user._id" :id="chw._id" class="pd-0" v-tap="{methods:deleteSth,id:chw._id,floor:0,flag:1}">删除</span>
+                <span v-if="userInfo._id!=null&&userInfo._id==chw.user._id" :id="chw._id" class="pd-0" v-tap="{methods:deleteSthAndBack,id:chw._id,floor:1,flag:0}">删除</span>
                 <span v-else :id="chw._id" class="pd-0" v-tap="{methods:replyFun,id:chw._id,uid:chw.user._id,floor:1}">评论</span>
             </div>
         </div>
@@ -110,11 +114,12 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
     },
     data: function () {
         return {
+            commentFloor1Deleted:false,
             isLogin:false,
             loadPageEnd:false,
             userInfo:{},
             chw_id:'',
-            chw:{user:{}},
+            chw:{user:{},likeFlag:0},
             // 评论
             replys:[],
             is_submit:false,
@@ -211,8 +216,49 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             this.toastShow = true;
             this.toastMsg = msg;
         },
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
+        },
         getDataStr(date){
             return common.timeStamp2String(date,'ymdhm');
+        },
+        chwLike_dom(){
+            var _self = this;
+            if(_self.chw.likeFlag==0) {
+                _self.chw.likeFlag = 1;
+                _self.chw.like++;
+            } else {
+                _self.chw.likeFlag = 0;
+                _self.chw.like--;
+            }            
+        },
+        chwLike(){
+            var _self = this;
+            if(_self.isLogin == false){
+                _self.$router.push({name: 'login'});
+            }
+            _self.chwLike_dom();
+            var params = {
+                interfaceId:common.interfaceIds.like,
+                data:{
+                    like_type: 2,//0、喵喵圈,1、personalChw,2、comments
+                    like_id: _self.comment_id,
+                    user_id: _self.user_id,
+                }
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+            }, response => {
+                var data = response.data;
+                var tips = '';
+                if( data && data.code == 200 ){
+                    tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                }else{
+                    tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                }
+                _self.showToast(tips);
+            })
         },
 
         //下拉刷新
@@ -259,6 +305,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
                 console.log(response)
                 let data = response.data;
                 _self.setInitData(data);
+                _self.loadData();
             })
         },
         setInitData(data){
@@ -407,7 +454,13 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             _self.comment_text = '';
         }, 
         // 删除：喵喵圈、评论
+        deleteSthAndBack(params){
+            let _self = this;
+            _self.deleteSth(params);
+            _self.commentFloor1Deleted = true;
+        },
         deleteSth(params){
+            console.log(params);
             var _self = this;
             _self.showSheet = true;
             _self.deleteId = params.id;
@@ -479,6 +532,11 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
           let data = response.data;
           if( data.code == 200 ){
             _self.showToast("删除成功!")
+            if(_self.commentFloor1Deleted){
+                setTimeout(function(){
+                    _self.goback();
+                },1000);
+            }
             _self.removeCommentHmtl(params);
           }else{
             _self.showToast("删除失败!")

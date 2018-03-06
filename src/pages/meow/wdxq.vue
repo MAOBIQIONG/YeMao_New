@@ -32,7 +32,7 @@
                 </div> -->
             <div class="nichengshijian">
                 <div class="ns-left">
-                <span><img :src="checkAvatar(null)"/></span><span>{{chw.user.user_name}}</span>
+                <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
                 </div>
                 <div class="tm-right">
                 <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
@@ -41,7 +41,7 @@
             <div class="neirongshijian">
                 {{chw.description}}
                 <div class="bottom">
-                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:like}">
+                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:chwLike}">
                     <span id="praise" ref="like">
                         <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
                         <img v-else src="../../../static/images/zan3.png"/>
@@ -67,7 +67,7 @@
                     <img :src="checkAvatar(l.user.img)"/>
                 </li>
                 </ul>
-                <div class="dianzhan" @click="toUrl('dianzhan')">
+                <div class="dianzhan" v-tap="{methods:toLikeMember,chw_id:chw_id}">
                 <span>{{likes_num}}</span>人点赞
                 </div>
             </div>
@@ -75,10 +75,14 @@
             <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
                 <div class="top-pinlun">
                     <div class="tp-left">
-                        <span><img src="../../../static/images/bj.jpg"/></span><span>{{item.user.user_name}}</span>
+                        <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
                     </div>
-                    <div class="tp-right">
-                        <span>{{item.comments}}</span><span><img src="../../../static/images/zan.png"/></span>
+                    <div class="tp-right"  v-tap="{methods:commentLike,comment_id:item._id,commentArrId:index}">
+                        <span>{{item.like}}</span>
+                        <span>
+                            <img v-if="item.likeFlag===0" src="../../../static/images/zan.png"/>
+                            <img v-if="item.likeFlag===1" src="../../../static/images/zan001.png"/>
+                        </span>
                     </div>
                 </div>
                 <div class="neirong">
@@ -212,6 +216,7 @@ export default {
             comment_text:'',
             answer_id:'',
             comment_id:'',
+            commentArrId:'',
             floor:0,
             answer_name:'',
             //toast
@@ -263,7 +268,7 @@ export default {
             _self.isLogin = true;
         }
         _self.chw_id = _self.$route.query.id;
-        _self.comment_id = _self.$route.query.id;
+        _self.comment_id = _self.chw_id;
         _self.initData();
         _self.loadData();
 
@@ -284,33 +289,89 @@ export default {
         toCommentDetail:function(param){
             this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
         },
+        toLikeMember(p){
+            this.$router.push({name:'dianzhan',query:{chw_id:p.chw_id}});
+        },
         // 头像
         checkAvatar (path) {
             return common.getAvatar(path)
         },
+        removeLikeUser(uid){
+            let _self = this;
+            _self.likes.reduce(function(a,c,i,arr){
+                if(c.user){
+                    if(c.user._id === uid && c.like_type===1){
+                        _self.likes.splice(i,1);
+                    }
+                }
+            },undefined)
+        },
         like_dom(param){
             var _self = this;
             // _self.chw.likeFlag == 0 ? _self.chw.likeFlag= 1 : _self.chw.likeFlag=0;
-            if(_self.chw.likeFlag==0) {
-                _self.chw.likeFlag = 1;
-                _self.chw.like++;
-            } else {
-                _self.chw.likeFlag = 0;
-                _self.chw.like--;
+            if(param===1){
+                let user = {
+                    authenticating_state:_self.userInfo.authenticating_state,
+                    img:_self.userInfo.img,
+                    user_name:_self.userInfo.user_name,
+                    _id:_self.userInfo._id,
+                }
+                if(_self.chw.likeFlag==0) {
+                    _self.chw.likeFlag = 1;
+                    _self.chw.like++;
+                    _self.likes.push({user});
+                    _self.likes_num++;
+                } else {
+                    _self.chw.likeFlag = 0;
+                    _self.chw.like--;
+                    _self.removeLikeUser(_self.userInfo._id);
+                     _self.likes_num--;
+
+                }
+            } else if(param===2) {
+                console.log(_self.comments[_self.commentArrId]);
+                let commentArrLike = _self.comments[_self.commentArrId];
+                if(commentArrLike.likeFlag===0){
+                    commentArrLike.likeFlag = 1;
+                    commentArrLike.like++;
+                } else {
+                    commentArrLike.likeFlag = 0;
+                    commentArrLike.like--;
+                }
             }
+
         },
-        like(){
+        chwLike(){
+            this.like(1);
+        },
+        commentLike(p){
+            console.log(p);
+            this.comment_id = p.comment_id;
+            this.commentArrId = p.commentArrId;
+            console.log(this.comment_id);
+            this.like(2);
+        },
+        like(type){
             var _self = this;
             if(_self.isLogin == false){
                 _self.$router.push({name: 'login'});
             }
-            _self.like_dom();
-            console.log(this.chw.collectFlag,this.chw.likeFlag);
+
+            // console.log(this.chw.collectFlag,this.chw.likeFlag);
+            let lid = null;
+            if(type===1){
+                lid = _self.chw_id;
+                _self.like_dom(1);
+            } else if (type === 2){
+                lid = _self.comment_id;
+                _self.like_dom(2);
+            }
+            console.log('like__comment-id',_self.comment_id);
             var params = {
                 interfaceId:common.interfaceIds.like,
                 data:{
-                    like_type: 1,//0、喵喵圈,1、personalChw,2、comments
-                    like_id: _self.chw_id,
+                    like_type: type,//0、喵喵圈,1、personalChw,2、comments
+                    like_id: lid,
                     user_id: _self.user_id,
                 }
             }
@@ -319,7 +380,7 @@ export default {
             }, response => {
                 var data = response.data;
                 var tips = '';
-                if( data && data.code == 200 ){
+                if( data && (data.code == 200) ){
                     tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
                 }else{
                     tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
@@ -534,7 +595,7 @@ export default {
             //点赞人列表
             // console.log('data.chw.likes',data.likes);
             let likes = data.likes;
-            common.setStorage('likes_chwdetail',likes);
+            // common.setStorage('likes_chwdetail',likes);
             _self.likes = likes.slice(0,7);
             _self.likes_num = likes.length;
             console.log(data.likes);
@@ -553,7 +614,8 @@ export default {
                 pageSize: _self.pagination.pageSize,
                 where:{
                     comment_id: _self.chw_id
-                }
+                },
+                user_id:_self.user_id
             };
             this.$axios.post('/mongoApi',{
                     params
