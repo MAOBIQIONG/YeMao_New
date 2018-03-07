@@ -26,27 +26,27 @@
       <div class="pinlunlist">
         <div class="top-pinlun">
           <div class="tp-left">
-            <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
+            <span><img :src="checkAvatar(comment.user.img)"/></span><span>{{comment.user.user_name}}</span>
           </div>
           <div class="tp-right" v-tap="{methods:chwLike}">
-            <span>{{chw.like}}</span>
+            <span>{{comment.like}}</span>
             <span>
-                <img v-if="chw.likeFlag==0" src="../../../static/images/zan.png"/>
-                <img v-if="chw.likeFlag==1" src="../../../static/images/zan001.png"/>
+                <img v-if="comment.likeFlag==0" src="../../../static/images/zan.png"/>
+                <img v-if="comment.likeFlag==1" src="../../../static/images/zan001.png"/>
             </span>
           </div>
         </div>
         <div class="neirong">
-          {{chw.content}}
+          {{comment.content}}
         </div>
         <div class="bottom">
             <div class="left-bt">
                 <!-- {{item.create_date | dateToStringSecond}} -->
-                {{getDataStr(chw.create_date)}}
+                {{getDataStr(comment.create_date)}}
             </div>
             <div class="right-bt">
-                <span v-if="userInfo._id!=null&&userInfo._id==chw.user._id" :id="chw._id" class="pd-0" v-tap="{methods:deleteSthAndBack,id:chw._id,floor:1,flag:0}">删除</span>
-                <span v-else :id="chw._id" class="pd-0" v-tap="{methods:replyFun,id:chw._id,uid:chw.user._id,floor:1}">评论</span>
+                <span v-if="userInfo._id!=null&&userInfo._id==comment.user._id" :id="comment._id" class="pd-0" v-tap="{methods:deleteSthAndBack,id:comment._id,floor:1,flag:0}">删除</span>
+                <span v-else :id="comment._id" class="pd-0" v-tap="{methods:replyFun,id:comment._id,uid:comment.user._id,floor:1}">评论</span>
             </div>
         </div>
         <div class="pinlunlist pinlunlist1" v-for="(item,index) in replys" :key="index">
@@ -119,7 +119,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             loadPageEnd:false,
             userInfo:{},
             chw_id:'',
-            chw:{user:{},likeFlag:0},
+            comment:{user:{},likeFlag:0},
             // 评论
             replys:[],
             is_submit:false,
@@ -127,6 +127,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             comment_text:'',
             answer_id:'',
             comment_id:'',
+            deleteId:'',
             floor:0,
             answer_name:'',
             //toast
@@ -203,6 +204,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
         }
         _self.chw_id = _self.$route.query.chw_id;
         _self.comment_id = _self.$route.query.comment_id;
+        _self.floor = 1;
         _self.initData();
     },
     methods: {
@@ -225,12 +227,12 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
         },
         chwLike_dom(){
             var _self = this;
-            if(_self.chw.likeFlag==0) {
-                _self.chw.likeFlag = 1;
-                _self.chw.like++;
+            if(_self.comment.likeFlag==0) {
+                _self.comment.likeFlag = 1;
+                _self.comment.like++;
             } else {
-                _self.chw.likeFlag = 0;
-                _self.chw.like--;
+                _self.comment.likeFlag = 0;
+                _self.comment.like--;
             }            
         },
         chwLike(){
@@ -253,9 +255,9 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
                 var data = response.data;
                 var tips = '';
                 if( data && data.code == 200 ){
-                    tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    tips = _self.comment.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
                 }else{
-                    tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    tips = _self.comment.likeFlag == 0 ? '取消失败！' : '点赞失败！';
                 }
                 _self.showToast(tips);
             })
@@ -310,13 +312,13 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
         },
         setInitData(data){
             let _self = this;
-            let chw = data.comment || {};
-            if(!chw.user){
-                chw.user = {};
+            let comment = data.comment || {};
+            if(!comment.user){
+                comment.user = {};
             }
-            _self.chw = chw;
-            _self.answer_id = _self.chw.user._id;
-            _self.replys = chw.replys;
+            _self.comment = comment;
+            _self.answer_id = _self.comment.user._id;
+            _self.replys = comment.replys;
             _self.$refs.scroller.donePulldown();
             this.loadMoreStatus.show=false;
             console.log('初始化数据完成');
@@ -403,15 +405,16 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
                 let data = response.data;
                 if( data.code == 200 || (data.code == 400 && data.result.ok == 1)){
                     _self.showToast("评论成功!")
-                    _self.addCommentHmtl(params.data);
+                    params.data._id = data.ids[0];
+                    _self.addCommentHtml(params.data);
+                    
                 }else{
                     _self.showToast("评论失败!")
                 }
             })
         },
         // 添加评论html
-        addCommentHmtl(data){
-            console.log(data);
+        addCommentHtml(data){
             console.log(data);
             var _self = this;
 
@@ -425,7 +428,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             data.create_date = new Date().getTime();
             if( data.floor == 0 ){ // 一级评论
                 // 修改评论数量
-                _self.chw.replys += 1;
+                _self.comment.replys += 1;
                 _self.replys.push(data);
             }else{
                 if( data.floor == 2 ){ // 回复
@@ -435,7 +438,6 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
                     };
                 }
             }
-            console.log(_self.loadPageEnd);
             // 添加回复记录
             if(_self.loadPageEnd == true){
                 _self.replys.push(data);
@@ -503,9 +505,9 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             console.log("blur:")
             var _self = this;
             _self.comment_placeholder = '填写评论';
-            // _self.comment_id = _self.miao_id;
-            // _self.answer_id = _self.meow.user._id;
-            // _self.floor = 0;
+            _self.comment_id = _self.comment_id;
+            _self.answer_id = _self.comment_id;
+            _self.floor = 1;
         },
         // 获取焦点
         commentOnBlur(params){
