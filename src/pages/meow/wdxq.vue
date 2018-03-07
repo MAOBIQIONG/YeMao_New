@@ -103,18 +103,6 @@
                     </div>
                 </div>
 
-    <!-- <div class="comment-box">
-        <div class="right" v-if="item.replys && item.replys.length>0">
-            <div class="arr-up"></div>
-            <div class="comment-reply">
-                <div class="reply">
-                    评论123123312133132
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-
             </div>
             </div>
             <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
@@ -160,6 +148,7 @@ export default {
         },
     data: function () {
         return {
+            loadPageEnd:false,
             userInfo:{},
             chw_id:null,
             chw:{
@@ -309,6 +298,7 @@ export default {
         like_dom(param){
             var _self = this;
             // _self.chw.likeFlag == 0 ? _self.chw.likeFlag= 1 : _self.chw.likeFlag=0;
+            //1chw评论  2一级评论
             if(param===1){
                 let user = {
                     authenticating_state:_self.userInfo.authenticating_state,
@@ -380,10 +370,21 @@ export default {
             }, response => {
                 var data = response.data;
                 var tips = '';
+                let commentArrLike = _self.comments[_self.commentArrId];
                 if( data && (data.code == 200) ){
-                    tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    if(params.data.like_type ===1) {
+                        tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    } else if (params.data.like_type ===2){             
+                        tips = commentArrLike.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    }
+                   
                 }else{
-                    tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    if(params.data.like_type ===1) {
+                        tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    }else if(params.data.like_type ===2){
+                        tips = commentArrLike.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    }
+                    
                 }
                 _self.showToast(tips);
             })
@@ -456,6 +457,7 @@ export default {
                 let data = response.data;
                 if( data.code == 200 || (data.code == 400 && data.result.ok == 1)){
                     _self.showToast("评论成功!")
+                    params.data._id = data.ids[0];
                     _self.addCommentHmtl(params.data);
                 }else{
                     _self.showToast("评论失败!")
@@ -464,6 +466,7 @@ export default {
         },
         // 添加评论html
         addCommentHmtl(data){
+            // console.log('addCommentHtml','param:'+JSON.stringify(data));
             var _self = this;
 
             // 添加评论记录
@@ -474,28 +477,17 @@ export default {
                 _id: _self.userInfo._id
             };
             data.create_date = new Date().getTime();
-            if( data.floor == 0 ){ // 一级评论
+            data.like = 0;
+            data.likeFlag = 0;
+            if( data.floor === 0 ){ // 一级评论
                 // 修改评论数量
+                console.log('data.floor===0');
                 _self.chw.comments += 1;
-                _self.comments.push(data);
-            }else{
-                if( data.floor == 2 ){ // 回复
-                    data.answer = {
-                        user_name: _self.answer_name,
-                        _id: _self.answer_id
-                    };
-                }
+                console.log(_self.loadPageEnd);
+                if(_self.loadPageEnd === true){
+                    _self.comments.push(data);
+                }            
             }
-            // 添加回复记录
-            _self.comments.forEach(function (item,index) {
-                if( data.comment_id == item._id.toString() ){
-                    if( item.replys ){
-                        item.replys.push(data);
-                    }else{
-                        item.replys = [data];
-                    }
-                }
-            })
             // 重置评论框内容
             _self.comment_text = '';
         },
@@ -646,9 +638,10 @@ export default {
                 _self.loadMoreStatus.show=true;
                 _self.loadMoreStatus.showLoading=false;
                 _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-
+                _self.loadPageEnd= true;
                 _self.$refs.scroller.disablePullup();
             } else {
+                _self.loadPageEnd= false;
                 _self.pagination.pageNo++
             }
         },

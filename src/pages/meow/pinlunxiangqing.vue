@@ -506,7 +506,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             var _self = this;
             _self.comment_placeholder = '填写评论';
             _self.comment_id = _self.comment_id;
-            _self.answer_id = _self.comment_id;
+            _self.answer_id =  _self.comment.user._id;;
             _self.floor = 1;
         },
         // 获取焦点
@@ -537,7 +537,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
             if(_self.commentFloor1Deleted){
                 setTimeout(function(){
                     _self.goback();
-                },1000);
+                },600);
             }
             _self.removeCommentHmtl(params);
           }else{
