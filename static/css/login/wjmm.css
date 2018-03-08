@@ -97,6 +97,9 @@
   text-align: center;
   bottom: 0.4rem;
   color: white;
-  background: linear-gradient(left, #f64098, #f67ab6);
+  background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+  background: -o-linear-gradient(right,#f64098, #f67ab6); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #f64098, #f67ab6); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right,#f64098, #f67ab6); /* 标准的语法 */
 }
 /*# sourceMappingURL=wjmm.css.map */
