@@ -35,6 +35,10 @@ ul {
   padding: 0;
   list-style: none;
 }
+body::-webkit-input-placeholder { /* WebKit browsers */
+  font-size:0.28rem !important;
+  color: #757575 !important;
+}
 /*解决手机ios中 select input textarea 在手机端中会出现阴影*/
 input{
   -webkit-tap-highlight-color:rgba(255,255,255,0)
