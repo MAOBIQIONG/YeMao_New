@@ -94,7 +94,7 @@
             <div class="neirong">
               <p>{{item.start_time}}~{{item.end_time}}</p>
               <p>{{item.company_name}}</p>
-              <p>{{item.positions}}</p>
+              <!--<p>{{item.positions}}</p>-->
               <p class="gznr">工作内容</p>
               <div class="list-neirong">
                 {{item.description}}

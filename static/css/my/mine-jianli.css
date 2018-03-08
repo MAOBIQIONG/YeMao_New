@@ -31,7 +31,7 @@
 .content .jbxx .xingmin {
 	font-size: 0.28rem;
 	margin-top: 0.1rem;
-	color: #bbbbbb;
+	color: #999999;
 }
 
 .content .jbxx .xq {
@@ -44,7 +44,7 @@
 .content .jbxx .xq .xinxi-list {
 	height: 0.8rem;
 	line-height: 0.8rem;
-	color: #bbbbbb;
+	color: #999999;
 }
 
 .content .jbxx .xq .xinxi-list .xx-left {
@@ -99,7 +99,7 @@
 
 .content .qwgz .qwgz-top .zhiwei {
 	padding-top: 0.2rem;
-	color: #b5acb5;
+	color: #999999;
 }
 
 .content .qwgz .qwgz-bottom {
@@ -108,7 +108,7 @@
 	height: 1.2rem;
 	text-align: center;
 	margin: auto;
-	color: #b5acb5;
+	color: #999999;
 }
 
 .content .gzjl {
@@ -189,6 +189,7 @@
 .content .gzjl .gzjl-content .gc-list .neirong .list-neirong {
 	font-size: 0.28rem;
 	line-height: 0.4rem;
+  color: #999999;
 }
 
 .content .zwms {
@@ -234,7 +235,7 @@
 	margin-top: 0.3rem;
 	font-size: 0.28rem;
 	line-height: 0.4rem;
-	color: #b5acb5;
+	color: #999999;
 }
 
 .content .grzp {

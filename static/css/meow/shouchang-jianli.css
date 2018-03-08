@@ -35,18 +35,22 @@
 }
 
 .content .jianli .jieshao .name {
-  color: #000000;
+  color: #333333;
   margin-top: 0.24rem;
+  font-size: 0.32rem;
 }
 
 .content .jianli .jieshao .qiwan {
-  font-size: 0.26rem;
-  color: #d6d2d6;
+  font-size: 0.28rem;
+  color: #999999;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 
 .content .jianli .jieshao .xinge {
-  font-size: 0.24rem;
-  color: #d6d2d6;
+  font-size: 0.28rem;
+  color: #999999;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;

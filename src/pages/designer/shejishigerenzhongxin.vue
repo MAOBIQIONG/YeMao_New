@@ -47,10 +47,10 @@
       <!--日历选取-->
       <div class="rili">
         <inline-calendar
-          ref="calendar"
-          class="inline-calendar-demo"
+          v-model="dates"
           :return-six-rows="return6Rows"
-          :disable-date-function="disableDateFunction">
+          :disable-date-function="disableDateFunction"
+          class="inline-calendar-demo" ref="calendar">
         </inline-calendar>
       </div>
       <!--滑动轮播-->
@@ -151,11 +151,15 @@
         cases: [],
         honors: [],
         works: [],
+        /**日历**/
+        dates: [],
         return6Rows: true,
         disableDateFunction (date) {
-          if (date.formatedDate === "2017-1-28") {
-            return true
-          }
+          return true
+          // var dateStr = common.getSomeday();
+          // if (date.formatedDate === dateStr) {
+          //   return true
+          // }
         },
       }
     },
@@ -241,6 +245,7 @@
           if ( data ) {
             _self.user = data.user || {};
             _self.cases = data.cases || [];
+            _self.dates = data.restDay || [];
           }
         })
       },
@@ -280,18 +285,6 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-  .vux-prev-icon,.vux-next-icon{
-    border-left: 1px solid #f65aa6 !important;
-    border-bottom: 1px solid #f65aa6 !important;
-  }
-  .inline-calendar td.is-today{
-    color: #f65aa6 !important;
-  }
-  .inline-calendar td.current > span.vux-calendar-each-date{
-    background-color: #f65aa6 !important;
-  }
-</style>
 <style scoped>
   @import '../../../static/css/designer/sjsgeren.css';
   .swps{

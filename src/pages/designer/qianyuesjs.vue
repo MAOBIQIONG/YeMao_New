@@ -27,6 +27,9 @@
           </div>
         </div>
       </div>
+      <div class="suoming">
+        请发送你的作品及简历至官方邮箱：jianlianyemao@163.com
+      </div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
