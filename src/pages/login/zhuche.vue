@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="ls-shouji">
-        <input type="text" class="shouji sjh" placeholder="手机号" v-model="param.mobile_phone"/>
+        <input type="tel" class="shouji sjh" placeholder="手机号" v-model="param.mobile_phone"/>
         <span class="del" v-if="param.mobile_phone.length>0" v-tap="{methods:clearInput,index:1}">×</span>
       </div>
       <div class="ls-yanzheng">

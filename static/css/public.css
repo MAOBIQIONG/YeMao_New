@@ -312,6 +312,7 @@ body,html{
   color: white;
   margin-top: 0.15rem;
   background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+  background: linear-gradient(to right,#f64098, #f67ab6); /* 标准的语法 */
 }
 /*search公共样式*/
 .search {
@@ -877,7 +878,7 @@ body,html{
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-top {
   width: 100%;
   height: 0.9rem;
-  font-size: 0.26rem;
+  font-size: 0.28rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -889,7 +890,7 @@ body,html{
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom {
   width: 100%;
   height: 0.6rem;
-  font-size: 0.24rem;
+  font-size: 0.28rem;
 }
 
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin {
@@ -955,7 +956,8 @@ body,html{
   color: white;
   margin-right: 0.24rem;
   margin-top: 0.15rem;
-  background: linear-gradient(left, #f64098, #f67ab6);
+  background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+  background: linear-gradient(to right,#f64098, #f67ab6); /* 标准的语法 */
 }
 
 /***************************************************/

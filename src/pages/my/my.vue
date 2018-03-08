@@ -110,7 +110,7 @@
     data () {
       return {
         userInfo:{},
-        tips:"点击登录",
+        tips:"点击头像登录",
         cacheSize: '',
         showPop:false,
         showMark: false,
