@@ -69,6 +69,7 @@
   display: block;
   border: none;
   color: #757575;
+  font-size: 0.28rem;
   background: white;
   outline: medium;
 }
@@ -84,6 +85,7 @@
   border: none;
   margin-left: 0.3rem;
   color: #757575;
+  font-size: 0.28rem;
   outline: medium;
 }
 

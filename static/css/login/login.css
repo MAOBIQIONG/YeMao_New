@@ -56,7 +56,8 @@
   display: block;
   border: none;
   margin-left: 0.3rem;
-  color: #999;
+  font-size: 0.28rem;
+  color: #757575;
   outline: medium;
 }
 
@@ -69,7 +70,6 @@
   position: absolute;
   top: 0.14rem;
   right: 0.2rem;
-  color: #999999;
   font-size: 0.4rem;
   display: inline-block;
   display: none;

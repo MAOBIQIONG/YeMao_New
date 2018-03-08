@@ -55,6 +55,8 @@
   border: none;
   margin-left: 0.3rem;
   outline: medium;
+  font-size: 0.28rem;
+  color: #757575;
 }
 
 .login-shuru .ls-shouji .del,
