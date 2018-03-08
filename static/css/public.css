@@ -668,6 +668,7 @@ body,html{
   margin-right: 0.2rem;
   margin-top: 0.2rem;
   background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+  background: linear-gradient(to right,#f64098, #f67ab6); /* 标准的语法 */
 
 }
 /*订单确认后详情页*/
