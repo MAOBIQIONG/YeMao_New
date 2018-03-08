@@ -530,6 +530,7 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
         };
         if( params.floor == 0 ){
             params.meow_id = _self.chw_id;
+            params.comment_type = 1;
         }
         this.$axios.post('/mongoApi',{
           params
