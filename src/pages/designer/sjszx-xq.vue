@@ -2,7 +2,7 @@
   <div >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
     </div>
     <div class="content content-p">
       <!--设计师基本信息模块-->
@@ -58,9 +58,10 @@
       <!--日历选取-->
       <div class="rili">
         <inline-calendar
-          ref="calendar"
-          class="inline-calendar-demo"
-          :disable-date-function="disableDateFunction">
+          v-model="dates"
+          :return-six-rows="return6Rows"
+          :disable-date-function="disableDateFunction"
+          class="inline-calendar-demo" ref="calendar">
         </inline-calendar>
       </div>
       <!--滑动轮播-->
@@ -163,6 +164,12 @@
         works: [],
         collectFlag:0,
         // isLogin:false,
+        /**日历**/
+        dates: [],
+        return6Rows: true,
+        disableDateFunction (date) {
+          return true
+        },
       }
     },
     activated: function () {
@@ -269,6 +276,7 @@
           if ( data ) {
             _self.user = data.user || {};
             _self.cases = data.cases || [];
+            _self.dates = data.restDay || [];
             _self.collectFlag = data.collectFlag;
           }
         })

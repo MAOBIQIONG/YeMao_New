@@ -614,6 +614,8 @@ const common = {
     queryUserById:'queryUserById',                 // 根据用户ID查询用户信息
     getCommentById:'getCommentById',               // 根据一级评论ID查询一级评论及其所有二级评论、回复
     getReplyByPages:'getReplyByPages',             // 查询评论列表
+    setRestDay:'setRestDay',                       // 设置休息日
+    getRestDay:'getRestDay',                       // 获取休息日
 
   },
 
