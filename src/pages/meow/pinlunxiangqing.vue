@@ -45,7 +45,7 @@
                 {{getDataStr(comment.create_date)}}
             </div>
             <div class="right-bt">
-                <span v-if="userInfo._id!=null&&userInfo._id==comment.user._id" :id="comment._id" class="pd-0" v-tap="{methods:deleteSthAndBack,id:comment._id,floor:1,flag:0}">删除</span>
+                <span v-if="userInfo._id!=null&&userInfo._id==comment.user._id" :id="comment._id" class="pd-0" v-tap="{methods:deleteSthAndBack,id:comment._id,floor:0,flag:1}">删除</span>
                 <span v-else :id="comment._id" class="pd-0" v-tap="{methods:replyFun,id:comment._id,uid:comment.user._id,floor:1}">评论</span>
             </div>
         </div>
@@ -528,6 +528,9 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
           _id: _self.deleteId,                 // 评论对象ID
           floor: _self.deleteFloor,            // 评论层级
         };
+        if( params.floor == 0 ){
+            params.meow_id = _self.chw_id;
+        }
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
