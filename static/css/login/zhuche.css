@@ -68,7 +68,6 @@
   border: none;
   display: block;
   border: none;
-  font-size: 0.24rem;
   color: #757575;
   background: white;
   outline: medium;
@@ -84,7 +83,7 @@
   display: block;
   border: none;
   margin-left: 0.3rem;
-  color: #999;
+  color: #757575;
   outline: medium;
 }
 
@@ -98,7 +97,7 @@
   top: 0.14rem;
   right: 0.2rem;
   font-size: 0.4rem;
-  color: #999;
+  color: #757575;
   /*display: inline-block;*/
   /*display: none;*/
 }
@@ -124,9 +123,6 @@
   line-height: 0.78rem;
   text-align: center;
   color: white;
-  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
-  background: -o-linear-gradient(right, #f74f9c, #fd7376);
-  background: -moz-linear-gradient(right, #f74f9c, #fd7376);
-  background: linear-gradient(to right, #f74f9c, #fd7376);
+  background: linear-gradient(left, #f64098, #f67ab6);
 }
 /*# sourceMappingURL=zhuche.css.map */

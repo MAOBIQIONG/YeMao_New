@@ -538,10 +538,8 @@ body,html{
   border-radius: 0.5rem;
   margin-left: 1.9rem;
   margin-top: 0.2rem;
-  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
-  background: -o-linear-gradient(right, #f74f9c, #fd7376);
-  background: -moz-linear-gradient(right, #f74f9c, #fd7376);
-  background: linear-gradient(to right, #f74f9c, #fd7376);
+  background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+
 }
 .sjs-list .sjs-bottom .sjs-mmlt {
   float: right;
@@ -665,10 +663,8 @@ body,html{
   color: white;
   margin-right: 0.2rem;
   margin-top: 0.2rem;
-  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
-  background: -o-linear-gradient(right, #f74f9c, #fd7376);
-  background: -moz-linear-gradient(right, #f74f9c, #fd7376);
-  background: linear-gradient(to right, #f74f9c, #fd7376);
+  background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+
 }
 /*订单确认后详情页*/
 .ddxq {
@@ -954,10 +950,7 @@ body,html{
   color: white;
   margin-right: 0.24rem;
   margin-top: 0.15rem;
-  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
-  background: -o-linear-gradient(right, #f74f9c, #fd7376);
-  background: -moz-linear-gradient(right, #f74f9c, #fd7376);
-  background: linear-gradient(to right, #f74f9c, #fd7376);
+  background: linear-gradient(left, #f64098, #f67ab6);
 }
 
 /***************************************************/

@@ -97,9 +97,6 @@
   text-align: center;
   bottom: 0.4rem;
   color: white;
-  background: -webkit-linear-gradient(left, #f74f9c, #fd7376);
-  background: -o-linear-gradient(right, #f74f9c, #fd7376);
-  background: -moz-linear-gradient(right, #f74f9c, #fd7376);
-  background: linear-gradient(to right, #f74f9c, #fd7376);
+  background: linear-gradient(left, #f64098, #f67ab6);
 }
 /*# sourceMappingURL=wjmm.css.map */
