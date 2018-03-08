@@ -111,7 +111,7 @@
       <div class="sctp">
         <div class="sc-top">上传图片</div>
         <div class="img-body" v-for="(img,index) in subParams.imgs" :key="index">
-          <img :src="getDefultImg(img.src)" />
+          <img :src="getDefultImg(img)" />
         </div>
         <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
           <img src="../../../static/images/employer/j.png" />
@@ -213,7 +213,7 @@
         uploadImg.init({
           callback:function (path) {
             console.log("path："+path)
-            _self.subParams.imgs.push({src:path});
+            _self.subParams.imgs.push(path);
           }
         });
       },

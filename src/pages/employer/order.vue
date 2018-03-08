@@ -86,10 +86,10 @@
           </div>
           <div class="qdsjs-box">
             <div class="qb-top">
-              <div class="qt-touxiang">
+              <div class="qt-touxiang" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:bid.user._id}}">
                 <img :src='checkAvatar(bid.user.img)'>
               </div>
-              <div class="qt-nichen">
+              <div class="qt-nichen" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:bid.user._id}}">
                 <span>{{bid.user.user_name}}</span>
               </div>
               <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:bid.user._id,name:bid.user.user_name,img:bid.user.img}}">
