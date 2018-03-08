@@ -12,10 +12,10 @@
             </div>
             <div class="qdsjs-box">
               <div class="qb-top">
-                <div class="qt-touxiang">
+                <div class="qt-touxiang" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:item.user._id}}">
                   <img :src='checkAvatar(item.user.img)'>
                 </div>
-                <div class="qt-nichen">
+                <div class="qt-nichen" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:item.user._id}}">
                   <span>{{item.user.user_name}}</span>
                 </div>
                 <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:item.user._id,name:item.user.user_name,img:item.user.img}}">
