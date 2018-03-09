@@ -289,7 +289,7 @@ export default {
             let _self = this;
             _self.likes.reduce(function(a,c,i,arr){
                 if(c.user){
-                    if(c.user._id === uid && c.like_type===1){
+                    if(c.user._id === uid){
                         _self.likes.splice(i,1);
                     }
                 }
@@ -479,6 +479,7 @@ export default {
             data.create_date = new Date().getTime();
             data.like = 0;
             data.likeFlag = 0;
+            data.replys = [];
             if( data.floor === 0 ){ // 一级评论
                 // 修改评论数量
                 console.log('data.floor===0');
