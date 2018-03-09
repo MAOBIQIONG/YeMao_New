@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="xiaoxi" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:user._id,name:user.user_name,img:user.img}}">
+            <div class="xiaoxi" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:user._id,name:user.user_name,img:user.img}}">
                 <img src="../../../static/images/designer/xiangqing_liaotian.png" alt="">
             </div>
         </div>
@@ -206,6 +206,14 @@
       },
       toUrl2: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
+      },
+      toUrlWUI: function (params) { // toUrlWidthUserInfo
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+          this.$router.push({name: params.pagename,query:params.query || {}})
+        }else{
+          this.$router.push({name: 'login'})
+        }
       },
       toChws: function (params) {
         var _self = this;
