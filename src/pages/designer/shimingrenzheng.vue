@@ -103,6 +103,9 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
+       toUrl2: function (p) {
+        this.$router.push({name: pagename})
+      },
       // 获取默认图片
       getDefultImg(img){
         return common.getDefultImg(img, './static/images/employer/j.png');

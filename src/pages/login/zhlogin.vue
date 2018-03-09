@@ -26,14 +26,26 @@
       <div class="lb-right"v-tap="{ methods:toUrl , pagename:'wjmm'}"><a>忘记密码？</a></div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+    <div v-transfer-dom>
+        <confirm v-model="confirmShow"
+            @on-confirm = "compOnConfirm"
+            @on-cancel="onCancel"
+        >
+        <p style="text-align:center;">{{confirmMsg}}</p>
+        </confirm>
+    </div>   
   </div>
 </template>
 
 <script>
-  import { Toast, } from 'vux'
+  import { Toast, Confirm,TransferDomDirective as TransferDom} from 'vux'
   export default {
+    directives: {
+        TransferDom
+    },
     components: {
       Toast,
+      Confirm
     },
     data () {
       return {
@@ -41,6 +53,8 @@
         password:'',
         showMark:false,
         showMsg:"",
+        confirmShow:false,
+        confirmMsg:'您还未实名认证，是否前往认证？'
       }
     },
     created: function () {
@@ -174,6 +188,10 @@
             if( data.code == 200 ){
               common.setStorage("userInfo",data.result);
               common.setStorage("login_account",_self.phone);
+              if(data.result.authenticating_state===0){
+                  _self.confirmShow = true;
+                  return;
+              }
               _self.$store.state.pageIndex = 0;
               _self.toUrl({'pagename':'index'});
             }else{
@@ -184,6 +202,14 @@
           }
         })
       },
+        compOnConfirm(){
+           this.toUrl({'pagename':'shimingrenzheng'});
+
+        },
+        onCancel(){
+            this.$store.state.pageIndex = 0;
+            this.toUrl({'pagename':'index'});
+        }
 
     }
   }
