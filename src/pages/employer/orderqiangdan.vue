@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="qd">
     <div class="header">
       <div class="header-left" v-tap="{ methods:goback }" ><img src="../../../static/images/back.png"/></div>
       <span>填写抢单信息</span>
@@ -140,4 +140,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/employer/order-qiangdan.css";
+  .qd{
+    position: static;
+    background-color: #f2f2f2;
+    height: 100%;
+  }
 </style>
