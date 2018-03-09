@@ -89,8 +89,10 @@
   }
   .tabs{
     position: fixed;
-    /*top:1.2rem;*/
-    top:0.88rem;
+    /*沉浸式样式*/
+    top:1.2rem;
+    /*非沉浸式样式*/
+    /*top:0.88rem;*/
     left: 0;
     background: white;
     z-index: 99999;

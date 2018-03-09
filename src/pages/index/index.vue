@@ -162,25 +162,40 @@
         <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
       </div>
     </scroller>
+    <div v-transfer-dom>
+        <confirm v-model="confirmShow"
+            @on-confirm = "compOnConfirm"
+            @on-cancel="onCancel"
+        >
+        <p style="text-align:center;">{{confirmMsg}}</p>
+        </confirm>
+    </div>   
   </div>
 </template>
 
 <script>
-  import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name} from 'vux'
+  import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Confirm,TransferDomDirective as TransferDom} from 'vux'
   import store from '@/vuex/store'
 
   export default {
+    directives: {
+        TransferDom
+    },
     components: {
       Swiper,
       SwiperItem,
       Divider,
       XAddress,
       Scroller,
-      LoadMore
+      LoadMore,
+      Confirm
     },
     store,
     data () {
       return {
+        authMark:false,
+        confirmShow:false,
+        confirmMsg:'您还未实名认证，是否前往认证？',
         srollFlag: 0,
         imgList: [],
         noticeList: [],
@@ -252,6 +267,9 @@
           account: user._id,
           token: user.wy_token,
         });
+      }
+      if(user.authenticating_state===0 && this.$store.state.isAuthenicatedTip === 0){
+          _self.confirmShow = true;
       }
     },
     created: function () {
@@ -526,7 +544,14 @@
           _self.pagination.pageNo++;
           _self.loadMoreStatus.show=false;
         }
-      }
+      },
+         compOnConfirm(){
+            this.$store.state.isAuthenicatedTip = 1;
+            this.toUrl({'pagename':'shimingrenzheng'});
+        },
+        onCancel(){
+            this.$store.state.isAuthenicatedTip = 1;
+        }     
 
     }
   }

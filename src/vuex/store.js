@@ -23,6 +23,8 @@ const state = {
   orderTabIndex:0,
   //我的订单页面动画方向
   directionOrderTab:0,
+  //首页登录后认证提示：0未提示，1已提示
+  isAuthenicatedTip:0
 }
 
 //这里的mutations是固定的写法，意思是改变的，要改变数据的方法，必须写在mutations里。
