@@ -12,7 +12,7 @@
     <div class="login-shuru">
       <p class="tishi"></p>
       <div class="ls-shouji">
-        <input v-model="phone" type="text"class="shouji" placeholder="手机号"/>
+        <input v-model="phone" type="tel"class="shouji" placeholder="手机号"/>
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">

@@ -16,8 +16,8 @@
             </tab-item>
         </tab>
         <transition :name="`vux-pop-${$store.state.directionOrderTab==0?'in':'out'}`">
-            <component 
-                :is="currentView" 
+            <component
+                :is="currentView"
                 :lock-x="lockX"
                 @on-slide-previous="onSlidePrevious"
                 @on-slide-next="onSlideNext"
@@ -66,7 +66,7 @@
     },
     created(){
         console.log("myorderchuli created");
-        
+
     },
     mounted(){
         console.log('myorderchuli mounted');
@@ -88,7 +88,7 @@
                         this.$store.state.directionOrderTab = 1
                     }
                     this.changeList();
-                }            
+                }
             }
         }
     },
@@ -110,7 +110,7 @@
         },
         changeList(){
             // console.log('changeList',this.index,this.currentView,this.viewArray[this.index],this.isChanged);
-            this.currentView = this.viewArray[this.index];         
+            this.currentView = this.viewArray[this.index];
         },
         changeList2(type){
             console.log('changeList2',type);
@@ -121,16 +121,16 @@
                     console.log('this.index',this.tabItems.length-1);
                     this.index = 0;
                     console.log('this.index',this.tabItems.length-1);
-                }           
+                }
             }
             if(type=="next"){
                 this.index++;
                 console.log('next:index',this.index);
                 if(this.index===this.tabItems.length){
                     this.index = this.tabItems.length-1;
-                }           
+                }
             }
-            
+
         },
         onSlidePrevious(){
             console.log('previous');
@@ -169,6 +169,9 @@
     margin-top: 1.74rem;
     height:14rem !important;
     overflow:auto !important;
+  }
+  #dcl{
+    background-color: #f2f2f2;
   }
 </style>
 
