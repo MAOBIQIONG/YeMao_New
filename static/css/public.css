@@ -60,6 +60,7 @@ body,html{
   -ms-user-select: none;
   user-select: none;
 }
+
 /*沉浸式样式*/
 .content-e{
   padding-top: 1.3rem;
@@ -77,6 +78,34 @@ body,html{
   /*非沉浸式*/
   /*padding-top: 0;*/
 }
+/*iPhoneX的适配沉浸式样式*/
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+  .content-e{
+    padding-top: 1.5rem !important;
+  }
+  .content-p{
+    padding-top: 1.4rem !important;
+  }
+  .qujin{
+    padding-top: 0.5rem !important;
+  }
+  .header{
+    height: 1.4rem !important;
+    padding-top: 0.5rem !important;
+  }
+  .header .header-left img {
+    /*沉浸式样式*/
+    margin-top: 0.42rem !important;
+  }
+  .header .header-right {
+    top: 0.52rem !important;
+  }
+  .search {
+    height: 1.4rem !important;
+    padding-top: 0.5rem !important ;
+  }
+}
+
 /**定位**/
 .p-fixed{
   position: fixed !important;

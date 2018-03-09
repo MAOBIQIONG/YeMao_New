@@ -89,11 +89,18 @@
   }
   .tabs{
     position: fixed;
-    /*top:1.2rem;*/
-    top:0.88rem;
+    /*沉浸式样式*/
+    top:1.2rem;
+    /*非沉浸式样式*/
+    /*top:0.88rem;*/
     left: 0;
     background: white;
     z-index: 99999;
+  }
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+    .tabs{
+      top:1.4rem !important;
+    }
   }
   .bg{
     background: #f2f2f2;

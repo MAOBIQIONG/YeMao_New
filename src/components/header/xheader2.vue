@@ -61,12 +61,18 @@
   .vux-header-title{
     color: #f65aa6 !important;
   }
+
   .vux-header-right{
     /*height: .92rem;*/
     /*沉浸式样式*/
     top:0.05rem !important;
     /*非沉浸式样式*/
     /*top:0rem !important;*/
+  }
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+    .vux-header-right{
+      top:0.05rem !important;
+    }
   }
   .vux-header-right a {
     height: .42rem;
