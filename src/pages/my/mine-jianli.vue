@@ -141,7 +141,7 @@
         </div>
       </div>
       <!--聊天-->
-      <div class="mmlt" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:resume.user_id,name:resume.real_name,img:resume.img}}">喵 喵 聊 天</div>
+      <div class="mmlt" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:resume.user_id,name:resume.real_name,img:resume.img}}">喵 喵 聊 天</div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <loading :show="loadingShow" text="加载中"></loading>
@@ -232,6 +232,14 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
       },
       toUrl2: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
+      },
+      toUrlWUI: function (params) { // toUrlWidthUserInfo
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+          this.$router.push({name: params.pagename,query:params.query || {}})
+        }else{
+          this.$router.push({name: 'login'})
+        }
       },
         // 头像
       checkAvatar (path) {

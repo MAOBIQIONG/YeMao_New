@@ -18,7 +18,7 @@
                 <div class="qt-nichen" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:item.user._id}}">
                   <span>{{item.user.user_name}}</span>
                 </div>
-                <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:item.user._id,name:item.user.user_name,img:item.user.img}}">
+                <div class="chat" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:item.user._id,name:item.user.user_name,img:item.user.img}}">
                   <img src='../../../static/images/employer/miaomiao.png'>
                 </div>
                 <div class="qt-jiage">
@@ -118,6 +118,14 @@
       },
       toUrl2: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
+      },
+      toUrlWUI: function (params) { // toUrlWidthUserInfo
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+          this.$router.push({name: params.pagename,query:params.query || {}})
+        }else{
+          this.$router.push({name: 'login'})
+        }
       },
       //头像
       checkAvatar(path) {
