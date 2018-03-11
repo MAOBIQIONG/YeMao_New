@@ -13,6 +13,13 @@
         <textarea v-model="description" class="area" maxlength="200" placeholder="请详细描述您遇见的问题和意见"></textarea>
         <p class="xianzhi"><span class="zs">200</span>/<span>200</span></p>
       </div>
+      <!--图片-->
+      <div class="pc-photo">
+        <div class="img-upload">
+          <div class="img" v-for="img in imgs" :style="{backgroundImage: 'url(' + checkImgs(img) + ')'}"></div>
+          <div class="upload-handle" v-if="imgs.length<9" v-tap="{ methods:triggerFile }"></div>
+        </div>
+      </div>
     </div>
     <!--退出登陆-->
     <div class="tcdl" v-tap="{methods:submit}">
@@ -32,6 +39,7 @@
       return {
         userInfo: {},
         description: '',
+        imgs: [],
         is_submit: false,
         showMark: false,
         showMsg: '',
@@ -52,6 +60,10 @@
       toUrl(name) {
         this.$router.push({name: name});
       },
+      //头像
+      checkImgs (path) {
+        return common.getDefultImg(path);
+      },
       //留言字数限制
       wzxz(){
         $(".area").bind("input propertychange",function(){
@@ -71,6 +83,20 @@
         this.showMark = true;
         this.showMsg = msg;
       },
+      //上传图片
+      triggerFile(){
+        console.log("trigger:")
+        var _self = this;
+        // 首先清空图片数组
+        _self.imgs = [];
+        // 调用相机、相册
+        uploadImg.init({
+          callback:function (path) {
+            console.log("path:"+path)
+            _self.imgs.push(path);
+          },
+        });
+      },
       // 提交
       submit(){
         var _self = this;
@@ -88,7 +114,8 @@
           interfaceId:common.interfaceIds.feedback,
           data:{
             user_id: _self.userInfo._id,
-            description: _self.description
+            description: _self.description,
+            imgs: _self.imgs
           }
         };
         _self.$axios.post('/mongoApi', {
