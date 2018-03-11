@@ -557,7 +557,8 @@ const common = {
     getHotSearch:'getHotSearch',                   // 获取热门搜索内容
     getDesigners:'getDesigners',                   // 设计师列表
     collect:'collect',                             // 收藏
-    setCertification:'setCertification',           // 认证
+    setCertification:'setCertification',           // 证书认证
+    applyDesignerCert:'applyDesignerCert',         // 签约认证
     getCertification:'getCertification',           // 查询认证
     getPersonalChw:'getPersonalChw',               // 获取personalChw
     getPChwDetails:'getPChwDetails',               // 获取personalChw详情

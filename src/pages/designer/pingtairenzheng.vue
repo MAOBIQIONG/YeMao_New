@@ -170,23 +170,22 @@
           user_id:_self.user_id,
           user:_self.user,
           imgs:_self.imgs,
+          auditFlag:1,
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           // console.log(response)
           var data = response.data
-          if( data ){
-            if( data.code==200 && data.code1==200 ){
-              _self.showToast('提交成功！');
-              _self.userInfo.school_name = _self.user.school_name;
-              common.setStorage("userInfo",_self.userInfo);
-              setTimeout(function () {
-                _self.toUrl('zhichengrenzheng');
-              },1000);
-            }else{
-              _self.showToast('提交失败！');
-            }
+          if( data && data.code==200 ){
+            _self.showToast('提交成功！');
+            _self.userInfo.school_name = _self.user.school_name;
+            common.setStorage("userInfo",_self.userInfo);
+            setTimeout(function () {
+              _self.toUrl('zhichengrenzheng');
+            },1000);
+          }else{
+            _self.showToast('提交失败！');
           }
         })
       }

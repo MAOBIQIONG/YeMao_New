@@ -194,19 +194,17 @@
         }, response => {
           // console.log(response)
           var data = response.data
-          if( data ){
-            if( data.code==200 && data.code1==200 ){
-              _self.showToast('提交成功！');
-              _self.userInfo.real_name = _self.user.real_name;
-              _self.userInfo.id_number = _self.user.id_number;
-              _self.userInfo.authenticating_state = _self.user.authenticating_state;
-              common.setStorage("userInfo",_self.userInfo);
-              setTimeout(function () {
-                _self.goback();
-              },1000);
-            }else{
-              _self.showToast('提交失败！');
-            }
+          if( data && data.code==200 ){
+            _self.showToast('提交成功！');
+            _self.userInfo.real_name = _self.user.real_name;
+            _self.userInfo.id_number = _self.user.id_number;
+            _self.userInfo.authenticating_state = _self.user.authenticating_state;
+            common.setStorage("userInfo",_self.userInfo);
+            setTimeout(function () {
+              _self.goback();
+            },1000);
+          }else{
+            _self.showToast('提交失败！');
           }
         })
       }
