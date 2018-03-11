@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="pingjia">
-                        <span>100</span>赞同 · <span>100</span>评论
+                        <span>{{item.like}}</span>赞同 · <span>{{item.comments}}</span>评论
                     </div>
                     </div>
                 </div>

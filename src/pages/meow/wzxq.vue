@@ -131,6 +131,7 @@ export default {
         },
     data: function () {
         return {
+            loadPageEnd:false,
             chw_id:null,
             chw:{
                 likeFlag:0,
@@ -250,7 +251,7 @@ export default {
             this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
         },
         //点赞
-        likelike_dom(param){
+        like_dom(param){
             var _self = this;
             if(_self.chw.likeFlag==0) {
                 _self.chw.likeFlag = 1;
@@ -374,7 +375,12 @@ export default {
                 _id: _self.userInfo._id
             };
             data.create_date = new Date().getTime();
-            _self.comments.unshift(data);
+            data.like = 0;
+            data.likeFlag = 0;
+            data.replys = [];
+            if(_self.loadPageEnd === true){
+                    _self.comments.push(data);
+            }       
             // 重置评论框内容
             _self.comment_text = '';
         },
@@ -476,9 +482,10 @@ export default {
                 _self.loadMoreStatus.show=true;
                 _self.loadMoreStatus.showLoading=false;
                 _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-
+                _self.loadPageEnd= true;
                 _self.$refs.scroller.disablePullup();
             } else {
+                _self.loadPageEnd= false;
                 _self.pagination.pageNo++
             }
         },
