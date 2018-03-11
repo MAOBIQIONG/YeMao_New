@@ -32,6 +32,7 @@
                 <!-- <img v-if="item.user.img" :src="checkAvatar(item.user.img)"/>
                 <img v-else src="../../../static/images/bj.jpg"/> -->
             </div>
+            <!-- <div class="tupian" v-if="item.imgs" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"> -->
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
             <div class="tupian" v-if="item.imgs">
@@ -181,7 +182,7 @@ export default {
                 pageSize:_self.pagination.pageSize,
                 user_id: _self.user_id,
                 where:{
-                    // user_id: _self.user_id,
+                    // user_id: _self.user_id
                     type: 4//问答
                 }
             }
