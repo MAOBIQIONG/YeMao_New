@@ -318,9 +318,9 @@
             _self.show = true;
             return;
         }
-//        if( !_self.verifyCode() ){
-//            return;
-//        }
+        if( !_self.verifyCode() ){
+            return;
+        }
         common.setStorage("nickname",_self.param.nickname)
         common.setStorage("mobile_phone",_self.param.mobile_phone)
         common.setStorage("verifying_code",_self.param.verifying_code)
