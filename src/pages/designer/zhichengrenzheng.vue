@@ -139,7 +139,7 @@
           // console.log(response)
           var data = response.data
           if( data ){
-            if( data.code==200 && data.code1==200 ){
+            if( data.code==200 ){
               _self.showToast('提交成功！');
               _self.userInfo.certificate_name = _self.user.certificate_name;
               _self.userInfo.authenticating_state = _self.user.authenticating_state;
