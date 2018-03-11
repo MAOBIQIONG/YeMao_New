@@ -127,7 +127,8 @@
         var params = {
           interfaceId:common.interfaceIds.applyDesignerCert,
           user_id: _self.user_id,
-          user: _self.user
+          user: _self.user,
+          audit_final_state:6
         }
         _self.$axios.post('/mongoApi', {
           params: params

@@ -169,8 +169,7 @@
           interfaceId:common.interfaceIds.setCertification,
           user_id:_self.user_id,
           user:_self.user,
-          imgs:_self.imgs,
-          auditFlag:1,
+          imgs:_self.imgs
         }
         _self.$axios.post('/mongoApi', {
           params: params
