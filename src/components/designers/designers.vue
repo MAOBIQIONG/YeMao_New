@@ -32,7 +32,7 @@
               <div class="sc-jiesao">{{item.description}}</div>
             </div>
             <div class="sjs-bottom">
-              <div class="sjs-yysj"v-tap="{methods:toUrl,pagename:'maintain'}">应邀设计</div>
+              <div class="sjs-yysj"v-tap="{methods:beInvited,designerid:item._id}">应邀设计</div>
               <div class="sjs-mmlt"v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:item._id,name:item.user_name,img:item.img}}">喵喵聊天</div>
             </div>
           </div>
@@ -216,7 +216,9 @@
         _self.sortMark = mark;
         _self.loadMore();
       },
-
+        beInvited(p){
+            this.$router.push({name:'fabudingdan',query:{designerid:p.designerid}});
+        }
     }
   }
 </script>
