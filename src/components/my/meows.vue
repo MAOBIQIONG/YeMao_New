@@ -217,8 +217,9 @@
         _self.options.previewer = '.previewer'+param.index;
         var imgs = _self.meows[param.index].imgs || [];
         imgs.forEach(function (img, j) {
-          _self.list.push({src:img,w:1200,h:700})
+          _self.list.push({src:_self.checkImg(img)})
         })
+        console.log("imgs:"+JSON.stringify(_self.list))
         _self.$refs.previewer.show(param.i)
         param.event.cancelBubble = true;
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
