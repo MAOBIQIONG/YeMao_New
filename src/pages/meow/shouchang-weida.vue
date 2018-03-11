@@ -82,6 +82,7 @@ export default {
     },
     data(){
         return {
+            myid:null,
             user_id:null,
             QAList:[],
             user:null,
@@ -184,6 +185,9 @@ export default {
                     type: 4//问答
                 }
             }
+            if(!common.isNull(_self.myid)){
+                params.where.user_id = _self.myid;
+            }
             _self.$axios.post('/mongoApi', {
                 params: params
                 }, response => {
@@ -277,6 +281,8 @@ export default {
             console.log('user_id is null');
             // _self.$router.push({name:'login'});
         }
+        let myid = _self.$route.query.myid;
+        _self.myid = myid;
         this.loadData();
     },
     mounted(){
