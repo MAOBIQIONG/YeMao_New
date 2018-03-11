@@ -53,6 +53,7 @@
       logout(){
         // this.$store.state.isAuthenicatedTip = 0;
         common.setStorage('isAuthenicatedTip',0);
+        this.$store.state.designerRefreshMark = 1;
         common.setStorage("userInfo",'{}');
         this.goback();
         // im登出

@@ -167,9 +167,6 @@
         /**日历**/
         dates: [],
         return6Rows: true,
-        disableDateFunction (date) {
-          return true
-        },
       }
     },
     activated: function () {

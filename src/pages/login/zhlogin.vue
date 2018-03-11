@@ -177,6 +177,7 @@
               common.setStorage("login_account",_self.phone);
               _self.$store.state.pageIndex = 0;
               _self.toUrl({'pagename':'index'});
+              _self.$store.state.designerRefreshMark = 1;
             }else{
               _self.showToast(data.msg);
             }
