@@ -190,9 +190,10 @@
         _self.loadData();
       }
       //判断页面是否来自于邀请
-      let invitation = _self.$route.query.invitation;
+    //   let invitation = _self.$route.query.invitation;
       let designerid = _self.$route.query.designerid;
-      if(invitation && designerid) {
+      _self.designerid = designerid;
+      if(!common.isNull(designerid)) {
         _self.isInvited=true;
       }
     },
@@ -301,7 +302,7 @@
             if( data.code == 200 ){
               _self.showToast("完善成功!");
               setTimeout(function () {
-                if(!common.isNull('fromMyOrderDetail')){
+                if(!common.isNull(common.getStorage('fromMyOrderDetail'))){
                     _self.$router.go(-2);
                     return;
                 }
@@ -390,12 +391,15 @@
         _self.subParams.project_deadLine = common.string2TimeStamp(_self.deadLine);
         _self.subParams.project_startTime = common.string2TimeStamp(_self.startTime);
         _self.subParams.project_endTime = common.string2TimeStamp(_self.endTime);
+        // 邀请设计师
+        _self.subParams.project_winBidder = _self.isInvited===true ? _self.designerid : '';
+        _self.subParams.project_state = _self.isInvited===true ? 1: 0;
         var params = {
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
         }
-        // 邀请设计师
-        params.data.project_winBidder = _self.isInvited==true ? _self.designerid : '';
+        // console.log(_self.subParams);
+
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -413,7 +417,9 @@
           }else{
             _self.showToast("发布失败！");
           }
-        })
+        });
+
+
       }
 
     },

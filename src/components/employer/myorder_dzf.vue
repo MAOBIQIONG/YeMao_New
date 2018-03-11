@@ -31,13 +31,9 @@
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
-                            <template  v-if="item.sub.length>0">
-                                <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
-                                <template v-else>
-                                    <div class="db-djs">待支付</div>
-                                </template>
+                            <template>
+                                <div class="db-djs">待支付</div>
                             </template>
-                            <div v-else class="db-djs">{{item.project_deadLine | dateDiff}}</div>
                         </div>
                     </div>
                 </div>

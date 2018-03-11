@@ -32,15 +32,18 @@
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
                             </div>
                             <!--状态信息-->
-                            <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
-                            <template v-else >
-                                <template v-if="item.project_winBidder == user_id">
-                                    <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
-                                    <div class="db-djs" v-else-if="item.project_state==3">等待雇主支付</div>
-                                    <div class="db-djs" v-else>等待设计师完善订单</div>
+                            <div ref="statetip">
+                                <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
+                                <template v-else >
+                                    <template v-if="item.project_winBidder === user_id">
+                                        <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
+                                        <div class="db-djs" v-else-if="item.project_state==3">等待雇主支付</div>
+                                        <div class="db-djs" v-else>等待设计师完善订单</div>
+                                    </template>
+                                    <div class="db-djs" v-else>抢单失败</div>
                                 </template>
-                                <div class="db-djs" v-else>抢单失败</div>
-                            </template>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -51,14 +54,21 @@
                 </div> -->
                 <!--按钮状态-->
                 <div class="ds-bottom">
-                    <div class="db-right">
+                    <div class="db-right" ref="buttons">
                         <template  v-if="!isNull(item.project_winBidder)" >
-                            <template v-if="item.project_winBidder == user_id" >
+                            <template v-if="item.project_winBidder === user_id" >
                                 <template v-if="item.project_state==1">
                                     <div class="db-qrdd" @click="improveTheOrder(item._id)">完善订单</div>
                                     <div class="db-qrdd"  v-tap="{methods:showConfirm,id:item._id,type:'confirmTheOrderByDesigner'}">确认订单</div>
                                 </template>
                             </template>
+                            <template v-else>
+                                <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'canclePart'}" >取消抢单</div>
+                            </template>
+                        </template>
+
+                        <template v-else>
+                            <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'canclePart'}" >取消抢单</div>
                         </template>
                     </div>
                 </div>
@@ -233,12 +243,18 @@ export default {
             };
             //判断是否已选择设计师
             if(!this.isNull(item.project_winBidder)){
-                if(item.project_winBidder==this.user_id){
+                if(item.project_winBidder===this.user_id){
                     if(item.project_state==1) {
                         buttonState.btns_type = 1;
                     }             
-                }             
-            } 
+                } else{
+                    if(item.project_state==1) {
+                        buttonState.btns_type = 2;
+                    }    
+                }         
+            } else {
+                buttonState.btns_type = 3;
+            }
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: item._id}})
         },
@@ -447,14 +463,47 @@ export default {
                     if( data.ok > 0 ){
                         if(this.confirmType =="confirmTheOrderByDesigner"){
                             _self.showToast('等待雇主确认订单');
+                            _self.refreshPageDate();
                         }
                         setTimeout(()=>{
-                            this.$parent.index=1;
+                            this.$parent.index=0;
                         },100);
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
                 })
+        },
+        canclePart(){
+            var _self = this;
+            var params = {
+            interfaceId:common.interfaceIds.competiteAnOrder,
+                data:{
+                    order_id: _self.order_id,
+                    user_id: _self.user_id,
+                }
+            }
+            _self.$axios.post('/mongoApi', {
+            params: params
+            }, response => {
+            var data = response.data;
+            if( data && data.code == 200 ){
+                _self.$store.state.indexRefreshMark = 1;
+                _self.showToast("取消成功！");
+                _self.cancelPart_dom();
+            }else{
+                _self.showToast("取消失败！");
+            }
+            })
+        },
+        cancelPart_dom(){
+            let _self = this;
+            let index = 0;
+            for (let r of _self.orderList) {
+                if(r._id == _self.order_id){
+                    _self.orderList.splice(index,1);
+                }
+                index++
+            }
         },
         showConfirm(params){
             this.confirmShow = true;
@@ -463,23 +512,18 @@ export default {
             if(params.type == "confirmTheOrderByDesigner"){
                 this.confirmMsg = "确定该订单吗？"
             } 
+            if(params.type == "canclePart"){
+                this.confirmMsg = "确定取消抢单吗？"
+            } 
         },
         compOnConfirm(){
             if(this.confirmType=="confirmTheOrderByDesigner"){
                 this.confirmTheOrderByDesigner();
+            } else if(this.confirmType=="canclePart"){
+                this.canclePart();
             }
         },
-        renderAfterCanceled(){
-            let _self = this;
-            let index = 0;
-            for (let r of _self.orderList) {
-                console.log(_self.orderList[index]);
-                if(r._id == _self.cancel_id){
-                    _self.orderList.splice(index,1);
-                }
-                index++
-            }
-        },
+
         onSlidePrevious(){
             this.$emit('on-slide-previous')
         },
