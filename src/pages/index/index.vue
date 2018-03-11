@@ -268,7 +268,8 @@
           token: user.wy_token,
         });
       }
-      if(user.authenticating_state===0 && this.$store.state.isAuthenicatedTip === 0){
+      let isAuthenicatedTip = common.getStorage('isAuthenicatedTip');
+      if(user.authenticating_state===0 && parseInt(isAuthenicatedTip) === 0){
           _self.confirmShow = true;
       }
     },
@@ -546,11 +547,13 @@
         }
       },
          compOnConfirm(){
-            this.$store.state.isAuthenicatedTip = 1;
+            // this.$store.state.isAuthenicatedTip = 1;
+            common.setStorage('isAuthenicatedTip',1);
             this.toUrl({'pagename':'shimingrenzheng'});
         },
         onCancel(){
-            this.$store.state.isAuthenicatedTip = 1;
+            // this.$store.state.isAuthenicatedTip = 1;
+            common.setStorage('isAuthenicatedTip',1);
         }     
 
     }
