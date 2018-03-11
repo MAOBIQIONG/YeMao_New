@@ -41,7 +41,7 @@
             <div class="neirongshijian">
                 {{chw.description}}
                 <div class="bottom">
-                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:like}">
+                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:chwLike}">
                     <span id="praise" ref="like">
                         <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
                         <img v-else src="../../../static/images/zan3.png"/>
@@ -67,8 +67,12 @@
                 <div class="tp-left">
                     <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
                 </div>
-                <div class="tp-right">
-                    <span>{{item.comments}}</span><span><img src="../../../static/images/zan.png"/></span>
+                <div class="tp-right"  v-tap="{methods:commentLike,comment_id:item._id,commentArrId:index}">
+                    <span>{{item.like}}</span>
+                    <span>
+                        <img v-if="item.likeFlag===0" src="../../../static/images/zan.png"/>
+                        <img v-if="item.likeFlag===1" src="../../../static/images/zan001.png"/>
+                    </span>
                 </div>
                 </div>
                 <div class="neirong">
@@ -182,6 +186,8 @@ export default {
             comment_placeholder:'填写评论',
             comment_text:'',
             answer_id:'',
+            comment_id:'',
+            commentArrId:'',
             //toast
             showMark:false,
             showMsg:"",
@@ -253,26 +259,48 @@ export default {
         //点赞
         like_dom(param){
             var _self = this;
-            if(_self.chw.likeFlag==0) {
-                _self.chw.likeFlag = 1;
-                _self.chw.like++;
-            } else {
-                _self.chw.likeFlag = 0;
-                _self.chw.like--;
+            if(param===1){
+                if(_self.chw.likeFlag==0) {
+                    _self.chw.likeFlag = 1;
+                    _self.chw.like++;
+                } else {
+                    _self.chw.likeFlag = 0;
+                    _self.chw.like--;
+                }
+            }else if(param===2) {
+                console.log(_self.comments[_self.commentArrId]);
+                let commentArrLike = _self.comments[_self.commentArrId];
+                if(commentArrLike.likeFlag===0){
+                    commentArrLike.likeFlag = 1;
+                    commentArrLike.like++;
+                } else {
+                    commentArrLike.likeFlag = 0;
+                    commentArrLike.like--;
+                }
             }
+
         },
-        like(){
+        like(type){
             var _self = this;
-            if(_self.isLogin==false) {
-                _self.$router.push({name:"login"});
+            if(_self.isLogin == false){
+                _self.$router.push({name: 'login'});
             }
-            _self.like_dom();
-            console.log(this.chw.collectFlag,this.chw.likeFlag);
+
+            // console.log(this.chw.collectFlag,this.chw.likeFlag);
+            let lid = null;
+            if(type===1){
+                lid = _self.chw_id;
+                _self.like_dom(1);
+            } else if (type === 2){
+                lid = _self.comment_id;
+                _self.like_dom(2);
+            }
+            console.log('like__comment-id',_self.comment_id);
             var params = {
                 interfaceId:common.interfaceIds.like,
                 data:{
-                    like_type: 1,//0、喵喵圈,1、personalChw,2、comments
-                    like_id: _self.chw_id,
+                    like_type: type,//0、喵喵圈,1、personalChw,2、comments
+                    like_id: lid,
                     user_id: _self.user_id,
                 }
             }
@@ -281,15 +309,38 @@ export default {
             }, response => {
                 var data = response.data;
                 var tips = '';
-                if( data && data.code == 200 ){
-                    tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                let commentArrLike = _self.comments[_self.commentArrId];
+                if( data && (data.code == 200) ){
+                    if(params.data.like_type ===1) {
+                        tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    } else if (params.data.like_type ===2){             
+                        tips = commentArrLike.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    }
+                   
                 }else{
-                    tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    if(params.data.like_type ===1) {
+                        tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    }else if(params.data.like_type ===2){
+                        tips = commentArrLike.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    }
+                    
                 }
                 _self.showToast(tips);
             })
         },
-                // 收藏
+
+        chwLike(){
+            this.like(1);
+        },
+        commentLike(p){
+            console.log(p);
+            this.comment_id = p.comment_id;
+            this.commentArrId = p.commentArrId;
+            console.log(this.comment_id);
+            this.like(2);
+        },
+
+        // 收藏
         collect_dom(param){
             var _self = this;
             _self.chw.collectFlag == 0 ? _self.chw.collectFlag=1 : _self.chw.collectFlag=0;
@@ -451,7 +502,8 @@ export default {
                 pageSize: _self.pagination.pageSize,
                 where:{
                     comment_id: _self.chw_id
-                }
+                },
+                user_id:_self.user_id
             };
             this.$axios.post('/mongoApi',{
                     params
