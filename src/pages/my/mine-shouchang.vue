@@ -29,7 +29,7 @@
         <div class="noData" v-if="collects.orders.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionOrder')">
             <li v-for="(item,index) in collects.orders" :key="index">
-                <img v-if="item.imgs.length>0" :src="checkImg(item.imgs[0])" />
+                <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])" />
             </li>
         </ul>
       </div>
@@ -41,7 +41,7 @@
         <div class="noData" v-if="collects.qas.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionQa')">
             <li v-for="(item,index) in collects.qas" :key="index">
-                <img v-if="item.imgs.length>0" :src="checkImg(item.imgs[0])" />
+                <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])" />
             </li>
         </ul>
       </div>
@@ -53,7 +53,7 @@
         <div class="noData" v-if="collects.mxts.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionMxt')">
             <li v-for="(item,index) in collects.mxts" :key="index">
-                <img v-if="item.imgs.length>0" :src="checkImg(item.imgs[0])" />
+                <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])" />
             </li>
         </ul>
       </div>
