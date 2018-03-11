@@ -188,6 +188,7 @@
           user_id:_self.user_id,
           user:_self.user,
           imgs:_self.imgs,
+          audit_final_state:2
         }
         _self.$axios.post('/mongoApi', {
           params: params
