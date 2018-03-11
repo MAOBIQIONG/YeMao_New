@@ -9,8 +9,9 @@
     <!--学校详情-->
     <div class="content content-p">
       <div class="xxmc">
-        <div class="touxiang">
-          <img src="../../../static/images/bj.jpg" />
+        <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(alumni.img)})`}">
+          <!-- <img src="../../../static/images/bj.jpg" /> -->
+          
         </div>
         <div class="mingcheng">
           <div class="xuexiao">{{alumni.school_name}}</div>
@@ -44,7 +45,7 @@
               <span v-if="alumniList.length>0">{{alumniList.length}}</span>
               <span v-else>0</span>人
             </div>
-            <ul class="cylist" v-for="(item,index) in alumniList" :key="index">
+            <ul class="cylist" v-for="(item,index) in alumniList.slice(0,7)" :key="index">
               <li><img :src="checkAvatar(item.user.img)" /></li>
             </ul>
           </div>
@@ -106,6 +107,13 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
         goback () {
             this.$router.goBack()
         },
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
+        },
+        checkImg(path){
+            return common.getDefultImg(path);
+        },       
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
@@ -132,9 +140,12 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
             }
         },
         // 头像
-        checkAvatar (path) {
-            return common.getAvatar(path)
-        },
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },    
         requestData(){
             let _self = this;
             _self.loadingShow = true;
@@ -203,4 +214,8 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
 </script>
 <style scoped>
   @import '../../../static/css/meow/xuexiaoxiangqing.css';
+.touxiang{
+    background-size:cover!important;
+    background-position:center center;
+  }
 </style>
