@@ -351,7 +351,7 @@
     background-position: center center;
     background-size: cover;
     color: #999;
-    line-height: 0.38rem;
+    line-height: 0.5rem;
   }
   .pinglun-list .pl-right.del{
     line-height: 0.8rem;

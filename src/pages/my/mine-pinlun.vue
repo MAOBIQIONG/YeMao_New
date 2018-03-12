@@ -69,10 +69,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine-pinlun.css';
-  .pinglun-list .pl-right{
-    background: url("/static/images/bj.jpg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-  }
+  /*.pinglun-list .pl-right{*/
+    /*background: url("/static/images/bj.jpg");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center center;*/
+    /*background-size: cover;*/
+  /*}*/
 </style>
