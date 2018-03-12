@@ -46,13 +46,13 @@
       return {
         addressData: ChinaAddressV4Data,
         value:  [],
-        user:{
-          city:  "",
-          email: "",
+        user: {
+          city:  '',
+          email: '',
           authenticating_state: 5
         },
-        showMark:false,
-        showMsg:"",
+        showMark: false,
+        showMsg: '',
       }
     },
     created: function () {
@@ -60,6 +60,7 @@
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
       if( !common.isNull(_self.userInfo._id) ){
+        _self.user.email = _self.userInfo.email;
         _self.user_id = _self.userInfo._id;
         if( !common.isNull(_self.userInfo.city) ){
           _self.value.push(_self.userInfo.city);
@@ -124,17 +125,17 @@
         }
 
         var params = {
-          interfaceId:common.interfaceIds.updateData,
-          coll: common.collections.users,
-          wheredata:{_id:_self.user_id},
-          data:{$set: _self.user},
+          interfaceId:common.interfaceIds.applyDesignerCert,
+          user_id: _self.user_id,
+          user: _self.user,
+          audit_final_state:6
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           console.log(response)
           var data = response.data
-          if( data && data.ok>0 ){
+          if( data && data.code==200 ){
               _self.showToast('提交成功！');
               _self.userInfo.city = _self.user.city;
               _self.userInfo.email = _self.user.email;

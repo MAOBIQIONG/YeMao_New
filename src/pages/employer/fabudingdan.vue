@@ -1,123 +1,124 @@
 <template>
-  <div class="">
-    <div class="header">
+  <div class="fabudingdan">
+    <div class="header-static"></div>
+    <div class="header p-absolute">
       <div class="header-left" v-tap="{ methods:goback }"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
-    <!--发布订单内容-->
-    <div class="content content-p">
-       <div class="fb-content">
-      <div class="xmlx">
-        <div class="xmlx-left">
-          <span>项目类型</span>
-        </div>
-        <div class="xmlx-right">
-          <select class="xmlx-kuang" v-model="subParams.project_type">
-            <option value="">请选择类型</option>
-            <option v-for="(item,index) in typeList" :value="item._id" :key="index">{{item.type_name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="xmlx">
-        <div class="xmlx-left">
-          <span>项目地区</span>
-        </div>
-        <div class="xmlx-right">
-          <group class="xmlx-kuang">
-            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
-          </group>
-        </div>
-      </div>
-      <div class="xmbt">
-        <div class="xmbt-top">
-          <div class="xt-left"><span>项目标题</span></div>
-          <div class="xt-right"><input type="text" placeholder="请输入项目标题" v-model="subParams.project_title" maxlength="20"/></div>
-        </div>
-        <div class="xmbt-bottom">
-          <textarea class="xt-txt" placeholder="请详细描述一下项目的内容" v-model="subParams.project_describe" maxlength="200"></textarea>
-        </div>
-      </div>
-      <div class="ys-time">
-        <div class="ys">
-          <div class="ys-left">
-            <span>预算</span>
+      <!--发布订单内容-->
+    <div class="content">
+      <div class="fb-content">
+        <div class="xmlx">
+          <div class="xmlx-left">
+            <span>项目类型</span>
           </div>
-          <div class="ys-right">
-            <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget"/>
+          <div class="xmlx-right">
+            <select class="xmlx-kuang" v-model="subParams.project_type">
+              <option value="">请选择类型</option>
+              <option v-for="(item,index) in typeList" :value="item._id" :key="index">{{item.type_name}}</option>
+            </select>
           </div>
         </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>抢单截止日期</span>
+        <div class="xmlx">
+          <div class="xmlx-left">
+            <span>项目地区</span>
           </div>
-          <div class="qdtime-right">
-              <datetime v-model="deadLine" class="shijian"></datetime>
+          <div class="xmlx-right">
+            <group class="xmlx-kuang">
+              <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
+            </group>
           </div>
         </div>
-      </div>
-      <div class="bt-mj-gs">
         <div class="xmbt">
-          <div class="xmbt-left">
-            <span>设计单位</span>
+          <div class="xmbt-top">
+            <div class="xt-left"><span>项目标题</span></div>
+            <div class="xt-right"><input type="text" placeholder="请输入项目标题" v-model="subParams.project_title" maxlength="20"/></div>
           </div>
-          <div class="xmbt-right">
-            <input type="text" placeholder="请输入设计单位" v-model="unit" ref="unit"/>
-          </div>
-        </div>
-        <div class="xmmj">
-          <div class="xmbt-left">
-            <span>设计面积</span>
-          </div>
-          <div class="xmbt-right">
-            <input type="text" placeholder="请输入设计面积" v-model="area" ref="area"/>
+          <div class="xmbt-bottom">
+            <textarea class="xt-txt" placeholder="请详细描述一下项目的内容" v-model="subParams.project_describe" maxlength="200"></textarea>
           </div>
         </div>
-        <div class="sjsd">
-          <div class="sjsd-top">设计深度</div>
-          <div class="sjsd-bottom">
-            <div class="fanan">
-              <checker
-                type="checkbox"
-                selected-item-class="demo5-item-selected"
-                @on-change="onChange" v-model="subParams.project_depth">
-                <checker-item key="0" value="0" class="fa">方案</checker-item>
-                <checker-item key="1" value="1" class="fa">扩初</checker-item>
-                <checker-item key="2" value="2" class="fa">施工</checker-item>
-              </checker>
+        <div class="ys-time">
+          <div class="ys">
+            <div class="ys-left">
+              <span>预算</span>
+            </div>
+            <div class="ys-right">
+              <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget"/>
+            </div>
+          </div>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>抢单截止日期</span>
+            </div>
+            <div class="qdtime-right">
+                <datetime v-model="deadLine" class="shijian"></datetime>
             </div>
           </div>
         </div>
-        <div class="gongshi">
-          <div class="gs">
+        <div class="bt-mj-gs">
+          <div class="xmbt">
             <div class="xmbt-left">
-              <span>工时</span>
+              <span>设计单位</span>
             </div>
             <div class="xmbt-right">
-              <input type="text" placeholder="请输入工时" v-model="hours" ref="hours"/>
+              <input type="text" placeholder="请输入设计单位" v-model="unit" ref="unit"/>
             </div>
           </div>
-          <div class="gsh-bottom">
-            <div class="gb-left">
-              <span>设计起止时间</span>
+          <div class="xmmj">
+            <div class="xmbt-left">
+              <span>设计面积</span>
             </div>
-            <div class="gb-right">
-              <span><datetime v-model="startTime" class="shijian"></datetime></span> / <span><datetime v-model="endTime" class="shijian"></datetime></span>
+            <div class="xmbt-right">
+              <input type="text" placeholder="请输入设计面积" v-model="area" ref="area"/>
             </div>
+          </div>
+          <div class="sjsd">
+            <div class="sjsd-top">设计深度</div>
+            <div class="sjsd-bottom">
+              <div class="fanan">
+                <checker
+                  type="checkbox"
+                  selected-item-class="demo5-item-selected"
+                  @on-change="onChange" v-model="subParams.project_depth">
+                  <checker-item key="0" value="0" class="fa">方案</checker-item>
+                  <checker-item key="1" value="1" class="fa">扩初</checker-item>
+                  <checker-item key="2" value="2" class="fa">施工</checker-item>
+                </checker>
+              </div>
+            </div>
+          </div>
+          <div class="gongshi">
+            <div class="gs">
+              <div class="xmbt-left">
+                <span>工时</span>
+              </div>
+              <div class="xmbt-right">
+                <input type="text" placeholder="请输入工时" v-model="hours" ref="hours"/>
+              </div>
+            </div>
+            <div class="gsh-bottom">
+              <div class="gb-left">
+                <span>设计起止时间</span>
+              </div>
+              <div class="gb-right">
+                <span><datetime v-model="startTime" class="shijian"></datetime></span> / <span><datetime v-model="endTime" class="shijian"></datetime></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sctp">
+          <div class="sc-top">上传图片</div>
+          <div class="img-body" v-for="(img,index) in subParams.imgs" :key="index">
+            <img :src="getDefultImg(img)" />
+          </div>
+          <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
+            <img src="../../../static/images/employer/j.png" />
           </div>
         </div>
       </div>
-      <div class="sctp">
-        <div class="sc-top">上传图片</div>
-        <div class="img-body" v-for="(img,index) in subParams.imgs" :key="index">
-          <img :src="getDefultImg(img)" />
-        </div>
-        <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
-          <img src="../../../static/images/employer/j.png" />
-        </div>
-      </div>
-    </div>
     </div>
     <!--弹窗-->
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
@@ -190,9 +191,10 @@
         _self.loadData();
       }
       //判断页面是否来自于邀请
-      let invitation = _self.$route.query.invitation;
+    //   let invitation = _self.$route.query.invitation;
       let designerid = _self.$route.query.designerid;
-      if(invitation && designerid) {
+      _self.designerid = designerid;
+      if(!common.isNull(designerid)) {
         _self.isInvited=true;
       }
     },
@@ -301,7 +303,7 @@
             if( data.code == 200 ){
               _self.showToast("完善成功!");
               setTimeout(function () {
-                if(!common.isNull('fromMyOrderDetail')){
+                if(!common.isNull(common.getStorage('fromMyOrderDetail'))){
                     _self.$router.go(-2);
                     return;
                 }
@@ -390,12 +392,15 @@
         _self.subParams.project_deadLine = common.string2TimeStamp(_self.deadLine);
         _self.subParams.project_startTime = common.string2TimeStamp(_self.startTime);
         _self.subParams.project_endTime = common.string2TimeStamp(_self.endTime);
+        // 邀请设计师
+        _self.subParams.project_winBidder = _self.isInvited===true ? _self.designerid : '';
+        _self.subParams.project_state = _self.isInvited===true ? 1: 0;
         var params = {
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
         }
-        // 邀请设计师
-        params.data.project_winBidder = _self.isInvited==true ? _self.designerid : '';
+        // console.log(_self.subParams);
+
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -413,7 +418,9 @@
           }else{
             _self.showToast("发布失败！");
           }
-        })
+        });
+
+
       }
 
     },
@@ -481,8 +488,15 @@
 </script>
 <style>
   /**解决软件盘弹出，文本框被顶起**/
-  .content{
+  .fabudingdan{
+    background-color: #f2f2f2;
+    height: 100%;
     overflow: hidden;
+  }
+  .content{
+    height: 100%;
+    overflow: auto;
+    padding-bottom: 1.2rem;
   }
   /*地区*/
   .vux-no-group-title {

@@ -31,7 +31,7 @@
                 </div>
                 <div class="gz-nicheng">{{order.user.user_name}}</div>
                 <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
-                <div class="gz-time"><span>{{order.project_deadLine}}过期</span></div>
+                <div class="gz-time"><span>{{timeStamp2String(order.project_deadLine)}}过期</span></div>
               </div>
               <div class="gz-content">
                 <div class="wenzhi">{{order.project_describe}}</div>
@@ -149,6 +149,9 @@
       // 头像
       checkAvatar(path) {
         return common.getAvatar(path);
+      },
+      timeStamp2String(time){
+        return common.timeStamp2String(time,'ymd');
       },
       getNameByTypeId: function (id) {
         var name = "";

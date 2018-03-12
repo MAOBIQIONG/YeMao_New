@@ -52,7 +52,7 @@
           <div class="xingxi">简历中心</div>
           <div class="list-right"></div>
         </div>
-        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minewenda'}">
+        <div class="list" v-tap="{methods:toQa}">
           <div class="xingxi">我的问答</div>
           <div class="list-right"></div>
         </div>
@@ -148,6 +148,16 @@
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
+      },
+      toQa(){
+        var _self = this;
+        if( !common.isNull(_self.userInfo._id) ){
+            _self.$router.push({name:'shouchangweida',query:{myid:_self.userInfo._id}})
+        } else {
+            console.log('没有获取用户信息');
+            _self.toUrl({pagename:"login"});
+        }
+
       },
       toUrlAfterLogin(params){
         var _self = this;

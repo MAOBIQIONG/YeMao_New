@@ -75,59 +75,59 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
             contactsArr:[],
             //数据源
             contactsArrData:[
-                {
-                    id:1,
-                    //userInfo
-                    img:'',
-                    user_name:'****',
-                    //contact
-                    displayName:null,
-                    name:null,
-                    nickName:null,
-                    phoneNumbers:[
-                        {value:'***********',type:'mobile'}
-                    ]
-                },
+                // {
+                //     id:1,
+                //     //userInfo
+                //     img:'',
+                //     user_name:'****',
+                //     //contact
+                //     displayName:null,
+                //     name:null,
+                //     nickName:null,
+                //     phoneNumbers:[
+                //         {value:'***********',type:'mobile'}
+                //     ]
+                // },
             ],
             //处理后数据源
             contactsArrData1:[
             //test
-                {
-                    id:2,
-                    img:'',
-                    user_name:'aaa',
-                    displayName:'aaar',
-                    name:null,
-                    nickName:null,
-                    phoneNumbers:[
-                        {value:'1234',type:'mobile'}
-                    ],
-                    canJoin:1
-                },
-                {
-                    id:3,
-                    img:'',
-                    user_name:'bbb',
-                    displayName:'bbbr',
-                    name:null,
-                    nickName:null,
-                    phoneNumbers:[
-                        {value:'9012',type:'mobile'}
-                    ],
-                    canJoin:1
-                },
-                {
-                    id:4,
-                    img:'',
-                    user_name:'ccc',
-                    displayName:'cccr',
-                    name:null,
-                    nickName:null,
-                    phoneNumbers:[
-                        {value:'3456',type:'mobile'}
-                    ],
-                    canJoin:1
-                },
+                // {
+                //     id:2,
+                //     img:'',
+                //     user_name:'aaa',
+                //     displayName:'aaar',
+                //     name:null,
+                //     nickName:null,
+                //     phoneNumbers:[
+                //         {value:'1234',type:'mobile'}
+                //     ],
+                //     canJoin:1
+                // },
+                // {
+                //     id:3,
+                //     img:'',
+                //     user_name:'bbb',
+                //     displayName:'bbbr',
+                //     name:null,
+                //     nickName:null,
+                //     phoneNumbers:[
+                //         {value:'9012',type:'mobile'}
+                //     ],
+                //     canJoin:1
+                // },
+                // {
+                //     id:4,
+                //     img:'',
+                //     user_name:'ccc',
+                //     displayName:'cccr',
+                //     name:null,
+                //     nickName:null,
+                //     phoneNumbers:[
+                //         {value:'3456',type:'mobile'}
+                //     ],
+                //     canJoin:1
+                // },
             ],
             searchText:''
       }
@@ -331,7 +331,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
         },
         addAlumnis(){
             let _self = this;
-            alert(_self.user_id);
+            // alert(_self.user_id);
             let params = {
                 interfaceId: common.interfaceIds.addAlumnis,
                 user_id:_self.user_id,

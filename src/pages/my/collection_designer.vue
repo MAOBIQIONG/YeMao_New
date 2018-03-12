@@ -25,8 +25,8 @@
         <div v-for="(item,index) in list" :key="index" class="content content-p" style="padding-top:0;">
             <div class="szsjs-list" @click="toDetails(item._id)">
                 <div class="szsjs-top">
-                <div class="szsjs-touxiang">
-                    <img src="../../../static/images/bj.jpg">
+                <div class="szsjs-touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
+                    <!-- <img src="../../../static/images/bj.jpg"> -->
                 </div>
                 <div class="szsjs-neirong">
                     <div class="sn-top">
@@ -217,6 +217,13 @@ import {Scroller,LoadMore,Toast} from 'vux'
             }
             // console.log(_self.list);
         },
+      // 头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },        
         //下拉刷新
         refreshPageDate(){
             let _self = this
@@ -257,5 +264,9 @@ import {Scroller,LoadMore,Toast} from 'vux'
   @import "../../../static/css/employer/shoucangsjs.css";
   .scroller{
       background:#F2F2F2;
+  }
+  .szsjs-touxiang{
+      background-size:cover!important;
+      background-position:center center!important;
   }
 </style>

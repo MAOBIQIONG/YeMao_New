@@ -92,7 +92,7 @@
               <div class="qt-nichen" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:bid.user._id}}">
                 <span>{{bid.user.user_name}}</span>
               </div>
-              <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:bid.user._id,name:bid.user.user_name,img:bid.user.img}}">
+              <div class="chat" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:bid.user._id,name:bid.user.user_name,img:bid.user.img}}">
                 <img src='../../../static/images/employer/miaomiao.png'>
               </div>
               <div class="qt-jiage">
@@ -110,7 +110,7 @@
     </div>
     <!--底部-->
     <div class="od-botton" v-if="userInfo._id!=order.user_id">
-      <div class="mmliaotian" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.user._id,name:order.user.user_name,img:order.user.img}}">
+      <div class="mmliaotian" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:order.user._id,name:order.user.user_name,img:order.user.img}}">
         <span><img src='../../../static/images/employer/miaomiao.png'></span>
         <span>喵喵聊天</span>
       </div>
@@ -217,6 +217,14 @@
       },
       toUrl2: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
+      },
+      toUrlWUI: function (params) { // toUrlWidthUserInfo
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+          this.$router.push({name: params.pagename,query:params.query || {}})
+        }else{
+          this.$router.push({name: 'login'})
+        }
       },
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})

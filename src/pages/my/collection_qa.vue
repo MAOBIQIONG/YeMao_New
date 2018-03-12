@@ -28,13 +28,12 @@
         <div class="weida" @click="toDetails(item._id)">
             <div class="wd-top">
             <div class="touxiang">
-                <img v-if="item.user.img" src="../../../static/images/bj.jpg"/>
-                <img v-else src="../../../static/images/bj.jpg"/>
+                <img v-if="item.user.img" :src="checkAvatar(item.user.img)"/>
             </div>
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
-            <div class="tupian" v-if="item.imgs">        
-            <img :src="item.imgs[0]"/>
+            <div class="tupian" v-if="item.imgs" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">        
+            <!-- <img :src="checkImg(item.imgs[0])"/> -->
             </div>
             <div class="neirong">
             <div class="piapti">
@@ -134,6 +133,13 @@
             },
             toUrl: function (pagename) {
                 this.$router.push({name: pagename})
+            },
+            // 头像
+            checkAvatar (path) {
+                return common.getAvatar(path)
+            },
+            checkImg(path){
+                return common.getDefultImg(path);
             },
             toDetails (id) {
                 this.$router.push({name: 'wdxq', query: {id: id}})
@@ -272,5 +278,9 @@
     .xs-plugin-pulldown-container{
         font-size:14px;
         margin-top:-0.21rem;
+    }
+    .tupian{
+        background-size:cover!important;
+        background-position:center center!important;
     }
 </style>

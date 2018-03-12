@@ -9,7 +9,7 @@
       <!--设计师专辑-->
       <div class="sjszj">
         <div class="sjszj-top">
-          <span>设计师专辑</span><span>:100</span>
+          <span>设计师专辑</span><span>:{{collects.usersCount}}</span>
         </div>
         <div class="noData" v-if="collects.users.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionDesigner')">
@@ -24,43 +24,43 @@
       <!--项目专辑-->
       <div class="xmzj">
         <div class="xm-top">
-          <span>项目专辑</span><span>:100</span>
+          <span>项目专辑</span><span>:{{collects.ordersCount}}</span>
         </div>
         <div class="noData" v-if="collects.orders.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionOrder')">
             <li v-for="(item,index) in collects.orders" :key="index">
-                <img src="../../../static/images/bj.jpg" />
+                <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])" />
             </li>
         </ul>
       </div>
       <!--问答专辑-->
       <div class="xmzj">
         <div class="xm-top">
-          <span>问答专辑</span><span>:100</span>
+          <span>问答专辑</span><span>:{{collects.qasCount}}</span>
         </div>
         <div class="noData" v-if="collects.qas.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionQa')">
             <li v-for="(item,index) in collects.qas" :key="index">
-                <img src="../../../static/images/bj.jpg" />
+                <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])" />
             </li>
         </ul>
       </div>
       <!--喵学堂专辑-->
       <div class="xmzj">
         <div class="xm-top">
-          <span>喵学堂专辑</span><span>:100</span>
+          <span>喵学堂专辑</span><span>:{{collects.mxtsCount}}</span>
         </div>
         <div class="noData" v-if="collects.mxts.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionMxt')">
             <li v-for="(item,index) in collects.mxts" :key="index">
-                <img src="../../../static/images/bj.jpg" />
+                <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])" />
             </li>
         </ul>
       </div>
       <!--设计师专辑-->
       <div class="sjszj jianli">
         <div class="sjszj-top">
-          <span>简历专辑</span><span>:100</span>
+          <span>简历专辑</span><span>:{{collects.resumeCount}}</span>
         </div>
         <div class="noData" v-if="collects.resumes.length==0">暂无收藏记录</div>
         <ul class="renyuan" v-else @click="toUrl('collectionResume')">
@@ -140,6 +140,9 @@
       checkAvatar (path) {
         return common.getAvatar(path)
       },
+    checkImg(path){
+          return common.getDefultImg(path);
+    },
       setData(data){
             let _self = this;
             _self.collects = data;

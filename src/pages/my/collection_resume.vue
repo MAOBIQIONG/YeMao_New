@@ -25,8 +25,8 @@
     <div>
         <div class="content content-p" style="padding-top:0.2rem;" v-for="(item,index) in list" :key="index">
             <div class="jianli" @click="toDetail(item._id,item.user_id)">
-                <div class="touxiang">
-                    <img src="../../../static/images/bj.jpg"/>
+                <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
+                    <!-- <img src="../../../static/images/bj.jpg"/> -->
                 </div>
                 <div class="jieshao">
                     <p class="name"><span>{{item.real_name}}</span>/<span>{{item.expected_positions}}</span></p>
@@ -146,6 +146,13 @@ export default {
                 _self.$router.push({name:"login"});
             }         
       },
+        // 头像
+      checkAvatar (path) {
+        return common.getAvatar(path)
+      },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },       
         getName (value) {
             return value2name(value, ChinaAddressV4Data)
         },
@@ -269,4 +276,8 @@ export default {
 <style scoped>
   @import '../../../static/css/meow/shouchang-jianli.css';
   .scroller{background:transparent!important;}
+  .touxiang{
+      background-size:cover!important;
+      background-position:center center;
+  }
 </style>

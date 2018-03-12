@@ -26,11 +26,12 @@
       <div class="lb-right"v-tap="{ methods:toUrl , pagename:'wjmm'}"><a>忘记密码？</a></div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+
   </div>
 </template>
 
 <script>
-  import { Toast, } from 'vux'
+  import { Toast} from 'vux'
   export default {
     components: {
       Toast,
@@ -176,6 +177,7 @@
               common.setStorage("login_account",_self.phone);
               _self.$store.state.pageIndex = 0;
               _self.toUrl({'pagename':'index'});
+              _self.$store.state.designerRefreshMark = 1;
             }else{
               _self.showToast(data.msg);
             }

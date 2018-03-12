@@ -68,6 +68,11 @@
 
       }
     },
+    created(){
+        var _self = this;
+        var userInfo = common.getObjStorage("userInfo") || {};
+        var user_id = userInfo._id;
+    },
     mounted: function () {
       this.tab();
     },

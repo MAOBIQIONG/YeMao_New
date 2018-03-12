@@ -20,7 +20,7 @@
         :class="{scroller:true}"
     >
         <div>
-            <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
+            <div class="ddlist-sjsdai" v-for="(item,index) in orderList" :key="index">
                 <div class="ds-top" v-tap="{methods:toDetails,item:item}">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
                     </div>
@@ -39,10 +39,16 @@
                                     <div v-if="item.project_state==2" class="db-djs">等待雇主确认订单</div>
                                     <div v-else class="db-djs">等待设计师完善订单</div>
                                 </template>
-
                             </template>
+                            <template v-else>
+                                <template v-if="!isNull(item.project_winBidder)">
+                                    <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
+                                    <div class="db-djs" v-else>等待设计师确认</div>
+                                </template>
 
-                            <div v-else class="db-djs"><counterboard  :endtime="item.project_deadLine" ><span slot="footer">后截止抢单</span></counterboard></div>
+                                <div v-else class="db-djs"><counterboard  :endtime="item.project_deadLine" ><span slot="footer">后截止</span></counterboard></div>
+                            </template>
+                            
                         </div>
                     </div>
                 </div>
@@ -80,9 +86,17 @@
                             </template>
                         </template>
                         <template v-else>
-                            <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
-                            <div class="db-sxdd noRefresh" v-else>刷新订单</div>
-                            <div class="db-qrdd" style="display: none"></div>
+
+                            <template  v-if="isNull(item.project_winBidder)">
+                                <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
+                                <div class="db-sxdd noRefresh" v-else>刷新订单</div>
+                            </template>
+                            <template v-else>
+                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
+                                        确认完善信息
+                                </div>
+                            </template>
+
                         </template>
 
                     </div>
@@ -273,7 +287,14 @@ export default {
                     buttonState.btns_type = 2;
                 }
             }else{
-                buttonState.btns_type = 3;
+                if(common.isNull(params.item.project_winBidder)){
+                    buttonState.btns_type = 3;
+                } else{
+                    if(params.item.project_state==2) {
+                        buttonState.btns_type = 2;
+                    }
+                }
+                
             }
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: params.item._id}})

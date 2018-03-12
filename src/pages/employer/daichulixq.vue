@@ -151,6 +151,18 @@
                             确认订单
                         </div>
                     </template>
+                    <template v-if="buttonState.btns_type==2">
+                        <div class="db-qxdd" v-tap="{methods:showConfirm,id:order._id,type:'canclePart',msg:'确定取消抢单吗？'}" >取消抢单</div>
+                        <div class="db-qrdd" v-tap="{methods:improveTheOrder,id:order._id}">
+                            完善信息
+                        </div>
+                        <div class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'confirmTheOrderByDesigner',msg:'确认该订单吗？'}">
+                            确认订单
+                        </div>
+                    </template>
+                    <template v-if="buttonState.btns_type==3">
+                        <div class="db-qxdd" v-tap="{methods:showConfirm,id:order._id,type:'canclePart',msg:'确定取消抢单吗？'}" >取消抢单</div>
+                    </template>
 
                 </div>
                 <div class="db-right" v-if="buttonState.state=='djf'">
@@ -191,7 +203,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             //订单装填完善标志位
             improved:0,
             isSubmissionConfirmed:0,
-            confirmType:"",//cancelOrder取消订单，confirmTheOrderByDesigner设计师确认订单 ，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交
+            confirmType:"",//cancelOrder取消订单，confirmTheOrderByDesigner设计师确认订单 ，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交,canclePart取消抢单
             user_id:null,
             userInfo:null,
             order:{
@@ -512,6 +524,30 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
                     }
                 });
         },
+        canclePart(){
+            var _self = this;
+            var params = {
+            interfaceId:common.interfaceIds.competiteAnOrder,
+                data:{
+                    order_id: _self.order_id,
+                    user_id: _self.user_id,
+                }
+            }
+            _self.$axios.post('/mongoApi', {
+            params: params
+            }, response => {
+            var data = response.data;
+            if( data && data.code == 200 ){
+                _self.$store.state.indexRefreshMark = 1;
+                _self.showToast("取消成功！");
+                setTimeout(()=>{
+                    _self.goback();
+                },1500);
+            }else{
+                _self.showToast("取消失败！");
+            }
+            })
+        },
         compOnConfirm(type){
             if(this.confirmType=="cancelOrder"){
                 this.cancelOrder();
@@ -527,6 +563,9 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             }
             if(this.confirmType =="submissionConfirm"){
                 this.confirmOrder();
+            }
+            if(this.confirmType =="canclePart"){
+                this.canclePart();
             }
         },
       //数据初始化

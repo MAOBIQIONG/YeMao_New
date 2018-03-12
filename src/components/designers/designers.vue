@@ -32,8 +32,8 @@
               <div class="sc-jiesao">{{item.description}}</div>
             </div>
             <div class="sjs-bottom">
-              <div class="sjs-yysj"v-tap="{methods:toUrl,pagename:'maintain'}">应邀设计</div>
-              <div class="sjs-mmlt"v-tap="{methods:toUrl,pagename:'liaotian',query:{id:item._id,name:item.user_name,img:item.img}}">喵喵聊天</div>
+              <div class="sjs-yysj" v-tap="{methods:beInvited,designerid:item._id}" v-if="canInvited(item._id)">应邀设计</div>
+              <div class="sjs-mmlt" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:item._id,name:item.user_name,img:item.img}}">喵喵聊天</div>
             </div>
           </div>
         </div>
@@ -93,6 +93,14 @@
     methods: {
       toUrl: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
+      },
+      toUrlWUI: function (params) { // toUrlWidthUserInfo
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+          this.$router.push({name: params.pagename,query:params.query || {}})
+        }else{
+          this.$router.push({name: 'login'})
+        }
       },
       // 详情页
       toDetails (param) {
@@ -208,7 +216,24 @@
         _self.sortMark = mark;
         _self.loadMore();
       },
+        beInvited(p){
+            var user = common.getObjStorage("userInfo") || {};
+            if(common.isNull(user._id)){
+                this.$router.push({name:'login'});
+            } else {
+                this.$router.push({name:'fabudingdan',query:{designerid:p.designerid}});
+            }
+            
+        },
+        canInvited(p){
+            var user = common.getObjStorage("userInfo") || {};
 
+            if(common.isNull(user._id)){return true}
+            if(user._id==p){
+                return false
+            }
+            return true;
+        }
     }
   }
 </script>
