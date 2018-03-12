@@ -75,6 +75,7 @@
       <div class="lunpo">
         <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
+            <div v-if="cases.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in cases" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
@@ -96,6 +97,7 @@
             <div class="more" v-if="cases.length==3" v-tap="{methods:toChws, flag:0}">查看更多</div>
           </swiper-item>
           <swiper-item key="1">
+            <div v-if="honors.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in honors" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
@@ -117,6 +119,7 @@
             <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
           </swiper-item>
           <swiper-item key="2">
+            <div v-if="works.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in works" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
@@ -381,5 +384,10 @@
   }
   .ysc{
       background:#999!important;
+  }
+    .noData{
+      font-size:0.28rem;
+      text-align:center;
+      padding:1rem;
   }
 </style>
