@@ -60,7 +60,7 @@
       <!--滑动轮播-->
       <div class="huadonglunpo">
         <tab :line-width=2 active-color='#fc378c' v-model="index">
-          <tab-item class="vux-center" key="0">案列展示</tab-item>
+          <tab-item class="vux-center" key="0">案例展示</tab-item>
           <tab-item class="vux-center" key="1">个人荣誉</tab-item>
           <tab-item class="vux-center" key="2">我的作品</tab-item>
         </tab>
@@ -68,6 +68,7 @@
       <div class="lunpo">
         <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
+            <div v-if="cases.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in cases" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
@@ -91,6 +92,7 @@
             <div class="more" v-if="cases.length==3" v-tap="{methods:toChws, flag:0}">查看更多</div>
           </swiper-item>
           <swiper-item key="1">
+            <div v-if="honors.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in honors" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
@@ -114,6 +116,7 @@
             <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
           </swiper-item>
           <swiper-item key="2">
+            <div v-if="works.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in works" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
@@ -327,7 +330,13 @@
     text-align: center;
     padding: .25rem;
   }
-  .header{
-    border-bottom: none;
+
+  .header {
+      border-bottom: none;
+    }
+  .noData{
+      font-size:0.28rem;
+      text-align:center;
+      padding:1rem;
   }
 </style>

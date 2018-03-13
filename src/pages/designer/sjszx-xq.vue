@@ -423,4 +423,9 @@
       text-align:center;
       padding:1rem;
   }
+    .noData{
+      font-size:0.28rem;
+      text-align:center;
+      padding:1rem;
+  }
 </style>
