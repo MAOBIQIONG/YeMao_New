@@ -39,7 +39,7 @@
         <textarea v-model="dataParams.description" class="area" maxlength="300" placeholder="请输入工作描述"></textarea>
         <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
       </div>
-      <div class="tjgzjl">
+      <div class="tjgzjl" @click="removeData()">
         删除此工作经历
       </div>
     </div>
@@ -184,6 +184,26 @@ export default {
                     _self.showToast("保存成功！")
                     setTimeout(()=>{_self.$router.goBack()},1000);
                     
+                });
+        },
+        removeData(){
+            let _self = this;
+            var params = {
+            interfaceId:common.interfaceIds.updateData,
+            coll:'workExperiences',
+            wheredata:{"_id":_self.we_id},
+            data:{
+                $set:{
+                    is_del: 1
+                }
+            }
+            }
+            _self.$axios.post('/mongoApi', {
+                params: params
+                }, response => {
+                    console.log(response);
+                    _self.showToast("删除成功！")
+                    setTimeout(()=>{_self.$router.goBack()},1000);
                 });
         }
     }
