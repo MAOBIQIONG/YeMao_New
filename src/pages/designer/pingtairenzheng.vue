@@ -1,13 +1,13 @@
 <template>
   <div >
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>平台认证</span>
       <div class="header-right" v-tap="{methods:submit}">下一步</div>
     </div>
     <!--发布订单内容-->
-    <div class="content wrz content-p">
+    <div class="content wrz">
       <!--流程-->
       <div class="banner">
          <img src="../../../static/images/designer/renzheng_01.png"/>
