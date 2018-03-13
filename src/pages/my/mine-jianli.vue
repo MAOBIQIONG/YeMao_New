@@ -437,10 +437,9 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     background-position: center right;
   }
     .imgNoData{
-        position: fixed;
         width: 4.5rem;
-        left:1.5rem;
-        top: 3rem;
+        margin:0 auto;
+        margin-top:50%
     }
     .imgNoData img{
         width: 100%;

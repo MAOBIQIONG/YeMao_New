@@ -68,7 +68,7 @@ body,html{
 }
 /*沉浸式样式*/
 .content-p{
-  padding-top: 1.2rem;
+  padding-top: 1.3rem;
   /*非沉浸式*/
   /*padding-top:0.88rem;*/
 }
@@ -477,7 +477,7 @@ body,html{
 
 .sjs-list .sjs-top .st-neirong .sn-bottom {
   height: 0.4rem;
-  font-size: 0.20rem;
+  font-size: 0.2rem;
 }
 
 .sjs-list .sjs-top .st-neirong .sn-bottom .sb-nianling {
@@ -495,8 +495,9 @@ body,html{
   float: left;
   text-align: center;
   color: #cda566;
-  padding: 0.02rem 0.08rem;
+  padding: 0.01rem 0.06rem;
   margin-right: 0.14rem;
+  margin-top: 0.05rem;
 }
 
 .sjs-list .sjs-top .st-neirong .sn-bottom .sb-ysm {
@@ -506,7 +507,8 @@ body,html{
   text-align: center;
   border-radius: 0.08rem;
   margin-right: 0.14rem;
-  padding: 0.02rem 0.08rem;
+  padding: 0.01rem 0.06rem;
+  margin-top: 0.05rem;
 }
 
 .sjs-list .sjs-top .st-neirong .sn-bottom .sb-yrz {
@@ -515,7 +517,8 @@ body,html{
   color: #142aa4;
   text-align: center;
   border-radius: 0.08rem;
-  padding: 0.02rem 0.08rem;
+  padding: 0.01rem 0.06rem;
+  margin-top: 0.05rem;
 }
 
 .sjs-list .sjs-top .st-jiageleixin {

@@ -1,13 +1,18 @@
 <template>
-  <div >
+  <div class="page">
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>收藏专辑</span>
     </div>
     <div class="content content-p">
+        <div v-if="collects.usersCount==0&&collects.ordersCount==0&&collects.qasCount==0&&collects.mxtsCount==0&&collects.resumeCount==0">
+            <div class="imgNoData">
+                <img src="../../../static/images/shuju.png"/>
+            </div>
+        </div>
       <!--设计师专辑-->
-      <div class="sjszj">
+      <div class="sjszj" v-if="collects.usersCount!=0">
         <div class="sjszj-top">
           <span>设计师专辑</span><span>:{{collects.usersCount}}</span>
         </div>
@@ -15,14 +20,13 @@
         <ul class="renyuan" v-else @click="toUrl('collectionDesigner')">
           <li v-for="(item,index) in collects.users" :key="index">
             <p class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
-              <!-- <img src="../../../static/images/bj.jpg" /> -->
             </p>
             <p class="nicheng">{{item.user_name}}</p>
           </li>
         </ul>
       </div>
       <!--项目专辑-->
-      <div class="xmzj">
+      <div class="xmzj" v-if="collects.ordersCount!=0">
         <div class="xm-top">
           <span>项目专辑</span><span>:{{collects.ordersCount}}</span>
         </div>
@@ -34,7 +38,7 @@
         </ul>
       </div>
       <!--问答专辑-->
-      <div class="xmzj">
+      <div class="xmzj" v-if="collects.qasCount!=0">
         <div class="xm-top">
           <span>问答专辑</span><span>:{{collects.qasCount}}</span>
         </div>
@@ -46,7 +50,7 @@
         </ul>
       </div>
       <!--喵学堂专辑-->
-      <div class="xmzj">
+      <div class="xmzj" v-if="collects.mxtsCount!=0">
         <div class="xm-top">
           <span>喵学堂专辑</span><span>:{{collects.mxtsCount}}</span>
         </div>
@@ -58,7 +62,7 @@
         </ul>
       </div>
       <!--设计师专辑-->
-      <div class="sjszj jianli">
+      <div class="sjszj jianli"  v-if="collects.resumeCount!=0">
         <div class="sjszj-top">
           <span>简历专辑</span><span>:{{collects.resumeCount}}</span>
         </div>
@@ -160,4 +164,19 @@
       margin:0.3rem auto 0 auto;
       text-align:center;
   }
+  .page{
+      position:absolute;    
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+  }
+    .imgNoData{
+        width: 4.5rem;
+        margin:0 auto;
+        margin-top:30%
+    }
+    .imgNoData img{
+        width: 100%;
+    }
 </style>

@@ -32,6 +32,7 @@
         dates: [],
         disablePast: true,
         return6Rows: true,
+        isSubmit: false,
         /**toast**/
         showMark:false,
         showMsg:"",
@@ -75,6 +76,8 @@
       submit: function () {
         console.log("submit:")
         var _self = this;
+        if( _self.isSubmit == true ) return;
+        _self.isSubmit = true;
         var params = {
           interfaceId: common.interfaceIds.setRestDay,
           user_id: _self.user_id,
@@ -92,6 +95,9 @@
           }else{
             _self.showToast("提交失败！");
           }
+          setTimeout(function () {
+            _self.isSubmit = false;
+          },2000)
         })
       }
     }
