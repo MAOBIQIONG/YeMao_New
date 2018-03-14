@@ -17,16 +17,17 @@
       <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
       <div class="pswp__ui pswp__ui--hidden">
         <div class="pswp__top-bar">
-          <!--  Controls are self-explanatory. Order can be changed. -->
+          <div class="indicator">
+            <span class="indicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'indicator__sign--active':item==1}"></span>
+          </div>
           <div class="pswp__counter"></div>
           <slot name="button-after"></slot>
-          <!-- <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
           <button class="pswp__button pswp__button--share" title="Share"></button>
           <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button> -->
+          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
           <slot name="button-before"></slot>
-          <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-          <!-- element will get class pswp__preloader--active when preloader is running -->
+
           <div class="pswp__preloader">
             <div class="pswp__preloader__icn">
               <div class="pswp__preloader__cut">
@@ -35,6 +36,7 @@
             </div>
           </div>
         </div>
+
         <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
           <div class="pswp__share-tooltip"></div>
         </div>
@@ -67,13 +69,34 @@ export default {
         }
         return one
       })
+    },
+    indicator(){
+      let arr = [];
+      let indicatorNum = 9;
+      let currentNum =  this.index;
+      for(let i = 0; i < indicatorNum; i++) {
+        if(i === currentNum){
+          arr.push(1);
+        } else {
+          arr.push(0);
+        }
+      };
+      return arr;
     }
+  },
+  mounted(){
+    console.log('previewer2--index',this.index);
   },
   watch: {
     imgs (newVal, oldVal) {
+      console.log("imgsWatch:");
+      // console.log("new:"+JSON.stringify(newVal));
+      // console.log("old:"+JSON.stringify(oldVal));
+      this.photoswipe.ui.update();
       if (!this.photoswipe) {
         return
       }
+
       if (newVal.length && newVal.length - oldVal.length === -1) {
         const index = this.photoswipe.getCurrentIndex()
         this.photoswipe.invalidateCurrItems()
@@ -85,6 +108,9 @@ export default {
         this.photoswipe.goTo(goToIndex)
         this.photoswipe.updateSize(true)
         this.photoswipe.ui.update()
+      } else if(newVal.length && newVal.length < oldVal.length){
+        console.log('newVal.length<oldVal.length!!!!!!!!!');
+
       } else if (!newVal.length) {
         this.close()
       }
@@ -92,6 +118,9 @@ export default {
   },
   methods: {
     init (index) {
+      console.log('init__index',index);
+      console.log('----');
+      console.log('init__imgs',this.imgs);
       const self = this
       const showItem = this.imgs[index]
       if (!showItem.w || !showItem.h || showItem.w < 5 || showItem.h < 5) {
@@ -107,16 +136,23 @@ export default {
       }
     },
     doInit (index) {
+      console.log('doInit__thisImgs',this.imgs);
       const self = this
       let options = objectAssign({
+        closeEl:false,
+        arrowEl: false,
         history: false,
         shareEl: false,
+        zoomEl: false,
+        fullscreenEl: false,
         tapToClose: true,
+        counterEl: false,
         index: index
       }, this.options)
       this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options)
 
       this.photoswipe.listen('gettingData', function (index, item) {
+        console.log("doInit__item",item);
         if (!item.w || !item.h || item.w < 1 || item.h < 1) {
           const img = new Image()
           img.onload = function () {
@@ -134,13 +170,14 @@ export default {
       })
     },
     show (index) {
+      console.log('previewer2  show  index', index);
       this.init(index)
     },
     getCurrentIndex () {
       return this.photoswipe.getCurrentIndex()
     },
     getNumItemsFn() {
-      return this.photoswipe.get
+      return this.photoswipe.options.getNumItemsFn();
     },
     close () {
       this.photoswipe.close()
@@ -153,7 +190,7 @@ export default {
     },
     next () {
       this.photoswipe.next()
-    }
+    },
   },
   props: {
     list: {
@@ -176,3 +213,23 @@ export default {
 
 <style src="x-photoswipe/dist/photoswipe.css"></style>
 <style src="x-photoswipe/dist/default-skin/default-skin.css"></style>
+<style> 
+.indicator{
+  width:4rem;
+  height:1rem;
+  margin:0 auto;
+  text-align:center;
+}
+.indicator__sign{
+  display:inline-block;
+  vertical-align:28%;
+  width:0.2rem;
+  height:0.2rem;
+  background:#aaa;
+  border-radius:50%;
+  margin:0 0.1rem;
+}
+.indicator__sign--active{
+  background:#fff;
+}
+</style>

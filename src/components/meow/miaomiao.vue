@@ -65,7 +65,7 @@
             </div>
             <div class="sjs-bottom">
               <ul>
-                <li v-for="(img, i) in item.imgs" v-tap="{methods:show,index:index,i:i}">
+                <li v-for="(img, i) in item.imgs" :key="i" v-tap="{methods:show,index:index,i:i}" v-if="!isNull(item.imgs)">
                   <div class="previewer-img" :class="'previewer'+index" :style="'background-image:url('+checkImg(img)+')'"></div>
                 </li>
               </ul>
@@ -76,9 +76,9 @@
               <!--<div class="more more-icon"></div>-->
             </div>
             <!--<div v-if="item.prevImgs && item.prevImgs.length > 0" >-->
-              <div v-transfer-dom>
+              <!-- <div v-transfer-dom>
                 <previewer2 :list="item.prevImgs" ref="previewer" :options="options"></previewer2>
-              </div>
+              </div> -->
             <!--</div>-->
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
@@ -87,9 +87,9 @@
       </scroller>
     </div>
     <div class="tianjia" v-tap="{methods:toRelease}"></div>
-    <!--<div v-transfer-dom>-->
-      <!--<previewer :list="list" ref="previewer" :options="options" @on-close="closePrevImg()"></previewer>-->
-    <!--</div>-->
+    <div v-transfer-dom>
+      <previewer2 :list="meows[meowsIndex].prevImgs" ref="previewer" :options="options"></previewer2>
+    </div>
   </div>
 </template>
 
@@ -112,7 +112,8 @@
     data() {
       return {
         userInfo:{},
-        meows:[],
+        meows:[{user:{},imgs:[],prevImgs:[]}],
+        meowsIndex:0,
         list: [],
         options: {
           previewer:'previewer0',
@@ -226,6 +227,9 @@
         param.event.stop;//阻止冒泡（原声方法）
         return false
       },
+      isNull(o){
+        return common.isNull(o);
+      },
       toRelease(){
         var _self = this;
         if( common.isNull(_self.userInfo._id) ){
@@ -270,8 +274,11 @@
       show (param) {
         var _self = this;
         console.log("param.index:"+param.index); 
+        console.log("param.i:"+param.i); 
+        _self.meowsIndex = param.index;
         _self.options.previewer = '.previewer'+param.index;
-        _self.$refs.previewer[param.index].show(param.i)
+        console.log('$refs.previewer',_self.$refs.previewer);
+        _self.$refs.previewer.show(param.i)
         param.event.cancelBubble = true;
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）
@@ -354,6 +361,7 @@
         } else {
           _self.pagination.pageNo++
         }
+        console.log('start setprevImgs');
         _self.meows.forEach(function (item,index) {
           item.prevImgs = [];
           if( item.imgs && item.imgs.length > 0 ){
@@ -364,6 +372,8 @@
             item.prevImgs = [{src:_self.checkImg(''),w:800,h:400}];
           }
         });
+        console.log('end setprevImgs');
+        console.log('meows',this.meows);
       },
 
       //点赞
