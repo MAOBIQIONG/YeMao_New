@@ -330,7 +330,6 @@
     text-align: center;
     padding: .25rem;
   }
-
   .header {
       border-bottom: none;
     }

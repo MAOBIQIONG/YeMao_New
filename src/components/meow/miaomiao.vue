@@ -454,7 +454,7 @@
       height:100%;
       background-repeat: no-repeat;
       background-position:center center;
-      background-size: cover
+      background-size: cover;
   }
 
   /**样式重写**/
