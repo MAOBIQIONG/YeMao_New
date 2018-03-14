@@ -181,27 +181,18 @@
       chooseDesigner() {
         var _self = this;
         var params = {
-          interfaceId: common.interfaceIds.updateData,
-          coll: common.collections.orderList,
-          wheredata: {
-            _id: _self.order_id
-          },
-          data: {
-            $set: {
-              project_winBidder: _self.project_winBidder,
-              project_state: 1, // 抢单中
-            }
-          }
+          interfaceId: common.interfaceIds.chooseDesigner,
+          order_id: _self.order_id,
+          project_winBidder: _self.project_winBidder
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
+          // console.log(response)
           var data = response.data;
-          if (data.ok > 0) {
+          if ( data && data.code==200 ) {
             _self.$store.state.indexRefreshMark = 1;
             _self.$store.state.employerRefreshMark = 1;
-            _self.showToast('选择成功！');
             if(!common.isNull(common.getStorage('fromOrderDcl'))){
                 setTimeout(function () {
                     _self.$router.go(-1)
@@ -211,7 +202,8 @@
                 _self.$router.go(-2)
                 }, 1000)
             }
-
+          }else{
+            _self.showToast('选择失败！');
           }
         })
       }
