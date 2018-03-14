@@ -17,6 +17,8 @@ import zhuche2 from '@/pages/login/zhuche2'
 import register from '@/pages/login/register'
 import fenlei from '@/pages/index/fenlei'
 import informxitong from '@/pages/index/informxitong'
+import activitynotice from '@/pages/index/activity-notice'
+import systemnotice from '@/pages/index/system-notice'
 import leibie from '@/pages/index/leibie'
 import message from '@/pages/index/message'
 import search from '@/pages/index/search'
@@ -516,6 +518,14 @@ const routeArray = [
   { path: '/informxitong',
     name: 'informxitong',
     component: informxitong
+  },
+  { path: '/activitynotice',
+    name: 'activitynotice',
+    component: activitynotice
+  },
+  { path: '/systemnotice',
+    name: 'systemnotice',
+    component: systemnotice
   },
   { path: '/leibie',
     name: 'leibie',

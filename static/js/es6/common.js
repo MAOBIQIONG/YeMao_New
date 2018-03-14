@@ -617,6 +617,8 @@ const common = {
     getReplyByPages:'getReplyByPages',             // 查询评论列表
     setRestDay:'setRestDay',                       // 设置休息日
     getRestDay:'getRestDay',                       // 获取休息日
+    getNoticeIndex:'getNoticeIndex',               // 通知首页
+    getNoticeList:'getNoticeList',                 // 通知列表
 
   },
 

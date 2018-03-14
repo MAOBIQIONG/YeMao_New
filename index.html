@@ -26,6 +26,8 @@
     }
     document.addEventListener( "plusready", function(){
       console.log("app.vue addEventListener plusready:");
+      // var info =plus.push.getClientInfo();
+      // console.log("info:"+JSON.stringify(info))
       // 弹出解决软件盘，顶部header被顶起
       if( common.browser.versions.ios ){
         console.log("currentWebview:"+plus.webview.currentWebview().id)
@@ -35,7 +37,7 @@
       }
       // 通知栏消息点击监听
       plus.push.addEventListener("click", function (msg) {
-        console.log("addEventListener click msg:"+JSON.stringify(msg))
+        // alert("click msg:"+JSON.stringify(msg))
       });
       // 透穿消息监听
       plus.push.addEventListener( "receive", function(msg) {
@@ -46,7 +48,14 @@
          * 2、android:
          * {"_UUID_":"androidPushMsg53788265","title":"标题","content":"内容","payload":"请输入需要透传的内容"}
          * */
-        console.log("addEventListener receive msg:"+JSON.stringify(msg))
+        // alert("receive msg:"+JSON.stringify(msg))
+        var appStatus = common.getStorage('appStatus');
+        if( appStatus == 0 ){
+          //震动
+          plus.device.vibrate( 50 );
+        }else if( common.browser.versions.android ){
+          wyim.createMessage(msg);
+        }
       });
     })
     //运行环境从前台切换到后台事件

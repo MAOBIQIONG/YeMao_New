@@ -167,12 +167,14 @@ const im = {
   },
   //创建本地消息
   createLocalPushMsg : function (msg){
-    var options = {cover:false};//title:msg.title,
-    var content = msg.content;
-    var content = msg.title+":"+im.filterImgs(content);
-    var payload = {"type":"chat"};
+    console.log("createLocalPushMsg:")
+    msg.content = msg.title+":"+im.filterImgs(msg.content);
+    im.createMessage(msg);
+  },
+  createMessage: function(msg) {
+    var options = {title:msg.title, cover:false};
     if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
-      plus.push.createMessage(content, JSON.stringify(payload), options);
+      plus.push.createMessage(msg.content, JSON.stringify(msg.payload), options);
     }else{
       console.log("Now it's the development environment!")
     }
