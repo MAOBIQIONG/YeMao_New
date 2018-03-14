@@ -136,7 +136,7 @@ export default {
       }
     },
     doInit (index) {
-      console.log('doInit__thisImgs',this.imgs);
+      // console.log('doInit__thisImgs',this.imgs);
       const self = this
       let options = objectAssign({
         closeEl:false,
@@ -152,7 +152,7 @@ export default {
       this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options)
 
       this.photoswipe.listen('gettingData', function (index, item) {
-        console.log("doInit__item",item);
+        // console.log("doInit__item",item);
         if (!item.w || !item.h || item.w < 1 || item.h < 1) {
           const img = new Image()
           img.onload = function () {
