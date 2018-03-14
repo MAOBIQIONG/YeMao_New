@@ -139,6 +139,9 @@ export default {
     getCurrentIndex () {
       return this.photoswipe.getCurrentIndex()
     },
+    getNumItemsFn() {
+      return this.photoswipe.get
+    },
     close () {
       this.photoswipe.close()
     },

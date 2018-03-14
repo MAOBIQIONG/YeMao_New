@@ -269,7 +269,7 @@
 
       show (param) {
         var _self = this;
-        console.log("param.index:"+param.index);
+        console.log("param.index:"+param.index); 
         _self.options.previewer = '.previewer'+param.index;
         _self.$refs.previewer[param.index].show(param.i)
         param.event.cancelBubble = true;
