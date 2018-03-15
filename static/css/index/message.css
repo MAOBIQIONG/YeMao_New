@@ -132,12 +132,12 @@
 }
 
 .msg-content .tab_box .tongzhi-list .tl-touxiang.xt {
-  background: url("/static/images/index/tongzhi_xitong.png") center no-repeat;
+  background: url("../../../static/images/index/tongzhi_xitong.png") center no-repeat;
   background-size: 0.4rem 0.4rem;
 }
 
 .msg-content .tab_box .tongzhi-list .tl-touxiang.hd {
-  background: url("/static/images/index/tongzhi_huodong.png") center no-repeat;
+  background: url("../../../static/images/index/tongzhi_huodong.png") center no-repeat;
   background-size: 0.4rem 0.4rem;
 }
 
