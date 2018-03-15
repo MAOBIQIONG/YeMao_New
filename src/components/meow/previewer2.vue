@@ -16,7 +16,7 @@
       </div>
       <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
       <div class="pswp__ui pswp__ui--hidden">
-        <div class="pswp__top-bar">
+        <div class="pswp__top-bar" style="background:transparent">
           <!--  Controls are self-explanatory. Order can be changed. -->
           <div class="pswp__counter"></div>
           <slot name="button-after"></slot>
@@ -44,6 +44,9 @@
           <div class="pswp__caption__center"></div>
         </div>
       </div>
+      <div class="indicator">
+        <span class="indicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'indicator__sign--active':item==1}"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -55,6 +58,11 @@ import objectAssign from 'object-assign'
 
 export default {
   name: 'previewer',
+  data(){
+    return {
+      indicator:[1,0]
+    }
+  },
   computed: {
     imgs () {
       return this.list.map(one => {
@@ -67,6 +75,23 @@ export default {
         }
         return one
       })
+    },
+    indicator0(){
+      if (!this.photoswipe) {
+        console.log("!this.photoswipe",!this.photoswipe);
+        return [1]
+      }
+      let arr = [];
+      let indicatorNum = 9;
+      let currentNum =  this.getCurrentIndex();
+      for(let i = 0; i < indicatorNum; i++) {
+        if(i === currentNum){
+          arr.push(1);
+        } else {
+          arr.push(0);
+        }
+      };
+      return arr;
     }
   },
   watch: {
@@ -109,16 +134,20 @@ export default {
     doInit (index) {
       const self = this
       let options = objectAssign({
-        history: false,
+        closeEl:false,
+        captionEl: false,
+        fullscreenEl: false,
+        zoomEl: false,
         shareEl: false,
+        counterEl: false,
+        arrowEl: false,
+        preloaderEl: true,
+        history: false,
         tapToClose: true,
-        showAnimationDuration:true,
-        hideAnimationDuration:true,
         showHideOpacity:false,
         index: index
       }, this.options)
-      this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options)
-
+      this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options);
       this.photoswipe.listen('gettingData', function (index, item) {
         if (!item.w || !item.h || item.w < 1 || item.h < 1) {
           const img = new Image()
@@ -131,7 +160,18 @@ export default {
         }
       })
 
-      this.photoswipe.init()
+      self.photoswipe.init();
+      self.indicator=[];
+      let indicatorNum = self.photoswipe.options.getNumItemsFn();
+      let currentNum =  self.photoswipe.getCurrentIndex();
+      console.log(indicatorNum,currentNum);
+      for(let i = 0; i < indicatorNum; i++) {
+        if(i === currentNum){
+          self.indicator.push(1);
+        } else {
+          self.indicator.push(0);
+        }
+      };
       this.photoswipe.listen('close', () => {
         this.$emit('on-close')
       })
@@ -176,3 +216,25 @@ export default {
 
 <style src="x-photoswipe/dist/photoswipe.css"></style>
 <style src="x-photoswipe/dist/default-skin/default-skin.css"></style>
+<style scoped>
+.indicator{
+  height:1rem;
+  left:0;
+  right:0;
+  text-align:center;
+  position:absolute;
+  bottom:1rem;
+}
+.indicator__sign{
+  display:inline-block;
+  vertical-align:28%;
+  width:0.2rem;
+  height:0.2rem;
+  background:#aaa;
+  border-radius:50%;
+  margin:0 0.1rem;
+}
+.indicator__sign--active{
+  background:#fff;
+}
+</style>
