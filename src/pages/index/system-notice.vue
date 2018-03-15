@@ -23,13 +23,17 @@
         ref="scroller"
       >
         <div>
-          <div class="xiaoxi-list" v-for="item in dataList">
+          <div class="xiaoxi-list" v-for="item in dataList" v-tap="{methods:toDetail,nid:item._id,state:item.state,type:item.object_type,query:{id:item.object_id}}">
             <div class="xl-time">{{getDataStr(item.create_date)}}</div>
             <div class="xl-content">
+              <div class="pop-box">
+                <div class="pop-title hover" v-if="item.state==0"><p>未读</p></div>
+                <div class="pop-title" v-if="item.state==1"><p>已读</p></div>
+              </div>
               <div class="jianjia"></div>
               <div class="zf-jg">{{item.title}}</div>
               <div class="zf-sm">{{item.content}}</div>
-              <div class="ckxq" v-if="item.object_id!=''" v-tap="{methods:toDetail,type:item.object_type,query:{id:item.object_id}}">
+              <div class="ckxq" v-if="item.object_id!=''&&item.object_type==1">
                 <span>查看详情</span>
                 <div class="ck-right">
                   <img src="../../../static/images/index/jiangou.png">
@@ -132,10 +136,17 @@
         this.$router.push({name: params.pagename, query: params.query})
       },
       toDetail: function (params) {
+        var _self = this;
+        if( common.checkInt(params.state) == 0 ){
+          _self.getNoticeDetails(params);
+          return;
+        }
         if( params.type == 1 ){
           params.pagename = 'emporder';
+        }else{
+          return;
         }
-        this.$router.push({name: params.pagename, query: params.query})
+        _self.$router.push({name: params.pagename, query: params.query})
       },
       getDataStr(date){
         return common.timeStamp2String(date,'ymdhm');
@@ -223,6 +234,34 @@
         } else {
           _self.pagination.pageNo++
         }
+      },
+
+      // 察看详情
+      getNoticeDetails(param){
+        let _self = this;
+        let params = {
+          interfaceId:common.interfaceIds.getNoticeDetails,
+          user_id: _self.user._id,
+          notice_id: param.nid
+        };
+        this.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          let data = response.data;
+          if( data && data.code==200 ){
+            if( param.type == 1 ){
+              _self.$router.push({name: 'emporder', query: param.query})
+            }else{
+              _self.dataList.forEach(function (item,index) {
+                if( item._id == param.nid ){
+                  item.state = 1;
+                }
+              })
+            }
+          }else{
+            console.log("查询出错！")
+          }
+        })
       },
 
     }

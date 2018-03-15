@@ -12,7 +12,7 @@
         </div>
         <div class="id-xiaoxi" v-tap="{ methods:toUrl , pagename:'message' }">
           <img src="../../../static/images/index/ling.png" />
-          <div class="hongdian"></div>
+          <div class="hongdian" v-if="user.unread_number>0"></div>
         </div>
         <div class="id-sousuo" :class="srollFlag==0?'sousuo1':'sousuo'" v-tap="{ methods:toUrl , pagename:'search' }">
           <img src="../../../static/images/index/search.png" />
@@ -197,6 +197,7 @@
         confirmShow:false,
         confirmMsg:'您还未实名认证，是否前往认证？',
         srollFlag: 0,
+        user:{unread_number:0},
         imgList: [],
         noticeList: [],
         orderList: [],
@@ -262,6 +263,7 @@
       }
       // 初始化im
       var user = common.getObjStorage("userInfo") || {};
+      _self.user = user;
       if( !common.isNull(user.wy_token) && wyim.nim == null ){
         wyim.init({
           account: user._id,
@@ -274,7 +276,8 @@
       }
     },
     created: function () {
-      // console.log('created:')
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
       this.initData()
     },
     mounted(){

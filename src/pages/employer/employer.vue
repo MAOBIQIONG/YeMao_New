@@ -5,7 +5,7 @@
       <span>雇主</span>
       <div class="header-right "v-tap="{ methods:toUrl, pagename:'message', flag:true }">
         <img src="../../../static/images/employer/ling.png" />
-        <div class="hongdian"></div>
+        <div class="hongdian" v-if="user.unread_number>0"></div>
       </div>
     </div>
 
@@ -146,8 +146,8 @@
       }
     },
     activated: function () {
-      // console.log("employer activated:")
       var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
       var erm = _self.$store.state.employerRefreshMark;
       if ( erm > 0 ) {
         _self.$store.state.employerRefreshMark = 0;
@@ -158,7 +158,9 @@
       }
     },
     created: function () {
-      this.loadMore()
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
+      _self.loadMore()
     },
     mounted(){
       this.$nextTick(

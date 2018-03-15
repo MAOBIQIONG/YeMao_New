@@ -699,8 +699,9 @@ const common = {
     getRestDay:'getRestDay',                       // 获取休息日
     getNoticeIndex:'getNoticeIndex',               // 通知首页
     getNoticeList:'getNoticeList',                 // 通知列表
+    getNoticeDetails:'getNoticeDetails',           // 系统通知详情
     chooseDesigner:'chooseDesigner',               // 选择设计师
-    
+
   },
 
 }

@@ -115,7 +115,7 @@
           return
         }
         if( common.isNull(_self.params.title) ){
-          _self.showToast("请输入问题描述!");
+          _self.showToast("请输入动态!");
           return
         }
         // 避免多次点击提交按钮

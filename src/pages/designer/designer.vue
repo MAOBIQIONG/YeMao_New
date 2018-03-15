@@ -5,7 +5,7 @@
       <span>设计师</span>
       <div class="header-right" v-tap="{methods:toWhere,pagename:'message'}">
         <span><img src="../../../static/images/designer/ling.png"/></span>
-        <div class="hongdian"></div>
+        <div class="hongdian" v-if="user.unread_number>0"></div>
       </div>
     </div>
     <div class="content content-p">
@@ -110,6 +110,14 @@
         sortName2: '认证',         // 排序名称
         sortMark: 0,               // 排序标识
       }
+    },
+    activated: function () {
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
+    },
+    created: function () {
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
     },
     methods: {
       goback() {

@@ -39,6 +39,33 @@
   background: white;
 }
 
+.pop-box{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+}
+
+.pop-title {
+  height: 0.6rem;
+  line-height: 0.6rem;
+  width: 2rem;
+  margin: 0.2rem 0 0;
+  font-size: 0.28rem;
+  color: #fff;
+  text-align: center;
+  background-color: #ddd;
+  position: absolute;
+  top: 0;
+  right: -0.5rem;
+  opacity: .85;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.pop-title.hover{
+  background-color: #f65aa6;
+}
+
 .xiaoxi-content .xiaoxi-list .xl-content .zf-jg {
   height: 1rem;
   font-size: 0.28rem;
