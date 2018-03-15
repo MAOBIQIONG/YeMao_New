@@ -9,7 +9,7 @@
     <!--学校详情-->
     <div class="content content-p">
       <div class="xxmc">
-        <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(alumni.img)})`}">
+        <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(alumni.school_logo)})`}">
           <!-- <img src="../../../static/images/bj.jpg" /> -->
           
         </div>
