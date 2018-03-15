@@ -267,9 +267,14 @@
 
       show (param) {
         var _self = this;
+        if( _self.isView ) return;
+        _self.isView = true;
         console.log("param.index:"+param.index);
         _self.options.previewer = '.previewer'+param.index;
         _self.$refs.previewer[param.index].show(param.i)
+        setTimeout(function () {
+          _self.isView = false;
+        },1000);
         param.event.cancelBubble = true;
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）

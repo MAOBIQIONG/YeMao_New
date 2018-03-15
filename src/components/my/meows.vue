@@ -54,13 +54,13 @@
               <p class="comments"><span></span><span>{{item.comments}}</span></p>
               <!--<div class="more more-icon"></div>-->
             </div>
+            <div v-transfer-dom>
+              <previewer :list="item.prevImgs" ref="previewer" :options="options"></previewer>
+            </div>
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
       </scroller>
-    </div>
-    <div v-transfer-dom>
-      <previewer :list="list" ref="previewer" :options="options"></previewer>
     </div>
   </div>
 </template>
@@ -194,6 +194,9 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
       },
@@ -213,16 +216,15 @@
 
       show (param) {
         var _self = this;
-        _self.list = [];
+        if( _self.isView ) return;
+        _self.isView = true;
+        console.log("param.index:"+param.index);
         _self.options.previewer = '.previewer'+param.index;
-        var imgs = _self.meows[param.index].imgs || [];
-        imgs.forEach(function (img, j) {
-          _self.list.push({src:_self.checkImg(img)})
-        })
-        console.log("imgs:"+JSON.stringify(_self.list))
-        _self.$refs.previewer.show(param.i)
+        _self.$refs.previewer[param.index].show(param.i)
+        setTimeout(function () {
+          _self.isView = false;
+        },1000);
         param.event.cancelBubble = true;
-        // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）
         return false
       },
@@ -316,6 +318,16 @@
           _self.pagination.pageNo++
           _self.loadMoreStatus.show=false;
         }
+        _self.meows.forEach(function (item,index) {
+          item.prevImgs = [];
+          if( item.imgs && item.imgs.length > 0 ){
+            item.imgs.forEach(function (img, j) {
+              item.prevImgs.push({src: _self.getRealPath(img)});
+            })
+          }else{
+            item.prevImgs = [{src:_self.checkImg(''),w:800,h:400}];
+          }
+        });
       },
 
       //点赞
