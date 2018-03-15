@@ -207,18 +207,18 @@ body,html{
 .gz-list .gz-top .gz-nicheng {
   float: left;
   height: 0.8rem;
-  line-height: 0.8rem;
   font-size: 0.32rem;
+  line-height: 1.1rem;
   margin-left: 0.1rem;
 }
 
 .gz-list .gz-top .gz-jiage {
   float: right;
   height: 0.8rem;
-  line-height: 0.8rem;
+  line-height: 1rem;
   font-size: 0.36rem;
   color: #04c0ad;
-  margin-right: 0.24rem;
+  margin-right: 0.28rem;
 }
 
 .gz-list .gz-timeleixin {
@@ -238,10 +238,11 @@ body,html{
 .gz-list .gz-timeleixin .gz-time span {
   float: left;
   display: inline-block;
+  padding-left: 0.8rem;
 }
-
 .gz-list .gz-timeleixin .gz-time span img {
   width: 0.4rem;
+  height: 0.2rem;
   margin-right: 0.1rem;
 }
 
@@ -286,6 +287,7 @@ body,html{
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  color: #333333;
 }
 
 .gz-list .gz-bottom {
@@ -933,6 +935,7 @@ body,html{
 
  .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin .yuan {
   color: #f74d9f;
+  font-size:0.32rem;
 }
 
  .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-djs {

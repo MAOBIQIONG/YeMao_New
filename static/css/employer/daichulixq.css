@@ -111,13 +111,13 @@
 
 .dcl-bottom .db-right .db-qxdd {
   float: left;
-  width: 1.7rem;
+  width: 1.5rem;
   height: 0.5rem;
   line-height: 0.5rem;
   text-align: center;
-  border: 1px solid #cccccc;
+  border: 1px solid #CCCCCC;
   border-radius: 0.5rem;
-  color: #cccccc;
+  color: #CCCCCC;
   margin-right: 0.24rem;
   margin-top: 0.25rem;
 }
@@ -136,7 +136,7 @@
 
 .dcl-bottom .db-right .db-qrdd {
   float: left;
-  width: 2rem;
+  width: 1.5rem;
   height: 0.5rem;
   line-height: 0.5rem;
   text-align: center;
@@ -144,11 +144,11 @@
   color: white;
   margin-right: 0.24rem;
   margin-top: 0.25rem;
-  background: linear-gradient(to right, #f74f9c, #fd7376);
+  background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+  background: linear-gradient(to right,#f64098, #f67ab6);
 }
 .db-sxdd.noRefresh{
     border:1px solid #cccccc!important;
     color:#cccccc!important;
 }
-
 /*# sourceMappingURL=daichulixq.css.map */

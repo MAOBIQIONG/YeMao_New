@@ -134,7 +134,12 @@
               <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
             </div>
             <div class="gz-timeleixin">
-              <div class="gz-time"><span><img src="../../../static/images/index/time.png"/></span><span>{{getDateDiff(order.refresh_date)}}</span></div>
+              <div class="gz-time">
+                <span class="imge">
+                  <!--<img src="../../../static/images/index/time.png"/>-->
+                </span>
+                <span>{{getDateDiff(order.refresh_date)}}</span>
+              </div>
               <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
             </div>
             <div class="gz-content">
