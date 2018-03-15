@@ -399,10 +399,6 @@
   .cur{
     border-bottom: 1px solid #f65aa6;
   }
-  .sjs-bottom{
-    overflow: auto;
-    zoom: 1;
-  }
   .sjs-bottom ul li {
     float: left;
     width: 2.4rem;

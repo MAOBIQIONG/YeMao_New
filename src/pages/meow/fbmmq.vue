@@ -9,7 +9,7 @@
     <div class="content content-p">
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="params.title" class="area" maxlength="300" placeholder="请输入问题描述"></textarea>
+        <textarea v-model="params.title" class="area" maxlength="300" placeholder="请输入动态"></textarea>
         <p class="xianzhi"><span class="zs">{{300-params.title.length}}</span>/<span>300</span></p>
       </div>
       <!--图片上传-->

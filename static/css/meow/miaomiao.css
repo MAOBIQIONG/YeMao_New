@@ -179,6 +179,8 @@
 .mm-list .sjse-list .sjs-bottom {
 	width: 100%;
 	font-size: 0.24rem;
+  display:flex;
+  zoom: 1;
 }
 
 /*.mm-list .sjse-list .sjs-bottom ul li {*/

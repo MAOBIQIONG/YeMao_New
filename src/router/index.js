@@ -105,7 +105,6 @@ import gerenzuoping from '@/pages/meow/gerenzuoping'
 import guide from '@/pages/main/guide'
 import maintain from '@/pages/main/maintain'
 
-
 Vue.use(Router)
 
 Router.prototype.goBack = function (num) {
