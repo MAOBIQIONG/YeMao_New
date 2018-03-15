@@ -44,7 +44,7 @@
           <div class="pswp__caption__center"></div>
         </div>
         <div class="dotIndicator">
-          <span class="dotIndicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'dotIndicator__sign--active':item==1}"></span>
+          <!-- <span class="dotIndicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'dotIndicator__sign--active':item==1}"></span> -->
         </div>
       </div>
     </div>
@@ -217,7 +217,10 @@ export default {
 
 <style src="x-photoswipe/dist/photoswipe.css"></style>
 <style src="x-photoswipe/dist/default-skin/default-skin.css"></style>
-<style scoped>
+<style>
+.pswp__top-bar{
+  background:transparent!important;
+}
 .dotIndicator{
   height:1rem;
   left:0;
@@ -236,6 +239,12 @@ export default {
   margin:0 0.1rem;
 }
 .dotIndicator__sign--active{
+  display:inline-block;
+  vertical-align:28%;
+  width:0.2rem;
+  height:0.2rem;
   background:#fff;
+  border-radius:50%;
+  margin:0 0.1rem;
 }
 </style>
