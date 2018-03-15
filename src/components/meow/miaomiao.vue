@@ -88,7 +88,7 @@
     </div>
     <div class="tianjia" v-tap="{methods:toRelease}"></div>
     <div v-transfer-dom>
-      <previewer2 :list="meows[meowsIndex].prevImgs" ref="previewer" :options="options"></previewer2>
+      <previewer2 :list="meows[meowsIndex].prevImgs" ref="previewer" :options="options" on-close="previewClose"></previewer2>
     </div>
   </div>
 </template>
@@ -114,6 +114,7 @@
         userInfo:{},
         meows:[{user:{},imgs:[],prevImgs:[]}],
         meowsIndex:0,
+        imgIndex:0,
         list: [],
         options: {
           previewer:'previewer0',
@@ -202,6 +203,12 @@
         }
       );
     },
+    beforeUpdate(){
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!beforeUpdate');
+    },
+    updated(){
+      console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!updated');
+    },
     watch:{
       pullUpDownStatus:{
         handler:function(val,oldval){
@@ -214,7 +221,14 @@
             }
           }
         }
-      }
+      },
+      // meowsIndex:function(val,oldval){
+      //   let _self = this;
+      //   _self.$nextTick(function(){
+      //     console.log('!!!!!!!!!!!!!!!!!!!miaomiaoNextTick');
+      //     _self.$refs.previewer.init(0);
+      //   });
+      // }
     },
     methods: {
       goback () {
@@ -273,18 +287,22 @@
 
       show (param) {
         var _self = this;
-        console.log("param.index:"+param.index); 
-        console.log("param.i:"+param.i); 
+        console.log('=========================================');
+        console.log("miaomiao__show__param.index:"+param.index); 
+        console.log("miaomiao__show__param.i:"+param.i); 
         _self.meowsIndex = param.index;
+        _self.imgIndex = param.i;
         _self.options.previewer = '.previewer'+param.index;
-        console.log('$refs.previewer',_self.$refs.previewer);
+        console.log('miaomiao__show__$refs.previewer__imgs',_self.$refs.previewer.imgs);
+        console.log('----------');
+        _self.$refs.previewer.init(param.i);
         _self.$refs.previewer.show(param.i)
         param.event.cancelBubble = true;
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）
         return false
       },
-      closePrevImg(){
+      previewClose(){
         console.log("closePrevImg:")
       },
       //下拉刷新

@@ -19,6 +19,7 @@
         <div class="pswp__top-bar">
           <div class="indicator">
             <span class="indicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'indicator__sign--active':item==1}"></span>
+            {{index}}
           </div>
           <div class="pswp__counter"></div>
           <slot name="button-after"></slot>
@@ -84,20 +85,31 @@ export default {
       return arr;
     }
   },
-  mounted(){
-    console.log('previewer2--index',this.index);
-  },
+//   created(){
+//     console.log('previewer2__created__index',this.index);
+//   },
+//   mounted(){
+//     console.log('previewer2__mounted__index',this.index);
+//   },
+//   updated(){
+//     console.log('previewer2__updated__index',this.index);
+//   },
+  // data(){
+  //   return{
+  //   }
+  // },
   watch: {
     imgs (newVal, oldVal) {
-      console.log("imgsWatch:");
+      console.log("previewer2__watch__imgs");
       // console.log("new:"+JSON.stringify(newVal));
       // console.log("old:"+JSON.stringify(oldVal));
-      this.photoswipe.ui.update();
+      console.log('previewer2__watch__photoswipe',this.photoswipe);
       if (!this.photoswipe) {
         return
       }
-
+      this.imgList = newVal;
       if (newVal.length && newVal.length - oldVal.length === -1) {
+          console.log('newVal.length - oldVal.length === -1!!!!!!!!!');
         const index = this.photoswipe.getCurrentIndex()
         this.photoswipe.invalidateCurrItems()
         this.photoswipe.items.splice(index, 1)
@@ -114,13 +126,12 @@ export default {
       } else if (!newVal.length) {
         this.close()
       }
-    }
+    },
   },
   methods: {
     init (index) {
-      console.log('init__index',index);
-      console.log('----');
-      console.log('init__imgs',this.imgs);
+      console.log('previewer2__init__index',index);
+      console.log('previewer2__init__imgs',this.imgs);
       const self = this
       const showItem = this.imgs[index]
       if (!showItem.w || !showItem.h || showItem.w < 5 || showItem.h < 5) {
@@ -147,6 +158,7 @@ export default {
         fullscreenEl: false,
         tapToClose: true,
         counterEl: false,
+        showHideOpacity:false,
         index: index
       }, this.options)
       this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options)
@@ -170,7 +182,7 @@ export default {
       })
     },
     show (index) {
-      console.log('previewer2  show  index', index);
+      console.log('previewer2__showIndex', index);
       this.init(index)
     },
     getCurrentIndex () {
