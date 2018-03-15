@@ -44,7 +44,6 @@
           <div class="pswp__caption__center"></div>
         </div>
         <div class="dotIndicator">
-          <!-- <span class="dotIndicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'dotIndicator__sign--active':item==1}"></span> -->
         </div>
       </div>
     </div>
@@ -58,11 +57,6 @@ import objectAssign from 'object-assign'
 
 export default {
   name: 'previewer',
-  data(){
-    return {
-      indicator:[1,0]
-    }
-  },
   computed: {
     imgs () {
       return this.list.map(one => {
@@ -76,23 +70,6 @@ export default {
         return one
       })
     },
-    indicator0(){
-      if (!this.photoswipe) {
-        console.log("!this.photoswipe",!this.photoswipe);
-        return [1]
-      }
-      let arr = [];
-      let indicatorNum = 9;
-      let currentNum =  this.getCurrentIndex();
-      for(let i = 0; i < indicatorNum; i++) {
-        if(i === currentNum){
-          arr.push(1);
-        } else {
-          arr.push(0);
-        }
-      };
-      return arr;
-    }
   },
   watch: {
     imgs (newVal, oldVal) {
@@ -160,19 +137,7 @@ export default {
           img.src = item.src
         }
       })
-
       self.photoswipe.init();
-      // self.indicator=[];
-      // let indicatorNum = self.photoswipe.options.getNumItemsFn();
-      // let currentNum =  self.photoswipe.getCurrentIndex();
-      // console.log(indicatorNum,currentNum);
-      // for(let i = 0; i < indicatorNum; i++) {
-      //   if(i === currentNum){
-      //     self.indicator.push(1);
-      //   } else {
-      //     self.indicator.push(0);
-      //   }
-      // };
       this.photoswipe.listen('close', () => {
         this.$emit('on-close')
       })

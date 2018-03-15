@@ -722,20 +722,14 @@ var PhotoSwipeUI_Default =
     if(_options.dotIndicatorEl) {
       var indicatorNum = _options.getNumItemsFn();
       var currentNum = pswp.getCurrentIndex();
-      console.log(indicatorNum,currentNum);
       var _indicatorArr = [];
-      for(var ind_i = 0; ind_i< indicatorNum; ind_i++){
-        
+      for(var ind_i = 0; ind_i< indicatorNum; ind_i++){     
         if(ind_i == currentNum){
           _indicatorArr.push(['<span class="dotIndicator__sign--active"></span>']);
         } else {
           _indicatorArr.push(['<span class="dotIndicator__sign"></span>']);
         }   
-        console.log('currentNum',currentNum,ind_i);
-
       }
-      console.log(_indicatorArr.join(''));
-
       _indexIndicator.innerHTML = _indicatorArr.join('');
     }
 	};

@@ -52,9 +52,9 @@
                     <!-- <img class="previewer-demo-img":src="item.src"width="100%"> -->
                     <div class="previewer-img" :style="'background-image:url('+checkImg(item.src)+')'"></div>
                   </li>
-                  <div v-transfer-dom>
-                    <previewer :list="list" ref="previewer" :options="options"></previewer>
-                  </div>
+                  <!-- <div v-transfer-dom>
+                    <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
+                  </div> -->
                 </ul>
               </div>
               <div class="pinjia">
@@ -101,7 +101,7 @@
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <div v-transfer-dom>
-      <previewer :list="list" ref="previewer" :options="options"></previewer>
+      <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
     </div>
     <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete"></actionsheet>
     <div class="chat-box">
@@ -120,6 +120,7 @@
 
 <script>
   import { Previewer, Actionsheet, TransferDom, Scroller, LoadMore, Toast } from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'
   import store from '@/vuex/store'
   export default {
     directives: {
@@ -128,6 +129,7 @@
     components: {
       Actionsheet,
       Previewer,
+      Previewer2,
       Scroller,
       LoadMore,
       Toast
