@@ -1,12 +1,12 @@
 <template>
   <div >
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>签约设计师</span>
       <div class="header-right" v-tap="{methods:submit}">提交</div>
     </div>
-    <div class="content content-p">
+    <div class="content" style="padding-top:0.2rem">
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">

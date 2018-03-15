@@ -169,7 +169,7 @@
         >
         <p style="text-align:center;">{{confirmMsg}}</p>
         </confirm>
-    </div>   
+    </div>
   </div>
 </template>
 
@@ -554,7 +554,7 @@
         onCancel(){
             // this.$store.state.isAuthenicatedTip = 1;
             common.setStorage('isAuthenicatedTip',1);
-        }     
+        }
 
     }
   }

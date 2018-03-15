@@ -195,12 +195,20 @@
         this.showMsg = msg;
       },
       submit () {
+        console.log("submit:")
         var _self = this;
+        // 避免多次点击
+        if( _self.isSubmit == true ) return;
+        _self.isSubmit = true;
         var params = {
           interfaceId:common.interfaceIds.login,
           where:{
             "phone":_self.phone
           }
+        }
+        if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+          var info =plus.push.getClientInfo();
+          params.clientid = info.clientid;
         }
         _self.$axios.post('/mongoApi', {
           params: params
@@ -220,6 +228,9 @@
           }else{
             _self.showToast("登录失败！")
           }
+          setTimeout(function () {
+            _self.isSubmit = false;
+          },1000);
         })
       },
 

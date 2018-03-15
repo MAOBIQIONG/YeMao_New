@@ -1,49 +1,45 @@
 <template>
   <div>
-    <div class="header-static"></div>
-    <div class="msg-content">
-      <div class="tab_box">
-        <!--通知列表-->
-        <div class="xiaoxi">
-          <scroller
-            id="scroller"
-            v-model="pullUpDownStatus"
-            :height="height"
-            :lock-x="lockX"
-            :lock-y="lockY"
-            :use-pulldown="true"
-            :use-pullup="true"
-            :pulldown-config="pulldownConfig"
-            :pullup-config = "pullupConfig"
-            @on-scroll="scroll"
-            @on-scroll-bottom="onScrollBottom"
-            @on-pulldown-loading="pullDownLoading"
-            @on-pullup-loading="pullUpLoading"
-            ref="scroller"
-          >
-            <div>
-              <!--消息列表-->
-              <div class="xiaoxi-list" v-for="item in dataList" v-tap="{methods:toUrl,scene:item.scene,query:{id:item.user.id,name:item.user.name,img:item.user.img}}">
-                <div class="xl-touxiang">
-                  <img :src="checkAvatar(item.user.img)" />
-                </div>
-                <div class="xiao-right">
-                  <div class="xr-top">
-                    <span class="name">{{item.user.name}}</span>
-                    <span class="time">{{getDataStr(item.refresh_date)}}</span>
-                  </div>
-                  <div class="xr-bottom">
-                    <div class="content" v-html="filterImgs(item.content)"></div>
-                    <div class="badge" v-if="item.sender==user._id && item.sender_unread_count>0">{{item.sender_unread_count}}</div>
-                    <div class="badge" v-else-if="item.recipient==user._id && item.recipient_unread_count>0">{{item.recipient_unread_count}}</div>
-                  </div>
+    <!--导航栏-->
+    <div class="header p-static">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
+      <span>活动通知</span>
+    </div>
+    <div class="xiaoxi-content">
+      <scroller
+        id="scroller"
+        v-model="pullUpDownStatus"
+        :height="height"
+        :lock-x="lockX"
+        :lock-y="lockY"
+        :use-pulldown="true"
+        :use-pullup="true"
+        :pulldown-config="pulldownConfig"
+        :pullup-config = "pullupConfig"
+        @on-scroll="scroll"
+        @on-scroll-bottom="onScrollBottom"
+        @on-pulldown-loading="pullDownLoading"
+        @on-pullup-loading="pullUpLoading"
+        ref="scroller"
+      >
+        <div>
+          <div class="xiaoxi-list" v-for="item in dataList">
+            <div class="xl-time">{{getDataStr(item.create_date)}}</div>
+            <div class="xl-content">
+              <div class="jianjia"></div>
+              <div class="zf-jg">{{item.title}}</div>
+              <div class="zf-sm">{{item.content}}</div>
+              <div class="ckxq" v-if="item.object_id!=''" v-tap="{methods:toDetail,type:item.object_type,query:{id:item.object_id}}">
+                <span>查看详情</span>
+                <div class="ck-right">
+                  <img src="../../../static/images/index/jiangou.png">
                 </div>
               </div>
-              <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
             </div>
-          </scroller>
+          </div>
+          <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
-      </div>
+      </scroller>
     </div>
   </div>
 </template>
@@ -61,7 +57,7 @@
         // 加载
         lockX:true,
         lockY:false,
-        height: '-55',
+        height: '-50',
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -117,26 +113,29 @@
       // console.log("news activated:")
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
-      _self.refreshPageDate();
-      // 重置监听接收消息回调
-      wyim.callback = _self.receiveMsg;
+      if( !common.isNull(_self.user._id) ){
+        _self.loadData();
+      }
     },
     created: function () {
-      // console.log("news created:")
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
-      _self.loadData();
-      // 重置监听接收消息回调
-      wyim.callback = _self.receiveMsg;
+      if( !common.isNull(_self.user._id) ){
+        _self.loadData();
+      }
     },
     methods: {
       goback() {
         this.$router.goBack();
       },
       toUrl: function (params) {
-        console.log("params.scene:"+params.scene)
-        var pagename = common.checkInt(params.scene)==1 ? 'groupchat' : 'liaotian';
-        this.$router.push({name: pagename,query:params.query || {}})
+        this.$router.push({name: params.pagename, query: params.query})
+      },
+      toDetail: function (params) {
+        if( params.type == 1 ){
+          params.pagename = 'emporder';
+        }
+        this.$router.push({name: params.pagename, query: params.query})
       },
       getDataStr(date){
         return common.timeStamp2String(date,'ymdhm');
@@ -144,32 +143,6 @@
       // 头像
       checkAvatar (path) {
         return common.getAvatar(path)
-      },
-      filterImgs(text){
-        return wyim.filterEmoji2(text);
-      },
-      // 接收消息后，保存消息
-      receiveMsg(msg){
-        var _self = this;
-        _self.dataList.forEach(function (item,index) {
-          if( msg.scene == 'team' ){
-            if( msg.to == item.recipient ){
-              item.content = msg.text;
-              item.refresh_date = common.getCurrentTimeStamp();
-              item.sender_unread_count += 1;
-            }
-          }else{
-            if( msg.from == item.sender ){
-              item.content = msg.text;
-              item.refresh_date = common.getCurrentTimeStamp();
-              item.recipient_unread_count += 1;
-            }else if( msg.from == item.recipient ){
-              item.content = msg.text;
-              item.refresh_date = common.getCurrentTimeStamp();
-              item.sender_unread_count += 1;
-            }
-          }
-        })
       },
       //下拉刷新
       refreshPageDate(){
@@ -211,10 +184,11 @@
         }
         _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
         let params = {
-          interfaceId:common.interfaceIds.getMyConvers,
+          interfaceId:common.interfaceIds.getNoticeList,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
-          user_id: _self.user._id
+          user_id: _self.user._id,
+          where: {object_type: 0}
         };
         this.$axios.post('/mongoApi',{
           params
@@ -228,19 +202,19 @@
         let _self = this;
         _self.$refs.scroller.enablePullup();
         // 订单
-        let convers = data.convers || [];
+        let notices = data.notices || [];
         //判断页码是否为0
         if(_self.pagination.pageNo == 0) {
-          _self.dataList = convers;
+          _self.dataList = notices;
         } else {
-          _self.dataList.push(...convers);
+          _self.dataList.push(...notices);
         }
         _self.loadMoreStatus.show=false;
         _self.loadMoreStatus.showLoading=false;
         _self.$refs.scroller.donePulldown();
         _self.$refs.scroller.donePullup();
         //判断数据是否有一页
-        if(convers.length < _self.pagination.pageSize){
+        if(notices.length < _self.pagination.pageSize){
           _self.hasMore = false;
           _self.loadMoreStatus.show=true;
           _self.loadMoreStatus.showLoading=false;
@@ -257,5 +231,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import '../../../static/css/index/message.css';
+  @import "../../../static/css/index/inform-xitong.css";
 </style>

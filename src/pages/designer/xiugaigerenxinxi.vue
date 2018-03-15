@@ -133,11 +133,12 @@
           _self.showToast("请重新确认时薪!");
           return
         }
+        _self.user.hourly_wage = common.checkFloat(_self.user.hourly_wage);
+        _self.user.working_years = common.checkFloat(_self.user.working_years);
         var params = {
-          interfaceId:common.interfaceIds.updateData,
-          coll:common.collections.users,
-          wheredata:{_id:_self.user_id},
-          data:{$set: _self.user}
+          interfaceId: common.interfaceIds.updateUserById,
+          user_id: _self.user_id,
+          data: _self.user
         }
         _self.$axios.post('/mongoApi', {
           params: params

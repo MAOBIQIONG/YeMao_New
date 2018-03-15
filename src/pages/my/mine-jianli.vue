@@ -89,7 +89,7 @@
           工作经历
         </div>
         <div class="gzjl-content">
-          <div class="gc-list" v-for="(item,index) in resume.wes" :key="index">
+          <div class="gc-list" v-for="(item,index) in resume.wes" :key="index" v-if="item.is_del==0">
             <div class="yuan"></div>
             <div class="neirong">
               <p>{{item.start_time}}~{{item.end_time}}</p>
