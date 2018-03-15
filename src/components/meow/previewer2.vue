@@ -16,7 +16,7 @@
       </div>
       <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
       <div class="pswp__ui pswp__ui--hidden">
-        <div class="pswp__top-bar" style="background:transparent">
+        <div class="pswp__top-bar">
           <!--  Controls are self-explanatory. Order can be changed. -->
           <div class="pswp__counter"></div>
           <slot name="button-after"></slot>
@@ -43,9 +43,9 @@
         <div class="pswp__caption">
           <div class="pswp__caption__center"></div>
         </div>
-      </div>
-      <div class="indicator">
-        <span class="indicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'indicator__sign--active':item==1}"></span>
+        <div class="dotIndicator">
+          <span class="dotIndicator__sign" v-for="(item,i) in indicator" :key="i" :class="{'dotIndicator__sign--active':item==1}"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -53,7 +53,7 @@
 
 <script>
 import PhotoSwipe from 'x-photoswipe/dist/photoswipe'
-import UI from 'x-photoswipe/dist/photoswipe-ui-default'
+import UI from '../../../static/js/es5/photoswipe-ui'
 import objectAssign from 'object-assign'
 
 export default {
@@ -134,6 +134,7 @@ export default {
     doInit (index) {
       const self = this
       let options = objectAssign({
+        dotIndicatorEl:true,
         closeEl:false,
         captionEl: false,
         fullscreenEl: false,
@@ -161,17 +162,17 @@ export default {
       })
 
       self.photoswipe.init();
-      self.indicator=[];
-      let indicatorNum = self.photoswipe.options.getNumItemsFn();
-      let currentNum =  self.photoswipe.getCurrentIndex();
-      console.log(indicatorNum,currentNum);
-      for(let i = 0; i < indicatorNum; i++) {
-        if(i === currentNum){
-          self.indicator.push(1);
-        } else {
-          self.indicator.push(0);
-        }
-      };
+      // self.indicator=[];
+      // let indicatorNum = self.photoswipe.options.getNumItemsFn();
+      // let currentNum =  self.photoswipe.getCurrentIndex();
+      // console.log(indicatorNum,currentNum);
+      // for(let i = 0; i < indicatorNum; i++) {
+      //   if(i === currentNum){
+      //     self.indicator.push(1);
+      //   } else {
+      //     self.indicator.push(0);
+      //   }
+      // };
       this.photoswipe.listen('close', () => {
         this.$emit('on-close')
       })
@@ -217,7 +218,7 @@ export default {
 <style src="x-photoswipe/dist/photoswipe.css"></style>
 <style src="x-photoswipe/dist/default-skin/default-skin.css"></style>
 <style scoped>
-.indicator{
+.dotIndicator{
   height:1rem;
   left:0;
   right:0;
@@ -225,7 +226,7 @@ export default {
   position:absolute;
   bottom:1rem;
 }
-.indicator__sign{
+.dotIndicator__sign{
   display:inline-block;
   vertical-align:28%;
   width:0.2rem;
@@ -234,7 +235,7 @@ export default {
   border-radius:50%;
   margin:0 0.1rem;
 }
-.indicator__sign--active{
+.dotIndicator__sign--active{
   background:#fff;
 }
 </style>
