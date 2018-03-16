@@ -139,7 +139,9 @@ export default {
       })
       self.photoswipe.init();
       this.photoswipe.listen('close', () => {
-        this.$emit('on-close')
+        this.$emit('on-close');
+        //默认销毁时间333与option.hideAnimationDuration默认参数一致
+        setTimeout(function(){self.photoswipe.destroy();},333);
       })
     },
     show (index) {
