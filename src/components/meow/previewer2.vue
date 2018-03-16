@@ -51,7 +51,8 @@
 </template>
 
 <script>
-import PhotoSwipe from 'x-photoswipe/dist/photoswipe'
+// import PhotoSwipe from 'x-photoswipe/dist/photoswipe'
+import PhotoSwipe from '../../../static/js/es5/photoswipe'
 import UI from '../../../static/js/es5/photoswipe-ui'
 import objectAssign from 'object-assign'
 
@@ -138,8 +139,10 @@ export default {
         }
       })
       self.photoswipe.init();
+
       this.photoswipe.listen('close', () => {
         this.$emit('on-close')
+        setTimeout(function(){self.photoswipe.destroy();},333)
       })
     },
     show (index) {
