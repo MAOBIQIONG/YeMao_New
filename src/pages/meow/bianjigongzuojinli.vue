@@ -212,10 +212,10 @@ export default {
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
   .shijian{
-    width: 1.9rem;
+    width: 1.6rem;
   }
   .zzsj{
-    width: 7.2rem !important;
+    width: 6.9rem !important;
     margin-left: 0.3rem !important;
   }
 </style>

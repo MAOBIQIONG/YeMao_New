@@ -103,7 +103,7 @@
           <div class="qdtime-right">
             <group class="xmlx-kuang">
               <!-- <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address> -->
-                <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" style="height:1rem;line-height:1rem;"></x-address>
+                <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city"></x-address>
             </group>
           </div>
         </div>
