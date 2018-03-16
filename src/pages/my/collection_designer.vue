@@ -22,7 +22,7 @@
         :class="{scroller:true}"   
     >  
     <div>
-        <div v-for="(item,index) in list" :key="index" class="content content-p" style="padding-top:0;">
+        <div v-for="(item,index) in list" :key="index" class="content content-p" style="padding-top:0;padding-bottom:0;">
             <div class="szsjs-list" @click="toDetails(item._id)">
                 <div class="szsjs-top">
                 <div class="szsjs-touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
