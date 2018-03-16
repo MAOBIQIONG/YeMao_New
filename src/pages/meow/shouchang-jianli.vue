@@ -24,7 +24,7 @@
         :class="{scroller:true}"
     >
     <div>
-        <div class="content" style="padding-top:0.2rem;" v-for="(item,index) in list" :key="index">
+        <div class="content" style="padding-top:0.2rem;padding-bottom:0;" v-for="(item,index) in list" :key="index">
             <div class="jianli" @click="toDetail(item._id,item.user_id)">
                 <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
                     <!-- <img src="../../../static/images/bj.jpg"/> -->
