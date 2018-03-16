@@ -62,7 +62,7 @@ export default {
             user_id:"",
             company_name:"",
             positions:"",
-            start_time:"",  
+            start_time:"",
             end_time:"",
             description:"",
         },
@@ -80,7 +80,7 @@ export default {
                 _self.isEdit = true;
                 _self.initData();
             }
-        }     
+        }
         var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
             _self.dataParams.user_id = user._id;
@@ -89,8 +89,8 @@ export default {
             console.log('user_id is null');
             _self.$router.push({name:'login'});
         }
-       
-       
+
+
     },
     mounted: function () {
         this. wzxz()
@@ -130,7 +130,7 @@ export default {
                 params: params
                 }, response => {
                     console.log(response);
-                    var data = response.data.we;   
+                    var data = response.data.we;
                     _self.dataParams = data;
                 });
         },
@@ -159,7 +159,7 @@ export default {
             if( common.isNull(_self.dataParams.end_time) ){
                 _self.showToast("请选择在职结束时间");
                 return;
-            }          
+            }
             if(_self.strToTimestamp(_self.dataParams.start_time)>=_self.strToTimestamp(_self.dataParams.end_time)){
                 _self.showToast("结束时间必须大于开始时间");
                 return;
@@ -183,7 +183,7 @@ export default {
                     console.log(response);
                     _self.showToast("保存成功！")
                     setTimeout(()=>{_self.$router.goBack()},1000);
-                    
+
                 });
         },
         removeData(){

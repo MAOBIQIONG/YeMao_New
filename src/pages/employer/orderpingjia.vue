@@ -18,19 +18,19 @@
             <li>
               <div class="px-left">图纸满意度</div>
               <div class="px-right">
-                <rater v-model="orderData.blueprint_satisfaction" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :max="5" :margin="5" :font-size="14"></rater>
+                <rater v-model="orderData.blueprint_satisfaction" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :max="5" :margin="5" :font-size="16"></rater>
               </div>
             </li>
             <li>
               <div class="px-left">设计师态度</div>
               <div class="px-right">
-                <rater v-model="orderData.attitude_satisfaction" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :max="5" :margin="5" :font-size="14"></rater>
+                <rater v-model="orderData.attitude_satisfaction" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :max="5" :margin="5" :font-size="16"></rater>
               </div>
             </li>
             <li>
               <div class="px-left">时间进度</div>
               <div class="px-right">
-                <rater v-model="orderData.time_schedule_satisfaction" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :max="5" :margin="5" :font-size="14"></rater>
+                <rater v-model="orderData.time_schedule_satisfaction" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :max="5" :margin="5" :font-size="16"></rater>
               </div>
             </li>
           </ul>

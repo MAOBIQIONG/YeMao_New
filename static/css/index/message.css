@@ -12,7 +12,7 @@
   margin: auto;
   display: inline-block;
   margin-top: 0.2rem;
-  border:0.01rem solid #f74d9f;
+  border:1px solid #f74d9f;
 }
 
 .header .daohang .tab_menu {

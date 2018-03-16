@@ -22,7 +22,7 @@
         :class="{scroller:true}"   
     >  
     <div>
-        <div v-for="(item,index) in list" :key="index" class="content content-p" style="padding-top:0;">
+        <div v-for="(item,index) in list" :key="index" class="content content-p" style="padding-top:0;padding-bottom:0;">
             <div class="szsjs-list" @click="toDetails(item._id)">
                 <div class="szsjs-top">
                 <div class="szsjs-touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
@@ -154,7 +154,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
             return common.getNameByTypeId(id);
         },
         invite(id){
-            this.$router.push({name:'fabudingdan', query: {designerid:id,invitation:1}});
+            this.$router.push({name:'fabudingdan', query: {designerid:id}});
         },
         loadData(){
             console.log('this is loadData');
