@@ -119,29 +119,20 @@
         _self.is_submit = true
         // 提交
         var params = {
-          interfaceId:common.interfaceIds.updateData,
-          coll:'users',
-          wheredata:{"phone":_self.phone},
-          data:{
-            $set:{
-              password: _self.password
-            }
-          }
+          interfaceId:common.interfaceIds.updateUserPwd,
+          phone:_self.phone,
+          password: _self.password
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           _self.is_submit = false;
           var data = response.data;
-          if( data ){
-            if( data.n == 0 ){
-              _self.showToast("该用户不存在！")
-            }else if( data.n==1 && data.nModified==1 && data.ok==1 ){
-              _self.showToast("修改成功！");
-              setTimeout(function () {
-                _self.goback();
-              },1000)
-            }
+          if( data && data.code==200 ){
+            _self.showToast("修改成功！");
+            setTimeout(function () {
+              _self.goback();
+            },1000)
           }else{
             _self.showToast("修改失败！")
           }
