@@ -122,7 +122,7 @@ export default {
         preloaderEl: true,
         history: false,
         tapToClose: true,
-        showHideOpacity:false,
+        showHideOpacity:true,
         index: index
       }, this.options)
       this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options);
@@ -199,8 +199,8 @@ export default {
 .dotIndicator__sign{
   display:inline-block;
   vertical-align:28%;
-  width:0.2rem;
-  height:0.2rem;
+  width:0.15rem;
+  height:0.15rem;
   background:#aaa;
   border-radius:50%;
   margin:0 0.1rem;
@@ -208,8 +208,8 @@ export default {
 .dotIndicator__sign--active{
   display:inline-block;
   vertical-align:28%;
-  width:0.2rem;
-  height:0.2rem;
+  width:0.15rem;
+  height:0.15rem;
   background:#fff;
   border-radius:50%;
   margin:0 0.1rem;
