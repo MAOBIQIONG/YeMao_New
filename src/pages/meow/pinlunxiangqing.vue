@@ -52,8 +52,8 @@
         <div class="pinlunlist pinlunlist1" v-for="(item,index) in replys" :key="index">
           <div class="top-pinlun">
             <div class="tp-left tp-left2" v-tap="{methods:replyFun,id:comment_id,aid:item._id,name:item.user.user_name,uid:item.user._id,floor:2}" :id="item._id">
-                <p v-if="item.floor==1"><span class="replier">{{item.user.user_name}}</span></p>
-                <p v-if="item.floor==2">
+                <p v-if="item.floor==1" class="replierWrap"><span class="replier">{{item.user.user_name}}</span></p>
+                <p v-if="item.floor==2" class="replierWrap">
                     <span class="replier">{{item.user.user_name}}</span>
                     <span>回复</span>
                     <span class="replier" v-if="item.answer">{{item.answer.user_name}}</span>
@@ -575,5 +575,14 @@ import {Actionsheet,Scroller,LoadMore,Toast} from 'vux'
   }
 </script>
 <style scoped>
-  @import '../../../static/css/meow/pinlunxiangqin.css';    
+  @import '../../../static/css/meow/pinlunxiangqin.css';
+  .replierWrap{
+    display:inline-block;
+    line-height:0.5rem;
+    width:3.5rem;
+    height:0.5rem;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+  }
 </style>
