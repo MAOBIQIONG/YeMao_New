@@ -714,4 +714,10 @@
   .pd-0{
     padding: 0.1rem;
   }
+  .comment-content{
+    word-wrap:break-word;
+  }
+  .reply{
+    word-wrap:break-word;
+  }
 </style>
