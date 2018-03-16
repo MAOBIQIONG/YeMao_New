@@ -5,7 +5,7 @@
     <div class="header p-absolute">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span>案列详情</span>
-      <div class="header-right" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
+      <div class="header-right" v-tap="{methods:delConfirm}" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
     </div>
 
     <!--详情内容-->
@@ -63,22 +63,30 @@
       </scroller>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+    <div v-transfer-dom>
+      <confirm v-model="confirmShow"
+               @on-confirm = "compOnConfirm"
+               @on-cancel="onCancel"
+      >
+        <p style="text-align:center;">{{confirmMsg}}</p>
+      </confirm>
+    </div>
     <div class="chat-box">
-    <!-- 评论输入框 -->
-    <div class="input-box">
-      <div class="input">
-        <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
-      </div>
-      <div class="send-btn" :class="is_submit?'hover':''">
-        <div class="btn" v-tap="{methods:commentchw}">发送</div>
+      <!-- 评论输入框 -->
+      <div class="input-box">
+        <div class="input">
+          <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
+        </div>
+        <div class="send-btn" :class="is_submit?'hover':''">
+          <div class="btn" v-tap="{methods:commentchw}">发送</div>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
-  import {Swiper, SwiperItem, Previewer, TransferDom, Scroller, LoadMore, Toast} from 'vux'
+  import {Swiper, SwiperItem, Previewer, Scroller, LoadMore, Toast, Value2nameFilter as value2name, Confirm,TransferDomDirective as TransferDom} from 'vux'
   import store from '@/vuex/store'
 
   export default {
@@ -91,7 +99,8 @@
       Previewer,
       Scroller,
       LoadMore,
-      Toast
+      Toast,
+      Confirm
     },
     store,
     data() {
@@ -108,6 +117,9 @@
         comment_placeholder: '填写评论',
         comment_text: '',
         answer_id:'',
+        // confirm
+        confirmShow:false,
+        confirmMsg:'确认删除？',
 
         // 上拉加载
         lockX: true,
@@ -234,6 +246,14 @@
         } else {
           _self.addComment();
         }
+      },
+      // confirm
+      compOnConfirm(){
+        console.log("compOnConfirm:")
+        this.deletePChw();
+      },
+      onCancel(){
+        console.log("onCancel:")
       },
 
       //下拉刷新
@@ -406,7 +426,6 @@
           }
         })
       },
-
       // 添加评论html
       addCommentHmtl(data) {
         var _self = this;
@@ -423,7 +442,30 @@
         _self.comments.unshift(data);
         // 重置评论框内容
         _self.comment_text = '';
-      }
+      },
+
+      // 确认删除
+      delConfirm(){
+        this.confirmShow = true;
+      },
+      // 删除
+      deletePChw() {
+        let _self = this;
+        let params = {
+          interfaceId: common.interfaceIds.removePChw,
+          _id: _self.chw_id
+        };
+        _self.$axios.post('/mongoApi', {
+          params
+        }, (response) => {
+          let data = response.data;
+          if (data.code == 200) {
+            _self.goback();
+          } else {
+            _self.showToast("删除失败!")
+          }
+        })
+      },
     }
   }
 </script>

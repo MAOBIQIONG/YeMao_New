@@ -79,6 +79,89 @@ let interfaceIds = {
   getNoticeList:'getNoticeList',                 //
 
 };
+let interfaceIds2 = {
+  insertData:'insertData',                       // 插入一条
+  insertMany:'insertMany',                       // 插入多条
+  saveData:'saveData',                           // 保存（数据存在更新，不存在则保存）
+  updateData:'updateData',                       // 更新
+  queryData:'queryData',                         // 查询多条
+  queryOne:'queryOne',                           // 查询一条
+  removeData:'removeData',                       // 删除
+  getIndexInfo:'getIndexInfo',                   // 查询首页
+  getOrderList:'getOrderList',                   // 获取订单列表
+  getProjectDetail:'getProjectDetail',           // 查询订单详情
+  getBidders:'getBidders',                       // 查询参与人
+  competiteAnOrder:'competiteAnOrder',           // 抢单
+  getHotSearch:'getHotSearch',                   // 获取热门搜索内容
+  getDesigners:'getDesigners',                   // 设计师列表
+  collect:'collect',                             // 收藏
+  setCertification:'setCertification',           // 证书认证
+  applyDesignerCert:'applyDesignerCert',         // 签约认证
+  getCertification:'getCertification',           // 查询认证
+  getPersonalChw:'getPersonalChw',               // 获取personalChw
+  getPChwDetails:'getPChwDetails',               // 获取personalChw详情
+  getPChwInfo:'getPChwInfo',                     // 获取personalChw详情
+  removePChw:'removePChw',                       //
+  prsonalCenter:'prsonalCenter',                 // 个人中心
+  getMyPurse:'getMyPurse',                       // 我的钱包
+  getPayments:'getPayments',                     // 收支明细
+  addWithdrawalsRecord:'addWithdrawalsRecord',   // 添加提现记录
+  getMeowList:'getMeowList',                     // 获取喵喵圈信息
+  getMeowDetails:'getMeowDetails',               // 获取喵喵圈动态详情
+  removeMeow:'removeMeow',                       // 删除喵喵圈
+  getComments:'getComments',                     // 获取评论列表
+  getLikes:'getLikes',                           // 获取点赞列表
+  like:'like',                                   // 点赞
+  addComments:'addComments',                     // 评论
+  removeComments:'removeComments',               // 删除评论
+  getCollects:'getCollects',                     // 收藏列表
+  getCollectsPage:'getCollectsPage',             // 我的收藏
+  getActivitys:'getActivitys',                   // 活动
+  getMypartInActs:'getMypartInActivity',         // 我参与的活动
+  getActDetails:'getActivityDetails',            // 活动详情
+  partInActivity:'partInActivity',               // 参加活动
+  addOrders:'addOrders',                         // 发布订单
+  modifyOrders:'modifyOrders',                   // 修改订单
+  refreshOrders:'refreshOrders',                 // 刷新订单
+  getDesignerOrders:'getDesignerOrders',         // 查询设计师未处理订单
+  saveDataFun:'saveDataFun',                     // 保存数据，有则修改，无则保存
+  queryByUserId:'queryByUserId',                 // 根据user_id查询单个集合数据
+  queryList:'queryList',                         // 分页查询数据
+  queryResumeById:'queryResumeById',             // 人才简历详情
+  queryWEById:'queryWEById',                     // 工作经历详情
+  addAA:'addAlumniAssoc',                        // 添加校友会
+  queryAlumniById:'queryAlumniById',             // 校友会详情
+  queryAlumniByName:'queryAlumniByName',         // 验证是否存在相同名称校友会
+  getUsersByPhone:'getUsersByPhone',             // 根据手机号码查询校友会成员
+  addAlumnis:'addAlumnis',                       // 校友会添加成员
+  getAlumnis:'getAlumnis',                       // 查询校友会成员
+  checkUser:'checkUser',                         // 根据手机号码检测该用户是否存在
+  registerUser:'registerUser',                   // 注册
+  updateUserById:'updateUserById',               // 修改用户信息
+  checkUserName:'checkUserName',                 // 检测用户昵称重复
+  login:"login",                                 // 登录
+  updateUserPwd:'updateUserPwd',                 // 修改密码
+  feedback:'feedback',                 　　　　　　// 意见反馈
+  getMyComments:'getMyComments',                 // 获取我的评论
+  getPayInfo:'getPayInfo',                       // 获取支付信息
+  orderComments:'orderComments',                 // 订单评价
+  confirmDelivery:'confirmDelivery',             // 确认支付
+  orderReview:'orderReview',                     // 一键会审
+  getMyConvers:'getMyConversation',              // 查询我的会话列表
+  getChatRecord:'getChatRecord',                 // 查询聊天记录
+  addChatRecord:'addChatRecord',                 // 新增聊天记录
+  addGroupRecord:'addGroupChatRecord',           // 新增聊天记录
+  queryUserById:'queryUserById',                 // 根据用户ID查询用户信息
+  getCommentById:'getCommentById',               // 根据一级评论ID查询一级评论及其所有二级评论、回复
+  getReplyByPages:'getReplyByPages',             // 查询评论列表
+  setRestDay:'setRestDay',                       // 设置休息日
+  getRestDay:'getRestDay',                       // 获取休息日
+  getNoticeIndex:'getNoticeIndex',               // 通知首页
+  getNoticeList:'getNoticeList',                 // 通知列表
+  getNoticeDetails:'getNoticeDetails',           // 系统通知详情
+  chooseDesigner:'chooseDesigner',               // 选择设计师
+
+};
 const common = {
   /**0、判断访问终端**/
   browser: {
@@ -643,6 +726,7 @@ const common = {
     getPersonalChw:'getPersonalChw',               // 获取personalChw
     getPChwDetails:'getPChwDetails',               // 获取personalChw详情
     getPChwInfo:'getPChwInfo',                     // 获取personalChw详情
+    removePChw:'removePChw',                       // 删除personalChw:
     prsonalCenter:'prsonalCenter',                 // 个人中心
     getMyPurse:'getMyPurse',                       // 我的钱包
     getPayments:'getPayments',                     // 收支明细
