@@ -203,7 +203,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             //订单装填完善标志位
             improved:0,
             isSubmissionConfirmed:0,
-            confirmType:"",//cancelOrder取消订单，confirmTheOrderByDesigner设计师确认订单 ，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交,canclePart取消抢单
+            confirmType:"",//cancelOrder取消订单confirmTheOrderByDesigner设计师确认订单，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交,canclePart取消抢单
             user_id:null,
             userInfo:null,
             order:{
