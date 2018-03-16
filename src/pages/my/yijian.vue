@@ -16,7 +16,9 @@
       <!--图片-->
       <div class="pc-photo">
         <div class="img-upload">
-          <div class="img" v-for="img in imgs" :style="{backgroundImage: 'url(' + checkImgs(img) + ')'}"></div>
+          <div class="img" v-for="(img,index) in imgs" :key="index" :style="{backgroundImage: 'url(' + checkImgs(img) + ')'}">
+            <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
+          </div>
           <div class="upload-handle" v-if="imgs.length<9" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
@@ -49,6 +51,8 @@
       console.log("created:")
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
+      // 清除图片缓存
+      uploadImg2.clearImgArr(true);
     },
     mounted: function () {
       this. wzxz()
@@ -87,8 +91,6 @@
       triggerFile(){
         console.log("trigger:")
         var _self = this;
-        // 首先清空图片数组
-        _self.imgs = [];
         // 调用相机、相册
         uploadImg.init({
           callback:function (path) {
@@ -96,6 +98,13 @@
             _self.imgs.push(path);
           },
         });
+      },
+      // 清除
+      clearImgs(params){
+        var _self = this;
+        var index = common.checkInt(params.index);
+        console.log("clearImgs:"+index);
+        _self.imgs.splice(index,1);
       },
       // 提交
       submit(){

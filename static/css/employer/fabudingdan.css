@@ -239,7 +239,7 @@
 
 .fb-content .sctp {
   width: 100%;
-  height: 3.2rem;
+  min-height: 3.2rem;
   background: white;
   zoom:1;
 }

@@ -287,7 +287,7 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response);
+          // console.log(response);
           let data = response.data;
           _self.setData(data);
         })

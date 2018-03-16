@@ -111,11 +111,11 @@
         </div>
         <div class="sctp">
           <div class="sc-top">上传图片</div>
-          <div class="img-body" v-for="(img,index) in subParams.imgs" :key="index">
-            <img :src="getDefultImg(img)" />
-          </div>
-          <div class="st-bottom" v-if="isShow" v-tap="{ methods:triggerFile }">
-            <img src="../../../static/images/employer/j.png" />
+          <div class="img-upload">
+            <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
+              <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
+            </div>
+            <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
           </div>
         </div>
       </div>
@@ -151,6 +151,7 @@
         deadLine: common.getSomeday(-1),
         startTime: common.getSomeday(-1),
         endTime: common.getSomeday(-2),
+        base64Arr:[],
         subParams:{
           user_id: '',
           project_type: '',
@@ -191,12 +192,14 @@
         _self.loadData();
       }
       //判断页面是否来自于邀请
-    //   let invitation = _self.$route.query.invitation;
+      //   let invitation = _self.$route.query.invitation;
       let designerid = _self.$route.query.designerid;
       _self.designerid = designerid;
       if(!common.isNull(designerid)) {
         _self.isInvited=true;
       }
+      // 清除图片缓存
+      uploadImg2.clearImgArr(true);
     },
     destroyed(){
         common.delStorage('fromMyOrderDetail');
@@ -212,12 +215,33 @@
       triggerFile(){
         console.log("trigger:")
         var _self = this;
-        uploadImg.init({
+        // 首先清空图片数组
+        _self.subParams.imgs = [];
+        // 调用相机、相册
+        uploadImg2.init({
           callback:function (path) {
-            console.log("path："+path)
+            console.log("path:"+path)
+            _self.base64Arr.push(path);
+          },
+          successfun:function (path) {
             _self.subParams.imgs.push(path);
-          }
+            console.log("path:"+path)
+            if( _self.subParams.imgs.length == _self.base64Arr.length ){
+              uploadImg2.clearImgArr(true);
+              _self.submit2();
+            }
+          },
         });
+      },
+      // 清除
+      clearImgs(params){
+        var _self = this;
+        var index = common.checkInt(params.index);
+        console.log("clearImgs:"+index);
+        uploadImg2.imgArr.splice(index,1);
+        uploadImg2.imgBase64.splice(index,1);
+        _self.base64Arr.splice(index,1);
+        _self.subParams.imgs.splice(index,1);
       },
       /**************************************/
       showToast(msg){
@@ -380,6 +404,7 @@
       }
       return true;
     },
+      // 提交图片
       submit(){
         console.log("submit:")
         var _self = this;
@@ -388,6 +413,16 @@
         // 避免多次点击提交按钮
         if( _self.is_submit == true ) return;
         _self.is_submit = true;
+        if( _self.base64Arr.length == 0 ){
+          _self.submit2();
+        }else{
+          uploadImg2.uploadImgs();
+        }
+      },
+      // 提交订单
+      submit2(){
+        console.log("submit2:")
+        var _self = this;
         // 参数
         _self.subParams.project_deadLine = common.string2TimeStamp(_self.deadLine);
         _self.subParams.project_startTime = common.string2TimeStamp(_self.startTime);
@@ -399,8 +434,6 @@
           interfaceId:common.interfaceIds.addOrders,
           data:_self.subParams
         }
-        // console.log(_self.subParams);
-
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {

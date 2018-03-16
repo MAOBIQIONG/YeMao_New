@@ -15,7 +15,9 @@
       <!--图片上传-->
       <div class="sctp">
         <div class="img-upload">
-          <div class="img" v-for="img in base64Arr" :style="{backgroundImage: 'url(' + img + ')'}"></div>
+          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
+            <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
+          </div>
           <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
@@ -63,6 +65,8 @@
       // 用户信息
       var userInfo = common.getObjStorage("userInfo");
       this.params.user_id = userInfo._id;
+      // 清除图片缓存
+      uploadImg2.clearImgArr(true);
     },
     methods: {
       goback () {
@@ -100,10 +104,21 @@
             _self.params.imgs.push(path);
             console.log("path:"+path)
             if( _self.params.imgs.length == _self.base64Arr.length ){
+              uploadImg2.clearImgArr(true);
               _self.submit2();
             }
           },
         });
+      },
+      // 清除
+      clearImgs(params){
+        var _self = this;
+        var index = common.checkInt(params.index);
+        console.log("clearImgs:"+index);
+        uploadImg2.imgArr.splice(index,1);
+        uploadImg2.imgBase64.splice(index,1);
+        _self.base64Arr.splice(index,1);
+        _self.params.imgs.splice(index,1);
       },
 
       submit(){
