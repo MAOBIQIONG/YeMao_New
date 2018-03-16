@@ -1,113 +1,116 @@
 <template>
-  <div>
+  <div class="templete-body">
     <!--头部导航-->
-    <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
     </div>
-    <scroller
-    v-model="pullUpDownStatus"
-    :height="height"
-    :lock-x="lockX"
-    :lock-y="lockY"
-    :use-pulldown="true"
-    :use-pullup="true"
-    :pulldown-config="pulldownConfig"
-    :pullup-config = "pullupConfig"
-    @on-scroll="scroll"
-    @on-scroll-bottom="onScrollBottom"
-    @on-pulldown-loading="pullDownLoading"
-    @on-pullup-loading="pullUpLoading"
-    ref="scroller"
-    :class="{scroller:true}"
-    >
-        <div>
-            <!--文章详情-->
-            <div class="content">
-            <div class="piaoti">
-                {{chw.title}}
-            </div>
-                <!-- <div class="xc-banner">
-                    <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
-                </div> -->
-            <div class="nichengshijian">
-                <div class="ns-left">
-                <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
-                </div>
-                <div class="tm-right">
-                <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
-                </div>
-            </div>
-            <div class="neirongshijian">
-                {{chw.description}}
-                <div class="bottom">
-                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:chwLike}">
-                    <span id="praise" ref="like">
-                        <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
-                        <img v-else src="../../../static/images/zan3.png"/>
-                    </span>
-                    <span id="praise-txt">{{chw.like}}</span>
-                </div>
-                <div class="bottom-sz" :class="{confirmColor:chw.collectFlag == 1}" v-tap="{methods:collect}">
-                    <span id="xinxin" ref="star">
-                        <img v-if="chw.collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
-                        <img v-else src="../../../static/images/xin1.png"/>
-                    </span>
-                    <span>收藏</span>
-                </div>
-                </div>
-            </div>
-            </div>
+    <div class="content">
+      <scroller
+      v-model="pullUpDownStatus"
+      :height="height"
+      :lock-x="lockX"
+      :lock-y="lockY"
+      :use-pulldown="true"
+      :use-pullup="true"
+      :pulldown-config="pulldownConfig"
+      :pullup-config = "pullupConfig"
+      @on-scroll="scroll"
+      @on-scroll-bottom="onScrollBottom"
+      @on-pulldown-loading="pullDownLoading"
+      @on-pullup-loading="pullUpLoading"
+      ref="scroller"
+      :class="{scroller:true}"
+      >
+          <div>
+              <!--文章详情-->
+              <div class="content">
+                  <div class="piaoti">
+                      {{chw.title}}
+                  </div>
+                      <!-- <div class="xc-banner">
+                          <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
+                      </div> -->
+                  <div class="nichengshijian">
+                      <div class="ns-left">
+                      <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
+                      </div>
+                      <div class="tm-right">
+                      <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
+                      </div>
+                  </div>
+                  <div class="neirongshijian">
+                      {{chw.description}}
+                      <div class="bottom">
+                      <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:chwLike}">
+                          <span id="praise" ref="like">
+                              <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                              <img v-else src="../../../static/images/zan3.png"/>
+                          </span>
+                          <span id="praise-txt">{{chw.like}}</span>
+                      </div>
+                      <div class="bottom-sz" :class="{confirmColor:chw.collectFlag == 1}" v-tap="{methods:collect}">
+                          <span id="xinxin" ref="star">
+                              <img v-if="chw.collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                              <img v-else src="../../../static/images/xin1.png"/>
+                          </span>
+                          <span>收藏</span>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
 
-            <!--评论详情-->
-            <div class="pinglun">
-            <div class="dsr">
-                <ul>
-                <li v-for="(l,i) in likes" :key="i">
-                    <img :src="checkAvatar(l.user.img)"/>
-                </li>
-                </ul>
-                <div class="dianzhan" v-tap="{methods:toLikeMember,chw_id:chw_id}">
-                <span>{{likes_num}}</span>人点赞
-                </div>
-            </div>
-            <p>热门评论</p>
-            <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
-                <div class="top-pinlun">
-                    <div class="tp-left">
-                        <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
-                    </div>
-                    <div class="tp-right"  v-tap="{methods:commentLike,comment_id:item._id,commentArrId:index}">
-                        <span>{{item.like}}</span>
-                        <span>
-                            <img v-if="item.likeFlag===0" src="../../../static/images/zan.png"/>
-                            <img v-if="item.likeFlag===1" src="../../../static/images/zan001.png"/>
-                        </span>
-                    </div>
-                </div>
-                <div class="neirong">
-                    {{item.content}}
-                </div>  
-                <div class="bottom">
-                    <div class="left-bt">
-                        {{item.create_date | dateToStringSecond}}
-                    </div>
-                    <div class="right-bt">
-                        <span v-tap="{methods:toCommentDetail,comment_id:item._id,chw_id:chw_id}">
-                            <span v-if="item.replys.length>0">{{item.replys.length}}</span>
-                            <span v-else>0</span>
-                            <span>条回复</span>
-                        </span>
-                        <!-- <span v-if="userInfo._id!=nuchw_idll&&userInfo._id==item.user._id" :id="item._id" class="pd-0" v-tap="{methods:deleteSth,id:item._id,floor:0,flag:1}">删除</span>
-                        <span v-else :id="item._id" class="pd-0" v-tap="{methods:replyFun,id:item._id,uid:item.user._id,floor:1}">评论</span> -->
-                    </div>
-                </div>
+                  <!--评论详情-->
+                  <div class="pinglun">
+                  <div class="dsr">
+                      <ul>
+                      <li v-for="(l,i) in likes" :key="i">
+                          <img :src="checkAvatar(l.user.img)"/>
+                      </li>
+                      </ul>
+                      <div class="dianzhan" v-tap="{methods:toLikeMember,chw_id:chw_id}">
+                      <span>{{likes_num}}</span>人点赞
+                      </div>
+                  </div>
+                  <p>热门评论</p>
+                  <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
+                      <div class="top-pinlun">
+                          <div class="tp-left">
+                              <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
+                          </div>
+                          <div class="tp-right"  v-tap="{methods:commentLike,comment_id:item._id,commentArrId:index}">
+                              <span>{{item.like}}</span>
+                              <span>
+                                  <img v-if="item.likeFlag===0" src="../../../static/images/zan.png"/>
+                                  <img v-if="item.likeFlag===1" src="../../../static/images/zan001.png"/>
+                              </span>
+                          </div>
+                      </div>
+                      <div class="neirong">
+                          {{item.content}}
+                      </div>
+                      <div class="bottom">
+                          <div class="left-bt">
+                              {{item.create_date | dateToStringSecond}}
+                          </div>
+                          <div class="right-bt">
+                              <span v-tap="{methods:toCommentDetail,comment_id:item._id,chw_id:chw_id}">
+                                  <span v-if="item.replys.length>0">{{item.replys.length}}</span>
+                                  <span v-else>0</span>
+                                  <span>条回复</span>
+                              </span>
+                              <!-- <span v-if="userInfo._id!=nuchw_idll&&userInfo._id==item.user._id" :id="item._id" class="pd-0" v-tap="{methods:deleteSth,id:item._id,floor:0,flag:1}">删除</span>
+                              <span v-else :id="item._id" class="pd-0" v-tap="{methods:replyFun,id:item._id,uid:item.user._id,floor:1}">评论</span> -->
+                          </div>
+                      </div>
 
-            </div>
-            </div>
-            <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
-        </div>
-    </scroller>
+                  </div>
+              </div>
+              <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
+          </div>
+      </scroller>
+    </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <div class="chat-box">
       <!-- 评论输入框 -->
@@ -374,17 +377,17 @@ export default {
                 if( data && (data.code == 200) ){
                     if(params.data.like_type ===1) {
                         tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
-                    } else if (params.data.like_type ===2){             
+                    } else if (params.data.like_type ===2){
                         tips = commentArrLike.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
                     }
-                   
+
                 }else{
                     if(params.data.like_type ===1) {
                         tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
                     }else if(params.data.like_type ===2){
                         tips = commentArrLike.likeFlag == 0 ? '取消失败！' : '点赞失败！';
                     }
-                    
+
                 }
                 _self.showToast(tips);
             })
@@ -487,7 +490,7 @@ export default {
                 console.log(_self.loadPageEnd);
                 if(_self.loadPageEnd === true){
                     _self.comments.push(data);
-                }            
+                }
             }
             // 重置评论框内容
             _self.comment_text = '';

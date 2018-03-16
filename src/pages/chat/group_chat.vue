@@ -1,5 +1,5 @@
 <template>
-  <div class="liaotian">
+  <div class="templete-body liaotian">
     <div class="header-static"></div>
     <div class="header p-absolute">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
@@ -90,7 +90,7 @@
         // 加载
         lockX:true,
         lockY:false,
-        height: '-90',
+        height: '', //  -90
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -375,10 +375,6 @@
   @import "../../../static/css/employer/liaotian.css";
   .liaotian {
     background-color: #f2f2f2;
-    overflow: hidden;
-  }
-  .content{
-    overflow: hidden;
   }
   .message{
     width: 7.1rem;
