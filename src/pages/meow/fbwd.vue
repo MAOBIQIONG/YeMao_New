@@ -21,7 +21,7 @@
           <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
             <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
           </div>
-          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
+          <div class="upload-handle" v-if="base64Arr.length<1" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
     </div>
@@ -164,6 +164,7 @@
               var _self = this;
               // 调用相机、相册
               uploadImg2.init({
+                maxLen:1,
                 callback:function (path) {
                   console.log("path:"+path)
                   _self.base64Arr.push(path);
