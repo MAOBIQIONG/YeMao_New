@@ -11,7 +11,7 @@
           <!-- <img class="previewer-img" v-for="(item, index) in list" :key="index" :src="item.src" width="100" @click="show(index)"> -->
          <div class="previewer-img" :style="{backgroundImage:`url(${item.src})`}" v-for="(item, i) in list" v-tap="{methods:show,index:i}" :key="i"></div>
           <div v-transfer-dom>
-            <previewer :list="list" ref="previewer" :options="options"></previewer>
+            <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
           </div>
         </div>
     </div>
@@ -20,12 +20,14 @@
 
 <script>
   import { Previewer, TransferDom } from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'
   export default {
     directives: {
       TransferDom
     },
     components: {
-      Previewer
+      Previewer,
+      Previewer2
     },
     data: function () {
       return {

@@ -154,7 +154,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
             return common.getNameByTypeId(id);
         },
         invite(id){
-            this.$router.push({name:'fabudingdan', query: {designerid:id,invitation:1}});
+            this.$router.push({name:'fabudingdan', query: {designerid:id}});
         },
         loadData(){
             console.log('this is loadData');
