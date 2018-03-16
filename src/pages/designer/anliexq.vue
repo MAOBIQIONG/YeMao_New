@@ -1,13 +1,15 @@
 <template>
-  <div class="anlie">
+  <div class="templete-body my-body">
     <!--头部导航-->
-    <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span>案列详情</span>
       <div class="header-right" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
     </div>
+
     <!--详情内容-->
-    <div class="content content-p">
+    <div class="content">
       <scroller
         v-model="pullUpDownStatus"
         :height="height"
@@ -429,7 +431,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/anliexq.css';
-
   .dz {
     height: 0.9rem;
     line-height: 0.9rem;
@@ -455,8 +456,5 @@
     background-position-y: 0.25rem;
     padding-left: 0.5rem;
     padding-right: 0.25rem;
-  }
-  .anlie{
-    position: fixed;
   }
 </style>

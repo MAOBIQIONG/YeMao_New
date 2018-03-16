@@ -1,10 +1,9 @@
 <template>
-  <div class="penyouxiangqing">
+  <div class="templete-body penyouxiangqing">
     <!--导航栏-->
-    <div class="header-static">
-      <div class="header">
-        <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
-      </div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
     </div>
 
     <!--  喵喵列表-->

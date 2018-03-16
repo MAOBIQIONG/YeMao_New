@@ -30,6 +30,18 @@ body::-webkit-scrollbar {
 a {
   text-decoration: none;
 }
+/**templete body**/
+.templete-body{
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/**解决软件盘弹出，文本框被顶起**/
+.templete-body .content{
+  height: 100%;
+  overflow: hidden;
+}
 
 ul {
   padding: 0;
