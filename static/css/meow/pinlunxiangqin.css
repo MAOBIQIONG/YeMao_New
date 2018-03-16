@@ -31,7 +31,8 @@
 
  .pinlunlist .top-pinlun .tp-left {
   float: left;
-  line-height: 0.8rem;
+  line-height: 0.5rem;
+  height:0.5rem;
   font-size: 0.28rem;
 }
 .pinlunlist .top-pinlun .tp-left2 {
@@ -52,6 +53,7 @@
  .pinlunlist .top-pinlun .tp-right {
   float: right;
   line-height: 0.5rem;
+  height:0.5rem;
   font-size: 0.28rem;
 }
 

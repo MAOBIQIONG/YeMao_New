@@ -35,8 +35,7 @@
             <!-- <div class="tupian" v-if="item.imgs" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"> -->
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
-            <div class="tupian" v-if="item.imgs">
-                <img :src="item.imgs[0]"/>
+            <div class="tupian" v-if="item.imgs && item.imgs.length>0" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
             </div>
             <div class="neirong">
             <div class="piapti">
@@ -307,6 +306,11 @@ export default {
   }
   .scweida{
     position: fixed;
+  }
+  .tupian{
+    background-size:cover!important;
+    background-position:center center!important;
+    background-repeat:no-repeat!important;
   }
 </style>
 <style>
