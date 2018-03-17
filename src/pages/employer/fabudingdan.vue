@@ -54,7 +54,7 @@
               <span>抢单截止日期</span>
             </div>
             <div class="qdtime-right">
-                <datetime v-model="deadLine" class="shijian"></datetime>
+                <datetime v-model="deadLine" :start-date="deadLine" class="shijian"></datetime>
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@
                 <span>设计起止时间</span>
               </div>
               <div class="gb-right">
-                <span><datetime v-model="startTime" class="shijian"></datetime></span> / <span><datetime v-model="endTime" class="shijian"></datetime></span>
+                <span><datetime v-model="startTime"　:start-date="deadLine" class="shijian"></datetime></span> / <span><datetime v-model="endTime" :start-date="deadLine" class="shijian"></datetime></span>
               </div>
             </div>
           </div>
