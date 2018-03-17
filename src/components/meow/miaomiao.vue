@@ -114,7 +114,7 @@
         options: {
           previewer:'previewer0',
           getThumbBoundsFn:function (index) {
-            console.log("getThumbBoundsFn:"+this.previewer)
+            // console.log("getThumbBoundsFn:"+this.previewer)
             // find thumbnail element
             let thumbnail = document.querySelectorAll(this.previewer)[index]
             // get window scroll Y
@@ -268,7 +268,7 @@
         var _self = this;
         if( _self.isView ) return;
         _self.isView = true;
-        console.log("param.index:"+param.index);
+        // console.log("param.index:"+param.index);
         _self.options.previewer = '.previewer'+param.index;
         _self.$refs.previewer[param.index].show(param.i)
 

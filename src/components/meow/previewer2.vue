@@ -123,7 +123,7 @@ export default {
         preloaderEl: true,
         history: false,
         tapToClose: true,
-        showHideOpacity:false,
+        showHideOpacity:true,
         index: index
       }, this.options)
       this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options);
@@ -141,8 +141,14 @@ export default {
       self.photoswipe.init();
 
       this.photoswipe.listen('close', () => {
+<<<<<<< HEAD
         this.$emit('on-close')
         setTimeout(function(){self.photoswipe.destroy();},333)
+=======
+        this.$emit('on-close');
+        //默认销毁时间333与option.hideAnimationDuration默认参数一致
+        setTimeout(function(){self.photoswipe.destroy();},333);
+>>>>>>> master
       })
     },
     show (index) {
@@ -195,13 +201,13 @@ export default {
   right:0;
   text-align:center;
   position:absolute;
-  bottom:1rem;
+  bottom:0.6rem;
 }
 .dotIndicator__sign{
   display:inline-block;
   vertical-align:28%;
-  width:0.2rem;
-  height:0.2rem;
+  width:0.15rem;
+  height:0.15rem;
   background:#aaa;
   border-radius:50%;
   margin:0 0.1rem;
@@ -209,8 +215,8 @@ export default {
 .dotIndicator__sign--active{
   display:inline-block;
   vertical-align:28%;
-  width:0.2rem;
-  height:0.2rem;
+  width:0.15rem;
+  height:0.15rem;
   background:#fff;
   border-radius:50%;
   margin:0 0.1rem;

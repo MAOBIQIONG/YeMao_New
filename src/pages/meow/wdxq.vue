@@ -40,6 +40,8 @@
                       <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
                       </div>
                   </div>
+                <div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">
+                </div>
                   <div class="neirongshijian">
                       {{chw.description}}
                       <div class="bottom">
@@ -280,6 +282,13 @@ export default {
         },
         toCommentDetail:function(param){
             this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
+        },
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
+        },
+        checkImg(path){
+            return common.getDefultImg(path);
         },
         toLikeMember(p){
             this.$router.push({name:'dianzhan',query:{chw_id:p.chw_id}});
@@ -703,5 +712,15 @@ export default {
     }
     .comment-reply{
         font-size:0.28rem;
+    }
+    .tupian{
+      background-size:cover!important;
+      background-position:center center!important;
+      background-repeat:no-repeat!important;
+      width: 7.2rem;
+      height: 2.6rem;
+      background: #CCCCCC;
+      overflow: hidden;
+      margin:0 auto 0.2rem;
     }
 </style>
