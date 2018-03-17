@@ -194,7 +194,7 @@ export default {
   right:0;
   text-align:center;
   position:absolute;
-  bottom:1rem;
+  bottom:0.6rem;
 }
 .dotIndicator__sign{
   display:inline-block;
