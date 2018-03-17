@@ -260,10 +260,7 @@
       /*******************************************************/
       // 日历
       disableDateFunction(date) {
-        // console.log("date:"+date)
-        if (date.formatedDate === '2017-12-28') {
-          return true
-        }
+        return true
       },
 
       // swiper

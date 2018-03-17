@@ -220,7 +220,7 @@ body,html{
   float: left;
   height: 0.8rem;
   font-size: 0.32rem;
-  line-height: 1.1rem;
+  line-height: 0.8rem;
   margin-left: 0.1rem;
 }
 
@@ -250,7 +250,7 @@ body,html{
 .gz-list .gz-timeleixin .gz-time span {
   float: left;
   display: inline-block;
-  padding-left: 0.8rem;
+  padding-left: 0.1rem;
 }
 .gz-list .gz-timeleixin .gz-time span img {
   width: 0.4rem;
