@@ -26,7 +26,7 @@
                         <img :src="checkImg(item.imgs[0])">
                     </div>
                     <div class="ds-jianjie">
-                        <div class="jianjie-top">{{item.project_describe}}</div>
+                        <div class="jianjie-top">{{item.project_title}}</div>
                         <div class="jianjie-bottom">
                             <div class="db-leixin">
                                 <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
