@@ -76,7 +76,7 @@
       </scroller>
     </div>
     <toast v-model="toastShow" :time="1000" type="text" width="5rem">{{toastMsg}}</toast>
-    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete"></actionsheet>
+    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete" :class="showSheet==true?'':'vux-actionsheet-rec'"></actionsheet>
     <div class="chat-box">
       <!-- 评论输入框 -->
       <div class="input-box">
@@ -583,8 +583,8 @@
     line-height:0.5rem;
     width:3.5rem;
     height:0.5rem;
-    overflow: hidden; 
-    white-space: nowrap; 
+    overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
   }
 </style>
