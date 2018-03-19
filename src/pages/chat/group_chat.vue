@@ -41,13 +41,14 @@
     </div>
     <chat :to="target_id" :scene="scene" @upup="sended"></chat>
     <div v-transfer-dom>
-      <previewer :list="list" ref="previewer" :options="options"></previewer>
+      <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
     </div>
   </div>
 </template>
 
 <script>
   import {LoadMore, Scroller, Previewer, TransferDom,} from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'  
   import chat from '../../components/chat/chat.vue'
   export default {
     directives: {
@@ -55,6 +56,7 @@
     },
     components: {
       Previewer,
+      Previewer2,
       Scroller,
       LoadMore,
       chat
