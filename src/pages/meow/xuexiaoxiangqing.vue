@@ -161,7 +161,8 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
         setTimeout(()=>{_self.loadingShow = false},2000);
         let params = {
           interfaceId:common.interfaceIds.queryAlumniById,
-          _id:_self.itemId
+          _id: _self.itemId,
+          user_id: _self.user._id
         }
         _self.$axios.post('/mongoApi', {
             params: params
@@ -197,7 +198,7 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
       },
       setData(data){
         console.log('set Data');
-        console.log(data);
+        // console.log(data);
         let _self = this;
         _self.loadingShow = false;
         _self.alumni = data;
