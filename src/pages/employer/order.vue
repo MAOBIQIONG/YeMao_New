@@ -338,6 +338,11 @@
             })
             _self.bidders = orderBidders;
             _self.order = order;
+            // 重置订单详情
+            _self.shoViewMore = false;
+            _self.viewMore = false;
+            _self.viewText = '点击查看更多';
+            _self.$refs.project_describe.innerHTML = _self.getMaxlen(_self.order.project_describe);
             if( _self.order.imgs ){
               _self.imgSize = _self.order.imgs.length;
             }

@@ -1,5 +1,5 @@
 <template>
-  <div class="fabudingdan">
+  <div class="templete-body fabudingdan">
     <div class="header-static"></div>
     <div class="header p-absolute">
       <div class="header-left" v-tap="{ methods:goback }"><img src="../../../static/images/back.png" /></div>
@@ -8,7 +8,7 @@
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
       <!--发布订单内容-->
-    <div class="content">
+    <div class="content1">
       <div class="fb-content">
         <div class="xmlx">
           <div class="xmlx-left">
@@ -523,13 +523,10 @@
   /**解决软件盘弹出，文本框被顶起**/
   .fabudingdan{
     background-color: #f2f2f2;
-    height: 100%;
-    overflow: hidden;
   }
-  .content{
+  .content1{
     height: 100%;
     overflow: auto;
-    padding-bottom: 1.2rem;
   }
   /*地区*/
   .vux-no-group-title {

@@ -55,7 +55,7 @@
               <!--<div class="more more-icon"></div>-->
             </div>
             <div v-transfer-dom>
-              <previewer :list="item.prevImgs" ref="previewer" :options="options"></previewer>
+              <previewer2 :list="item.prevImgs" ref="previewer" :options="options"></previewer2>
             </div>
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
@@ -67,12 +67,14 @@
 
 <script>
   import { Previewer, TransferDom, Scroller, LoadMore, Toast } from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'
   export default {
     directives: {
       TransferDom
     },
     components: {
       Previewer,
+      Previewer2,
       Scroller,
       LoadMore,
       Toast
