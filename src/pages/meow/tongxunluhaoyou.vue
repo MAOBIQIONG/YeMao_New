@@ -20,9 +20,9 @@
         <div class="dshy-right">
           全部加入
         </div>
-      </div>    
+      </div>
 </div>
-    <div class="content" style="padding-top:3rem;">   
+    <div class="content" style="padding-top:3rem;">
       <!--列表-->
       <div class="jl-list">
         <div class="jianli" v-for="(item,index) in contactsArr" :key="index"  v-if="!isNull(item.phoneNumbers)">
@@ -31,7 +31,7 @@
           </div>
           <div class="jieshao">
             <!-- <p class="name">{{item.user_name}}</p> -->
-            
+
             <p class="xinge"><span v-if="item.canJoin==1">夜猫用户：</span><span v-else>联系人：</span><span>{{item.user_name}}</span></p>
             <p class="name"><span>手机号：</span>{{item.phoneNumbers[0].value}}</p>
             <div class="biaoqian" v-if="item.canJoin==1"  v-tap="{methods:showConfirm,uid:item.uid,type:'addAlumnis'}">
@@ -61,7 +61,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
     },
     directives: {
         TransferDom
-    },      
+    },
     data: function () {
         return {
             confirmShow:false,
@@ -150,7 +150,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                     let continueState = 0;
                     //遍历每条记录的属性
                     // console.log(Object.keys(c1));
-                    Object.keys(c1).reduce(function(a2,c2,i2,arr2){                   
+                    Object.keys(c1).reduce(function(a2,c2,i2,arr2){
                         if(c2=="phoneNumbers"){
                             if(continueState == 1){
                                 return;
@@ -163,9 +163,9 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                                     if(c3.value.match(val)){
                                         _self.contactsArr.push(c1);
                                         continueState = 1;
-                                    } 
+                                    }
                                 }
-                                
+
                             },undefined);
                         } else{
                             let pvalue = c1[c2];
@@ -228,11 +228,11 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                 }, function ( e ) {
                     alert( "获取通讯录失败" + e.message );
                 });
-            }       
+            }
         }
     },
     mounted(){
-        console.log('tongxunluhaoyouMounted');   
+        console.log('tongxunluhaoyouMounted');
     },
     methods: {
         goback () {
@@ -308,7 +308,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                                 c1.canJoin = 0;
                             }
                         }
-                    },undefined);             
+                    },undefined);
                 },undefined);
                 // console.log('contactsArrData1-c1:'+JSON.stringify(c1));
             },undefined);
@@ -322,7 +322,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
             this.confirmType = params.type
             if(params.type == "addAlumnis"){
                 this.confirmMsg = "向校友会添加该用户吗？"
-            } 
+            }
         },
         compOnConfirm(){
             if(this.confirmType=="addAlumnis"){
@@ -345,7 +345,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
 
                      _self.showToast('已加入！');
 
-                })            
+                })
         }
     }
   }

@@ -102,7 +102,7 @@
     <div v-transfer-dom>
       <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
     </div>
-    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete"></actionsheet>
+    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete" :class="showSheet==true?'':'vux-actionsheet-rec'"></actionsheet>
     <div class="chat-box">
        <!-- 评论输入框 -->
        <div class="input-box">

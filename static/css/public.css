@@ -1314,3 +1314,10 @@ body,html{
 .inline-calendar-demo td.current > span.vux-calendar-each-date{
   background-color: #cccccc !important;
 }
+
+
+/***********遮罩层**********/
+/**重构**/
+.vux-actionsheet-rec .weui-actionsheet{
+  opacity: 0;
+}
