@@ -5,7 +5,7 @@
       <div class="title">{{imgIndex+1}}/{{imgList.length}}</div>
     </div>
     <div class="content content-p">
-       <swiper height="8rem" class="swiper-self" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange" :show-dots="false"></swiper>
+       <swiper height="11rem" class="swiper-self" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange" :show-dots="false"></swiper>
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@
         this.imgIndex = index
       },
       checkImg(path){
-        return common.getDefultImg(path);
+        return common.getRealImgPath(path);
       },
     },
   }
