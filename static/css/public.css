@@ -250,7 +250,7 @@ body,html{
 .gz-list .gz-timeleixin .gz-time span {
   float: left;
   display: inline-block;
-  padding-left: 0.9rem;
+  padding-left: 0.1rem;
 }
 .gz-list .gz-timeleixin .gz-time span img {
   width: 0.4rem;
