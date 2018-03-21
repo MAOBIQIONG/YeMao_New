@@ -127,6 +127,10 @@ body,html{
 .p-static{ position: static !important;  }
 .p-relative{ position: relative;}
 
+/**显示**/
+.dp-n{display: none;}
+.dp-b{display: block;}
+
 /*头部公共样式*/
 .header {
   position: fixed;
