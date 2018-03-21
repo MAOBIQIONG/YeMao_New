@@ -43,7 +43,6 @@
                   <!--</div>-->
                 </div>
               </li>
-              <li class="bot-li"></li>
             </ul>
           </div>
         </div>
@@ -212,6 +211,7 @@
         var ch = document.documentElement.clientHeight;
         var bh = document.getElementById("inputBox").offsetHeight;
         var height = sh-ch+bh*2.5; // div高度-屏幕高度+头部+底部高度
+            height = sh-ch;
         var h = height > 0 ? height : 0;
         _self.$nextTick(
           ()=>{
@@ -235,7 +235,7 @@
       },
       // 接收消息后，保存消息
       receiveMsg(msg){
-        console.log("msg:"+JSON.stringify(msg))
+        // console.log("msg:"+JSON.stringify(msg))
         var _self = this;
         if( _self.target_id == msg.from && msg.scene == 'p2p' ){
           _self.sended(msg);
@@ -243,7 +243,6 @@
       },
       //下拉刷新
       refreshPageDate(){
-        console.log()
         let _self = this
         _self.pagination.pageNo = 0;
         _self.hasMore = true;
@@ -273,14 +272,10 @@
       //获取数据
       loadData(){
         let _self = this;
-        console.log("hasMore:"+_self.hasMore)
-        console.log("pageNo:"+_self.pagination.pageNo)
         if( common.isNull(_self.user._id) || common.isNull(_self.target_id) ||
             _self.hasMore==false ){
-          _self.hasMore = false;
-          _self.loadMoreStatus.show=true;
-          _self.loadMoreStatus.showLoading=false;
-          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.pullUpDownStatus.pulldownStatus = 'default';
+          _self.$refs.scroller.donePulldown();
           return;
         }
         _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
@@ -296,7 +291,7 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          // console.log(response);
+          console.log(response);
           let data = response.data;
           _self.setData(data);
         })
@@ -361,6 +356,7 @@
     margin-left: 0.2rem;
     background-color: #f2f2f2;
     font-size: 0.3rem;
+    padding-bottom: 3rem;
   }
   .message .self{
     position: relative;
