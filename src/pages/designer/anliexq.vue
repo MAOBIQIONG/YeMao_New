@@ -45,18 +45,22 @@
           <div class="pingjia-list">
             <div class="gzpj-list" v-for="item in comments">
               <div class="pl-top">
-                <div class="touxiang">
+                <div class="left">
                   <img :src="checkAvatar(item.user.img)"/>
                 </div>
-                <p>{{item.user.user_name}}</p>
+                <div class="center">{{item.user.user_name}}</div>
+                <div class="right" v-if="item.type==0">{{getDateDiff(item.create_date)}}</div>
               </div>
               <div class="pl-content">{{item.content}}</div>
-              <div class="pl-bottom">
+              <div class="pl-bottom" v-if="item.type==1">
                 <div class="shijian">{{getDateDiff(item.create_date)}}</div>
-                <div class="pingfen"></div>
+                <div class="pingfen">
+                  <rater v-model="chw.score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
+                </div>
               </div>
             </div>
           </div>
+          <div style="height: 1.2rem;"></div>
         </div>
         <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip"
                    class="loadMore"></load-more>
@@ -86,9 +90,8 @@
 </template>
 
 <script>
-  import {Swiper, SwiperItem, Previewer, Scroller, LoadMore, Toast, Value2nameFilter as value2name, Confirm,TransferDomDirective as TransferDom} from 'vux'
+  import {Swiper, SwiperItem, Previewer, Scroller, LoadMore, Toast, Value2nameFilter as value2name, Confirm,TransferDomDirective as TransferDom,Rater} from 'vux'
   import store from '@/vuex/store'
-
   export default {
     directives: {
       TransferDom
@@ -100,7 +103,8 @@
       Scroller,
       LoadMore,
       Toast,
-      Confirm
+      Confirm,
+      Rater
     },
     store,
     data() {
@@ -439,7 +443,11 @@
           _id: _self.userInfo._id
         };
         data.create_date = new Date().getTime();
-        _self.comments.unshift(data);
+        if( _self.comments.length>0 && _self.comments[0].type==1 ){
+          _self.comments.splice(1, 0, data);
+        }else{
+          _self.comments.unshift(data);
+        }
         // 重置评论框内容
         _self.comment_text = '';
       },

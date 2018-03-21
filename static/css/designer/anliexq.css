@@ -87,6 +87,7 @@
 .xqjs .smjs {
   width: 7.1rem;
   margin: auto;
+  padding: 0.1rem 0rem;
   font-size: 0.28rem;
   line-height: 0.4rem;
   color: #333333;
@@ -100,6 +101,8 @@
   width: 7.5rem;
   margin: auto;
   background: white;
+  padding-bottom: 0.1rem;
+  border-bottom: 0.55px solid #ccc;
 }
 
 .pingjia-list .gzpj-list .pl-top {
@@ -107,6 +110,7 @@
   height: 1.2rem;
   line-height: 1.2rem;
   margin: auto;
+  display:-webkit-box;
 }
 
 .pingjia-list .gzpj-list .pl-top .touxiang {
@@ -119,30 +123,56 @@
   margin: 0.35rem 0.2rem;
   overflow: hidden;
 }
-
 .pingjia-list .gzpj-list .pl-top .touxiang img {
   width: 100%;
   height: 100%;
   display: block;
 }
-
 .pingjia-list .gzpj-list .pl-top p {
   font-size: 0.28rem;
 }
+
+/**start**/
+.pingjia-list .gzpj-list .pl-top .left{
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #CCCCCC;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0.35rem 0.2rem 0.35rem 0rem;
+  overflow: hidden;
+}
+.pingjia-list .gzpj-list .pl-top .left img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.pingjia-list .gzpj-list .pl-top .center{
+  font-size: 0.28rem;
+  -webkit-box-flex:1;
+}
+.pingjia-list .gzpj-list .pl-top .right{
+  font-size: 0.24rem;
+  line-height: 1.3rem;
+  color: #999999;
+  margin-right: 0.2rem;
+}
+/**end**/
 
 .pingjia-list .gzpj-list .pl-content {
   width: 7.1rem;
   font-size: 0.28rem;
   line-height: 0.4rem;
   margin: auto;
+  padding-bottom: .25rem;
   background: white;
 }
 
 .pingjia-list .gzpj-list .pl-bottom {
   width: 7.1rem;
   height: 1rem;
-  font-size: 0.28rem;
   line-height: 1rem;
+  font-size: 0.28rem;
   margin: auto;
   background: white;
 }
@@ -155,8 +185,8 @@
 
 .pingjia-list .gzpj-list .pl-bottom .pingfen {
   float: right;
-  width: 1.9rem;
-  height: 0.3rem;
+  /*width: 1.9rem;*/
+  /*height: 0.3rem;*/
 }
 
 .pingjia-list .gzpj-list .pl-bottom .pingfen img {

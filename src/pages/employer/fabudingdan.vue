@@ -267,7 +267,6 @@
           }
           var city = _self.getName(_self.city);
           _self.subParams.project_region = city.trim();
-          // console.log('project_region', _self.subParams.project_region)
         }
       },
       logShow (str) {
@@ -290,16 +289,12 @@
             console.log(response)
             var data = response.data;
             if(data){
-                // this.subParams = data.order;
                 let objectKeys = Object.keys(_self.subParams);
                 objectKeys.reduce(
                     (accumulator,currentValue,currentIndex,array)=>{
-                        // console.log(currentValue,accumulator);
                         _self.subParams[currentValue] = data.order[currentValue];
                     },0
                 );
-                // _self.subParams.user_id = "5a55a3a3565a966d3b6a932e"
-                console.log(_self.subParams);
             }
         });
     },
