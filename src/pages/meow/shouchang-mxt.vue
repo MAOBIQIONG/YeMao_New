@@ -270,5 +270,6 @@ export default {
   }
   .mxt{
     position: fixed;
+    width: 100%;
   }
 </style>

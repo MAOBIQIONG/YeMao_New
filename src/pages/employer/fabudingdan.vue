@@ -152,7 +152,6 @@
         startTime: common.getSomeday(-1),
         endTime: common.getSomeday(-2),
         base64Arr:[],
-
         subParams:{
           user_id: '',
           project_type: '',
