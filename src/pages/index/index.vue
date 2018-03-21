@@ -425,8 +425,9 @@
       initData () {
         var _self = this
         var params = {
-          interfaceId: common.interfaceIds.getIndexInfo
-        }
+          interfaceId: common.interfaceIds.getIndexInfo,
+          user_id: _self.user._id
+        };
         params.sort = {refresh_date:-1};
         _self.$axios.post('/mongoApi', {
           params: params
@@ -490,7 +491,8 @@
           interfaceId: common.interfaceIds.getOrderList,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
-          where:{}
+          where:{},
+          user_id: _self.user._id
         }
         // 排序
         params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};

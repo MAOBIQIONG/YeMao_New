@@ -318,6 +318,7 @@
           interfaceId:common.interfaceIds.getOrderList,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
+          user_id: _self.user._id
         }
         // 排序
         params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};
