@@ -191,4 +191,8 @@
     width: 6.9rem;
     margin: 0 auto;
   }
+  .pc-shuru{
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+  }
 </style>
