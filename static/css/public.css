@@ -953,8 +953,9 @@ body,html{
 }
 
  .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin .yuan {
-  color: #f74d9f;
-  font-size:0.36rem;
+   color: #f74d9f;
+   font-size: 0.36rem;
+   font-weight: bolder;
 }
 
  .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-djs {
