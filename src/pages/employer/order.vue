@@ -156,7 +156,9 @@
         isInit: false,
         isPart: false,
         collectFlag: 0,
-        order: {},
+        order: {
+          user:{}
+        },
         bidders: [],
         imgSize: 0,
         shoViewMore:false,
