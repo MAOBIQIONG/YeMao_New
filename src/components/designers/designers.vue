@@ -1,14 +1,27 @@
 <template>
   <div class="">
     <!-- 上拉加载 -->
-    <scroller lock-x height="-220px" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
+    <scroller
+      v-model="pullUpDownStatus"
+      :height="height"
+      :lock-x="lockX"
+      :lock-y="lockY"
+      :use-pulldown="true"
+      :use-pullup="true"
+      :pulldown-config="pulldownConfig"
+      :pullup-config = "pullupConfig"
+      @on-scroll="scroll"
+      @on-scroll-bottom="onScrollBottom"
+      @on-pulldown-loading="pullDownLoading"
+      @on-pullup-loading="pullUpLoading"
+      ref="scroller"
+    >
       <div>
-        <div class="content">
+        <div class="">
+          <div :style="{ height: blank }"></div>
           <div class="sjs-list" v-for="item in designers">
             <div class="sjs-top" v-tap="{methods:toDetails, id:item._id}">
-              <div class="st-touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)}`}">
-                <!-- <img :src="checkAvatar(item.img)" /> -->
-              </div>
+              <div class="st-touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)}`}"></div>
               <div class="st-neirong">
                 <div class="sn-top">
                   <div class="st-nicheng">{{item.user_name}}</div>
@@ -37,7 +50,7 @@
             </div>
           </div>
         </div>
-        <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
       </div>
     </scroller>
   </div>
@@ -52,21 +65,54 @@
       Rater
     },
     props:{
-      value: String,              // 模糊查询字符串
-      // sortMark: Number,           // 排序标识
+      value: String,                   // 模糊查询字符串
+      blank: String,                   // 数据离屏幕高度的间隔
+      pulldownTop: String,             // 下拉提示框距离顶部的高度
     },
     data() {
       return {
         sortMark:0,
         designers: [],
-        pageNo: 0,
-        pageSize: 10,
+        // 加载
         onFetching: true,
-        showLoading: false,
-        loadtext: '上拉加载',
-        loadmore: '上拉加载',
-        loadrefresh: '正在加载...',
-        loadnomore: '没有更多数据了'
+        lockX:true,
+        lockY:false,
+        height:"-50",
+        pagination: {
+          pageNo: 0,
+          pageSize: 10
+        },
+        pullUpDownStatus: {
+          pulldownStatus: 'default',
+          pullupStatus: 'default'
+        },
+        pulldownConfig:{
+          content: '下拉刷新',
+          height: 60,
+          autoRefresh: false,
+          downContent: '下拉刷新',
+          upContent: '放开刷新',
+          loadingContent: '刷新中...',
+          clsPrefix: 'xs-plugin-pulldown-'
+        },
+        pullupConfig:{
+          content: '上拉加载',
+          pullUpHeight: 60,
+          height: 40,
+          autoRefresh: false,
+          downContent: '放开加载',
+          upContent: '上拉加载',
+          loadingContent: '',
+          clsPrefix: 'xs-plugin-pullup-'
+        },
+        loadMoreStatus:{
+          tip:"正在加载",
+          tipNoData:"没有更多数据了",
+          tipLoading:"正在加载",
+          showLoading:true,
+          show:true,
+        },
+        hasMore:true,
       }
     },
     activated: function () {
@@ -74,21 +120,49 @@
       var drm = this.$store.state.designerRefreshMark;
       if ( drm > 0 ) {
         this.$store.state.designerRefreshMark = 0;
-        this.pageNo = 0;
-        this.pageSize = 10;
+        this.pagination.pageNo = 0;
+        this.pagination.pageSize = 10;
         this.onFetching = true;
         this.loadMore()
       }
     },
     created: function () {
       console.log("designers created:")
-      this.loadMore()
+      var _self = this;
+      _self.loadMore()
+      /*****************重置下拉刷新提示框距离屏幕顶部距离******************/
+      setTimeout(function () {
+        if( !common.isNull(_self.pulldownTop) && _self.$route.path=='/home/designer' ){
+          var pulldowns = document.getElementsByClassName("xs-plugin-pulldown-container");
+          for (var i=0; i<pulldowns.length; i++) {
+            pulldowns[i].style.top = _self.pulldownTop;
+          }
+        }
+      },1000)
     },
     mounted: function () {
       console.log("designers mounted:")
-      this.$nextTick(() => {
-        this.$refs.scrollerBottom.reset({top: 0})
+      var _self = this;
+      _self.$nextTick(() => {
+        _self.$refs.scroller.reset({top: 0})
       })
+    },
+    destroyed: function() {
+      console.log("designers destroyed:");
+    },
+    watch:{
+      pullUpDownStatus:{
+        handler:function(val,oldval){
+          if(val.pullupStatus=="loading"){
+            this.loadMoreStatus.show=true;
+            if(this.hasMore == false){
+              this.loadMoreStatus.showLoading=false;
+            } else {
+              this.loadMoreStatus.showLoading=true;
+            }
+          }
+        }
+      }
     },
     methods: {
       toUrl: function (params) {
@@ -116,32 +190,42 @@
       checkAvatar (path) {
         return common.getAvatar(path)
       },
-      // 滑动
-      onScroll (sroll) {
-        // console.log("onScroll:"+JSON.stringify(sroll))
-      },
 
-      // 下拉加载下拉加载
-      onScrollBottom () {
-        // console.log("onScrollBottom:")
-        var _self = this
-        if (_self.onFetching) {
-          // do nothing
-        } else {
-          _self.onFetching = true
-          setTimeout(() => {
-            _self.loadMore()
-          }, 100)
-        }
+      //下拉刷新
+      refreshPageDate(){
+        let _self = this
+        _self.pagination.pageNo = 0;
+        _self.hasMore = true;
+        _self.loadMoreStatus.show=false;
+        _self.loadData();
+      },
+      //上拉加载
+      loadMore(){
+        let _self = this;
+        _self.loadData();
+      },
+      scroll(position){
+        // console.log("on-scroll",position);
+      },
+      pullDownLoading(){
+        console.log('on-pull-down-loading');
+        this.refreshPageDate();
+      },
+      pullUpLoading(){
+        console.log('on-pull-up-loading');
+        this.loadMore();
+      },
+      onScrollBottom(){
+        // console.log('on-scroll-bottom');
       },
 
       // 加载更多
-      loadMore () {
+      loadData () {
         var _self = this;
         var params = {
           interfaceId: common.interfaceIds.getDesigners,
-          pageNo: _self.pageNo,
-          pageSize: _self.pageSize
+          pageNo: _self.pagination.pageNo,
+          pageSize: _self.pagination.pageSize
         }
         //条件查询
         params.where = {};
@@ -188,56 +272,60 @@
         // 设计师
         var designers = data.designers || [];
         //判断页码是否为0
-        if( _self.pageNo == 0 ){
+        if( _self.pagination.pageNo == 0 ){
           _self.designers = designers;
         }else{
           _self.designers = [..._self.designers, ...designers];
         }
-        //重置页面滚动距离
-        _self.$nextTick(() => {
-          _self.$refs.scrollerBottom.reset()
-        })
-        //底部加载动画
-        _self.showLoading = false;
         //判断数据是否有一页
-        if ( designers.length < _self.pageSize ) {
-          _self.loadtext = _self.loadnomore;
+        _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePulldown();
+        _self.$refs.scroller.donePullup();
+        //判断数据是否有一页
+        if ( designers.length < _self.pagination.pageSize ) {
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.$refs.scroller.disablePullup();
         } else {
-          _self.loadtext = _self.loadmore;
           _self.onFetching = false
-          _self.pageNo++;
+          _self.pagination.pageNo++;
+          _self.loadMoreStatus.show=false;
         }
       },
 
       // 重新加载数据
       refreshData(mark){
         var _self = this;
-        _self.pageNo = 0;
+        _self.pagination.pageNo = 0;
         _self.sortMark = mark;
         _self.loadMore();
       },
-        beInvited(p){
-            var user = common.getObjStorage("userInfo") || {};
-            if(common.isNull(user._id)){
-                this.$router.push({name:'login'});
-            } else {
-                this.$router.push({name:'fabudingdan',query:{designerid:p.designerid}});
-            }
-            
-        },
-        canInvited(p){
-            var user = common.getObjStorage("userInfo") || {};
-
-            if(common.isNull(user._id)){return true}
-            if(user._id==p){
-                return false
-            }
-            return true;
+      beInvited(p){
+        var user = common.getObjStorage("userInfo") || {};
+        if(common.isNull(user._id)){
+          this.$router.push({name:'login'});
+        } else {
+          this.$router.push({name:'fabudingdan',query:{designerid:p.designerid}});
         }
+
+      },
+      canInvited(p){
+        var user = common.getObjStorage("userInfo") || {};
+        if(common.isNull(user._id)){return true}
+        if(user._id==p){
+          return false
+        }
+        return true;
+      }
     }
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
   @import "../../../static/css/index/search-jieguo.css";
+  .sjs-list{
+    margin-top: 0rem !important;
+    margin-bottom: 0.2rem;
+  }
 </style>

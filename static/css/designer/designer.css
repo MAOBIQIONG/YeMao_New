@@ -1,3 +1,10 @@
+.top-menu{
+  width: 100%;
+  background: #fff;
+  position: absolute;
+  top: 1.2rem;
+  z-index: 998;
+}
 .mokuai {
   height:1.8rem;
   background: white;
@@ -80,5 +87,4 @@
 }
 .content{
   background: #F2F2F2;
-  margin-bottom: 1.2rem;
 }

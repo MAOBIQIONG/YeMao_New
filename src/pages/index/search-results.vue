@@ -18,7 +18,7 @@
       </tab>
     </div>
     <div class="content content-p">
-        <designers :is="index==0?'designers':'orders'" :value="searchValue"></designers> <!-- keep-alive -->
+        <designers :is="index==0?'designers':'orders'" :value="searchValue" :blank="height"></designers> <!-- keep-alive -->
     </div>
   </div>
 </template>
@@ -37,7 +37,8 @@
     data() {
       return {
         index: 0,
-        searchValue:''
+        searchValue:'',
+        height:'0.3rem',             // 数据离屏幕高度的间隔
       }
     },
     created: function () {

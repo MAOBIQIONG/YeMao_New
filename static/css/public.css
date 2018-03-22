@@ -127,6 +127,10 @@ body,html{
 .p-static{ position: static !important;  }
 .p-relative{ position: relative;}
 
+/**显示**/
+.dp-n{display: none;}
+.dp-b{display: block;}
+
 /*头部公共样式*/
 .header {
   position: fixed;
@@ -949,8 +953,9 @@ body,html{
 }
 
  .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin .yuan {
-  color: #f74d9f;
-  font-size:0.36rem;
+   color: #f74d9f;
+   font-size: 0.36rem;
+   font-weight: bolder;
 }
 
  .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-djs {
