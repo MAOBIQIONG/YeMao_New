@@ -17,7 +17,7 @@
       ref="scroller"
     >
       <div>
-        <div class="content">
+        <div class="">
           <div :style="{ height: blank }"></div>
           <div class="sjs-list" v-for="item in designers">
             <div class="sjs-top" v-tap="{methods:toDetails, id:item._id}">
@@ -75,9 +75,9 @@
         designers: [],
         // 加载
         onFetching: true,
-        lockX:true,
-        lockY:false,
-        height:"-60",
+        lockX: true,
+        lockY: false,
+        height: '',
         pagination: {
           pageNo: 0,
           pageSize: 10
