@@ -217,7 +217,7 @@
         onFetching: true,
         lockX:true,
         lockY:false,
-        height:"-60",
+        height:"-50",
         pagination: {
           pageNo: 0,
           pageSize: 10

@@ -75,9 +75,9 @@
         designers: [],
         // 加载
         onFetching: true,
-        lockX: true,
-        lockY: false,
-        height: '',
+        lockX:true,
+        lockY:false,
+        height:"-50",
         pagination: {
           pageNo: 0,
           pageSize: 10
