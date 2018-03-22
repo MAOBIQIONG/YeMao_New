@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class="templete-body">
     <!--头部导航-->
-    <div class="header">
+    <div class="header-static"></div>
+    <div class="header p-absolute">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
     </div>
@@ -313,17 +314,17 @@ export default {
                 if( data && (data.code == 200) ){
                     if(params.data.like_type ===1) {
                         tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
-                    } else if (params.data.like_type ===2){             
+                    } else if (params.data.like_type ===2){
                         tips = commentArrLike.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
                     }
-                   
+
                 }else{
                     if(params.data.like_type ===1) {
                         tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
                     }else if(params.data.like_type ===2){
                         tips = commentArrLike.likeFlag == 0 ? '取消失败！' : '点赞失败！';
                     }
-                    
+
                 }
                 _self.showToast(tips);
             })
@@ -431,7 +432,7 @@ export default {
             data.replys = [];
             if(_self.loadPageEnd === true){
                     _self.comments.push(data);
-            }       
+            }
             // 重置评论框内容
             _self.comment_text = '';
         },
