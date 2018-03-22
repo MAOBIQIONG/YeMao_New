@@ -123,6 +123,7 @@ export default {
         history: false,
         tapToClose: true,
         showHideOpacity:true,
+        hideAnimationDuration:false,
         index: index
       }, this.options)
       this.photoswipe = new PhotoSwipe(this.$el, UI, this.imgs, options);
