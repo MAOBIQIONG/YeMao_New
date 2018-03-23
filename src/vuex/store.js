@@ -23,6 +23,8 @@ const state = {
   orderTabIndex:0,
   //我的订单页面动画方向
   directionOrderTab:0,
+  //案例列表刷新状态
+  caseRefreshMark:0,
 
 }
 

@@ -431,7 +431,7 @@ export default {
             data.likeFlag = 0;
             data.replys = [];
             if(_self.loadPageEnd === true){
-                    _self.comments.push(data);
+              _self.comments.unshift(data);
             }
             // 重置评论框内容
             _self.comment_text = '';

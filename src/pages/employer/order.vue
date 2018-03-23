@@ -271,13 +271,13 @@
 
       // 订单详情字数限制
       getMaxlen(text){
-        var str = '';
+        var str = '',minLen=6;
         var _self = this;
-        var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
+        var width = 0.5,fontSize=0.28,lines=3;// margin:.5,font-size:.3,行数:3;
         var num = common.getMaxlenInlineNum(width,fontSize,lines);
         if( text && text.length > num ){
           _self.shoViewMore = true;
-          str = text.substring(0,num-6) + '...';
+          str = text.substring(0,num-minLen) + '...';
         }else{
           _self.shoViewMore = false;
           str = text;

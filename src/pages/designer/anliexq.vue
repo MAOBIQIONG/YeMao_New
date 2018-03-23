@@ -396,6 +396,7 @@
           // console.log(response)
           let data = response.data;
           if (data.code == 200) {
+            _self.$store.state.caseRefreshMark = 1;
             _self.chw.likeFlag = _self.chw.likeFlag == 1 ? 0 : 1;
             _self.chw.like += _self.chw.likeFlag == 1 ? 1 : -1;
           } else {
@@ -423,6 +424,7 @@
           console.log(response)
           let data = response.data;
           if (data.code == 200) {
+            _self.$store.state.caseRefreshMark = 1;
             _self.showToast("评论成功!")
             _self.addCommentHmtl(params.data);
           } else {
@@ -468,6 +470,7 @@
         }, (response) => {
           let data = response.data;
           if (data.code == 200) {
+            _self.$store.state.caseRefreshMark = 1;
             _self.goback();
           } else {
             _self.showToast("删除失败!")

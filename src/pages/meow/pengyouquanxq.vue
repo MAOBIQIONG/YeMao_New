@@ -551,7 +551,6 @@
           // 修改评论数量
           _self.meow.comments += 1;
           //_self.comments.unshift(data);
-          _self.comments.push(data);
         }else{
           if( data.floor == 2 ){ // 回复
             data.answer = {

@@ -498,7 +498,7 @@ export default {
                 _self.chw.comments += 1;
                 console.log(_self.loadPageEnd);
                 if(_self.loadPageEnd === true){
-                    _self.comments.push(data);
+                    _self.comments.unshift(data);
                 }
             }
             // 重置评论框内容
