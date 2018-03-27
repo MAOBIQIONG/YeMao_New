@@ -478,9 +478,9 @@ body,html{
 }
 
 .sjs-list .sjs-top .st-neirong .sn-top .st-nicheng {
-  width: 1.4rem;
   height: 0.4rem;
   float: left;
+  margin-right: 0.2rem;
 }
 
 .sjs-list .sjs-top .st-neirong .sn-top .st-pingxin {
@@ -488,11 +488,20 @@ body,html{
   width: 1.5rem;
   height: 0.4rem;
 }
-
-.sjs-list .sjs-top .st-neirong .sn-top .st-pingxin img {
+.st-pingxin {
+  float: left;
+  width: 1.5rem;
+  height: 0.4rem;
+}
+.sjs-list .sjs-top .st-neirong .sn-bottom .st-pingxin {
+  float: left;
+  width: 1.5rem;
+  height: 0.4rem;
+  padding-top: 0.06rem;
+}
+.sjs-list .sjs-top .st-neirong .sn-bottom .st-pingxin img {
   width: 100%;
 }
-
 .sjs-list .sjs-top .st-neirong .sn-bottom {
   height: 0.4rem;
   font-size: 0.2rem;
@@ -517,7 +526,17 @@ body,html{
   margin-right: 0.14rem;
   margin-top: 0.05rem;
 }
-
+.sjs-list .sjs-top .st-neirong .sn-top .sb-qian {
+  border: 1px solid #ffe354;
+  background-color: #fff9d9;
+  border-radius: 0.08rem;
+  float: left;
+  font-size: 0.24rem;
+  text-align: center;
+  color: #cda566;
+  padding: 0.01rem 0.06rem;
+  margin-right: 0.14rem;
+}
 .sjs-list .sjs-top .st-neirong .sn-bottom .sb-ysm {
   float: left;
   border: 1px solid #6ddacf;
@@ -528,7 +547,16 @@ body,html{
   padding: 0.01rem 0.06rem;
   margin-top: 0.05rem;
 }
-
+.sjs-list .sjs-top .st-neirong .sn-top .sb-ysm {
+  float: left;
+  border: 1px solid #6ddacf;
+  font-size: 0.24rem;
+  color: #6ddacf;
+  text-align: center;
+  border-radius: 0.08rem;
+  margin-right: 0.14rem;
+  padding: 0.01rem 0.06rem;
+}
 .sjs-list .sjs-top .st-neirong .sn-bottom .sb-yrz {
   float: left;
   border: 1px solid #142aa4;
@@ -538,7 +566,15 @@ body,html{
   padding: 0.01rem 0.06rem;
   margin-top: 0.05rem;
 }
-
+.sjs-list .sjs-top .st-neirong .sn-top .sb-yrz {
+  float: left;
+  border: 1px solid #142aa4;
+  color: #142aa4;
+  font-size: 0.24rem;
+  text-align: center;
+  border-radius: 0.08rem;
+  padding: 0.01rem 0.06rem;
+}
 .sjs-list .sjs-top .st-jiageleixin {
   float: right;
   height: 0.8rem;

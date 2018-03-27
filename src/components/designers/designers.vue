@@ -25,15 +25,21 @@
               <div class="st-neirong">
                 <div class="sn-top">
                   <div class="st-nicheng">{{item.user_name}}</div>
-                  <div class="st-pingxin" style="width: 2.5rem">
-                    <rater v-model="item.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
-                  </div>
-                </div>
-                <div class="sn-bottom">
-                  <div class="sb-nianling">{{item.working_years}}年</div>
                   <div class="sb-qian" v-if="item.authenticating_state>5">签</div>
                   <div class="sb-ysm" v-if="item.authenticating_state>1">已实名</div>
                   <div class="sb-yrz" v-if="item.authenticating_state>3">已认证</div>
+                  <!--<div class="st-pingxin" style="width: 2.5rem">-->
+                    <!--<rater v-model="item.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>-->
+                  <!--</div>-->
+                </div>
+                <div class="sn-bottom">
+                  <div class="sb-nianling">{{item.working_years}}年</div>
+                  <div class="st-pingxin" style="width: 2.5rem">
+                    <rater v-model="item.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
+                  </div>
+                  <!--<div class="sb-qian" v-if="item.authenticating_state>5">签</div>-->
+                  <!--<div class="sb-ysm" v-if="item.authenticating_state>1">已实名</div>-->
+                  <!--<div class="sb-yrz" v-if="item.authenticating_state>3">已认证</div>-->
                 </div>
               </div>
               <div class="st-jiageleixin">
