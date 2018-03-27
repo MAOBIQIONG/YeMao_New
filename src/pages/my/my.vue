@@ -3,7 +3,7 @@
     <!--头部-->
     <div class="mine-top">
       <div class="shezhi" v-tap="{ methods:toUrlAfterLogin, pagename:'set' }">
-          <img src="../../../static/images/my/shezhi1.png" />
+        <img src="../../../static/images/my/shezhi1.png" />
       </div>
       <div class="tu-nicheng">
         <div class="touxiang" v-tap="{ methods:modifyAvatar }" :style="{backgroundImage:`url(${checkAvatar(userInfo.img)})`}">
@@ -62,8 +62,8 @@
     <div class="yijian">
       <div class="liebiao">
         <!--<div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">-->
-          <!--<div class="xingxi">客服中心</div>-->
-          <!--<div class="list-right"></div>-->
+        <!--<div class="xingxi">客服中心</div>-->
+        <!--<div class="list-right"></div>-->
         <!--</div>-->
         <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'yijian'}">
           <div class="xingxi">意见反馈</div>
@@ -152,20 +152,20 @@
       toQa(){
         var _self = this;
         if( !common.isNull(_self.userInfo._id) ){
-            _self.$router.push({name:'shouchangweida',query:{myid:_self.userInfo._id}})
+          _self.$router.push({name:'shouchangweida',query:{myid:_self.userInfo._id}})
         } else {
-            console.log('没有获取用户信息');
-            _self.toUrl({pagename:"login"});
+          console.log('没有获取用户信息');
+          _self.toUrl({pagename:"login"});
         }
 
       },
       toUrlAfterLogin(params){
         var _self = this;
         if( !common.isNull(_self.userInfo._id) ){
-            _self.toUrl(params);
+          _self.toUrl(params);
         } else {
-            console.log('没有获取用户信息');
-            _self.toUrl({pagename:"login"});
+          console.log('没有获取用户信息');
+          _self.toUrl({pagename:"login"});
         }
       },
       // loading

@@ -42,7 +42,7 @@ const myshare ={
     }
     if( params ){
       if( myshare.isNull(params.href) || myshare.isNull(params.title) ||
-          myshare.isNull(params.content) || myshare.isNull(params.thumbs) ){
+        myshare.isNull(params.content) || myshare.isNull(params.thumbs) ){
         alert("缺少分享参数!");
         return;
       }
