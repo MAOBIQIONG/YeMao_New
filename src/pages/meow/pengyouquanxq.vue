@@ -8,7 +8,7 @@
 
     <!--  喵喵列表-->
     <div class="content">
-       <scroller
+      <scroller
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"
@@ -104,16 +104,16 @@
     </div>
     <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete" :class="showSheet==true?'':'vux-actionsheet-rec'"></actionsheet>
     <div class="chat-box">
-       <!-- 评论输入框 -->
-       <div class="input-box">
-         <div class="input">
-           <input v-model="comment_text" type="text" :placeholder="comment_placeholder" v-on:blur.lazy="commentBlur" ref="commentInput">
-         </div>
-         <div class="send-btn" :class="is_submit?'hover':''">
-           <div class="btn" v-tap="{methods:commentMeow}">发送</div>
-         </div>
-       </div>
-     </div>
+      <!-- 评论输入框 -->
+      <div class="input-box">
+        <div class="input">
+          <input v-model="comment_text" type="text" :placeholder="comment_placeholder" v-on:blur.lazy="commentBlur" ref="commentInput">
+        </div>
+        <div class="send-btn" :class="is_submit?'hover':''">
+          <div class="btn" v-tap="{methods:commentMeow}">发送</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -279,7 +279,7 @@
       show (index) {
         this.$refs.previewer.show(index)
       },
-　　　 //点赞
+      //点赞
       dianzan(){
         var _self = this;
         if( common.isNull(_self.userInfo._id) ){
@@ -550,7 +550,7 @@
         if( data.floor == 0 ){ // 一级评论
           // 修改评论数量
           _self.meow.comments += 1;
-          //_self.comments.unshift(data);
+          _self.comments.unshift(data);
         }else{
           if( data.floor == 2 ){ // 回复
             data.answer = {
@@ -704,11 +704,11 @@
     padding-left: 0.5rem;
   }
   .previewer-img{
-      width:100%;
-      height:100%;
-      background-repeat: no-repeat;
-      background-position:center center;
-      background-size: cover
+    width:100%;
+    height:100%;
+    background-repeat: no-repeat;
+    background-position:center center;
+    background-size: cover
   }
   .pd-0{
     padding: 0.1rem;
