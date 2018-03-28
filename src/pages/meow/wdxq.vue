@@ -4,7 +4,7 @@
     <div class="header-static"></div>
     <div class="header p-absolute">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
-      <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
+      <div class="header-right" v-tap="{methods:shareApp}"><img src="../../../static/images/fx1.png" /></div>
     </div>
     <div class="content">
       <scroller
@@ -686,7 +686,28 @@ export default {
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
+        },
+
+
+      // 分享
+      shareApp() {
+        var _self = this;
+        if( common.isNull(_self.chw.title) || common.isNull(_self.chw.description) ||
+          common.isNull(_self.chw._id) ){
+          _self.showToast("分享失败，缺少分享参数！");
+          return;
         }
+        var title = _self.chw.title.length>20 ? _self.chw.title.substring(0,20)+'...' : _self.chw.title;
+        var description = _self.chw.description.length>30 ? _self.chw.description.substring(0,30)+'...' : _self.chw.description;
+        var shareUrl = 'http://101.132.96.90:8080/yemaoServer/appShare/wdxq?id='+_self.chw._id;
+            // shareUrl = 'http://192.168.10.99:8080/yemaoServer/appShare/wdxq?id='+_self.chw._id;
+        myshare.init({
+          href: shareUrl,
+          title: title,
+          content: description,
+          thumbs: ['./static/images/logo.png'],
+        })
+      },
     }
 }
 </script>

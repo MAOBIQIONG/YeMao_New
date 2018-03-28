@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header header1">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
-      <div class="header-right fx"><img src="../../../static/images/fx.png" /></div>
+      <div class="header-right fx" v-tap="{methods:shareApp}"><img src="../../../static/images/fx.png" /></div>
     </div>
     <div class="content" :style="'background-image:url('+checkImg(activity.poster_img)+')'">
       <div class="bottom">
@@ -124,6 +124,26 @@
           }else{
             _self.showToast("报名失败！");
           }
+        })
+      },
+
+      // 分享
+      shareApp() {
+        var _self = this;
+        if( common.isNull(_self.activity.title) || common.isNull(_self.activity.description) ||
+            common.isNull(_self.activity._id) ){
+          _self.showToast("分享失败，缺少分享参数！");
+          return;
+        }
+        var title = _self.activity.title.length>20 ? _self.activity.title.substring(0,20)+'...' : _self.activity.title;
+        var description = _self.activity.description.length>30 ? _self.activity.description.substring(0,30)+'...' : _self.activity.description;
+        var shareUrl = 'http://101.132.96.90:8080/yemaoServer/appShare/haibao?id='+_self.activity._id;
+            // shareUrl = 'http://192.168.10.99:8080/yemaoServer/appShare/haibao?id='+_self.activity._id;
+        myshare.init({
+          href: shareUrl,
+          title: title,
+          content: description,
+          thumbs: ['./static/images/logo.png'],
         })
       },
 
