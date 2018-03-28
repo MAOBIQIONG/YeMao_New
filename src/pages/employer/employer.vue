@@ -55,7 +55,7 @@
         ref="scroller"
       >
         <div>
-          <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
+          <div class="gz-list" v-for="(order,index) in orderList" :key="index" v-tap="{methods:toDetails,id:order._id,uid:order.user._id}">
             <div class="gz-top">
               <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}"></div>
               <div class="gz-nicheng">{{order.user.user_name}}</div>
@@ -64,7 +64,8 @@
             <div class="gz-timeleixin">
               <div class="gz-time">
                 <!--<span><img src="../../../static/images/index/time.png"/></span>-->
-                <span>{{getDateDiff(order.refresh_date)}}</span>
+                <!-- <span>{{getDateDiff(order.refresh_date)}}</span> -->
+                <span>{{footPrintTime(order.footprint_date)}}&nbsp;·&nbsp;{{order.project_region}}</span>
               </div>
               <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
             </div>
@@ -159,6 +160,16 @@
         _self.onFetching = true;
         _self.loadMore()
       }
+
+      let footprint2 = common.getObjStorage('footprint2');
+      if(!common.isNull(footprint2)){
+        _self.orderList.reduce(function(a,c,i,arr){
+          if(c._id==footprint2.id){
+            c.footprint_date= Date.parse(new Date());
+          }
+        },undefined)
+      }
+      common.delStorage('footprint2');
     },
     created: function () {
       var _self = this;
@@ -202,8 +213,12 @@
         this.toUrl(params);
       },
       // 详情页
-      toDetails (id) {
-        this.$router.push({name: 'emporder', query: {id: id}})
+      toDetails (params) {
+        var _self = this;
+        if(_self.user && _self.user._id == params.uid){
+          common.setStorage('footprint2',{id:params.id});
+        }
+        this.$router.push({name: 'emporder', query: {id: params.id}})
       },
       /*******************************************************/
       // 项目类型名称
@@ -333,6 +348,22 @@
         })
       },
 
+      footPrintTime(date){
+          let now = Date.parse(new Date());
+          let differ = (now-date)/ 1000 / 60;
+          if(differ<5){
+            return "刚刚来过";
+          }
+          if(differ>=5 && differ < 60){
+            return parseInt(differ) + "分钟前来过";
+          }
+          if(differ>=60 && differ < 1440){
+            return parseInt(differ/ 60) + "小时前来过";
+          }
+          if(differ>=1440){
+            return parseInt(differ/ 1440) + "天前来过";
+          }
+      },
       setOrderData(data){
         var _self = this;
         // 订单
