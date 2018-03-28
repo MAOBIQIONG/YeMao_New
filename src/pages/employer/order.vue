@@ -59,7 +59,7 @@
               <span><img src="../../../static/images/employer/06.png"/></span><span>地区：</span>
             </div>
             <div class="box-right">
-              <span>{{order.project_region}}</span>
+              <span>{{order.project_region}}</span> 
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="tu"></div>
         <p v-if="bidders.length>0">已有<span>{{bidders.length}}</span>位设计师抢单</p>
         <p v-if="bidders.length==0">还没有设计师抢单</p>
-        <div class="gengduo" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }"></div>
+        <!-- <div class="gengduo" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }"></div> -->
       </div>
 
       <div class="od-list" style="padding-bottom: .25rem">

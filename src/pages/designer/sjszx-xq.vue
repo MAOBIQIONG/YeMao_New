@@ -49,7 +49,7 @@
             收藏设计师
           </div>
           <div class="scsjs ysc" v-else>
-            已收藏
+            取消收藏
           </div>
         </div>
 
