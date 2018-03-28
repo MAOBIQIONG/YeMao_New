@@ -46,9 +46,11 @@
             <div class="gzpj-list" v-for="item in comments">
               <div class="pl-top">
                 <div class="left">
-                  <img :src="checkAvatar(item.user.img)"/>
+                  <img v-if="item.anonymous==0" :src="checkAvatar(item.user.img)"/>
+                  <img v-else :src="checkAvatar('')"/>
                 </div>
-                <div class="center">{{item.user.user_name}}</div>
+                <div v-if="item.anonymous==0" class="center">{{item.user.user_name}}</div>
+                <div v-else class="center">匿名</div>
                 <div class="right" v-if="item.type==0">{{getDateDiff(item.create_date)}}</div>
               </div>
               <div class="pl-content">{{item.content}}</div>
@@ -81,6 +83,9 @@
         <div class="input">
           <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
         </div>
+        <!--<div class="anonymous-box" v-tap="{methods:anonymousFun}">-->
+          <!--<div class="anonymous" :class="anonymous==1?'hover':''">匿</div>-->
+        <!--</div>-->
         <div class="send-btn" :class="is_submit?'hover':''">
           <div class="btn" v-tap="{methods:commentchw}">发送</div>
         </div>
@@ -121,6 +126,7 @@
         comment_placeholder: '填写评论',
         comment_text: '',
         answer_id:'',
+        anonymous:0, // 匿名:0、不匿名，1、匿名。
         // confirm
         confirmShow:false,
         confirmMsg:'确认删除？',
@@ -240,7 +246,6 @@
           _self.like();
         }
       },
-
       //点赞效果
       commentchw() {
         var _self = this;
@@ -258,6 +263,12 @@
       },
       onCancel(){
         console.log("onCancel:")
+      },
+
+      /**匿名**/
+      anonymousFun(){
+        var _self = this;
+        _self.anonymous = _self.anonymous==0 ? 1 : 0;
       },
 
       //下拉刷新
@@ -416,6 +427,7 @@
             content: _self.comment_text,          // 评论内容
             comment_type: 1,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
             answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
+            anonymous: _self.anonymous,           // 匿名:0、不匿名，1、匿名。
           }
         };
         this.$axios.post('/mongoApi', {

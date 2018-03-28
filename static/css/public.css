@@ -1362,3 +1362,102 @@ body,html{
 .vux-actionsheet-rec .weui-actionsheet{
   opacity: 0;
 }
+
+/***********单选框**********/
+/**
+<div class="radiocheck">
+        <div class="frame">
+          <input checked="checked" id="anonymous" name="check" type="checkbox">
+          <label class="check" for="anonymous">
+            <!--<i class="fa fa-check"></i>-->
+            <span class="fa fa-font">匿</span>
+          </label>
+        </div>
+      </div>
+**/
+.radiocheck
+{
+  height: 1rem;
+  line-height: 1rem;
+  font-size: 0.28rem;
+}
+.radiocheck .frame
+{
+  display: flex;
+  flex-flow: row nowrap;
+}
+.radiocheck .frame input
+{
+  display: none;
+}
+.radiocheck .frame label
+{
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: 0.25rem 0.1rem;
+  background: #fff;
+  transition: all 0.3s ease-in-out;
+  font-size: 0.24rem;
+  color: #FFF;
+  -webkit-font-smoothing: antialiased;
+  border: 1px solid #f65aa6;
+}
+.radiocheck .frame label.radio
+{
+  border-radius: 100%;
+}
+.radiocheck .frame label.check
+{
+  border-radius: 0.1rem;
+}
+.radiocheck .frame label .fa
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transition: all 0.3s ease-in-out;
+  line-height: 0.5rem;
+  text-align: center;
+}
+.radiocheck .frame input:checked + label
+{
+  background: #f65aa6;
+}
+.radiocheck .frame input:checked + label .fa
+{
+  opacity: 1;
+  -webkit-transform: scale(1);
+}
+.radiocheck .frame input:checked + label .fa.fa-check
+{
+  background: url("../images/right.png") center no-repeat;
+  background-size: .4rem .4rem;
+}
+.radiocheck .frame input:checked + label .fa.fa-font
+{
+  font-size: 0.30rem;
+}
+
+/**匿名**/
+.anonymous-box{
+  height: 1rem;
+  font-size: 0.28rem;
+}
+.anonymous{
+  width: 0.5rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  margin: 0.25rem 0.1rem;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.1rem;
+  background: #ccc;
+}
+.anonymous.hover{
+  background: #f65aa6;
+}
