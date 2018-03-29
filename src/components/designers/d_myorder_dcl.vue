@@ -20,8 +20,9 @@
         :class="{scroller:true}"
     >
         <div>
-            <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
+            <div class="ddlist-sjsdai" v-for="(item,index) in orderList" :key="index">
                 <div class="ds-top" @click="toDetails(item)">
+                  <!-- <div class="order__tag" v-if="item.invited_state==1">受邀</div> -->
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"  v-if="item.imgs"></div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
@@ -58,6 +59,7 @@
                         <template  v-if="!isNull(item.project_winBidder)" >
                             <template v-if="item.project_winBidder === user_id" >
                                 <template v-if="item.project_state==1">
+                                  <div class="db-qrdd" v-if="item.invited_state==1" v-tap="{methods:showConfirm,id:item._id,type:'refuseInvitation'}">拒绝邀请</div>
                                     <div class="db-qrdd" @click="improveTheOrder(item._id)">完善订单</div>
                                     <div class="db-qrdd"  v-tap="{methods:showConfirm,id:item._id,type:'confirmTheOrderByDesigner'}">确认订单</div>
                                 </template>
@@ -141,7 +143,7 @@ export default {
     },
     data(){
         return {
-            confirmType:"",//confirmTheOrderByDesigner 设计师确认订单
+            confirmType:"",//confirmTheOrderByDesigner 设计师确认订单,refuseInvitation//拒绝邀请
             cancel_id:null,
             order_id:null,
             orderList: [],
@@ -515,12 +517,17 @@ export default {
             if(params.type == "canclePart"){
                 this.confirmMsg = "确定取消抢单吗？"
             } 
+            if(params.type == "refuseInvitation"){
+                this.confirmMsg = "确定拒绝吗？"
+            } 
         },
         compOnConfirm(){
             if(this.confirmType=="confirmTheOrderByDesigner"){
                 this.confirmTheOrderByDesigner();
             } else if(this.confirmType=="canclePart"){
                 this.canclePart();
+            } else if(this.confirmType=="refuseInvitation"){
+                this.refuseInvitation();
             }
         },
 
@@ -529,9 +536,51 @@ export default {
         },
         onSlideNext(){
             this.$emit('on-slide-next')
-        }
+        },
+
+        refuseInvitation(){
+          let _self = this;
+          let params = {
+            interfaceId:common.interfaceIds.modifyOrders,
+            coll:common.collections.orderList,
+            data:{invited_state:2,project_winBidder:''},
+            wheredata:{
+                _id:_self.order_id,
+            },
+          };
+          _self.$axios.post('/mongoApi', {
+              params: params
+          }, response => {
+              console.log(response)
+              var data = response.data;
+              if( data.code == 200 ){
+                _self.showToast("已拒绝");
+              }else{
+                _self.showToast("拒绝失败!");
+              }
+          });
+        },
     }
 }
 </script>
+<style scoped>
+.ds-top{
+  position:relative;
+  overflow:hidden;
+}
+.order__tag{
+  position:absolute;
+  transform:rotate(-45deg)translate(-50%,30%);
+  transform-origin:0 0;
+  -webkit-transform-origin:0 0;
+  -webkit-transform:rotate(-45deg)translate(-50%,30%);
+  width:2rem;
+  text-align:center;
+  padding:0.1rem 0.1rem;
+  font-size:0.28rem;
+  color:#fff;
+  background-color:rgb(255, 153, 0);
+}
+</style>
 
 

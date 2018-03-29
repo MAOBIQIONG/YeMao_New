@@ -62,41 +62,50 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'cancelOrder'}">取消订单</div>
-                        <template v-if="item.sub.length>0">
-                            <template v-if="isNull(item.project_winBidder)">
-                                <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
-                                <div class="db-sxdd noRefresh" v-else>刷新订单</div>
-                                <div class="db-qrdd"
-                                    v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
-                                 >
-                                 选择设计师
-                                </div>
-                            </template>
-
-                            <template v-else>
-                                <!-- <div class="db-sxdd">
-                                    刷新订单
-                                </div> -->
-                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
-                                    确认完善信息
-                                </div>
-                                <div v-else class="db-qrdd"  style="display: none">
-                                    <!-- 等待完善订单 -->
-                                </div>
-                            </template>
+                        <template v-if="item.invited_state==2">
+                            <div class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'reselect'}">
+                                      重新选择
+                            </div>
+                            <div class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'republish'}">
+                                      重新发布
+                            </div>
                         </template>
                         <template v-else>
+                          <template v-if="item.sub.length>0">
+                              <template v-if="isNull(item.project_winBidder)">
+                                  <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
+                                  <div class="db-sxdd noRefresh" v-else>刷新订单</div>
+                                  <div class="db-qrdd"
+                                      v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
+                                  >
+                                  选择设计师
+                                  </div>
+                              </template>
 
+                              <template v-else>
+                                  <!-- <div class="db-sxdd">
+                                      刷新订单
+                                  </div> -->
+                                  <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
+                                      确认完善
+                                  </div>
+                                  <div v-else class="db-qrdd"  style="display: none">
+                                      <!-- 等待完善订单 -->
+                                  </div>
+                              </template>
+                          </template>
+                        <template v-else>
                             <template  v-if="isNull(item.project_winBidder)">
                                 <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                                 <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                             </template>
                             <template v-else>
                                 <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
-                                        确认完善信息
+                                        确认完善
                                 </div>
                             </template>
 
+                        </template>
                         </template>
 
                     </div>
@@ -166,7 +175,7 @@ export default {
     },
     data(){
         return {
-            confirmType:"",//cancelOrder取消订单，commitImprove确认完善,refreshOrders刷新订单
+            confirmType:"",//cancelOrder取消订单，commitImprove确认完善,refreshOrders刷新订单,reselect重新选择，republish	重新发布
             order_id:null,
             orderList: [],
             pagination: {
@@ -552,8 +561,10 @@ export default {
                 this.confirmMsg = '确认刷新订单吗？'
             } else if(params.type == "commitImprove"){
                 this.confirmMsg = '确认信息已完善吗？'
+            } else if(params.type == "republish"){
+                this.confirmMsg = '确认重新发布吗？'
             }
-            console.log(this.order_id);
+            // console.log(this.order_id);
         },
         renderAfterOperate(){
             let _self = this;
@@ -582,6 +593,31 @@ export default {
             if(this.confirmType =="commitImprove"){
                 this.updateStateAfterImprove();
             }
+            if(this.confirmType == "republish"){
+                this.republish();
+            }
+        },
+        republish(){
+          let _self = this;
+          let params = {
+            interfaceId:common.interfaceIds.modifyOrders,
+            coll:common.collections.orderList,
+            data:{invited_state:0,project_winBidder:''},
+            wheredata:{
+                _id:_self.order_id,
+            },
+          };
+          _self.$axios.post('/mongoApi', {
+              params: params
+          }, response => {
+              console.log(response)
+              var data = response.data;
+              if( data.code == 200 ){
+                _self.showToast("已拒绝");
+              }else{
+                _self.showToast("拒绝失败!");
+              }
+          });
         },
     }
 }
