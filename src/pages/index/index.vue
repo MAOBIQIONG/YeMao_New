@@ -126,8 +126,8 @@
           </div>
         </div>
         <!--雇主列表-->
-        <div class="content"style="padding-bottom:0.2rem">
-          <div class="gz-list" v-for="order in orderList" v-tap="{methods:toDetails,id:order._id}">
+        <div class="content" style="padding-bottom:0.2rem">
+          <div class="gz-list" v-for="order in orderList" v-tap="{methods:toDetails,id:order._id,uid:order.user._id}">
             <div class="gz-top">
               <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}"></div>
               <div class="gz-nicheng">{{order.user.user_name}}</div>
@@ -138,7 +138,8 @@
                 <span class="imge">
                   <!--<img src="../../../static/images/index/time.png"/>-->
                 </span>
-                <span>{{getDateDiff(order.refresh_date)}}</span>
+                <!-- <span>{{getDateDiff(order.refresh_date)}}</span> -->
+                <span>{{footPrintTime(order.footprint_date)}}&nbsp;·&nbsp;{{order.project_region}}</span>
               </div>
               <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
             </div>
@@ -279,6 +280,15 @@
       if(user.authenticating_state===0 && parseInt(isAuthenicatedTip) === 0){
           _self.confirmShow = true;
       }
+      let footprint = common.getObjStorage('footprint');
+      if(!common.isNull(footprint)){
+        _self.orderList.reduce(function(a,c,i,arr){
+          if(c._id==footprint.id){
+            c.footprint_date= Date.parse(new Date());
+          }
+        },undefined)
+      }
+      common.delStorage('footprint');
     },
     created: function () {
       var _self = this;
@@ -313,6 +323,10 @@
       },
       // 详情页
       toDetails (params) {
+        var _self = this;
+        if(_self.user && _self.user._id == params.uid){
+          common.setStorage('footprint',{id:params.id});
+        }
         this.$router.push({name: 'emporder', query: {id: params.id}})
       },
       // 根据类别id查询订单
@@ -564,6 +578,24 @@
         onCancel(){
             // this.$store.state.isAuthenicatedTip = 1;
             common.setStorage('isAuthenicatedTip',1);
+        },
+        footPrintTime(date){
+            let now = Date.parse(new Date());
+            let differ = (now-date)/ 1000 / 60;
+            if(differ<5){
+              return "刚刚来过";
+            }
+            if(differ>=5 && differ < 60){
+              return parseInt(differ) + "分钟前来过";
+            }
+            if(differ>=60 && differ < 1440){
+              return parseInt(differ/ 60) + "小时前来过";
+            }
+            if(differ>=1440){
+              return parseInt(differ/ 1440) + "天前来过";
+            }
+
+
         }
 
     }

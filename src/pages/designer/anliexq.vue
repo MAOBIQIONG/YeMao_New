@@ -43,15 +43,21 @@
           </div>
           <!--评价内容-->
           <div class="pingjia-list">
-            <div class="gzpj-list" v-for="item in comments">
+            <div class="gzpj-list" v-for="(item,index) in comments" :key="index">
               <div class="pl-top">
                 <div class="left">
                   <img v-if="item.anonymous==0" :src="checkAvatar(item.user.img)"/>
                   <img v-else :src="checkAvatar('')"/>
                 </div>
-                <div v-if="item.anonymous==0" class="center">{{item.user.user_name}}</div>
-                <div v-else class="center">匿名</div>
+                <div v-if="item.anonymous==0" class="center">
+                  <span class="comment__username">{{item.user.user_name}}</span>
+                  <div class="sb-qian" v-if="item.user.authenticating_state>5">签</div>
+                  <div class="sb-ysm" v-if="item.user.authenticating_state>1">已实名</div>
+                  <div class="sb-yrz" v-if="item.user.authenticating_state>3">已认证</div>
+                </div>
+                <div v-else class="center">匿名用户</div>
                 <div class="right" v-if="item.type==0">{{getDateDiff(item.create_date)}}</div>
+                <div class="right comment__employee" v-if="item.type==1">雇主评价</div>
               </div>
               <div class="pl-content">{{item.content}}</div>
               <div class="pl-bottom" v-if="item.type==1">
@@ -521,5 +527,49 @@
     background-position-y: 0.25rem;
     padding-left: 0.5rem;
     padding-right: 0.25rem;
+  }
+  .pl-top,.pl-top .center{
+    align-items:center;
+    display:-webkit-flex;
+  }
+  .comment__username{
+    display:inline-block;
+      max-width:3rem;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap
+  }
+  .sb-qian,.sb-ysm,.sb-yrz{
+      font-size:0.24rem;
+      height:0.4rem;
+      width:1rem;
+      line-height:0.4rem;
+      display:inline-block;
+      margin-left:0.1rem;
+  }
+  .sb-qian{
+    width:0.6rem;
+    border: 1px solid #ffe354;
+    background-color: #fff9d9;
+    border-radius: 0.08rem;
+
+    text-align: center;
+    color: #cda566;
+  }
+  .sb-ysm {
+    border: 1px solid #6ddacf;
+    color: #6ddacf;
+    text-align: center;
+    border-radius: 0.08rem;
+  }
+  .sb-yrz {
+    border: 1px solid #142aa4;
+    color: #142aa4;
+    text-align: center;
+    border-radius: 0.08rem;
+  }
+  .comment__employee{
+    color: #f661a9!important;
+    font-size: 0.3rem!important;
   }
 </style>
