@@ -137,8 +137,7 @@
         }
         var title = _self.activity.title.length>20 ? _self.activity.title.substring(0,20)+'...' : _self.activity.title;
         var description = _self.activity.description.length>30 ? _self.activity.description.substring(0,30)+'...' : _self.activity.description;
-        var shareUrl = 'http://101.132.96.90:8080/yemaoServer/appShare/haibao?id='+_self.activity._id;
-            // shareUrl = 'http://192.168.10.99:8080/yemaoServer/appShare/haibao?id='+_self.activity._id;
+        var shareUrl = 'http://www.jianlianyemao.com/yemaoServer/appShare/haibao?id='+_self.activity._id;
         myshare.init({
           href: shareUrl,
           title: title,
