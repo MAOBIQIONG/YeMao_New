@@ -94,7 +94,6 @@
           }
         });
       },
-
       /*************************************/
       showToast(msg){
         this.showMark = true;
@@ -138,7 +137,6 @@
           }
         })
       },
-
       // 手机验证
       verifyPhone(){
         var _self = this;
@@ -151,7 +149,6 @@
           return false;
         } return true;
       },
-
       // 验证码验证
       verifyCode(){
         var _self = this;
@@ -171,7 +168,6 @@
         }
         return true;
       },
-
       // 密码验证
       verifyPassword(){
         var _self = this;
@@ -185,7 +181,6 @@
         }
         return true;
       },
-
       // 倒计时
       count_down(time){
         var _self = this;
@@ -205,7 +200,6 @@
           }
         }, 1000)
       },
-
       // 获取验证码
       getVerificationCode () {
         var _self = this;
@@ -222,7 +216,6 @@
           }
         })
       },
-
       // 获取验证码
       verifyParams () {
         var _self = this;
@@ -235,7 +228,6 @@
         _self.is_verify = true;
         _self.checkUser();
       },
-
       // 检测用户是否存在
       checkUser(){
         var _self = this;
@@ -263,11 +255,9 @@
           }
         })
       },
-
     }
   }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/login/wjmm.css';

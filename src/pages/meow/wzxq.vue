@@ -582,8 +582,7 @@ export default {
         }
         var title = _self.chw.title.length>20 ? _self.chw.title.substring(0,20)+'...' : _self.chw.title;
         var description = _self.chw.description.length>30 ? _self.chw.description.substring(0,30)+'...' : _self.chw.description;
-        var shareUrl = 'http://101.132.96.90:8080/yemaoServer/appShare/wzxq?id='+_self.chw._id;
-            // shareUrl = 'http://192.168.10.99:8080/yemaoServer/appShare/wzxq?id='+_self.chw._id;
+        var shareUrl = 'http://www.jianlianyemao.com/yemaoServer/appShare/wdxq?id='+_self.chw._id;
         myshare.init({
           href: shareUrl,
           title: title,
