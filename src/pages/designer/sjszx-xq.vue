@@ -377,18 +377,22 @@
   .calendar-title {
     color: #666 !important;
   }
+
   .inline-calendar th {
     color: #666 !important;
   }
+
   .inline-calendar table {
     color: #666 !important;
   }
+
   .inline-calendar td > span.vux-calendar-each-date {
     border-radius: inherit !important;
   }
 </style>
 <style scoped>
   @import '../../../static/css/designer/sjsgeren.css';
+
   .xinximokuai {
     height: 4.8rem !important;
   }
@@ -412,17 +416,14 @@
   .ysc {
     background: #999 !important;
   }
-  .header{
+
+  .header {
     border-bottom: none;
   }
-    .noData{
-      font-size:0.28rem;
-      text-align:center;
-      padding:1rem;
-  }
-    .noData{
-      font-size:0.28rem;
-      text-align:center;
-      padding:1rem;
+
+  .noData {
+    font-size: 0.28rem;
+    text-align: center;
+    padding: 1rem;
   }
 </style>

@@ -50,7 +50,6 @@
         </div>
       </div>
     </div>
-
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
