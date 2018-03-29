@@ -228,8 +228,7 @@ import {Loading,Confirm,TransferDomDirective as TransferDom,Toast} from 'vux';
           this.addAlumnis();
         }
       },
-      addAlumnis(){},
-
+      // 加入校友会
       joinAlumnis(){
         let _self = this;
         let params = {
@@ -242,8 +241,15 @@ import {Loading,Confirm,TransferDomDirective as TransferDom,Toast} from 'vux';
         }, response => {
           var data = response.data;
           if( data && data.code==200 ){
-            _self.alumni.addMark = 1; // 0、为加入，1、已加入。
             _self.showToast('加入成功！');
+            var alumnis = {
+              authenticating_state: _self.user.authenticating_state,
+              img: _self.user.img,
+              user_name: _self.user.user_name,
+              _id: _self.user._id
+            }
+            _self.alumniList.unshift({user:alumnis});
+            _self.alumni.addMark = 1; // 0、为加入，1、已加入。
           }else{
             var msg = common.isNull(data.msg) ? '加入失败！' : data.msg;
             _self.showToast(msg);
