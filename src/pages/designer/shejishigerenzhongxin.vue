@@ -1,8 +1,9 @@
 <template>
-  <div >
+  <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
+      <span>个人详情</span>
       <div class="header-right" v-tap="{methods:toUrl, pagename:'xiugaigerenxinxi'}">设置</div>
     </div>
     <div class="content content-p">
@@ -10,7 +11,7 @@
       <div class="xinximokuai">
         <div class="ximk-top">
           <div class="touxiang">
-            <img :src="checkAvatar(user.img)" />
+            <img :src="checkAvatar(user.img)"/>
           </div>
           <div class="xiright">
             <div class="nicheng">
@@ -22,7 +23,8 @@
             <div class="zhicheng">
               <span class="zc">{{user.certificate_name}}</span>&nbsp;&nbsp;
               <!--<span class="pinxin">☆ ☆ ☆ ☆</span>-->
-              <rater v-model="user.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
+              <rater v-model="user.composite_score" star="<i class='icon iconfont icon-star-red'></i>"
+                     active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
             </div>
           </div>
         </div>
@@ -46,17 +48,19 @@
       </div>
       <!--日历选取-->
       <div class="rili">
-        <inline-calendar
-          ref="calendar"
-          class="inline-calendar-demo"
-          :return-six-rows="return6Rows"
-          :disable-date-function="disableDateFunction">
-        </inline-calendar>
+        <div class="rln">
+          <inline-calendar
+            v-model="dates"
+            :return-six-rows="return6Rows"
+            :disable-date-function="disableDateFunction"
+            class="inline-calendar-demo" ref="calendar">
+          </inline-calendar>
+        </div>
       </div>
       <!--滑动轮播-->
       <div class="huadonglunpo">
         <tab :line-width=2 active-color='#fc378c' v-model="index">
-          <tab-item class="vux-center" key="0">案列展示</tab-item>
+          <tab-item class="vux-center" key="0">案例展示</tab-item>
           <tab-item class="vux-center" key="1">个人荣誉</tab-item>
           <tab-item class="vux-center" key="2">我的作品</tab-item>
         </tab>
@@ -64,10 +68,11 @@
       <div class="lunpo">
         <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
+            <div v-if="cases.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in cases" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
-                  <img :src="getDefultImg(item.cover)" />
+                  <img :src="getDefultImg(item.cover)"/>
                 </div>
                 <div class="al-right">
                   <div class="ar-top">{{item.title}}</div>
@@ -76,8 +81,10 @@
               </div>
               <div class="al-bottom">
                 <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
+                  <p><span><img
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                  <p><span><img
+                    src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
@@ -85,10 +92,11 @@
             <div class="more" v-if="cases.length==3" v-tap="{methods:toChws, flag:0}">查看更多</div>
           </swiper-item>
           <swiper-item key="1">
+            <div v-if="honors.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in honors" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
-                  <img :src="getDefultImg(item.cover)" />
+                  <img :src="getDefultImg(item.cover)"/>
                 </div>
                 <div class="al-right">
                   <div class="ar-top">{{item.title}}</div>
@@ -97,8 +105,10 @@
               </div>
               <div class="al-bottom">
                 <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
+                  <p><span><img
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                  <p><span><img
+                    src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
@@ -106,10 +116,11 @@
             <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
           </swiper-item>
           <swiper-item key="2">
+            <div v-if="works.length==0" class="noData">暂无数据</div>
             <div class="alzs-list" v-for="item in works" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
               <div class="al-top">
                 <div class="touxiang">
-                  <img :src="getDefultImg(item.cover)" />
+                  <img :src="getDefultImg(item.cover)"/>
                 </div>
                 <div class="al-right">
                   <div class="ar-top">{{item.title}}</div>
@@ -118,8 +129,10 @@
               </div>
               <div class="al-bottom">
                 <div class="al-left">
-                  <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
-                  <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
+                  <p><span><img
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                  <p><span><img
+                    src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
                 <div class="al-right">{{getStringDate(item.create_date)}}</div>
               </div>
@@ -133,7 +146,8 @@
 </template>
 
 <script>
-  import {Tab, TabItem, Swiper, SwiperItem, InlineCalendar, Rater } from 'vux'
+  import {Tab, TabItem, Swiper, SwiperItem, InlineCalendar, Rater} from 'vux'
+
   export default {
     components: {
       InlineCalendar,
@@ -143,34 +157,38 @@
       SwiperItem,
       Rater
     },
-    data () {
+    data() {
       return {
         index: 0,
-        user:{},
-        loadMark:1,
+        user: {},
+        loadMark: 1,
         cases: [],
         honors: [],
         works: [],
+        /**日历**/
+        dates: [],
         return6Rows: true,
-        disableDateFunction (date) {
-          if (date.formatedDate === "2017-1-28") {
-            return true
-          }
+        disableDateFunction(date) {
+          return true
+          // var dateStr = common.getSomeday();
+          // if (date.formatedDate === dateStr) {
+          //   return true
+          // }
         },
       }
     },
     activated: function () {
       var _self = this;
-      if( _self.isInit == true  ){
+      if (_self.isInit == true) {
         var userInfo = common.getObjStorage("userInfo") || {};
-        if( common.isNull(userInfo._id) != true ){
+        if (common.isNull(userInfo._id) != true) {
           _self.user_id = userInfo._id;
         }
-        _self.index=0;
-        _self.loadMark=1;
-        _self.cases=[];
-        _self.honors=[];
-        _self.works=[];
+        _self.index = 0;
+        _self.loadMark = 1;
+        _self.cases = [];
+        _self.honors = [];
+        _self.works = [];
         _self.initData();
       }
       _self.isInit = true;
@@ -179,44 +197,44 @@
       console.log("created:")
       var _self = this;
       var userInfo = common.getObjStorage("userInfo") || {};
-      if( common.isNull(userInfo._id) != true ){
+      if (common.isNull(userInfo._id) != true) {
         _self.user_id = userInfo._id;
       }
       _self.initData();
     },
     methods: {
-      goback(){
+      goback() {
         this.$router.goBack();
       },
       toUrl: function (params) {
-        this.$router.push({name: params.pagename,query:{id:params.id}})
+        this.$router.push({name: params.pagename, query: {id: params.id}})
       },
       toChws: function (params) {
-        this.$router.push({name: 'anlielist', query:{flag:params.flag}})
+        this.$router.push({name: 'anlielist', query: {flag: params.flag}})
       },
       // 项目类型名称
-      getNameById (id) {
+      getNameById(id) {
         return common.getNameByTypeId(id)
       },
       // 头像
-      checkAvatar (path) {
+      checkAvatar(path) {
         return common.getAvatar(path)
       },
       // 默认图片
-      getDefultImg (path) {
+      getDefultImg(path) {
         return common.getDefultImg(path)
       },
       // 时间戳转字符串
-      getStringDate(date,id){
-        return common.timeStamp2String(date,id)
+      getStringDate(date, id) {
+        return common.timeStamp2String(date, id)
       },
       /*******************************************************/
       // 日历
       // swiper
-      onIndexChange (index) {
-        console.log("index:"+index)
+      onIndexChange(index) {
+        console.log("index:" + index)
         var _self = this;
-        if( index == _self.loadMark ){
+        if (index == _self.loadMark) {
           console.log("getChw:")
           _self.getChw();
         }
@@ -224,9 +242,9 @@
 
       /*************************************************/
       // 初始化首页
-      initData () {
+      initData() {
         var _self = this;
-        if( common.isNull(_self.user_id) ){
+        if (common.isNull(_self.user_id)) {
           return;
         }
         var params = {
@@ -238,24 +256,25 @@
         }, response => {
           // console.log(response);
           var data = response.data
-          if ( data ) {
+          if (data) {
             _self.user = data.user || {};
             _self.cases = data.cases || [];
+            _self.dates = data.restDay || [];
           }
         })
       },
 
       // 获取personalChw:
-      getChw () {
+      getChw() {
         var _self = this;
-        if( common.isNull(_self.user_id) ){
+        if (common.isNull(_self.user_id)) {
           return;
         }
         var params = {
           interfaceId: common.interfaceIds.getPersonalChw,
-          pageNo:0,
-          pageSize:3,
-          where:{
+          pageNo: 0,
+          pageSize: 3,
+          where: {
             user_id: _self.user_id,
             type: _self.loadMark
           }
@@ -265,10 +284,10 @@
         }, response => {
           // console.log(response);
           var data = response.data
-          if ( data ) {
-            if( _self.loadMark == 1 ){
+          if (data) {
+            if (_self.loadMark == 1) {
               _self.honors = data.chws || [];
-            }else if( _self.loadMark == 2 ){
+            } else if (_self.loadMark == 2) {
               _self.works = data.chws || [];
             }
             _self.loadMark++;
@@ -281,27 +300,42 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .vux-prev-icon,.vux-next-icon{
-    border-left: 1px solid #f65aa6 !important;
-    border-bottom: 1px solid #f65aa6 !important;
+  .calendar-title {
+    color: #666 !important;
   }
-  .inline-calendar td.is-today{
-    color: #f65aa6 !important;
+
+  .inline-calendar th {
+    color: #666 !important;
   }
-  .inline-calendar td.current > span.vux-calendar-each-date{
-    background-color: #f65aa6 !important;
+
+  .inline-calendar table {
+    color: #666 !important;
   }
+  .inline-calendar td > span.vux-calendar-each-date {
+    border-radius: inherit !important;
+  }
+  /*.vux-tab .vux-tab-item{*/
+    /*background: none !important;*/
+  /*}*/
 </style>
 <style scoped>
   @import '../../../static/css/designer/sjsgeren.css';
-  .swps{
-    height:8rem !important;
-    overflow:auto !important;
+  .swps {
+    height: 8rem !important;
+    overflow: auto !important;
   }
-  .more{
+  .more {
     font-size: .3rem;
     color: #999;
     text-align: center;
     padding: .25rem;
+  }
+  .header {
+      border-bottom: none;
+    }
+  .noData{
+      font-size:0.28rem;
+      text-align:center;
+      padding:1rem;
   }
 </style>

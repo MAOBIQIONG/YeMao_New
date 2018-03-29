@@ -48,6 +48,11 @@
   margin-top: 0.1rem;
 	overflow: hidden;
 }
+.tupian{
+  background-size: cover!important;
+  background-position: center center!important;
+  background-repeat: no-repeat!important;
+}
 
 .weida-list .weida .tupian img {
 	width: 100%;

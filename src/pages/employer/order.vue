@@ -27,7 +27,7 @@
               <span><img src='../../../static/images/employer/leixin.png'></span><span>预计完成：</span>
             </div>
             <div class="box-right">
-              <span>{{order.project_endTime}}</span>
+              <span>{{getStringDate(order.project_endTime,'ymd')}}</span>
             </div>
           </div>
           <div class="ddxq-box">
@@ -59,7 +59,7 @@
               <span><img src="../../../static/images/employer/06.png"/></span><span>地区：</span>
             </div>
             <div class="box-right">
-              <span>{{order.project_region}}</span>
+              <span>{{order.project_region}}</span> 
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="tu"></div>
         <p v-if="bidders.length>0">已有<span>{{bidders.length}}</span>位设计师抢单</p>
         <p v-if="bidders.length==0">还没有设计师抢单</p>
-        <div class="gengduo" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }"></div>
+        <!-- <div class="gengduo" v-tap="{ methods:toParts, id: order._id, uid: order.user_id }"></div> -->
       </div>
 
       <div class="od-list" style="padding-bottom: .25rem">
@@ -86,13 +86,13 @@
           </div>
           <div class="qdsjs-box">
             <div class="qb-top">
-              <div class="qt-touxiang">
+              <div class="qt-touxiang" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:bid.user._id}}">
                 <img :src='checkAvatar(bid.user.img)'>
               </div>
-              <div class="qt-nichen">
+              <div class="qt-nichen" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:bid.user._id}}">
                 <span>{{bid.user.user_name}}</span>
               </div>
-              <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:bid.user._id,name:bid.user.user_name,img:bid.user.img}}">
+              <div class="chat" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:bid.user._id,name:bid.user.user_name,img:bid.user.img}}">
                 <img src='../../../static/images/employer/miaomiao.png'>
               </div>
               <div class="qt-jiage">
@@ -110,7 +110,7 @@
     </div>
     <!--底部-->
     <div class="od-botton" v-if="userInfo._id!=order.user_id">
-      <div class="mmliaotian" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.user._id,name:order.user.user_name,img:order.user.img}}">
+      <div class="mmliaotian" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:order.user._id,name:order.user.user_name,img:order.user.img}}">
         <span><img src='../../../static/images/employer/miaomiao.png'></span>
         <span>喵喵聊天</span>
       </div>
@@ -156,7 +156,9 @@
         isInit: false,
         isPart: false,
         collectFlag: 0,
-        order: {},
+        order: {
+          user:{}
+        },
         bidders: [],
         imgSize: 0,
         shoViewMore:false,
@@ -218,6 +220,14 @@
       toUrl2: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
       },
+      toUrlWUI: function (params) { // toUrlWidthUserInfo
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+          this.$router.push({name: params.pagename,query:params.query || {}})
+        }else{
+          this.$router.push({name: 'login'})
+        }
+      },
       toParts: function (param) {
         this.$router.push({name: 'emporderparts', query: {id: param.id, uid: param.uid}})
       },
@@ -261,13 +271,13 @@
 
       // 订单详情字数限制
       getMaxlen(text){
-        var str = '';
+        var str = '',minLen=6;
         var _self = this;
-        var width = 0.5,fontSize=0.3,lines=3;// margin:.5,font-size:.3,行数:3;
+        var width = 0.5,fontSize=0.28,lines=3;// margin:.5,font-size:.3,行数:3;
         var num = common.getMaxlenInlineNum(width,fontSize,lines);
         if( text && text.length > num ){
           _self.shoViewMore = true;
-          str = text.substring(0,num-6) + '...';
+          str = text.substring(0,num-minLen) + '...';
         }else{
           _self.shoViewMore = false;
           str = text;
@@ -333,6 +343,11 @@
             if( _self.order.imgs ){
               _self.imgSize = _self.order.imgs.length;
             }
+            // 重置订单详情
+            _self.shoViewMore = false;
+            _self.viewMore = false;
+            _self.viewText = '点击查看更多';
+            _self.$refs.project_describe.innerHTML = _self.getMaxlen(_self.order.project_describe);
           }
         })
       },
@@ -396,30 +411,24 @@
       chooseDesigner(){
         var _self = this;
         var params = {
-          interfaceId:common.interfaceIds.updateData,
-          coll:common.collections.orderList,
-          wheredata:{
-            _id: _self.order_id
-          },
-          data:{
-            $set: {
-              project_winBidder: _self.project_winBidder,
-              project_state: 1, // 抢单中
-            }
-          }
+          interfaceId:common.interfaceIds.chooseDesigner,
+          order_id: _self.order_id,
+          project_winBidder: _self.project_winBidder
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           console.log(response)
           var data = response.data;
-          if( data.ok > 0 ){
+          if ( data && data.code==200 ) {
             _self.$store.state.indexRefreshMark = 1;
             _self.$store.state.employerRefreshMark = 1;
             _self.showToast('选择成功！');
             setTimeout(function () {
               _self.goback();
             },1000)
+          }else{
+            _self.showToast('选择失败！');
           }
         })
       }

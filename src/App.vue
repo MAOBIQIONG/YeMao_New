@@ -25,6 +25,7 @@
       // console.log('$route.meta.keepAlive:' + this.$route.meta.keepAlive)
       var _self = this;
       document.addEventListener( "plusready", function () {
+        console.log("app.vue addEventListener plusready:");
         // 监听android后退键
         plus.key.addEventListener('backbutton',function () {
           var path = _self.$route.path;

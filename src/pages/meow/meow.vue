@@ -1,19 +1,17 @@
 <template>
   <div class="meow">
     <!--导航栏-->
-    <div class="header">
+    <div class="header p-static">
       <div class="hd-cont">
         <ul>
-          <li class="tab miaomiao cur" @click="toggleTab(0)"ref="miaomiao">喵喵圈</li>
-          <li class="tab miaomiaopaizhuan " @click="toggleTab(1)"ref="miaomiaopaizhuan">喵喵拍砖</li>
-          <li class="tab huodong" @click="toggleTab(2)"ref="huodong">活动</li>
+          <li class="tab miaomiao" :class="tabIndex==0?'cur':''" v-tap="{methods:toggleTab,index:0}">喵喵圈</li>
+          <li class="tab miaomiaopaizhuan" :class="tabIndex==1?'cur':''" v-tap="{methods:toggleTab,index:1}">喵喵拍砖</li>
+          <li class="tab huodong" :class="tabIndex==2?'cur':''" v-tap="{methods:toggleTab,index:2}">活动</li>
         </ul>
       </div>
     </div>
     <!--内容-->
-    <div class="content content-p">
-      <miaomiao :is="currentTab" keep-alive></miaomiao>
-    </div>
+    <miaomiao :is="currentTab" keep-alive></miaomiao>
   </div>
 </template>
 
@@ -30,11 +28,9 @@
     },
     data() {
       return {
+        tabIndex: 0,
         currentTab: 'miaomiao'  // currentTab 用于标识当前触发的子组件
       }
-    },
-    mounted: function () {
-      this.miao();
     },
     methods: {
       goback () {
@@ -43,21 +39,16 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      toggleTab: function(index) {
+      toggleTab: function(params) {
         // tab 为当前触发标签页的组件名
-        if(index==0){
+        this.tabIndex = params.index;
+        if(params.index==0){
           this.currentTab='miaomiao';
-        }else if(index==1){
+        }else if(params.index==1){
           this.currentTab='miaomiaopaizhuan';
-        }else if(index==2){
+        }else if(params.index==2){
           this.currentTab='huodong';
         }
-      },
-      //tab选择
-      miao(){
-      $(".hd-cont li").click(function(){
-          $(".hd-cont li").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
-      });
       },
     }
   }

@@ -12,7 +12,7 @@
         </div>
         <div class="id-xiaoxi" v-tap="{ methods:toUrl , pagename:'message' }">
           <img src="../../../static/images/index/ling.png" />
-          <div class="hongdian"></div>
+          <div class="hongdian" v-if="user.unread_number>0"></div>
         </div>
         <div class="id-sousuo" :class="srollFlag==0?'sousuo1':'sousuo'" v-tap="{ methods:toUrl , pagename:'search' }">
           <img src="../../../static/images/index/search.png" />
@@ -20,7 +20,21 @@
       </div>
     </div>
     <!-- 上拉加载 -->
-    <scroller lock-x height="" @on-scroll-bottom="onScrollBottom" @on-scroll="onScroll" ref="scrollerBottom" :scroll-bottom-offst="100">
+    <scroller
+      v-model="pullUpDownStatus"
+      :height="height"
+      :lock-x="lockX"
+      :lock-y="lockY"
+      :use-pulldown="true"
+      :use-pullup="true"
+      :pulldown-config="pulldownConfig"
+      :pullup-config = "pullupConfig"
+      @on-scroll="scroll"
+      @on-scroll-bottom="onScrollBottom"
+      @on-pulldown-loading="pullDownLoading"
+      @on-pullup-loading="pullUpLoading"
+      ref="scroller"
+    >
       <div>
         <!--banner-->
         <swiper loop auto height="4rem" :list="imgList" :index="imgIndex" @on-index-change="onIndexChange"></swiper>
@@ -112,17 +126,21 @@
           </div>
         </div>
         <!--雇主列表-->
-        <div class="content"style="padding-bottom:0.2rem">
-          <div class="gz-list" v-for="order in orderList" v-tap="{methods:toDetails,id:order._id}">
+        <div class="content" style="padding-bottom:0.2rem">
+          <div class="gz-list" v-for="order in orderList" v-tap="{methods:toDetails,id:order._id,uid:order.user._id}">
             <div class="gz-top">
-              <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}">
-                <!-- <img :src="checkAvatar(order.user.img)" /> -->
-              </div>
+              <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}"></div>
               <div class="gz-nicheng">{{order.user.user_name}}</div>
               <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
             </div>
             <div class="gz-timeleixin">
-              <div class="gz-time"><span><img src="../../../static/images/index/time.png"/></span><span>{{order.project_deadLine}}过期</span></div>
+              <div class="gz-time">
+                <span class="imge">
+                  <!--<img src="../../../static/images/index/time.png"/>-->
+                </span>
+                <!-- <span>{{getDateDiff(order.refresh_date)}}</span> -->
+                <span>{{footPrintTime(order.footprint_date)}}&nbsp;·&nbsp;{{order.project_region}}</span>
+              </div>
               <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
             </div>
             <div class="gz-content">
@@ -147,29 +165,45 @@
             </div>
           </div>
         </div>
-        <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
+        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
       </div>
     </scroller>
+    <div v-transfer-dom>
+        <confirm v-model="confirmShow"
+            @on-confirm = "compOnConfirm"
+            @on-cancel="onCancel"
+        >
+        <p style="text-align:center;">{{confirmMsg}}</p>
+        </confirm>
+    </div>
   </div>
 </template>
 
 <script>
-  import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name} from 'vux'
+  import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Confirm,TransferDomDirective as TransferDom} from 'vux'
   import store from '@/vuex/store'
 
   export default {
+    directives: {
+        TransferDom
+    },
     components: {
       Swiper,
       SwiperItem,
       Divider,
       XAddress,
       Scroller,
-      LoadMore
+      LoadMore,
+      Confirm
     },
     store,
     data () {
       return {
+        authMark:false,
+        confirmShow:false,
+        confirmMsg:'您还未实名认证，是否前往认证？',
         srollFlag: 0,
+        user:{unread_number:0},
         imgList: [],
         noticeList: [],
         orderList: [],
@@ -181,45 +215,107 @@
         value: ['上海市'],
         city: '',
 
-        pageNo: 0,
-        pageSize: 10,
         onFetching: true,
-        showLoading: false,
-        loadtext: '上拉加载',
-        loadmore: '上拉加载',
-        loadrefresh: '正在加载...',
-        loadnomore: '没有更多数据了'
+        lockX:true,
+        lockY:false,
+        height:"-50",
+        pagination: {
+          pageNo: 0,
+          pageSize: 10
+        },
+        pullUpDownStatus: {
+          pulldownStatus: 'default',
+          pullupStatus: 'default'
+        },
+        pulldownConfig:{
+          content: '', // '下拉刷新',
+          height: 120,
+          autoRefresh: false,
+          downContent: '', // '下拉刷新',
+          upContent: '', // '放开刷新',
+          loadingContent: '', // '刷新中...',
+          clsPrefix: 'xs-plugin-pulldown-'
+        },
+        pullupConfig:{
+          content: '上拉加载',
+          pullUpHeight: 60,
+          height: 40,
+          autoRefresh: false,
+          downContent: '放开加载',
+          upContent: '上拉加载',
+          loadingContent: '',
+          clsPrefix: 'xs-plugin-pullup-'
+        },
+        loadMoreStatus:{
+          tip:"正在加载",
+          tipNoData:"没有更多数据了",
+          tipLoading:"正在加载",
+          showLoading:true,
+          show:true,
+        },
+        hasMore:true,
       }
     },
     activated: function () {
       // console.log("index activated:")
       var _self = this;
-      _self.$refs.scrollerBottom.reset()
       var irm = _self.$store.state.indexRefreshMark
       if ( irm > 0 ) {
         _self.$store.state.indexRefreshMark = 0
-        _self.pageNo = 0;
-        _self.pageSize = 10;
+        _self.pagination.pageNo = 0;
+        _self.pagination.pageSize = 10;
         _self.onFetching = true;
         _self.initData()
       }
       // 初始化im
       var user = common.getObjStorage("userInfo") || {};
+      _self.user = user;
       if( !common.isNull(user.wy_token) && wyim.nim == null ){
         wyim.init({
           account: user._id,
           token: user.wy_token,
         });
       }
+      let isAuthenicatedTip = common.getStorage('isAuthenicatedTip');
+      if(user.authenticating_state===0 && parseInt(isAuthenicatedTip) === 0){
+          _self.confirmShow = true;
+      }
+      let footprint = common.getObjStorage('footprint');
+      if(!common.isNull(footprint)){
+        _self.orderList.reduce(function(a,c,i,arr){
+          if(c._id==footprint.id){
+            c.footprint_date= Date.parse(new Date());
+          }
+        },undefined)
+      }
+      common.delStorage('footprint');
     },
     created: function () {
-      // console.log('created:')
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
       this.initData()
     },
-    mounted: function () {
-      this.$nextTick(() => {
-        this.$refs.scrollerBottom.reset({top: 0})
-      })
+    mounted(){
+      this.$nextTick(
+        ()=>{
+          this.$refs.scroller.disablePullup();
+          this.$refs.scroller.reset({top:0});
+        }
+      );
+    },
+    watch:{
+      pullUpDownStatus:{
+        handler:function(val,oldval){
+          if(val.pullupStatus=="loading"){
+            this.loadMoreStatus.show=true;
+            if(this.hasMore == false){
+              this.loadMoreStatus.showLoading=false;
+            } else {
+              this.loadMoreStatus.showLoading=true;
+            }
+          }
+        }
+      }
     },
     methods: {
       toUrl: function (params) {
@@ -227,6 +323,10 @@
       },
       // 详情页
       toDetails (params) {
+        var _self = this;
+        if(_self.user && _self.user._id == params.uid){
+          common.setStorage('footprint',{id:params.id});
+        }
         this.$router.push({name: 'emporder', query: {id: params.id}})
       },
       // 根据类别id查询订单
@@ -245,6 +345,9 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
+      getDateDiff(date){
+        return common.getDateDiff(date)
+      },
       // 智能排序
       znbx () {
         var _self = this
@@ -257,7 +360,7 @@
         _self.sortName = event.target.innerText;
         // if( _self.sortMark != param.value  ){
           _self.sortMark = param.value;
-          _self.pageNo = 0;
+          _self.pagination.pageNo = 0;
           _self.loadMore();
         // }
       },
@@ -321,37 +424,14 @@
           _self.city = city.trim();
           // console.log('city', _self.city)
           // 按城市查询订单
-          _self.pageNo = 0;
+          _self.pagination.pageNo = 0;
           _self.loadMore();
         }
       },
       logShow (str) {
         console.log('on-show', str)
       },
-      // 滑动
-      onScroll (sroll) {
-        // console.log("onScroll:"+JSON.stringify(sroll))
-        var _self = this;
-        _self.srollFlag = sroll.top > 100 ? 1 : 0;
-        if( sroll.top<-150 && sroll.top>=-400 ){
-          var size = (150-sroll.top-110)/100;
-          $("#page").css('background-size',size+'rem '+size+'rem')
-        }
-      },
 
-      // 下拉加载下拉加载
-      onScrollBottom () {
-        // console.log("onScrollBottom:")
-        var _self = this
-        if (_self.onFetching) {
-          // do nothing
-        } else {
-          _self.onFetching = true
-          setTimeout(() => {
-            _self.loadMore()
-          }, 100)
-        }
-      },
       /**
        * interface
        * */
@@ -359,8 +439,9 @@
       initData () {
         var _self = this
         var params = {
-          interfaceId: common.interfaceIds.getIndexInfo
-        }
+          interfaceId: common.interfaceIds.getIndexInfo,
+          user_id: _self.user._id
+        };
         params.sort = {refresh_date:-1};
         _self.$axios.post('/mongoApi', {
           params: params
@@ -374,14 +455,58 @@
         })
       },
 
+      //下拉刷新
+      refreshPageDate(){
+        let _self = this
+        _self.pagination.pageNo = 0;
+        _self.hasMore = true;
+        _self.loadMoreStatus.show=false;
+        _self.loadData();
+      },
+      //上拉加载
+      loadMore(){
+        let _self = this;
+        _self.loadData();
+      },
+      scroll(position){
+        // console.log("on-scroll",position);
+        var _self = this;
+        _self.srollFlag = position.top > 100 ? 1 : 0;
+        if( position.top<-150 && position.top>=-400 ){
+          var size = (150-position.top-110)/100;
+          $("#page").css('background-size',size+'rem '+size+'rem')
+        }
+      },
+      pullDownLoading(){
+        console.log('on-pull-down-loading');
+        this.refreshPageDate();
+      },
+      pullUpLoading(){
+        console.log('on-pull-up-loading');
+        this.loadMore();
+      },
+      onScrollBottom(){
+        // console.log('on-scroll-bottom');
+        var _self = this
+        if (_self.onFetching) {
+          // do nothing
+        } else {
+          _self.onFetching = true
+          setTimeout(() => {
+            _self.loadMore()
+          }, 100)
+        }
+      },
+
       // 加载更多
-      loadMore () {
+      loadData () {
         var _self = this;
         var params = {
           interfaceId: common.interfaceIds.getOrderList,
-          pageNo: _self.pageNo,
-          pageSize: _self.pageSize,
-          where:{}
+          pageNo: _self.pagination.pageNo,
+          pageSize: _self.pagination.pageSize,
+          where:{},
+          user_id: _self.user._id
         }
         // 排序
         params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};
@@ -389,9 +514,6 @@
         if( !common.isNull(_self.city) ){
           params.where.project_region = _self.city;
         }
-        //上拉加载
-        _self.loadtext = _self.loadrefresh;
-        _self.showLoading = true;
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -428,26 +550,53 @@
           })
         });
         //判断页码是否为0
-        if( _self.pageNo == 0 ){
+        if( _self.pagination.pageNo == 0 ){
           _self.orderList = orderList;
         }else{
           _self.orderList = [..._self.orderList, ...orderList];
         }
-        //重置页面滚动距离
-        _self.$nextTick(() => {
-          _self.$refs.scrollerBottom.reset()
-        })
-        //底部加载动画
-        _self.showLoading = false;
         //判断数据是否有一页
-        if ( orderList.length < _self.pageSize ) {
-          _self.loadtext = _self.loadnomore;
+        _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePulldown();
+        _self.$refs.scroller.donePullup();
+        if( orderList.length < _self.pagination.pageSize ){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.$refs.scroller.disablePullup();
         } else {
-          _self.loadtext = _self.loadmore;
           _self.onFetching = false
-          _self.pageNo++;
+          _self.pagination.pageNo++;
+          _self.loadMoreStatus.show=false;
         }
-      }
+      },
+         compOnConfirm(){
+            // this.$store.state.isAuthenicatedTip = 1;
+            common.setStorage('isAuthenicatedTip',1);
+            this.toUrl({'pagename':'shimingrenzheng'});
+        },
+        onCancel(){
+            // this.$store.state.isAuthenicatedTip = 1;
+            common.setStorage('isAuthenicatedTip',1);
+        },
+        footPrintTime(date){
+            let now = Date.parse(new Date());
+            let differ = (now-date)/ 1000 / 60;
+            if(differ<5){
+              return "刚刚来过";
+            }
+            if(differ>=5 && differ < 60){
+              return parseInt(differ) + "分钟前来过";
+            }
+            if(differ>=60 && differ < 1440){
+              return parseInt(differ/ 60) + "小时前来过";
+            }
+            if(differ>=1440){
+              return parseInt(differ/ 1440) + "天前来过";
+            }
+
+
+        }
 
     }
   }

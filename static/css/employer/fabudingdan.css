@@ -239,7 +239,8 @@
 
 .fb-content .sctp {
   width: 100%;
-  height: 3.2rem;
+  min-height: 4.5rem;
+  padding-bottom: 1.5rem;
   background: white;
   zoom:1;
 }

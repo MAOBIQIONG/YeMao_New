@@ -32,10 +32,10 @@
                 <!-- <img v-if="item.user.img" :src="checkAvatar(item.user.img)"/>
                 <img v-else src="../../../static/images/bj.jpg"/> -->
             </div>
+            <!-- <div class="tupian" v-if="item.imgs" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"> -->
             <p class="nicheng">{{item.user.user_name}}</p>
             </div>
-            <div class="tupian" v-if="item.imgs">
-                <img :src="item.imgs[0]"/>
+            <div class="tupian" v-if="item.imgs && item.imgs.length>0" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
             </div>
             <div class="neirong">
             <div class="piapti">
@@ -82,6 +82,7 @@ export default {
     },
     data(){
         return {
+            myid:null,
             user_id:null,
             QAList:[],
             user:null,
@@ -160,7 +161,7 @@ export default {
             var _self = this;
             var user = common.getObjStorage("userInfo") || {};
             if( !common.isNull(user._id)){
-                _self.toUrl('fbwd');              
+                _self.toUrl('fbwd');
             } else {
                 console.log('user_id is null');
                 _self.$router.push({name:'login'});
@@ -180,9 +181,12 @@ export default {
                 pageSize:_self.pagination.pageSize,
                 user_id: _self.user_id,
                 where:{
-                    // user_id: _self.user_id,
+                    // user_id: _self.user_id
                     type: 4//问答
                 }
+            }
+            if(!common.isNull(_self.myid)){
+                params.where.user_id = _self.myid;
             }
             _self.$axios.post('/mongoApi', {
                 params: params
@@ -277,6 +281,8 @@ export default {
             console.log('user_id is null');
             // _self.$router.push({name:'login'});
         }
+        let myid = _self.$route.query.myid;
+        _self.myid = myid;
         this.loadData();
     },
     mounted(){
@@ -300,6 +306,11 @@ export default {
   }
   .scweida{
     position: fixed;
+  }
+  .tupian{
+    background-size:cover!important;
+    background-position:center center!important;
+    background-repeat:no-repeat!important;
   }
 </style>
 <style>

@@ -51,11 +51,11 @@
   font-size: 0.28rem;
   margin-left: 0.2rem;
   padding-left: 0.5rem;
-  background: url('/static/images/zan.png') center left no-repeat;
+  background: url('../../../static/images/zan.png') center left no-repeat;
   background-size: 0.4rem 0.4rem;
 }
 .content .list-paizuan .zan .left-zan.hover{
-  background: url('/static/images/zan2.png') center left no-repeat;
+  background: url('../../../static/images/zan2.png') center left no-repeat;
   background-size: 0.4rem 0.4rem;
 }
 

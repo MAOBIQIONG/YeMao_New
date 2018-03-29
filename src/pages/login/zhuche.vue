@@ -10,7 +10,7 @@
       <p class="tishi"></p>
       <div class="ls-shouji">
         <input type="text"class="shouji nicheng" placeholder="昵称" v-model="param.nickname"/>
-        <span class="del">×</span>
+        <span class="del" v-if="param.nickname.length>0" v-tap="{methods:clearInput,index:0}">×</span>
       </div>
       <div class="ls-shouji">
         <div class="xmlx-right">
@@ -21,8 +21,8 @@
         </div>
       </div>
       <div class="ls-shouji">
-        <input type="text" class="shouji sjh" placeholder="手机号" v-model="param.mobile_phone"/>
-        <span class="del">×</span>
+        <input type="tel" class="shouji sjh" placeholder="手机号" v-model="param.mobile_phone"/>
+        <span class="del" v-if="param.mobile_phone.length>0" v-tap="{methods:clearInput,index:1}">×</span>
       </div>
       <div class="ls-yanzheng">
         <input type="text" class="yanzheng" maxlength="8" placeholder="验证码"  v-model="param.verifying_code" ref="code"/>
@@ -36,7 +36,7 @@
 
 <script>
     import  { Toast } from 'vux'
-    import interfaces from  '../../../static/js/interface'
+    import interfaces from '../../../static/js/es6/interface'
     import md5 from 'js-md5';
     export default {
       components:{
@@ -48,7 +48,7 @@
           nickname:'',
           mobile_phone:'',
           verifying_code:'',
-          user_type:null
+          user_type: null
         },
         show:false,
         showText:"请正确填写信息",
@@ -65,16 +65,16 @@
     },
     mounted: function () {
       //输入框内有内容时显示清空按钮
-      this.checkNumber(".nicheng");
-      this.checkNumber(".sjh");
-      //获取焦点时触发判断事件
-      this.panduan(".sjh");
-      //获取短信验证码
-      this.huoquyanzhengma(".msgs",".sjh");
-      //判断输入框不能为空
-      this.loge(".log-btn");
-      //判断昵称格式是否正确
-      this.nichen(".nicheng");
+//      this.checkNumber(".nicheng");
+//      this.checkNumber(".sjh");
+//      //获取焦点时触发判断事件
+//      this.panduan(".sjh");
+//      //获取短信验证码
+//      this.huoquyanzhengma(".msgs",".sjh");
+//      //判断输入框不能为空
+//      this.loge(".log-btn");
+//      //判断昵称格式是否正确
+//      this.nichen(".nicheng");
     },
     methods: {
       goback() {
@@ -82,6 +82,13 @@
       },
       toUrl(name){
         this.$router.push({name:name});
+      },
+      clearInput(params){
+        if( params.index == 0 ){
+          this.param.nickname = '';
+        }else if( params.index == 1 ){
+          this.param.mobile_phone = '';
+        }
       },
       //输入框内有内容时显示清空按钮
       checkNumber(obj) {
@@ -199,13 +206,14 @@
       // 倒计时
       count_down(time){
         var _self = this;
+        _self.$refs.verify_btn.innerText = time + "秒后重新获取";
         var interval = setInterval(function () {
           if( !_self.$refs.verify_btn ) return;
           // 开始
           time--;
           _self.$refs.verify_btn.innerText = time + "秒后重新获取";
-          if( time == 0 ) {
-            clearInterval(t);
+          if( time <= 0 ) {
+            clearInterval(interval);
             _self.$refs.verify_btn.innerText = "重新获取";
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
@@ -224,7 +232,7 @@
           _self.show = true;
           return;
         }
-        let regMobilePhone = /^1[0-9]{10}$/;
+        var regMobilePhone = /^1[0-9]{10}$/;
         if(!regMobilePhone.test(_self.param.mobile_phone)){
           _self.showText = _self.showTextWrongPhone;
           _self.show = true;
@@ -239,7 +247,7 @@
       // 检测用户是否存在
       checkUser(){
         var _self = this;
-        let params= {
+        var params= {
           interfaceId:common.interfaceIds.checkUser,
           phone:_self.param.mobile_phone
         };
@@ -248,9 +256,10 @@
         }, response => {
           var data = response.data;
           if( data ) {
-            if( data.code == 200 ){
+            if( data && data.code == 200 ){
               _self.getVerificationCode();
             }else{
+              _self.is_verify = false;
               _self.showText = '网络异常，请重试!';
               if( !common.isNull(data.msg) ){
                 _self.showText = data.msg;
@@ -258,6 +267,7 @@
               _self.show = true;
             }
           }else{
+
             _self.showText = '网络异常，请重试!';
             _self.show = true;
           }
@@ -274,58 +284,53 @@
         }
         interfaces.getVerifyCode(params,function (data) {
           console.log("data.code:"+data.code)
-          _self.is_verify = false;
           if( data.code == 200 ){
             _self.verify_code = data.obj;
             _self.verify_phone = params.mobile;
             _self.count_down(120);
+          }else{
+            _self.is_verify = false;
           }
         })
       },
       /*************************************/
-
-        nextStep(){
-            let _self = this;
-            let regNickname = /^[a-zA-Z0-9\u4e00-\u9fa5_-]{2,10}$/;
-            let regMobilePhone = /^1[0-9]{10}$/;
-            if(!regNickname.test(_self.param.nickname)){
-                _self.showText = _self.showTextWrongName
-                _self.show = true;
-                return;
-            }
-            if(common.isNull(_self.param.user_type)){
-                _self.showText = _self.showTextNoType
-                _self.show = true;
-                return;
-            }
-            if(common.isNull(_self.param.mobile_phone)){
-                _self.showText = _self.showTextNoPhone;
-                _self.show = true;
-                return;
-            }
-            if(!regMobilePhone.test(_self.param.mobile_phone)){
-                _self.showText = _self.showTextWrongPhone;
-                _self.show = true;
-                return;
-            }
-
-            if( !_self.verifyCode() ){
-                return;
-            }
-
-            let param1 = [
-                {key:"nickname",value:_self.param.nickname},
-                {key:"mobile_phone",value:_self.param.mobile_phone},
-                {key:"verifying_code",value:_self.param.verifying_code},
-                {key:"user_type",value:_self.param.user_type}
-            ]
-            let storage = common.op_localStorage().getStorage();
-            common.op_localStorage().setArray(param1);
-            console.log(storage);
-
-            _self.toUrl('zhuche2');
-
+      nextStep(){
+        var _self = this;
+        var regNickname = /^[a-zA-Z0-9\u4e00-\u9fa5_-]{2,10}$/;
+        var regMobilePhone = /^1[0-9]{10}$/;
+        if(!regNickname.test(_self.param.nickname)){
+            _self.showText = _self.showTextWrongName
+            _self.show = true;
+            return;
         }
+        if(common.isNull(_self.param.user_type)){
+            _self.showText = _self.showTextNoType
+            _self.show = true;
+            return;
+        }
+        if(common.isNull(_self.param.mobile_phone)){
+            _self.showText = _self.showTextNoPhone;
+            _self.show = true;
+            return;
+        }
+        if(!regMobilePhone.test(_self.param.mobile_phone)){
+            _self.showText = _self.showTextWrongPhone;
+            _self.show = true;
+            return;
+        }
+        if( !_self.verifyCode() ){
+            return;
+        }
+        common.setStorage("nickname",_self.param.nickname)
+        common.setStorage("mobile_phone",_self.param.mobile_phone)
+        common.setStorage("verifying_code",_self.param.verifying_code)
+        common.setStorage("user_type",_self.param.user_type)
+        setTimeout(function () {
+          _self.toUrl('zhuche2');
+        },50)
+
+      },
+
     },
   }
 </script>

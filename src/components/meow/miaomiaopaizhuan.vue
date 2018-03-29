@@ -92,6 +92,19 @@
         hasMore:true,
       }
     },
+    activated: function () {
+      console.log("mmpz activated:")
+      var _self = this;
+      _self.userInfo = common.getObjStorage("userInfo") || {};
+      var crm = _self.$store.state.caseRefreshMark;
+      if ( crm > 0 ) {
+        console.log("mmpz activated crm:"+crm)
+        _self.$store.state.caseRefreshMark = 0;
+        _self.pagination.pageNo = 0;
+        _self.pagination.pageSize = 10;
+        _self.loadData()
+      }
+    },
     created(){
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
@@ -193,7 +206,7 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response);
+          // console.log(response);
           let data = response.data;
           _self.setData(data);
         })

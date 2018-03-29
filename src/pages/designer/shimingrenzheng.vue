@@ -1,13 +1,14 @@
 <template>
   <div class="smrz">
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static;">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>实名认证</span>
       <div class="header-right" v-tap="{methods:submit}">提交</div>
     </div>
+    <scroller :lock-x="true" :height="height">
     <!--发布订单内容-->
-    <div class="content content-p">
+    <div class="content">
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
@@ -27,7 +28,7 @@
         </div>
       </div>
 
-      <div class="shangchuan" v-for="(item,index) in imgs" v-tap="{ methods:triggerFile,index:index }">
+      <div class="shangchuan" v-for="(item,index) in imgs" v-tap="{ methods:triggerFile,index:index }" :key="index">
         <div class="sc"> <img :src="getDefultImg(item.img)" /></div>
         <p>{{item.remark}}</p>
       </div>
@@ -44,20 +45,24 @@
         <!--<p>请上传身份证背面照</p>-->
       <!--</div>-->
     </div>
+    </scroller>
+
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
 <script>
-  import { Toast } from 'vux'
-  import uploadImg from "../../../static/js/uploadImg";
+  import { Toast,Scroller } from 'vux'
+  import uploadImg from "../../../static/js/es6/uploadImg";
   export default {
     components: {
+      Scroller,
       Toast
     },
     data () {
       return {
         imgIndex:0,
+        height:'',
         user:{
           real_name:"",
           id_number:"",
@@ -91,6 +96,18 @@
       }
       _self.initData();
     },
+    mounted(){
+        let fontSize = getComputedStyle(document.getElementsByTagName('body')[0]).fontSize;
+        console.log(fontSize);
+        this.height ='-' + parseInt(fontSize.replace('px','')*1.2)
+        console.log('height',this.height);
+        this.$nextTick(
+            ()=>{
+                this.$refs.scroller.disablePullup();
+                this.$refs.scroller.reset({top:0});
+            }
+        );
+    },
     methods: {
       /**************************************/
       showToast(msg){
@@ -101,6 +118,9 @@
         this.$router.goBack();
       },
       toUrl: function (pagename) {
+        this.$router.push({name: pagename})
+      },
+       toUrl2: function (p) {
         this.$router.push({name: pagename})
       },
       // 获取默认图片
@@ -185,25 +205,24 @@
           user_id:_self.user_id,
           user:_self.user,
           imgs:_self.imgs,
+          audit_final_state:2
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           // console.log(response)
           var data = response.data
-          if( data ){
-            if( data.code==200 && data.code1==200 ){
-              _self.showToast('提交成功！');
-              _self.userInfo.real_name = _self.user.real_name;
-              _self.userInfo.id_number = _self.user.id_number;
-              _self.userInfo.authenticating_state = _self.user.authenticating_state;
-              common.setStorage("userInfo",_self.userInfo);
-              setTimeout(function () {
-                _self.goback();
-              },1000);
-            }else{
-              _self.showToast('提交失败！');
-            }
+          if( data && data.code==200 ){
+            _self.showToast('提交成功！');
+            _self.userInfo.real_name = _self.user.real_name;
+            _self.userInfo.id_number = _self.user.id_number;
+            _self.userInfo.authenticating_state = _self.user.authenticating_state;
+            common.setStorage("userInfo",_self.userInfo);
+            setTimeout(function () {
+              _self.goback();
+            },1000);
+          }else{
+            _self.showToast('提交失败！');
           }
         })
       }

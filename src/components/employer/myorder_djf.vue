@@ -27,7 +27,7 @@
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
-                            {{item.project_describe}}
+                            {{item.project_title}}
                         </div>
                         <div class="jianjie-bottom">
                             <div class="db-leixin">

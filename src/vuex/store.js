@@ -23,6 +23,9 @@ const state = {
   orderTabIndex:0,
   //我的订单页面动画方向
   directionOrderTab:0,
+  //案例列表刷新状态
+  caseRefreshMark:0,
+
 }
 
 //这里的mutations是固定的写法，意思是改变的，要改变数据的方法，必须写在mutations里。

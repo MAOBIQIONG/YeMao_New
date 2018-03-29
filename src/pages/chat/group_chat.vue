@@ -1,11 +1,12 @@
 <template>
-  <div class="liaotian">
-    <div class="header p-static">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+  <div class="templete-body liaotian">
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span v-text="target_name"></span>
     </div>
     <!--  信息表-->
-    <div class="content">
+    <div id="content" class="content">
       <scroller
         id="scroller"
         v-model="pullUpDownStatus"
@@ -27,42 +28,42 @@
             <ul>
               <li v-for="(message, index) in dataArray" :key="index" :class="message.from==user._id?'an-move-right':'an-move-left'">
                 <p class="time"> <span v-text="getDataStr(message.create_date)"></span></p>
-                <!--<p class="time system" v-if="message.from!=user._id"> <span>{{message.text}}</span> </p>-->
                 <div class="main" :class="message.sender==user._id?'self':''">
-                  <img class="avatar" :src="message.sender==user._id? ownerAvatarUrl: contactAvatarUrl">
-                  <!-- 文本 -->
-                  <div class="text" v-html="filterImgs(message.content)"></div>
-                  <!--<div class="text" v-if="message.type=='text'" v-html="message.content"></div>-->
-                  <!-- 图片 -->
-                  <!--<div class="text" v-else-if="message.type=='image'">-->
-                    <!--<img :src="message.text" class="image" alt="聊天图片">-->
-                  <!--</div>-->
-                  <!--&lt;!&ndash; 其他 &ndash;&gt;-->
-                  <!--<div class="text" v-else v-text="'[暂未支持的消息类型:'+ message.type +']\n\r' + message.text">-->
-                  <!--</div>-->
+                  <img class="avatar" :src="message.sender==user._id?ownerAvatarUrl:checkAvatar(message.user.img)">
+                  <div class="text" v-tap="{methods:show,text:message.content}" v-html="filterImgs(message.content)"></div>
                 </div>
               </li>
-
+              <li class="bot-li"></li>
             </ul>
           </div>
         </div>
       </scroller>
     </div>
-    <chat :to="target_id" @upup="sended"></chat>
+    <chat :to="target_id" :scene="scene" @upup="sended"></chat>
+    <div v-transfer-dom>
+      <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
+    </div>
   </div>
 </template>
 
 <script>
-  import {LoadMore, Scroller,} from 'vux'
+  import {LoadMore, Scroller, Previewer, TransferDom,} from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'  
   import chat from '../../components/chat/chat.vue'
   export default {
+    directives: {
+      TransferDom
+    },
     components: {
+      Previewer,
+      Previewer2,
       Scroller,
       LoadMore,
       chat
     },
     data () {
       return {
+        scene: 'team',
         target_id:'',
         target_name: '',
         ownerAvatarUrl: '',
@@ -70,10 +71,28 @@
         dataArray: [],
         userArray: [],
         isReset:false,
+        // 预览图片
+        list:[],
+        imgList:[],
+        options: {
+          getThumbBoundsFn (index) {
+            // find thumbnail element
+            let thumbnail = document.querySelectorAll('.emoji-thumbnail')[index]
+            // get window scroll Y
+            let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
+            // optionally get horizontal scroll
+            // get position of element relative to viewport
+            let rect = thumbnail.getBoundingClientRect()
+            // w = width
+            return {x: rect.left, y: rect.top + pageYScroll, w: rect.width}
+            // Good guide on how to get element coordinates:
+            // http://javascript.info/tutorial/coordinates
+          }
+        },
         // 加载
         lockX:true,
         lockY:false,
-        height: '-90',
+        height: '', //  -90
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -125,10 +144,13 @@
         }
       }
     },
+    activated: function () {
+      console.log("group_chat activated:")
+    },
     created(){
+
       var _self = this;
       _self.target_id = _self.$route.query.id;
-      console.log("target_id:"+_self.target_id)
       _self.target_name = _self.$route.query.name;
       _self.contactAvatarUrl = _self.checkAvatar(_self.$route.query.img);
       _self.user = common.getObjStorage("userInfo") || {};
@@ -151,15 +173,40 @@
       checkAvatar (path) {
         return common.getAvatar(path)
       },
+      checkImg(path){
+        return common.getDefultImg(path);
+      },
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       filterImgs(text){
         return wyim.filterEmoji(text);
+      },
+      filterPaths (text){
+        return wyim.filterImgPath(text);
+      },
+      show (param) {
+        var _self = this;
+        var arr = _self.filterPaths(param.text);
+        if( arr.length > 0 ){
+          var i = _self.imgList.indexOf(arr[0]);
+          _self.list = [];//清除缓存
+          _self.imgList.forEach(function (img, j) {
+            _self.list.push({src: _self.getRealPath(img)});
+          })
+          _self.$refs.previewer.show(i)
+        }
+        param.event.cancelBubble = true;
+        param.event.stop;//阻止冒泡（原声方法）
+        return false
       },
       // 重新计算滚动高度
       resetHeight(num){
         var _self = this;
         var sh = _self.$refs.message.scrollHeight;
         var ch = document.documentElement.clientHeight;
-        var height = sh-ch+common.checkInt(num); // div高度-屏幕高度-头部-底部高度
+        var bh = document.getElementById("inputBox").offsetHeight;
+        var height = sh-ch+bh*2.5; // div高度-屏幕高度+头部+底部高度
         var h = height > 0 ? height : 0;
         _self.$nextTick(
           ()=>{
@@ -174,16 +221,27 @@
           sender: msg.from,            // 发送者ID
           recipient: msg.to,           // 接收者ID
           content: msg.text,           // 最新聊天内容
-          create_date: msg.time        // 会话创建时间
+          create_date: msg.time,       // 会话创建时间
+          user: msg.user || {}
         }
         _self.dataArray.push(record);
-        _self.resetHeight(200);
+        setTimeout(function () {
+          _self.resetHeight();
+        },100)
       },
       // 接收消息后，保存消息
       receiveMsg(msg){
+        if( msg.scene == 'p2p') return;
         var _self = this;
-        if( _self.target_id == msg.from ){
+        _self.dataArray.forEach(function (item,index) {
+          if( msg.from == item.user.id ){
+            msg.user = item.user;
+          }
+        })
+        if( msg.user ){
           _self.sended(msg);
+        }else{
+          _self.getUserById(msg);
         }
       },
       //下拉刷新
@@ -230,10 +288,11 @@
         }
         _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
         let params = {
-          interfaceId:common.interfaceIds.getChatRecord,
+          interfaceId: common.interfaceIds.getChatRecord,
           pageNo: _self.pagination.pageNo,
           pageSize: _self.pagination.pageSize,
-          where:{
+          scene: 1,
+          where: {
             sender: _self.user._id,
             recipient: _self.target_id,
           }
@@ -272,13 +331,42 @@
         } else {
           _self.pagination.pageNo++
         }
+        // 过滤预览图片地址
+        records.forEach(function (item,index) {
+          var arr = _self.filterPaths(item.content);
+          if( arr.length > 0 ){
+            arr.forEach(function (img,i) {
+              if( _self.imgList.indexOf(img) < 0 ){
+                _self.imgList.push(img);
+              }
+            })
+          }
+        })
         /**置底**/
         if( _self.isReset == false ){
           _self.isReset = true;
           setTimeout(function () {
-            _self.resetHeight(125);
-          },200)
+            _self.resetHeight();
+          },100)
         }
+      },
+      //获取用户信息
+      getUserById(msg){
+        let _self = this;
+        let params = {
+          interfaceId: common.interfaceIds.queryUserById,
+          user_id: msg.from,
+        };
+        _self.$axios.post('/mongoApi',{
+          params
+        },(response)=>{
+          let data = response.data;
+          if( data ){
+            var id = data._id.toString();
+            msg.user = {id: id,name: data.user_name,img: data.img};
+            _self.sended(msg);
+          }
+        })
       },
     }
   }
@@ -305,6 +393,9 @@
     left:0;
     position: relative;
     display:inline-block;
+  }
+  .bot-li{
+    height: 0.5rem;
   }
   .message .time {
     margin: 0.2rem 0;

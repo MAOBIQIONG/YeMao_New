@@ -1,12 +1,12 @@
 <template>
   <div >
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>签约设计师</span>
       <div class="header-right" v-tap="{methods:submit}">提交</div>
     </div>
-    <div class="content content-p">
+    <div class="content" style="padding-top:0.2rem">
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
@@ -27,6 +27,9 @@
           </div>
         </div>
       </div>
+      <div class="suoming">
+        请发送你的作品及简历至官方邮箱：jianlianyemao@163.com
+      </div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
@@ -43,13 +46,13 @@
       return {
         addressData: ChinaAddressV4Data,
         value:  [],
-        user:{
-          city:  "",
-          email: "",
+        user: {
+          city:  '',
+          email: '',
           authenticating_state: 5
         },
-        showMark:false,
-        showMsg:"",
+        showMark: false,
+        showMsg: '',
       }
     },
     created: function () {
@@ -57,6 +60,7 @@
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
       if( !common.isNull(_self.userInfo._id) ){
+        _self.user.email = _self.userInfo.email;
         _self.user_id = _self.userInfo._id;
         if( !common.isNull(_self.userInfo.city) ){
           _self.value.push(_self.userInfo.city);
@@ -121,17 +125,17 @@
         }
 
         var params = {
-          interfaceId:common.interfaceIds.updateData,
-          coll: common.collections.users,
-          wheredata:{_id:_self.user_id},
-          data:{$set: _self.user},
+          interfaceId:common.interfaceIds.applyDesignerCert,
+          user_id: _self.user_id,
+          user: _self.user,
+          audit_final_state:6
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           console.log(response)
           var data = response.data
-          if( data && data.ok>0 ){
+          if( data && data.code==200 ){
               _self.showToast('提交成功！');
               _self.userInfo.city = _self.user.city;
               _self.userInfo.email = _self.user.email;

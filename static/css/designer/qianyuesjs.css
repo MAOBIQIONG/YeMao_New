@@ -12,7 +12,13 @@
 	width: 100%;
 	background: white;
 }
-
+.content .suoming {
+  width: 100%;
+  text-align: center;
+  font-size: 0.32rem;
+  color: #999999;
+  margin-top: 1rem;
+}
 .content .ys-time .qdtime {
 	width: 6.9rem;
 	height: 0.8rem;
@@ -36,6 +42,7 @@
 	font-size: 0.28rem;
 	outline: medium;
 	text-align: right;
+  color: #999999;
 }
 
 

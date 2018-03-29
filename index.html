@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>yemao</title>
-    <script src="static/js/ydui.flexible.js"></script>
+    <script src="static/js/es5/ydui.flexible.js"></script>
     <link rel="stylesheet" type="text/css" href="static/css/public.css"/>
   </head>
   <body>
@@ -12,6 +12,52 @@
     <!-- built files will be auto injected -->
   </body>
   <script>
+    // 解决ios软件盘弹出,底部输入框被顶起
+    window.onresize=function(){
+      console.log("onresize:")
+      //软键盘弹起与隐藏  都会引起窗口的高度发生变化
+      var  resizeHeight=document.documentElement.clientHeight || document.body.clientHeight;
+      console.log("resizeHeight:"+resizeHeight)
+      var content = document.getElementById("content");
+      if( content && common.browser.versions.ios ){
+        var h = resizeHeight > 100 ? resizeHeight-100 : resizeHeight;
+        content.style.height = h+'px';
+      }
+    }
+    document.addEventListener( "plusready", function(){
+      console.log("app.vue addEventListener plusready:");
+      // var info =plus.push.getClientInfo();
+      // console.log("info:"+JSON.stringify(info))
+      // 弹出解决软件盘，顶部header被顶起
+      if( common.browser.versions.ios ){
+        console.log("currentWebview:"+plus.webview.currentWebview().id)
+        plus.webview.currentWebview().setStyle({
+          softinputMode: "adjustResize"  // 弹出软键盘时自动改变webview的高度
+        });
+      }
+      // 通知栏消息点击监听
+      plus.push.addEventListener("click", function (msg) {
+        // alert("click msg:"+JSON.stringify(msg))
+      });
+      // 透穿消息监听
+      plus.push.addEventListener( "receive", function(msg) {
+        /**
+         * msg内容：
+         * 1、ios:
+         * {"payload":"请输入需要透传的内容","title":"标题","content":"内容","type":"receive","aps":"null"}
+         * 2、android:
+         * {"_UUID_":"androidPushMsg53788265","title":"标题","content":"内容","payload":"请输入需要透传的内容"}
+         * */
+        // alert("receive msg:"+JSON.stringify(msg))
+        var appStatus = common.getStorage('appStatus');
+        if( appStatus == 0 ){
+          //震动
+          plus.device.vibrate( 50 );
+        }else if( common.browser.versions.android ){
+          wyim.createMessage(msg);
+        }
+      });
+    })
     //运行环境从前台切换到后台事件
     document.addEventListener("pause", function() {
       //0、前台运行，1、后台运行

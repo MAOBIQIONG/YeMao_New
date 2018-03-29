@@ -5,7 +5,7 @@
       <span>雇主</span>
       <div class="header-right "v-tap="{ methods:toUrl, pagename:'message', flag:true }">
         <img src="../../../static/images/employer/ling.png" />
-        <div class="hongdian"></div>
+        <div class="hongdian" v-if="user.unread_number>0"></div>
       </div>
     </div>
 
@@ -38,24 +38,40 @@
     </div>
     <div class="content">
       <!-- 上拉加载 -->
-      <scroller lock-x height="-10px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: 3.8rem;">
+      <!--<scroller lock-x height="-10px" @on-scroll-bottom="onScrollBottom" ref="scrollerBottom" :scroll-bottom-offst="100" style="padding-bottom: 3.8rem;">-->
+      <scroller
+        v-model="pullUpDownStatus"
+        :height="height"
+        :lock-x="lockX"
+        :lock-y="lockY"
+        :use-pulldown="true"
+        :use-pullup="true"
+        :pulldown-config="pulldownConfig"
+        :pullup-config = "pullupConfig"
+        @on-scroll="scroll"
+        @on-scroll-bottom="onScrollBottom"
+        @on-pulldown-loading="pullDownLoading"
+        @on-pullup-loading="pullUpLoading"
+        ref="scroller"
+      >
         <div>
-          <div class="gz-list" v-for="order in orderList" @click="toDetails(order._id)">
+          <div class="gz-list" v-for="(order,index) in orderList" :key="index" v-tap="{methods:toDetails,id:order._id,uid:order.user._id}">
             <div class="gz-top">
-              <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}">
-                <!-- <img :src="checkAvatar(order.user.img)" /> -->
-              </div>
+              <div class="gz-touxiang" :style="{backgroundImage:`url(${checkAvatar(order.user.img)})`}"></div>
               <div class="gz-nicheng">{{order.user.user_name}}</div>
               <div class="gz-jiage"><span>￥</span><span>{{order.project_budget}}</span></div>
             </div>
             <div class="gz-timeleixin">
-              <div class="gz-time"><span><img src="../../../static/images/index/time.png"/></span><span>{{order.project_deadLine}}过期</span></div>
+              <div class="gz-time">
+                <!--<span><img src="../../../static/images/index/time.png"/></span>-->
+                <!-- <span>{{getDateDiff(order.refresh_date)}}</span> -->
+                <span>{{footPrintTime(order.footprint_date)}}&nbsp;·&nbsp;{{order.project_region}}</span>
+              </div>
               <div class="gz-leixin"><span>{{getNameById(order.project_type)}}</span></div>
             </div>
             <div class="gz-content">
               <div class="tupian">
                 <div class="tu" v-for="img in order.imgs.slice(0, 3)">
-                  <!--<img :src="checkImg(img)" />-->
                   <div class="bg-cover" :style="'background-image:url('+checkImg(img)+')'"></div>
                 </div>
               </div>
@@ -63,9 +79,7 @@
             </div>
             <div class="gz-bottom">
               <div class="gb-left">
-                <div class="gb-tu" v-for="bidder in order.bidders" :style="{backgroundImage:`url(${checkAvatar(bidder.user.img)})`}">
-                  <!-- <img :src="checkAvatar(bidder.user.img)" /> -->
-                </div>
+                <div class="gb-tu" v-for="bidder in order.bidders" :style="{backgroundImage:`url(${checkAvatar(bidder.user.img)})`}"></div>
                 <div class="gb-wz"><span>{{order.bidders.length}}</span>人抢单</div>
               </div>
               <div class="gb-right">
@@ -73,7 +87,7 @@
               </div>
             </div>
           </div>
-          <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
+          <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
       </scroller>
     </div>
@@ -94,29 +108,95 @@
         sortMark: 0,
         znpxMark: false,
 
-        pageNo: 0,
-        pageSize: 10,
         onFetching: true,
-        showLoading: false,
-        loadtext: '上拉加载',
-        loadmore: '上拉加载',
-        loadrefresh: '正在加载...',
-        loadnomore: '没有更多数据了'
+        lockX:true,
+        lockY:false,
+        height:"-200",
+        pagination: {
+          pageNo: 0,
+          pageSize: 10
+        },
+        pullUpDownStatus: {
+          pulldownStatus: 'default',
+          pullupStatus: 'default'
+        },
+        pulldownConfig:{
+          content: '下拉刷新',
+          height: 60,
+          autoRefresh: false,
+          downContent: '下拉刷新',
+          upContent: '放开刷新',
+          loadingContent: '刷新中...',
+          clsPrefix: 'xs-plugin-pulldown-'
+        },
+        pullupConfig:{
+          content: '上拉加载',
+          pullUpHeight: 60,
+          height: 40,
+          autoRefresh: false,
+          downContent: '放开加载',
+          upContent: '上拉加载',
+          loadingContent: '',
+          clsPrefix: 'xs-plugin-pullup-'
+        },
+        loadMoreStatus:{
+          tip:"正在加载",
+          tipNoData:"没有更多数据了",
+          tipLoading:"正在加载",
+          showLoading:true,
+          show:true,
+        },
+        hasMore:true,
       }
     },
     activated: function () {
-      console.log("employer activated:")
-      var erm = this.$store.state.employerRefreshMark;
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
+      var erm = _self.$store.state.employerRefreshMark;
       if ( erm > 0 ) {
-        this.$store.state.employerRefreshMark = 0;
-        this.pageNo = 0;
-        this.pageSize = 10;
-        this.onFetching = true;
-        this.loadMore()
+        _self.$store.state.employerRefreshMark = 0;
+        _self.pagination.pageNo = 0;
+        _self.pagination.pageSize = 10;
+        _self.onFetching = true;
+        _self.loadMore()
       }
+
+      let footprint2 = common.getObjStorage('footprint2');
+      if(!common.isNull(footprint2)){
+        _self.orderList.reduce(function(a,c,i,arr){
+          if(c._id==footprint2.id){
+            c.footprint_date= Date.parse(new Date());
+          }
+        },undefined)
+      }
+      common.delStorage('footprint2');
     },
     created: function () {
-      this.loadMore()
+      var _self = this;
+      _self.user = common.getObjStorage("userInfo") || {};
+      _self.loadMore()
+    },
+    mounted(){
+      this.$nextTick(
+        ()=>{
+          this.$refs.scroller.disablePullup();
+          this.$refs.scroller.reset({top:0});
+        }
+      );
+    },
+    watch:{
+      pullUpDownStatus:{
+        handler:function(val,oldval){
+          if(val.pullupStatus=="loading"){
+            this.loadMoreStatus.show=true;
+            if(this.hasMore == false){
+              this.loadMoreStatus.showLoading=false;
+            } else {
+              this.loadMoreStatus.showLoading=true;
+            }
+          }
+        }
+      }
     },
     methods: {
       toUrl: function (params) {
@@ -127,14 +207,18 @@
           this.$router.push({name: params.pagename})
         }
       },
-      toMyorder(params){  
+      toMyorder(params){
         //myorder页面tabindex设为0；
         this.$store.commit("changeIndexOrder",{index:0});
         this.toUrl(params);
       },
       // 详情页
-      toDetails (id) {
-        this.$router.push({name: 'emporder', query: {id: id}})
+      toDetails (params) {
+        var _self = this;
+        if(_self.user && _self.user._id == params.uid){
+          common.setStorage('footprint2',{id:params.id});
+        }
+        this.$router.push({name: 'emporder', query: {id: params.id}})
       },
       /*******************************************************/
       // 项目类型名称
@@ -148,6 +232,9 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
+      getDateDiff(date){
+        return common.getDateDiff(date)
+      },
       // 智能排序
       znbx () {
         var _self = this
@@ -160,7 +247,7 @@
         _self.sortName = event.target.innerText;
         if( _self.sortMark != param.value  ){
           _self.sortMark = param.value;
-          _self.pageNo = 0;
+          _self.pagination.pageNo = 0;
           _self.loadMore();
         }
       },
@@ -195,12 +282,39 @@
         })
         return status;
       },
-      /**
-       * vux
-       * */
-      // 下拉加载下拉加载
-      onScrollBottom () {
+      //下拉刷新
+      refreshPageDate(){
+        let _self = this
+        _self.pagination.pageNo = 0;
+        _self.hasMore = true;
+        _self.loadMoreStatus.show=false;
+        _self.loadData();
+      },
+      //上拉加载
+      loadMore(){
+        let _self = this;
+        _self.loadData();
+      },
+      scroll(position){
+        // console.log("on-scroll",position);
         var _self = this;
+        _self.srollFlag = position.top > 100 ? 1 : 0;
+        if( position.top<-150 && position.top>=-400 ){
+          var size = (150-position.top-110)/100;
+          $("#page").css('background-size',size+'rem '+size+'rem')
+        }
+      },
+      pullDownLoading(){
+        console.log('on-pull-down-loading');
+        this.refreshPageDate();
+      },
+      pullUpLoading(){
+        console.log('on-pull-up-loading');
+        this.loadMore();
+      },
+      onScrollBottom(){
+        // console.log('on-scroll-bottom');
+        var _self = this
         if (_self.onFetching) {
           // do nothing
         } else {
@@ -213,18 +327,16 @@
       /**
        * interface
        * */
-      loadMore () {
+      loadData () {
         var _self = this;
         var params = {
           interfaceId:common.interfaceIds.getOrderList,
-          pageNo: _self.pageNo,
-          pageSize: _self.pageSize,
+          pageNo: _self.pagination.pageNo,
+          pageSize: _self.pagination.pageSize,
+          user_id: _self.user._id
         }
         // 排序
-        params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:1};
-        // 上拉加载
-        _self.loadtext = _self.loadrefresh;
-        _self.showLoading = true;
+        params.sort = _self.sortMark==1?{project_participants:-1}:{refresh_date:-1};
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
@@ -236,6 +348,22 @@
         })
       },
 
+      footPrintTime(date){
+          let now = Date.parse(new Date());
+          let differ = (now-date)/ 1000 / 60;
+          if(differ<5){
+            return "刚刚来过";
+          }
+          if(differ>=5 && differ < 60){
+            return parseInt(differ) + "分钟前来过";
+          }
+          if(differ>=60 && differ < 1440){
+            return parseInt(differ/ 60) + "小时前来过";
+          }
+          if(differ>=1440){
+            return parseInt(differ/ 1440) + "天前来过";
+          }
+      },
       setOrderData(data){
         var _self = this;
         // 订单
@@ -254,24 +382,24 @@
           })
         });
         //判断页码是否为0
-        if( _self.pageNo == 0 ){
+        if( _self.pagination.pageNo == 0 ){
           _self.orderList = orderList;
         }else{
           _self.orderList = [..._self.orderList, ...orderList];
         }
-        //重置页面滚动距离
-        _self.$nextTick(() => {
-          _self.$refs.scrollerBottom.reset()
-        })
-        //底部加载动画
-        _self.showLoading = false;
         //判断数据是否有一页
-        if ( orderList.length < _self.pageSize ) {
-          _self.loadtext = _self.loadnomore;
+        _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePulldown();
+        _self.$refs.scroller.donePullup();
+        if( orderList.length < _self.pagination.pageSize ){
+          _self.hasMore = false;
+          _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
+          _self.$refs.scroller.disablePullup();
         } else {
-          _self.loadtext = _self.loadmore;
           _self.onFetching = false
-          _self.pageNo++;
+          _self.pagination.pageNo++;
+          _self.loadMoreStatus.show=false;
         }
       }
 

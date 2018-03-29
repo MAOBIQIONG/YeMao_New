@@ -1,13 +1,15 @@
 <template>
-  <div class="anlie">
+  <div class="templete-body my-body">
     <!--头部导航-->
-    <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span>案列详情</span>
-      <div class="header-right" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
+      <div class="header-right" v-tap="{methods:delConfirm}" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
     </div>
+
     <!--详情内容-->
-    <div class="content content-p">
+    <div class="content">
       <scroller
         v-model="pullUpDownStatus"
         :height="height"
@@ -41,42 +43,66 @@
           </div>
           <!--评价内容-->
           <div class="pingjia-list">
-            <div class="gzpj-list" v-for="item in comments">
+            <div class="gzpj-list" v-for="(item,index) in comments" :key="index">
               <div class="pl-top">
-                <div class="touxiang">
-                  <img :src="checkAvatar(item.user.img)"/>
+                <div class="left">
+                  <img v-if="item.anonymous==0" :src="checkAvatar(item.user.img)"/>
+                  <img v-else :src="checkAvatar('')"/>
                 </div>
-                <p>{{item.user.user_name}}</p>
+                <div v-if="item.anonymous==0" class="center">
+                  <span class="comment__username">{{item.user.user_name}}</span>
+                  <div class="sb-qian" v-if="item.user.authenticating_state>5">签</div>
+                  <div class="sb-ysm" v-if="item.user.authenticating_state>1">已实名</div>
+                  <div class="sb-yrz" v-if="item.user.authenticating_state>3">已认证</div>
+                </div>
+                <div v-else class="center">匿名用户</div>
+                <div class="right" v-if="item.type==0">{{getDateDiff(item.create_date)}}</div>
+                <div class="right comment__employee" v-if="item.type==1">雇主评价</div>
               </div>
               <div class="pl-content">{{item.content}}</div>
-              <div class="pl-bottom">
+              <div class="pl-bottom" v-if="item.type==1">
                 <div class="shijian">{{getDateDiff(item.create_date)}}</div>
-                <div class="pingfen"></div>
+                <div class="pingfen">
+                  <rater v-model="chw.score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
+                </div>
               </div>
             </div>
           </div>
+          <div style="height: 1.2rem;"></div>
         </div>
         <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip"
                    class="loadMore"></load-more>
       </scroller>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
-    <!-- 评论输入框 -->
-    <div class="input-box">
-      <div class="input">
-        <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
-      </div>
-      <div class="send-btn" :class="is_submit?'hover':''">
-        <div class="btn" v-tap="{methods:commentchw}">发送</div>
+    <div v-transfer-dom>
+      <confirm v-model="confirmShow"
+               @on-confirm = "compOnConfirm"
+               @on-cancel="onCancel"
+      >
+        <p style="text-align:center;">{{confirmMsg}}</p>
+      </confirm>
+    </div>
+    <div class="chat-box">
+      <!-- 评论输入框 -->
+      <div class="input-box">
+        <div class="input">
+          <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
+        </div>
+        <!--<div class="anonymous-box" v-tap="{methods:anonymousFun}">-->
+          <!--<div class="anonymous" :class="anonymous==1?'hover':''">匿</div>-->
+        <!--</div>-->
+        <div class="send-btn" :class="is_submit?'hover':''">
+          <div class="btn" v-tap="{methods:commentchw}">发送</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {Swiper, SwiperItem, Previewer, TransferDom, Scroller, LoadMore, Toast} from 'vux'
+  import {Swiper, SwiperItem, Previewer, Scroller, LoadMore, Toast, Value2nameFilter as value2name, Confirm,TransferDomDirective as TransferDom,Rater} from 'vux'
   import store from '@/vuex/store'
-
   export default {
     directives: {
       TransferDom
@@ -87,7 +113,9 @@
       Previewer,
       Scroller,
       LoadMore,
-      Toast
+      Toast,
+      Confirm,
+      Rater
     },
     store,
     data() {
@@ -104,6 +132,10 @@
         comment_placeholder: '填写评论',
         comment_text: '',
         answer_id:'',
+        anonymous:0, // 匿名:0、不匿名，1、匿名。
+        // confirm
+        confirmShow:false,
+        confirmMsg:'确认删除？',
 
         // 上拉加载
         lockX: true,
@@ -220,7 +252,6 @@
           _self.like();
         }
       },
-
       //点赞效果
       commentchw() {
         var _self = this;
@@ -230,6 +261,20 @@
         } else {
           _self.addComment();
         }
+      },
+      // confirm
+      compOnConfirm(){
+        console.log("compOnConfirm:")
+        this.deletePChw();
+      },
+      onCancel(){
+        console.log("onCancel:")
+      },
+
+      /**匿名**/
+      anonymousFun(){
+        var _self = this;
+        _self.anonymous = _self.anonymous==0 ? 1 : 0;
       },
 
       //下拉刷新
@@ -368,6 +413,7 @@
           // console.log(response)
           let data = response.data;
           if (data.code == 200) {
+            _self.$store.state.caseRefreshMark = 1;
             _self.chw.likeFlag = _self.chw.likeFlag == 1 ? 0 : 1;
             _self.chw.like += _self.chw.likeFlag == 1 ? 1 : -1;
           } else {
@@ -387,6 +433,7 @@
             content: _self.comment_text,          // 评论内容
             comment_type: 1,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
             answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
+            anonymous: _self.anonymous,           // 匿名:0、不匿名，1、匿名。
           }
         };
         this.$axios.post('/mongoApi', {
@@ -395,6 +442,7 @@
           console.log(response)
           let data = response.data;
           if (data.code == 200) {
+            _self.$store.state.caseRefreshMark = 1;
             _self.showToast("评论成功!")
             _self.addCommentHmtl(params.data);
           } else {
@@ -402,7 +450,6 @@
           }
         })
       },
-
       // 添加评论html
       addCommentHmtl(data) {
         var _self = this;
@@ -416,10 +463,38 @@
           _id: _self.userInfo._id
         };
         data.create_date = new Date().getTime();
-        _self.comments.unshift(data);
+        if( _self.comments.length>0 && _self.comments[0].type==1 ){
+          _self.comments.splice(1, 0, data);
+        }else{
+          _self.comments.unshift(data);
+        }
         // 重置评论框内容
         _self.comment_text = '';
-      }
+      },
+
+      // 确认删除
+      delConfirm(){
+        this.confirmShow = true;
+      },
+      // 删除
+      deletePChw() {
+        let _self = this;
+        let params = {
+          interfaceId: common.interfaceIds.removePChw,
+          _id: _self.chw_id
+        };
+        _self.$axios.post('/mongoApi', {
+          params
+        }, (response) => {
+          let data = response.data;
+          if (data.code == 200) {
+            _self.$store.state.caseRefreshMark = 1;
+            _self.goback();
+          } else {
+            _self.showToast("删除失败!")
+          }
+        })
+      },
     }
   }
 </script>
@@ -427,7 +502,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/anliexq.css';
-
   .dz {
     height: 0.9rem;
     line-height: 0.9rem;
@@ -454,7 +528,48 @@
     padding-left: 0.5rem;
     padding-right: 0.25rem;
   }
-  .anlie{
-    position: fixed;
+  .pl-top,.pl-top .center{
+    align-items:center;
+    display:-webkit-flex;
+  }
+  .comment__username{
+    display:inline-block;
+      max-width:3rem;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap
+  }
+  .sb-qian,.sb-ysm,.sb-yrz{
+      font-size:0.24rem;
+      height:0.4rem;
+      width:1rem;
+      line-height:0.4rem;
+      display:inline-block;
+      margin-left:0.1rem;
+  }
+  .sb-qian{
+    width:0.6rem;
+    border: 1px solid #ffe354;
+    background-color: #fff9d9;
+    border-radius: 0.08rem;
+
+    text-align: center;
+    color: #cda566;
+  }
+  .sb-ysm {
+    border: 1px solid #6ddacf;
+    color: #6ddacf;
+    text-align: center;
+    border-radius: 0.08rem;
+  }
+  .sb-yrz {
+    border: 1px solid #142aa4;
+    color: #142aa4;
+    text-align: center;
+    border-radius: 0.08rem;
+  }
+  .comment__employee{
+    color: #f661a9!important;
+    font-size: 0.3rem!important;
   }
 </style>

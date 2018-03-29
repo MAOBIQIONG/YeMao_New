@@ -204,6 +204,7 @@
   margin-left: 0.8rem;
   line-height: 0.4rem;
   color: #999999;
+  word-wrap:break-word;
 }
 
 .pinglun .pinlunlist .bottom {

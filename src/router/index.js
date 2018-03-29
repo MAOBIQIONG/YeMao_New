@@ -14,8 +14,11 @@ import wjmm from '@/pages/login/wjmm'
 import login from '@/pages/login/zhlogin'
 import zhuche from '@/pages/login/zhuche'
 import zhuche2 from '@/pages/login/zhuche2'
+import register from '@/pages/login/register'
 import fenlei from '@/pages/index/fenlei'
 import informxitong from '@/pages/index/informxitong'
+import activitynotice from '@/pages/index/activity-notice'
+import systemnotice from '@/pages/index/system-notice'
 import leibie from '@/pages/index/leibie'
 import message from '@/pages/index/message'
 import search from '@/pages/index/search'
@@ -30,6 +33,7 @@ import shoucangsjs from '@/pages/employer/shoucangsjs'
 import zfcg from '@/pages/employer/zfcg'
 import payment from '@/pages/employer/payment'
 import liaotian from '@/pages/chat/liaotian'
+import groupchat from '@/pages/chat/group_chat'
 import daizhifu from '@/pages/employer/daizhifu'
 import daijiaofu from '@/pages/employer/daijiaofu'
 import yiwancheng from '@/pages/employer/yiwancheng'
@@ -39,6 +43,7 @@ import sjszxxq from '@/pages/designer/sjszx-xq'
 import myorderdesigner from '@/pages/designer/myorder-designer'
 import shejishigerenzhongxin from '@/pages/designer/shejishigerenzhongxin'
 import xiugaigerenxinxi from '@/pages/designer/xiugaigerenxinxi'
+import restday from '@/pages/designer/restday'
 import jianjiexiugai from '@/pages/designer/jianjiexiugai'
 import rongyushangcuan from '@/pages/designer/rongyushangcuan'
 import zuopingshangchuan from '@/pages/designer/zuopingshangchuan'
@@ -80,6 +85,7 @@ import bianjigongzuojinli from '@/pages/meow/bianjigongzuojinli'
 import chuangjianxiaoyouhui from '@/pages/meow/chuangjianxiaoyouhui'
 import ddsh from '@/pages/meow/ddsh'
 import dianzhan from '@/pages/meow/dianzhan'
+import alumniList from '@/pages/meow/alumniList'
 import gongzuojinli from '@/pages/meow/gongzuojinli'
 import fbwd from '@/pages/meow/fbwd'
 import pengyouquanxq from '@/pages/meow/pengyouquanxq'
@@ -100,7 +106,6 @@ import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
 import guide from '@/pages/main/guide'
 import maintain from '@/pages/main/maintain'
-
 
 Vue.use(Router)
 
@@ -271,6 +276,11 @@ const routeArray = [
     name: 'dianzhan',
     component: dianzhan
   },
+    {
+        path: '/alumniList',
+        name: 'alumniList',
+        component: alumniList
+    },
   { path: '/ddsh',
     name: 'ddsh',
     component: ddsh
@@ -417,6 +427,10 @@ const routeArray = [
     name: 'xiugaigerenxinxi',
     component: xiugaigerenxinxi
   },
+  { path: '/restday',
+    name: 'restday',
+    component: restday
+  },
   { path: '/jianjiexiugai',
     name: 'jianjiexiugai',
     component: jianjiexiugai
@@ -491,6 +505,10 @@ const routeArray = [
     name: 'liaotian',
     component: liaotian
   },
+  { path: '/groupchat',
+    name: 'groupchat',
+    component: groupchat
+  },
   // index模块
   { path: '/fenlei',
     name: 'fenlei',
@@ -500,13 +518,22 @@ const routeArray = [
     name: 'informxitong',
     component: informxitong
   },
+  { path: '/activitynotice',
+    name: 'activitynotice',
+    component: activitynotice
+  },
+  { path: '/systemnotice',
+    name: 'systemnotice',
+    component: systemnotice
+  },
   { path: '/leibie',
     name: 'leibie',
     component: leibie
   },
   { path: '/message',
     name: 'message',
-    component: message
+    component: message,
+    meta: { keepAlive: true }
   },
   { path: '/search',
     name: 'search',
@@ -540,6 +567,10 @@ const routeArray = [
   { path: '/zhuche2',
     name: 'zhuche2',
     component: zhuche2
+  },
+  { path: '/register',
+    name: 'register',
+    component: register
   },
     {
         path: '/collectionDesigner',

@@ -10,7 +10,7 @@
     <div class="login-shuru">
       <p class="tishi" ref="tips"></p>
       <div class="ls-shouji">
-        <input v-model="phone" type="text" class="shouji" id="phone" placeholder="手机号">
+        <input v-model="phone" type="tel" class="shouji" id="phone" placeholder="手机号">
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
@@ -29,7 +29,7 @@
 
 <script>
   import { Toast, } from 'vux'
-  import interfaces from  '../../../static/js/interface'
+  import interfaces from '../../../static/js/es6/interface'
   import md5 from 'js-md5';
   export default {
     components: {
@@ -119,29 +119,20 @@
         _self.is_submit = true
         // 提交
         var params = {
-          interfaceId:common.interfaceIds.updateData,
-          coll:'users',
-          wheredata:{"phone":_self.phone},
-          data:{
-            $set:{
-              password: _self.password
-            }
-          }
+          interfaceId:common.interfaceIds.updateUserPwd,
+          phone:_self.phone,
+          password: _self.password
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           _self.is_submit = false;
           var data = response.data;
-          if( data ){
-            if( data.n == 0 ){
-              _self.showToast("该用户不存在！")
-            }else if( data.n==1 && data.nModified==1 && data.ok==1 ){
-              _self.showToast("修改成功！");
-              setTimeout(function () {
-                _self.goback();
-              },1000)
-            }
+          if( data && data.code==200 ){
+            _self.showToast("修改成功！");
+            setTimeout(function () {
+              _self.goback();
+            },1000)
           }else{
             _self.showToast("修改失败！")
           }
@@ -198,13 +189,14 @@
       // 倒计时
       count_down(time){
         var _self = this;
+        _self.$refs.verify_btn.innerText = time + "秒后重新获取";
         var interval = setInterval(function () {
           if( !_self.$refs.verify_btn ) return;
           // 开始
           time--;
           _self.$refs.verify_btn.innerText = time + "秒后重新获取";
-          if( time == 0 ) {
-            clearInterval(t);
+          if( time <= 0 ) {
+            clearInterval(interval);
             _self.$refs.verify_btn.innerText = "重新获取";
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
@@ -254,7 +246,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          _self.is_verify = false;
+          // _self.is_verify = false;
           var data = response.data;
           if( data ) {
             if( data.code == 201 ){

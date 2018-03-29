@@ -3,7 +3,7 @@
     <!--头部-->
     <div class="mine-top">
       <div class="shezhi" v-tap="{ methods:toUrlAfterLogin, pagename:'set' }">
-          <img src="../../../static/images/my/shezhi1.png" />
+        <img src="../../../static/images/my/shezhi1.png" />
       </div>
       <div class="tu-nicheng">
         <div class="touxiang" v-tap="{ methods:modifyAvatar }" :style="{backgroundImage:`url(${checkAvatar(userInfo.img)})`}">
@@ -52,7 +52,7 @@
           <div class="xingxi">简历中心</div>
           <div class="list-right"></div>
         </div>
-        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minewenda'}">
+        <div class="list" v-tap="{methods:toQa}">
           <div class="xingxi">我的问答</div>
           <div class="list-right"></div>
         </div>
@@ -61,10 +61,10 @@
     <!--意见反馈-->
     <div class="yijian">
       <div class="liebiao">
-        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">
-          <div class="xingxi">客服中心</div>
-          <div class="list-right"></div>
-        </div>
+        <!--<div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">-->
+        <!--<div class="xingxi">客服中心</div>-->
+        <!--<div class="list-right"></div>-->
+        <!--</div>-->
         <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'yijian'}">
           <div class="xingxi">意见反馈</div>
           <div class="list-right"></div>
@@ -110,7 +110,7 @@
     data () {
       return {
         userInfo:{},
-        tips:"点击登录",
+        tips:"点击头像登录",
         cacheSize: '',
         showPop:false,
         showMark: false,
@@ -149,13 +149,23 @@
         this.showMark = true;
         this.showMsg = msg;
       },
+      toQa(){
+        var _self = this;
+        if( !common.isNull(_self.userInfo._id) ){
+          _self.$router.push({name:'shouchangweida',query:{myid:_self.userInfo._id}})
+        } else {
+          console.log('没有获取用户信息');
+          _self.toUrl({pagename:"login"});
+        }
+
+      },
       toUrlAfterLogin(params){
         var _self = this;
         if( !common.isNull(_self.userInfo._id) ){
-            _self.toUrl(params);
+          _self.toUrl(params);
         } else {
-            console.log('没有获取用户信息');
-            _self.toUrl({pagename:"login"});
+          console.log('没有获取用户信息');
+          _self.toUrl({pagename:"login"});
         }
       },
       // loading
@@ -242,20 +252,20 @@
 
       // 分享
       shareApp() {
-        var _self = this;
-        if( !common.isNull(_self.userInfo._id) ){
-          console.log("分享")
-          if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
-            myshare.init({
-              href: 'www.baidu.com',
-              title: '测试标题',
-              content: '测试内容',
-              thumbs: ['./static/images/logo.png'],
-            })
-          }
+        var downloadHref = '';
+        if( common.browser.versions.ios ){
+          downloadHref = 'https://itunes.apple.com/cn/app/%E5%BB%BA%E8%81%94%E5%A4%9C%E7%8C%AB/id1268232893?mt=8';
+        }else if( common.browser.versions.android ){
+          downloadHref = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.scu.jlyemao&from=singlemessage';
         }else{
-          _self.toUrl({pagename:'login'});
+          return;
         }
+        myshare.init({
+          href: downloadHref,
+          title: '建联夜猫',
+          content: '欢迎下载建联夜猫APP!',
+          thumbs: ['./static/images/logo.png'],
+        })
       },
 
     }

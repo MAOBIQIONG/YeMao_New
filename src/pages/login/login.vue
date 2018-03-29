@@ -15,7 +15,7 @@
     <div class="login-shuru">
       <p class="tishi" ref="tips"></p>
       <div class="ls-shouji">
-        <input v-model="phone" type="text" class="shouji" id="phone" placeholder="手机号">
+        <input v-model="phone" type="tel" class="shouji" id="phone" placeholder="手机号">
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
@@ -58,7 +58,7 @@
 <script>
   import { Toast, } from 'vux'
   import store from '@/vuex/store'
-  import interfaces from  '../../../static/js/interface'
+  import interfaces from '../../../static/js/es6/interface'
   import md5 from 'js-md5';
   export default {
     components: {
@@ -195,12 +195,20 @@
         this.showMsg = msg;
       },
       submit () {
+        console.log("submit:")
         var _self = this;
+        // 避免多次点击
+        if( _self.isSubmit == true ) return;
+        _self.isSubmit = true;
         var params = {
           interfaceId:common.interfaceIds.login,
           where:{
             "phone":_self.phone
           }
+        }
+        if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+          var info =plus.push.getClientInfo();
+          params.clientid = info.clientid;
         }
         _self.$axios.post('/mongoApi', {
           params: params
@@ -220,6 +228,9 @@
           }else{
             _self.showToast("登录失败！")
           }
+          setTimeout(function () {
+            _self.isSubmit = false;
+          },1000);
         })
       },
 
@@ -259,13 +270,14 @@
       // 倒计时
       count_down(time){
         var _self = this;
+        _self.$refs.verify_btn.innerText = time + "秒后重新获取";
         var interval = setInterval(function () {
           if( !_self.$refs.verify_btn ) return;
           // 开始
           time--;
           _self.$refs.verify_btn.innerText = time + "秒后重新获取";
-          if( time == 0 ) {
-            clearInterval(t);
+          if( time <= 0 ) {
+            clearInterval(interval);
             _self.$refs.verify_btn.innerText = "重新获取";
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
@@ -315,7 +327,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          _self.is_verify = false;
+          // _self.is_verify = false;
           var data = response.data;
           if( data ) {
             if( data.code == 201 ){

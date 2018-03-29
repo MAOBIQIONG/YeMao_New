@@ -30,9 +30,10 @@
                         <div class="piapti">
                             {{item.title}}
                         </div>
-                        <div class="tupian" v-if="item.imgs">
-                            <img :src="item.imgs[0]"/>
-                        </div>
+                        <!--<div class="tupian" v-if="item.imgs">-->
+                            <!--<img :src="checkImg(item.imgs[0])"/>-->
+                        <!--</div>-->
+                        <div class="tupian" v-if="item.imgs && item.imgs.length>0" :style="{backgroundImage: 'url(' + checkImg(item.imgs[0]) + ')'}"></div>
                         <!-- <div class="tupian" v-else>
                             <img src="../../../static/images/bj.jpg"/>
                         </div> -->
@@ -41,7 +42,7 @@
                         </div>
                     </div>
                     <div class="pingjia">
-                        <span>100</span>赞同 · <span>100</span>评论
+                        <span>{{item.like}}</span>赞同 · <span>{{item.comments}}</span>评论
                     </div>
                     </div>
                 </div>
@@ -139,6 +140,9 @@ export default {
         },
         toDetails (id) {
             this.$router.push({name: 'wzxq', query: {id: id}})
+        },
+        checkImg(path){
+          return common.getDefultImg(path);
         },
         loadData(){
             console.log('this is loadData');
@@ -270,5 +274,6 @@ export default {
   }
   .mxt{
     position: fixed;
+    width: 100%;
   }
 </style>

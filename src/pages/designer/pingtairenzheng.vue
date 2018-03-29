@@ -1,13 +1,13 @@
 <template>
   <div >
     <!--头部导航-->
-    <div class="header">
+    <div class="header" style="position:static">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>平台认证</span>
       <div class="header-right" v-tap="{methods:submit}">下一步</div>
     </div>
     <!--发布订单内容-->
-    <div class="content wrz content-p">
+    <div class="content wrz">
       <!--流程-->
       <div class="banner">
          <img src="../../../static/images/designer/renzheng_01.png"/>
@@ -169,24 +169,22 @@
           interfaceId:common.interfaceIds.setCertification,
           user_id:_self.user_id,
           user:_self.user,
-          imgs:_self.imgs,
+          imgs:_self.imgs
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
           // console.log(response)
           var data = response.data
-          if( data ){
-            if( data.code==200 && data.code1==200 ){
-              _self.showToast('提交成功！');
-              _self.userInfo.school_name = _self.user.school_name;
-              common.setStorage("userInfo",_self.userInfo);
-              setTimeout(function () {
-                _self.toUrl('zhichengrenzheng');
-              },1000);
-            }else{
-              _self.showToast('提交失败！');
-            }
+          if( data && data.code==200 ){
+            _self.showToast('提交成功！');
+            _self.userInfo.school_name = _self.user.school_name;
+            common.setStorage("userInfo",_self.userInfo);
+            setTimeout(function () {
+              _self.toUrl('zhichengrenzheng');
+            },1000);
+          }else{
+            _self.showToast('提交失败！');
           }
         })
       }

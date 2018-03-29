@@ -18,8 +18,10 @@
       <!--图片上传-->
       <div class="sctp">
         <div class="img-upload">
-          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}"></div>
-          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
+          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
+            <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
+          </div>
+          <div class="upload-handle" v-if="base64Arr.length<1" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
     </div>
@@ -32,7 +34,7 @@
 
 <script>
     import { Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
-    import uploadImg2 from "../../../static/js/uploadImg-more";
+    import uploadImg2 from "../../../static/js/es6/uploadImg-more";
     export default {
         directives: {
             TransferDom
@@ -71,6 +73,8 @@
                 console.log('没有获取用户信息');
                 // _self.$router.push({name:"login"});
             }
+          // 清除图片缓存
+          uploadImg2.clearImgArr(true);
         },
         mounted: function () {
             this.wzxz();
@@ -138,44 +142,53 @@
                     data:_self.params,
                 };
                 _self.$axios.post('/mongoApi', {
-                    params: params
-                    }, response => {
-                            // 取消加载动画
-                            _self.showLoad = false;
-                            // 提交标识
-                            _self.is_submit = true;
-                            console.log(response)
-                            var data = response.data;
-                            if( data && response.code == '200' ){
-                                _self.showToast("发布成功！");
-                                uploadImg2.clearImgArr(true);
-                                setTimeout(function () {
-                                    _self.goback();
-                                },1000)
-                            }else{
-                                _self.showToast("发布失败！");
-                            }
-                        })
+                params: params
+                }, response => {
+                    // 取消加载动画
+                    _self.showLoad = false;
+                    // 提交标识
+                    _self.is_submit = true;
+                    var data = response.data;
+                    if( data && response.code == '200' ){
+                        _self.showToast("发布成功！");
+                        setTimeout(function () {
+                            _self.goback();
+                        },1000)
+                    }else{
+                        _self.showToast("发布失败！");
+                    }
+                })
             },
             triggerFile(){
-                console.log("trigger:")
-                var _self = this;
-                // 首先清空图片数组
-                _self.params.imgs = [];
-                // 调用相机、相册
-                uploadImg2.init({
+              console.log("trigger:")
+              var _self = this;
+              // 调用相机、相册
+              uploadImg2.init({
+                maxLen:1,
                 callback:function (path) {
-                    console.log("path:"+path)
-                    _self.base64Arr.push(path);
+                  console.log("path:"+path)
+                  _self.base64Arr.push(path);
                 },
                 successfun:function (path) {
-                    _self.params.imgs.push(path);
-                    if( _self.params.imgs.length == _self.base64Arr.length ){
+                  _self.params.imgs.push(path);
+                  if( _self.params.imgs.length == _self.base64Arr.length ){
+                    uploadImg2.clearImgArr(true);
                     _self.submit2();
-                    }
+                  }
                 },
-                });
-            },         
+              });
+            },
+
+            // 清除
+            clearImgs(params){
+              var _self = this;
+              var index = common.checkInt(params.index);
+              console.log("clearImgs:"+index);
+              uploadImg2.imgArr.splice(index,1);
+              uploadImg2.imgBase64.splice(index,1);
+              _self.base64Arr.splice(index,1);
+              _self.params.imgs.splice(index,1);
+            },
         }
     }
 </script>

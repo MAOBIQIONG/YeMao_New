@@ -1,15 +1,14 @@
 <template>
-  <div class="penyouxiangqing">
+  <div class="templete-body penyouxiangqing">
     <!--导航栏-->
-    <div class="header-static">
-      <div class="header">
-        <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
-      </div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
     </div>
 
     <!--  喵喵列表-->
     <div class="content">
-       <scroller
+      <scroller
         v-model="pullUpDownStatus"
         :height="height"
         :lock-x="lockX"
@@ -48,13 +47,13 @@
               </div>
               <div class="sjs-bottom sjs-bottom1">
                 <ul>
-                  <li v-for="(item, index) in list"@click.stop="show(index)">
+                  <li v-for="(item,index) in list" @click.stop="show(index)" :key="index">
                     <!-- <img class="previewer-demo-img":src="item.src"width="100%"> -->
                     <div class="previewer-img" :style="'background-image:url('+checkImg(item.src)+')'"></div>
                   </li>
-                  <div v-transfer-dom>
-                    <previewer :list="list" ref="previewer" :options="options"></previewer>
-                  </div>
+                  <!-- <div v-transfer-dom>
+                    <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
+                  </div> -->
                 </ul>
               </div>
               <div class="pinjia">
@@ -66,7 +65,7 @@
           </div>
           <!--评价列表-->
           <div class="liuyan">
-            <div class="comment-box" v-for="com in comments">
+            <div class="comment-box" v-for="(com,index) in comments" :key="index">
               <div class="left">
                 <div class="img"><img :src="checkAvatar(com.user.img)"/></div>
               </div>
@@ -77,13 +76,13 @@
                     <span class="pd-0">{{getDateDiff(com.create_date)}}</span>
                     <span>·</span>
                     <span v-if="userInfo._id!=null&&userInfo._id==com.user._id" :id="com._id" class="pd-0" v-tap="{methods:deleteSth,id:com._id,floor:0,flag:1}">删除</span>
-                    <span v-else="" :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}">评论</span>
+                    <span v-else :id="com._id" class="pd-0" v-tap="{methods:replyFun,id:com._id,uid:com.user._id,floor:1}">评论</span>
                   </div>
                 </div>
                 <div class="comment-content">{{com.content}}</div>
                 <div class="arr-up" v-if="com.replys && com.replys.length>0"></div>
                 <div class="comment-reply" v-if="com.replys && com.replys.length>0">
-                  <div class="reply" v-tap="{methods:replyFun,id:com._id,aid:rep._id,name:rep.user.user_name,uid:rep.user._id,floor:2}" :id="rep._id" v-for="rep in com.replys">
+                  <div class="reply" v-tap="{methods:replyFun,id:com._id,aid:rep._id,name:rep.user.user_name,uid:rep.user._id,floor:2}" :id="rep._id" v-for="(rep,index) in com.replys" :key="index">
                     <p v-if="rep.floor==1"><span class="replier">{{rep.user.user_name}}</span>&nbsp;:&nbsp;<span>{{rep.content}}</span></p>
                     <p v-if="rep.floor==2">
                       <span class="replier">{{rep.user.user_name}}</span>
@@ -101,16 +100,18 @@
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <div v-transfer-dom>
-      <previewer :list="list" ref="previewer" :options="options"></previewer>
+      <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
     </div>
-    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete"></actionsheet>
-    <!-- 评论输入框 -->
-    <div class="input-box">
-      <div class="input">
-        <input v-model="comment_text" type="text" :placeholder="comment_placeholder" v-on:blur.lazy="commentBlur" ref="commentInput">
-      </div>
-      <div class="send-btn" :class="is_submit?'hover':''">
-        <div class="btn" v-tap="{methods:commentMeow}">发送</div>
+    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete" :class="showSheet==true?'':'vux-actionsheet-rec'"></actionsheet>
+    <div class="chat-box">
+      <!-- 评论输入框 -->
+      <div class="input-box">
+        <div class="input">
+          <input v-model="comment_text" type="text" :placeholder="comment_placeholder" v-on:blur.lazy="commentBlur" ref="commentInput">
+        </div>
+        <div class="send-btn" :class="is_submit?'hover':''">
+          <div class="btn" v-tap="{methods:commentMeow}">发送</div>
+        </div>
       </div>
     </div>
   </div>
@@ -118,6 +119,7 @@
 
 <script>
   import { Previewer, Actionsheet, TransferDom, Scroller, LoadMore, Toast } from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'
   import store from '@/vuex/store'
   export default {
     directives: {
@@ -126,6 +128,7 @@
     components: {
       Actionsheet,
       Previewer,
+      Previewer2,
       Scroller,
       LoadMore,
       Toast
@@ -262,6 +265,9 @@
       checkImg (path) {
         return common.getDefultImg(path)
       },
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       // 时间戳转日期
       timeStamp2String(time,id){
         return common.timeStamp2String(time,'ymd');
@@ -273,7 +279,7 @@
       show (index) {
         this.$refs.previewer.show(index)
       },
-　　　 //点赞
+      //点赞
       dianzan(){
         var _self = this;
         if( common.isNull(_self.userInfo._id) ){
@@ -293,7 +299,7 @@
       // 回复
       replyFun(params){
         var _self = this;
-        // 删除自己的评论、回复
+        // 二级回复点击到自己的回复,显示是否删除
         if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
           if( _self.userInfo._id == params.uid ){
             var delParams = {id:params.aid,flag:1,floor:1};
@@ -301,10 +307,11 @@
             return;
           }
         }
-        // 评论、回复
+        // 二级评论
         var id = "#"+params.id;
         _self.comment_id = params.id;
         _self.floor = common.checkInt(params.floor);
+        // 回复
         if( !common.isNull(params.aid) && !common.isNull(params.name) ){
           id = "#"+params.aid;
           _self.answer_id = params.uid;
@@ -401,7 +408,7 @@
         // 图片
         var imgs = _self.meow.imgs || [];
         imgs.forEach(function (item,index) {
-          _self.list.push({src:_self.checkImg(item)})
+          _self.list.push({src:_self.getRealPath(item)})
         })
         // 评论
         _self.comments = data.comments || [];
@@ -543,8 +550,7 @@
         if( data.floor == 0 ){ // 一级评论
           // 修改评论数量
           _self.meow.comments += 1;
-          //_self.comments.unshift(data);
-          _self.comments.push(data);
+          _self.comments.unshift(data);
         }else{
           if( data.floor == 2 ){ // 回复
             data.answer = {
@@ -698,13 +704,19 @@
     padding-left: 0.5rem;
   }
   .previewer-img{
-      width:100%;
-      height:100%;
-      background-repeat: no-repeat;
-      background-position:center center;
-      background-size: cover
+    width:100%;
+    height:100%;
+    background-repeat: no-repeat;
+    background-position:center center;
+    background-size: cover
   }
   .pd-0{
     padding: 0.1rem;
+  }
+  .comment-content{
+    word-wrap:break-word;
+  }
+  .reply{
+    word-wrap:break-word;
   }
 </style>

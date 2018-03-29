@@ -12,13 +12,13 @@
             </div>
             <div class="qdsjs-box">
               <div class="qb-top">
-                <div class="qt-touxiang">
+                <div class="qt-touxiang" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:item.user._id}}">
                   <img :src='checkAvatar(item.user.img)'>
                 </div>
-                <div class="qt-nichen">
+                <div class="qt-nichen" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:item.user._id}}">
                   <span>{{item.user.user_name}}</span>
                 </div>
-                <div class="chat" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:item.user._id,name:item.user.user_name,img:item.user.img}}">
+                <div class="chat" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:item.user._id,name:item.user.user_name,img:item.user.img}}">
                   <img src='../../../static/images/employer/miaomiao.png'>
                 </div>
                 <div class="qt-jiage">
@@ -119,6 +119,14 @@
       toUrl2: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
       },
+      toUrlWUI: function (params) { // toUrlWidthUserInfo
+        var user = common.getObjStorage("userInfo") || {};
+        if( !common.isNull(user._id) ){
+          this.$router.push({name: params.pagename,query:params.query || {}})
+        }else{
+          this.$router.push({name: 'login'})
+        }
+      },
       //头像
       checkAvatar(path) {
         return common.getAvatar(path);
@@ -173,27 +181,18 @@
       chooseDesigner() {
         var _self = this;
         var params = {
-          interfaceId: common.interfaceIds.updateData,
-          coll: common.collections.orderList,
-          wheredata: {
-            _id: _self.order_id
-          },
-          data: {
-            $set: {
-              project_winBidder: _self.project_winBidder,
-              project_state: 1, // 抢单中
-            }
-          }
+          interfaceId: common.interfaceIds.chooseDesigner,
+          order_id: _self.order_id,
+          project_winBidder: _self.project_winBidder
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
+          // console.log(response)
           var data = response.data;
-          if (data.ok > 0) {
+          if ( data && data.code==200 ) {
             _self.$store.state.indexRefreshMark = 1;
             _self.$store.state.employerRefreshMark = 1;
-            _self.showToast('选择成功！');
             if(!common.isNull(common.getStorage('fromOrderDcl'))){
                 setTimeout(function () {
                     _self.$router.go(-1)
@@ -203,7 +202,8 @@
                 _self.$router.go(-2)
                 }, 1000)
             }
-
+          }else{
+            _self.showToast('选择失败！');
           }
         })
       }

@@ -20,13 +20,13 @@
         :class="{scroller:true}"
     >
         <div>
-            <div class="ddlist-sjsdai" v-for="item in orderList" :key="item._id">
+            <div class="ddlist-sjsdai" v-for="(item,index) in orderList" :key="index">
                 <div class="ds-top" v-tap="{methods:toDetails,item:item}">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}">
                     </div>
                     <div class="ds-jianjie">
                         <div class="jianjie-top">
-                            {{item.project_describe}}
+                            {{item.project_title}}
                         </div>
                         <div class="jianjie-bottom">
                             <div class="db-leixin">
@@ -39,10 +39,16 @@
                                     <div v-if="item.project_state==2" class="db-djs">等待雇主确认订单</div>
                                     <div v-else class="db-djs">等待设计师完善订单</div>
                                 </template>
-
                             </template>
+                            <template v-else>
+                                <template v-if="!isNull(item.project_winBidder)">
+                                    <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
+                                    <div class="db-djs" v-else>等待设计师确认</div>
+                                </template>
 
-                            <div v-else class="db-djs">{{item.project_deadLine | dateDiff}}</div>
+                                <div v-else class="db-djs"><counterboard  :endtime="item.project_deadLine" ><span slot="footer">后截止</span></counterboard></div>
+                            </template>
+                            
                         </div>
                     </div>
                 </div>
@@ -57,7 +63,7 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'cancelOrder'}">取消订单</div>
                         <template v-if="item.sub.length>0">
-                            <template v-if="isNull(item.project_winBidder)">                   
+                            <template v-if="isNull(item.project_winBidder)">
                                 <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                                 <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                                 <div class="db-qrdd"
@@ -79,10 +85,18 @@
                                 </div>
                             </template>
                         </template>
-                        <template v-else>   
-                            <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
-                            <div class="db-sxdd noRefresh" v-else>刷新订单</div>
-                            <div class="db-qrdd" style="display: none"></div>
+                        <template v-else>
+
+                            <template  v-if="isNull(item.project_winBidder)">
+                                <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
+                                <div class="db-sxdd noRefresh" v-else>刷新订单</div>
+                            </template>
+                            <template v-else>
+                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
+                                        确认完善信息
+                                </div>
+                            </template>
+
                         </template>
 
                     </div>
@@ -108,6 +122,7 @@
 <script>
 import {LoadMore,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
 import scroller2 from '@/components/scroller2'
+import counterboard from '@/components/counterboard'
 export default {
     name:"scroll-list",
     directives: {
@@ -117,7 +132,8 @@ export default {
         LoadMore,
         Toast,
         Confirm,
-        scroller2
+        scroller2,
+        counterboard
     },
     created(){
         // console.log('created');
@@ -214,12 +230,16 @@ export default {
             //计算天数差的函数，通用
             let DateDiff=function(sDate1,  sDate2){    //sDate1和sDate2是2002-12-18格式
                 var  aDate,  oDate1,  oDate2,  iDays
-                aDate  =  sDate1.split("-")
-                oDate1  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])    //转换为12/18/2002格式
+                if( common.isString(sDate1) ){
+                  aDate  =  sDate1.split("-")
+                  oDate1  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])    //转换为12/18/2002格式
+                }else{
+                  oDate1 = sDate1
+                }
                 aDate  =  sDate2.split("-")
                 oDate2  =  new  Date(aDate[1]  +  '/'  +  aDate[2]  +  '/'  +  aDate[0])
-                iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)
-                if (iDays == 0) return '抢单结束'    //把相差的毫秒数转换为天数
+                iDays  =  parseInt((oDate1  -  oDate2)  /  1000  /  60  /  60  /24) //Math.abs
+                if (iDays < 0) return '抢单结束'    //把相差的毫秒数转换为天数
                 return  iDays + "天后截止报名"
             }
             return DateDiff(date,today);
@@ -267,7 +287,14 @@ export default {
                     buttonState.btns_type = 2;
                 }
             }else{
-                buttonState.btns_type = 3;
+                if(common.isNull(params.item.project_winBidder)){
+                    buttonState.btns_type = 3;
+                } else{
+                    if(params.item.project_state==2) {
+                        buttonState.btns_type = 2;
+                    }
+                }
+                
             }
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: params.item._id}})
@@ -555,7 +582,7 @@ export default {
             if(this.confirmType =="commitImprove"){
                 this.updateStateAfterImprove();
             }
-        },       
+        },
     }
 }
 </script>

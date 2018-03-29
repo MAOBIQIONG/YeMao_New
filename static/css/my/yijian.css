@@ -26,6 +26,15 @@
 	background-color: white;
 }
 
+.content .pc-photo {
+  position: relative;
+  width: 7.1rem;
+  min-height: 4.2rem;
+  border: 1px solid #F2F2F2;
+  margin: auto;
+  background-color: white;
+}
+
 .content .pc-shuru .area {
 	width: 6.9rem;
 	height: 3.6rem;

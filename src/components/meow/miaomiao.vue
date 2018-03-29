@@ -75,6 +75,11 @@
               <p class="comments"><span></span><span>{{item.comments}}</span></p>
               <!--<div class="more more-icon"></div>-->
             </div>
+            <!--<div v-if="item.prevImgs && item.prevImgs.length > 0" >-->
+              <div v-transfer-dom>
+                <previewer2 :list="item.prevImgs" ref="previewer" :options="options"></previewer2>
+              </div>
+            <!--</div>-->
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
           <div class="blank_bottom"></div>
@@ -82,14 +87,12 @@
       </scroller>
     </div>
     <div class="tianjia" v-tap="{methods:toRelease}"></div>
-    <div v-transfer-dom>
-      <previewer :list="list" ref="previewer" :options="options"></previewer>
-    </div>
   </div>
 </template>
 
 <script>
   import { Previewer, TransferDom, Scroller, LoadMore, Toast } from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'
   import store from '@/vuex/store'
   export default {
     directives: {
@@ -97,6 +100,7 @@
     },
     components: {
       Previewer,
+      Previewer2,
       Scroller,
       LoadMore,
       Toast
@@ -110,7 +114,7 @@
         options: {
           previewer:'previewer0',
           getThumbBoundsFn:function (index) {
-            console.log("getThumbBoundsFn:"+this.previewer)
+            // console.log("getThumbBoundsFn:"+this.previewer)
             // find thumbnail element
             let thumbnail = document.querySelectorAll(this.previewer)[index]
             // get window scroll Y
@@ -238,6 +242,9 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       // 时间戳转日期
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
@@ -259,17 +266,22 @@
 
       show (param) {
         var _self = this;
-        _self.list = [];
+        if( _self.isView ) return;
+        _self.isView = true;
+        // console.log("param.index:"+param.index);
         _self.options.previewer = '.previewer'+param.index;
-        var imgs = _self.meows[param.index].imgs || [];
-        imgs.forEach(function (img, j) {
-          _self.list.push({src: _self.checkImg(img)})
-        })
-        _self.$refs.previewer.show(param.i)
+        _self.$refs.previewer[param.index].show(param.i)
+
+        setTimeout(function () {
+          _self.isView = false;
+        },500);
         param.event.cancelBubble = true;
         // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）
         return false
+      },
+      closePrevImg(){
+        console.log("closePrevImg:")
       },
       //下拉刷新
       refreshPageDate(){
@@ -345,6 +357,16 @@
         } else {
           _self.pagination.pageNo++
         }
+        _self.meows.forEach(function (item,index) {
+          item.prevImgs = [];
+          if( item.imgs && item.imgs.length > 0 ){
+            item.imgs.forEach(function (img, j) {
+              item.prevImgs.push({src: _self.getRealPath(img)});
+            })
+          }else{
+            item.prevImgs = [{src:_self.checkImg(''),w:800,h:400}];
+          }
+        });
       },
 
       //点赞
@@ -433,7 +455,7 @@
       height:100%;
       background-repeat: no-repeat;
       background-position:center center;
-      background-size: cover
+      background-size: cover;
   }
 
   /**样式重写**/

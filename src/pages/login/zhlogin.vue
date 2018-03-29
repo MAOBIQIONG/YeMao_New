@@ -2,7 +2,7 @@
   <div class="">
     <div class="header">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
-      <div class="header-right" v-tap="{ methods:toUrl , pagename:'zhuche'}">注册</div>
+      <div class="header-right" v-tap="{ methods:toUrl , pagename:'register'}">注册</div>
     </div>
     <div class="log">
       <div class="log-img">
@@ -12,7 +12,7 @@
     <div class="login-shuru">
       <p class="tishi"></p>
       <div class="ls-shouji">
-        <input v-model="phone" type="text"class="shouji" placeholder="手机号"/>
+        <input v-model="phone" type="tel"class="shouji" placeholder="手机号"/>
         <span class="del">×</span>
       </div>
       <div class="ls-yanzheng">
@@ -26,11 +26,12 @@
       <div class="lb-right"v-tap="{ methods:toUrl , pagename:'wjmm'}"><a>忘记密码？</a></div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+
   </div>
 </template>
 
 <script>
-  import { Toast, } from 'vux'
+  import { Toast} from 'vux'
   export default {
     components: {
       Toast,
@@ -158,13 +159,21 @@
       },
 
       submit () {
+        console.log("submit:")
         var _self = this;
+        // 避免多次点击
+        if( _self.isSubmit == true ) return;
+        _self.isSubmit = true;
         var params = {
           interfaceId:common.interfaceIds.login,
           where:{
             "phone":_self.phone,
             "password": _self.password
           }
+        }
+        if(process.env.NODE_ENV === 'production'){ // production:生产环境,development:开发环境
+          var info =plus.push.getClientInfo();
+          params.clientid = info.clientid;
         }
         _self.$axios.post('/mongoApi', {
           params: params
@@ -176,12 +185,16 @@
               common.setStorage("login_account",_self.phone);
               _self.$store.state.pageIndex = 0;
               _self.toUrl({'pagename':'index'});
+              _self.$store.state.designerRefreshMark = 1;
             }else{
               _self.showToast(data.msg);
             }
           }else{
             _self.showToast("登录失败！")
           }
+          setTimeout(function () {
+            _self.isSubmit = false;
+          },1000);
         })
       },
 

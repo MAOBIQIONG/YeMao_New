@@ -1,111 +1,129 @@
 <template>
-  <div>
+  <div class="templete-body">
     <!--头部导航-->
-    <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
-      <div class="header-right"><img src="../../../static/images/fx1.png" /></div>
+    <div class="header-static"></div>
+    <div class="header p-absolute">
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
+      <div class="header-right" v-tap="{methods:shareApp}"><img src="../../../static/images/fx1.png" /></div>
     </div>
-    <scroller
-    v-model="pullUpDownStatus"
-    :height="height"
-    :lock-x="lockX"
-    :lock-y="lockY"
-    :use-pulldown="true"
-    :use-pullup="true"
-    :pulldown-config="pulldownConfig"
-    :pullup-config = "pullupConfig"
-    @on-scroll="scroll"
-    @on-scroll-bottom="onScrollBottom"
-    @on-pulldown-loading="pullDownLoading"
-    @on-pullup-loading="pullUpLoading"
-    ref="scroller"
-    :class="{scroller:true}"
-    >
-        <div>
-            <!--文章详情-->
-            <div class="content">
-            <div class="piaoti">
-                {{chw.title}}
-            </div>
-                <!-- <div class="xc-banner">
-                    <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
-                </div> -->
-            <div class="nichengshijian">
-                <div class="ns-left">
-                <span><img :src="checkAvatar(null)"/></span><span>{{chw.user.user_name}}</span>
+    <div class="content">
+      <scroller
+      v-model="pullUpDownStatus"
+      :height="height"
+      :lock-x="lockX"
+      :lock-y="lockY"
+      :use-pulldown="true"
+      :use-pullup="true"
+      :pulldown-config="pulldownConfig"
+      :pullup-config = "pullupConfig"
+      @on-scroll="scroll"
+      @on-scroll-bottom="onScrollBottom"
+      @on-pulldown-loading="pullDownLoading"
+      @on-pullup-loading="pullUpLoading"
+      ref="scroller"
+      :class="{scroller:true}"
+      >
+          <div>
+              <!--文章详情-->
+              <div class="content">
+                  <div class="piaoti">
+                      {{chw.title}}
+                  </div>
+                      <!-- <div class="xc-banner">
+                          <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
+                      </div> -->
+                  <div class="nichengshijian">
+                      <div class="ns-left">
+                      <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
+                      </div>
+                      <div class="tm-right">
+                      <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
+                      </div>
+                  </div>
+                <div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">
                 </div>
-                <div class="tm-right">
-                <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
-                </div>
-            </div>
-            <div class="neirongshijian">
-                {{chw.description}}
-                <div class="bottom">
-                <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:like}">
-                    <span id="praise" ref="like">
-                        <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
-                        <img v-else src="../../../static/images/zan3.png"/>
-                    </span>
-                    <span id="praise-txt">{{chw.like}}</span>
-                </div>
-                <div class="bottom-sz" :class="{confirmColor:chw.collectFlag == 1}" v-tap="{methods:collect}">
-                    <span id="xinxin" ref="star">
-                        <img v-if="chw.collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
-                        <img v-else src="../../../static/images/xin1.png"/>
-                    </span>
-                    <span>收藏</span>
-                </div>
-                </div>
-            </div>
-            </div>
+                  <div class="neirongshijian">
+                      {{chw.description}}
+                      <div class="bottom">
+                      <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:chwLike}">
+                          <span id="praise" ref="like">
+                              <img v-if="chw.likeFlag == 1" src='../../../static/images/zan2.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                              <img v-else src="../../../static/images/zan3.png"/>
+                          </span>
+                          <span id="praise-txt">{{chw.like}}</span>
+                      </div>
+                      <div class="bottom-sz" :class="{confirmColor:chw.collectFlag == 1}" v-tap="{methods:collect}">
+                          <span id="xinxin" ref="star">
+                              <img v-if="chw.collectFlag == 1" src='../../../static/images/xing.png' style='width: 0.5rem;height: 0.5rem;vertical-align:middle;display: inline-block'/>
+                              <img v-else src="../../../static/images/xin1.png"/>
+                          </span>
+                          <span>收藏</span>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
 
-            <!--评论详情-->
-            <div class="pinglun">
-            <div class="dsr">
-                <ul>
-                <li v-for="(l,i) in likes" :key="i">
-                    <img :src="checkAvatar()"/>
-                </li>
-                </ul>
-                <div class="dianzhan" @click="toUrl('dianzhan')">
-                <span>{{likes_num}}</span>人点赞
-                </div>
-            </div>
-            <p>热门评论</p>
-            <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
-                <div class="top-pinlun">
-                <div class="tp-left">
-                    <span><img src="../../../static/images/bj.jpg"/></span><span>{{item.user.user_name}}</span>
-                </div>
-                <div class="tp-right">
-                    <span>{{item.comments}}</span><span><img src="../../../static/images/zan.png"/></span>
-                </div>
-                </div>
-                <div class="neirong">
-                    {{item.content}}
-                </div>
-                <div class="bottom">
-                <div class="left-bt">
-                    {{item.create_date | dateToStringSecond}}
-                </div>
-                <div class="right-bt">
-                    100条回复
-                </div>
-                </div>
-            </div>
-            </div>
-            <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
-        </div>
-    </scroller>
+                  <!--评论详情-->
+                  <div class="pinglun">
+                  <div class="dsr">
+                      <ul>
+                      <li v-for="(l,i) in likes" :key="i">
+                          <img :src="checkAvatar(l.user.img)"/>
+                      </li>
+                      </ul>
+                      <div class="dianzhan" v-tap="{methods:toLikeMember,chw_id:chw_id}">
+                      <span>{{likes_num}}</span>人点赞
+                      </div>
+                  </div>
+                  <p>热门评论</p>
+                  <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
+                      <div class="top-pinlun">
+                          <div class="tp-left">
+                              <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
+                          </div>
+                          <div class="tp-right"  v-tap="{methods:commentLike,comment_id:item._id,commentArrId:index}">
+                              <span>{{item.like}}</span>
+                              <span>
+                                  <img v-if="item.likeFlag===0" src="../../../static/images/zan.png"/>
+                                  <img v-if="item.likeFlag===1" src="../../../static/images/zan001.png"/>
+                              </span>
+                          </div>
+                      </div>
+                      <div class="neirong">
+                          {{item.content}}
+                      </div>
+                      <div class="bottom">
+                          <div class="left-bt">
+                              {{item.create_date | dateToStringSecond}}
+                          </div>
+                          <div class="right-bt">
+                              <span v-tap="{methods:toCommentDetail,comment_id:item._id,chw_id:chw_id}">
+                                  <span v-if="item.replys.length>0">{{item.replys.length}}</span>
+                                  <span v-else>0</span>
+                                  <span>条回复</span>
+                              </span>
+                              <!-- <span v-if="userInfo._id!=nuchw_idll&&userInfo._id==item.user._id" :id="item._id" class="pd-0" v-tap="{methods:deleteSth,id:item._id,floor:0,flag:1}">删除</span>
+                              <span v-else :id="item._id" class="pd-0" v-tap="{methods:replyFun,id:item._id,uid:item.user._id,floor:1}">评论</span> -->
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
+          </div>
+      </scroller>
+    </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
-    <!-- 评论输入框 -->
-    <div class="input-box">
-        <div class="input">
-            <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
-        </div>
-        <div class="send-btn" :class="is_submit?'hover':''">
-            <div class="btn" v-tap="{methods:commentchw}">发送</div>
-        </div>
+    <div class="chat-box">
+      <!-- 评论输入框 -->
+      <div class="input-box">
+          <div class="input">
+              <input v-model="comment_text" type="text" :placeholder="comment_placeholder" @blur="commentBlur" ref="commentInput">
+          </div>
+          <div class="send-btn" :class="is_submit?'hover':''">
+              <div class="btn" v-tap="{methods:commentchw}">发送</div>
+          </div>
+      </div>
     </div>
   </div>
 </template>
@@ -135,6 +153,8 @@ export default {
         },
     data: function () {
         return {
+            loadPageEnd:false,
+            userInfo:{},
             chw_id:null,
             chw:{
                 likeFlag:0,
@@ -189,6 +209,10 @@ export default {
             comment_placeholder:'填写评论',
             comment_text:'',
             answer_id:'',
+            comment_id:'',
+            commentArrId:'',
+            floor:0,
+            answer_name:'',
             //toast
             showMark:false,
             showMsg:"",
@@ -238,6 +262,7 @@ export default {
             _self.isLogin = true;
         }
         _self.chw_id = _self.$route.query.id;
+        _self.comment_id = _self.chw_id;
         _self.initData();
         _self.loadData();
 
@@ -255,33 +280,100 @@ export default {
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
         },
+        toCommentDetail:function(param){
+            this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
+        },
         // 头像
         checkAvatar (path) {
             return common.getAvatar(path)
         },
+        checkImg(path){
+            return common.getDefultImg(path);
+        },
+        toLikeMember(p){
+            this.$router.push({name:'dianzhan',query:{chw_id:p.chw_id}});
+        },
+        // 头像
+        checkAvatar (path) {
+            return common.getAvatar(path)
+        },
+        removeLikeUser(uid){
+            let _self = this;
+            _self.likes.reduce(function(a,c,i,arr){
+                if(c.user){
+                    if(c.user._id === uid){
+                        _self.likes.splice(i,1);
+                    }
+                }
+            },undefined)
+        },
         like_dom(param){
             var _self = this;
             // _self.chw.likeFlag == 0 ? _self.chw.likeFlag= 1 : _self.chw.likeFlag=0;
-            if(_self.chw.likeFlag==0) {
-                _self.chw.likeFlag = 1;
-                _self.chw.like++;
-            } else {
-                _self.chw.likeFlag = 0;
-                _self.chw.like--;
+            //1chw评论  2一级评论
+            if(param===1){
+                let user = {
+                    authenticating_state:_self.userInfo.authenticating_state,
+                    img:_self.userInfo.img,
+                    user_name:_self.userInfo.user_name,
+                    _id:_self.userInfo._id,
+                }
+                if(_self.chw.likeFlag==0) {
+                    _self.chw.likeFlag = 1;
+                    _self.chw.like++;
+                    _self.likes.push({user});
+                    _self.likes_num++;
+                } else {
+                    _self.chw.likeFlag = 0;
+                    _self.chw.like--;
+                    _self.removeLikeUser(_self.userInfo._id);
+                     _self.likes_num--;
+
+                }
+            } else if(param===2) {
+                console.log(_self.comments[_self.commentArrId]);
+                let commentArrLike = _self.comments[_self.commentArrId];
+                if(commentArrLike.likeFlag===0){
+                    commentArrLike.likeFlag = 1;
+                    commentArrLike.like++;
+                } else {
+                    commentArrLike.likeFlag = 0;
+                    commentArrLike.like--;
+                }
             }
+
         },
-        like(){
+        chwLike(){
+            this.like(1);
+        },
+        commentLike(p){
+            console.log(p);
+            this.comment_id = p.comment_id;
+            this.commentArrId = p.commentArrId;
+            console.log(this.comment_id);
+            this.like(2);
+        },
+        like(type){
             var _self = this;
             if(_self.isLogin == false){
                 _self.$router.push({name: 'login'});
             }
-            _self.like_dom();
-            console.log(this.chw.collectFlag,this.chw.likeFlag);
+
+            // console.log(this.chw.collectFlag,this.chw.likeFlag);
+            let lid = null;
+            if(type===1){
+                lid = _self.chw_id;
+                _self.like_dom(1);
+            } else if (type === 2){
+                lid = _self.comment_id;
+                _self.like_dom(2);
+            }
+            console.log('like__comment-id',_self.comment_id);
             var params = {
                 interfaceId:common.interfaceIds.like,
                 data:{
-                    like_type: 1,//0、喵喵圈,1、personalChw,2、comments
-                    like_id: _self.chw_id,
+                    like_type: type,//0、喵喵圈,1、personalChw,2、comments
+                    like_id: lid,
                     user_id: _self.user_id,
                 }
             }
@@ -290,10 +382,21 @@ export default {
             }, response => {
                 var data = response.data;
                 var tips = '';
-                if( data && data.code == 200 ){
-                    tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                let commentArrLike = _self.comments[_self.commentArrId];
+                if( data && (data.code == 200) ){
+                    if(params.data.like_type ===1) {
+                        tips = _self.chw.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    } else if (params.data.like_type ===2){
+                        tips = commentArrLike.likeFlag == 0 ? '取消点赞！' : '点赞成功！';
+                    }
+
                 }else{
-                    tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    if(params.data.like_type ===1) {
+                        tips = _self.chw.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    }else if(params.data.like_type ===2){
+                        tips = commentArrLike.likeFlag == 0 ? '取消失败！' : '点赞失败！';
+                    }
+
                 }
                 _self.showToast(tips);
             })
@@ -352,10 +455,11 @@ export default {
                 interfaceId:common.interfaceIds.addComments,
                 data: {
                     user_id: _self.user_id,               // 评论人
-                    comment_id: _self.chw_id,             // 评论对象ID
+                    comment_id: _self.comment_id,             // 评论对象ID
                     content: _self.comment_text,          // 评论内容
                     comment_type: 5,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
                     answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
+                    floor: _self.floor                   // 评论层级
                 }
             };
             this.$axios.post('/mongoApi',{
@@ -363,8 +467,9 @@ export default {
             },(response)=>{
                 console.log(response)
                 let data = response.data;
-                if( data.code == 200 ){
+                if( data.code == 200 || (data.code == 400 && data.result.ok == 1)){
                     _self.showToast("评论成功!")
+                    params.data._id = data.ids[0];
                     _self.addCommentHmtl(params.data);
                 }else{
                     _self.showToast("评论失败!")
@@ -373,9 +478,9 @@ export default {
         },
         // 添加评论html
         addCommentHmtl(data){
+            // console.log('addCommentHtml','param:'+JSON.stringify(data));
             var _self = this;
-            // 修改评论数量
-            _self.chw.comments += 1;
+
             // 添加评论记录
             data.user = {
                 authenticating_state: _self.userInfo.authenticating_state,
@@ -384,9 +489,73 @@ export default {
                 _id: _self.userInfo._id
             };
             data.create_date = new Date().getTime();
-            _self.comments.unshift(data);
+            data.like = 0;
+            data.likeFlag = 0;
+            data.replys = [];
+            if( data.floor === 0 ){ // 一级评论
+                // 修改评论数量
+                console.log('data.floor===0');
+                _self.chw.comments += 1;
+                console.log(_self.loadPageEnd);
+                if(_self.loadPageEnd === true){
+                    _self.comments.unshift(data);
+                }
+            }
             // 重置评论框内容
             _self.comment_text = '';
+        },
+
+        // 删除：喵喵圈、评论
+        deleteSth(params){
+            var _self = this;
+            _self.showSheet = true;
+            _self.deleteId = params.id;
+            _self.deleteFlag = params.flag;
+            _self.deleteFloor = params.floor;
+        },
+        // 回复
+        replyFun(params){
+            var _self = this;
+            // 删除自己的评论、回复
+            if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
+                if( _self.userInfo._id == params.uid ){
+                    var delParams = {id:params.aid,flag:1,floor:1};
+                    _self.deleteSth(delParams);
+                    return;
+                }
+            }
+            // 评论、回复
+            var id = "#"+params.id;
+            _self.comment_id = params.id;
+            _self.floor = common.checkInt(params.floor);
+            if( !common.isNull(params.aid) && !common.isNull(params.name) ){
+                id = "#"+params.aid;
+                _self.answer_id = params.uid;
+                _self.answer_name = params.name;
+                _self.comment_placeholder = '回复'+_self.answer_name+':';
+            }
+            if( !$(id).hasClass('bg-clo-1') ){
+                $(id).addClass('bg-clo-1');
+                setTimeout(function () {
+                    $(id).removeClass('bg-clo-1');
+                    _self.commentOnBlur();
+                },100)
+            }
+        },
+        // 失去焦点
+        commentBlur(){
+            console.log("blur:")
+            var _self = this;
+            _self.comment_placeholder = '填写评论';
+            // _self.comment_id = _self.miao_id;
+            // _self.answer_id = _self.meow.user._id;
+            // _self.floor = 0;
+        },
+        // 获取焦点
+        commentOnBlur(params){
+            console.log("focus:")
+            var _self = this;
+            _self.$refs['commentInput'].focus();
         },
         onIndexChange(index) {
             this.index = index
@@ -394,6 +563,9 @@ export default {
         // 头像
         checkAvatar (path) {
             return common.getAvatar(path)
+        },
+        getDataStr(date){
+            return common.timeStamp2String(date,'ymdhm');
         },
         //数据初始化
         initData(){
@@ -428,7 +600,7 @@ export default {
             //点赞人列表
             // console.log('data.chw.likes',data.likes);
             let likes = data.likes;
-            common.setStorage('likes_chwdetail',likes);
+            // common.setStorage('likes_chwdetail',likes);
             _self.likes = likes.slice(0,7);
             _self.likes_num = likes.length;
             console.log(data.likes);
@@ -447,7 +619,8 @@ export default {
                 pageSize: _self.pagination.pageSize,
                 where:{
                     comment_id: _self.chw_id
-                }
+                },
+                user_id:_self.user_id
             };
             this.$axios.post('/mongoApi',{
                     params
@@ -478,9 +651,10 @@ export default {
                 _self.loadMoreStatus.show=true;
                 _self.loadMoreStatus.showLoading=false;
                 _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
-
+                _self.loadPageEnd= true;
                 _self.$refs.scroller.disablePullup();
             } else {
+                _self.loadPageEnd= false;
                 _self.pagination.pageNo++
             }
         },
@@ -512,7 +686,28 @@ export default {
         },
         onScrollBottom(){
             // console.log('on-scroll-bottom');
+        },
+
+
+      // 分享
+      shareApp() {
+        var _self = this;
+        if( common.isNull(_self.chw.title) || common.isNull(_self.chw.description) ||
+          common.isNull(_self.chw._id) ){
+          _self.showToast("分享失败，缺少分享参数！");
+          return;
         }
+        var title = _self.chw.title.length>20 ? _self.chw.title.substring(0,20)+'...' : _self.chw.title;
+        var description = _self.chw.description.length>30 ? _self.chw.description.substring(0,30)+'...' : _self.chw.description;
+        var shareUrl = 'http://101.132.96.90:8080/yemaoServer/appShare/wdxq?id='+_self.chw._id;
+            // shareUrl = 'http://192.168.10.99:8080/yemaoServer/appShare/wdxq?id='+_self.chw._id;
+        myshare.init({
+          href: shareUrl,
+          title: title,
+          content: description,
+          thumbs: ['./static/images/logo.png'],
+        })
+      },
     }
 }
 </script>
@@ -535,5 +730,18 @@ export default {
     .confirmColor{
         color:#f65aa6;
         background: #ffffff !important;
+    }
+    .comment-reply{
+        font-size:0.28rem;
+    }
+    .tupian{
+      background-size:cover!important;
+      background-position:center center!important;
+      background-repeat:no-repeat!important;
+      width: 7.2rem;
+      height: 2.6rem;
+      background: #CCCCCC;
+      overflow: hidden;
+      margin:0 auto 0.2rem;
     }
 </style>

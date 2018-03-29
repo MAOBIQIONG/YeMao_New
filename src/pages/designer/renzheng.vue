@@ -81,35 +81,35 @@
       },
       toPtrz: function () {
         var _self = this;
-//        if( _self.state == 0 ){
-//          _self.showToast('请先进行实名认证!');
-//        }else if( _self.state == 1 ){
-//          _self.showToast('实名认证中!');
-//        }else if( _self.state == 2 ){
+       if( _self.state == 0 ){
+         _self.showToast('请先进行实名认证!');
+       }else if( _self.state == 1 ){
+         _self.showToast('实名认证中!');
+       }else if( _self.state == 2 ){
           _self.$router.push({name: 'pingtairenzheng'})
-//        }else if( _self.state == 3 ){
-//          _self.showToast('平台认证中!');
-//        }else if( _self.state >= 4 ){
-//          _self.$router.push({name: 'renzhengchenggong'})
-//        }
+       }else if( _self.state == 3 ){
+         _self.showToast('平台认证中!');
+       }else if( _self.state >= 4 ){
+         _self.$router.push({name: 'renzhengchenggong'})
+       }
       },
       toQyrz: function () {
         var _self = this;
-//        if( _self.state == 0 ){
-//          _self.showToast('请先进行实名认证!');
-//        }else if( _self.state == 1 ){
-//          _self.showToast('实名认证中!');
-//        }else if( _self.state == 2 ){
-//          _self.showToast('请先进行平台认证!');
-//        }else if( _self.state == 3 ){
-//          _self.showToast('平台认证中!');
-//        }else if( _self.state == 4 ){
+       if( _self.state == 0 ){
+         _self.showToast('请先进行实名认证!');
+       }else if( _self.state == 1 ){
+         _self.showToast('实名认证中!');
+       }else if( _self.state == 2 ){
+         _self.showToast('请先进行平台认证!');
+       }else if( _self.state == 3 ){
+         _self.showToast('平台认证中!');
+       }else if( _self.state == 4 ){
           _self.$router.push({name: 'qianyuesjs'})
-//        }else if( _self.state == 5 ){
-//          _self.showToast('签约认证中!');
-//        }else if( _self.state == 6 ){
-//          _self.$router.push({name: 'renzhengchenggong'})
-//        }
+       }else if( _self.state == 5 ){
+         _self.showToast('签约认证中!');
+       }else if( _self.state == 6 ){
+         _self.$router.push({name: 'renzhengchenggong'})
+       }
       },
 
     }

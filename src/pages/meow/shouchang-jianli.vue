@@ -1,46 +1,45 @@
 <template>
   <div>
     <!--头部导航-->
-    <div class="header" style="position:static">
+    <div class="header-static"></div>
+    <div class="header p-absolute">
       <div class="header-left" @click="toUrl('meow')"><img src="../../../static/images/back.png" /></div>
       <span>喵喵人才</span>
       <div class="header-right" @click="toJl()">发布</div>
     </div>
     <!--简历列表-->
-    <scroller
-        v-model="pullUpDownStatus"
-        :height="height"
-        :lock-x="lockX"
-        :lock-y="lockY"
-        :use-pulldown="true"
-        :use-pullup="true"
-        :pulldown-config="pulldownConfig"
-        :pullup-config = "pullupConfig"
-        @on-scroll="scroll"
-        @on-scroll-bottom="onScrollBottom"
-        @on-pulldown-loading="pullDownLoading"
-        @on-pullup-loading="pullUpLoading"
-        ref="scroller"
-        :class="{scroller:true}"   
-    >   
-    <div>
-        <div class="content content-p" style="padding-top:0.2rem;" v-for="(item,index) in list" :key="index">
-            <div class="jianli" @click="toDetail(item._id,item.user_id)">
-                <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
-                    <!-- <img src="../../../static/images/bj.jpg"/> -->
-                </div>
-                <div class="jieshao">
-                    <p class="name"><span>{{item.real_name}}</span>/<span>{{item.expected_positions}}</span></p>
-                    <p class="qiwan"><span>{{getName([item.city[0]])}}</span>&nbsp;<span>{{item.working_year | getWorkyearsName}}</span>工作经验&nbsp;<span>{{item.education}}</span>&nbsp;<span>￥{{item.expected_salary}}</span></p>
-                    <p class="xinge">{{item.description}}</p>
-                </div>
-            </div>     
+    <div class="content">
+      <scroller
+          v-model="pullUpDownStatus"
+          :height="height"
+          :lock-x="lockX"
+          :lock-y="lockY"
+          :use-pulldown="true"
+          :use-pullup="true"
+          :pulldown-config="pulldownConfig"
+          :pullup-config = "pullupConfig"
+          @on-scroll="scroll"
+          @on-scroll-bottom="onScrollBottom"
+          @on-pulldown-loading="pullDownLoading"
+          @on-pullup-loading="pullUpLoading"
+          ref="scroller"
+          :class="{scroller:true}"
+      >
+        <div>
+          <div class="jianli" v-for="(item,index) in list" :key="index" @click="toDetail(item._id,item.user_id)">
+            <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
+              <!-- <img src="../../../static/images/bj.jpg"/> -->
+            </div>
+            <div class="jieshao">
+              <p class="name"><span>{{item.real_name}}</span>/<span>{{item.expected_positions}}</span></p>
+              <p class="qiwan"><span>{{getName([item.city[0]])}}</span>&nbsp;<span>{{item.working_year | getWorkyearsName}}</span>&nbsp;<span>{{item.education}}</span>&nbsp;<span>￥{{item.expected_salary}}</span></p>
+              <p class="xinge">{{item.description}}</p>
+            </div>
+          </div>
+          <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
-        <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
+      </scroller>
     </div>
-    
-    </scroller>
-    
   </div>
 </template>
 
@@ -51,7 +50,7 @@ export default {
         Scroller,
         LoadMore,
         Toast
-    }, 
+    },
     props:{
         lockX:{
             type:Boolean,
@@ -60,13 +59,13 @@ export default {
         lockY:{
             type:Boolean,
             default:false
-        }, 
+        },
     },
     filters:{
         getWorkyearsName(id){
             return common.getWorkyearsName(id);
         }
-    }, 
+    },
     data: function () {
       return {
         height:'',
@@ -144,7 +143,7 @@ export default {
             } else {
                 console.log('没有获取用户信息');
                 _self.$router.push({name:"login"});
-            }         
+            }
       },
         //头像
         checkAvatar (path) {

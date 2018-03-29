@@ -54,25 +54,27 @@
               <p class="comments"><span></span><span>{{item.comments}}</span></p>
               <!--<div class="more more-icon"></div>-->
             </div>
+            <div v-transfer-dom>
+              <previewer2 :list="item.prevImgs" ref="previewer" :options="options"></previewer2>
+            </div>
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
       </scroller>
-    </div>
-    <div v-transfer-dom>
-      <previewer :list="list" ref="previewer" :options="options"></previewer>
     </div>
   </div>
 </template>
 
 <script>
   import { Previewer, TransferDom, Scroller, LoadMore, Toast } from 'vux'
+  import Previewer2 from '@/components/meow/previewer2'
   export default {
     directives: {
       TransferDom
     },
     components: {
       Previewer,
+      Previewer2,
       Scroller,
       LoadMore,
       Toast
@@ -194,11 +196,12 @@
       checkImg(path){
         return common.getDefultImg(path);
       },
-      //
+      getRealPath(path){
+        return common.getRealImgPath(path);
+      },
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
       },
-
       // 点赞效果
       dianzan(param){
         var _self = this;
@@ -215,15 +218,15 @@
 
       show (param) {
         var _self = this;
-        _self.list = [];
+        if( _self.isView ) return;
+        _self.isView = true;
+        console.log("param.index:"+param.index);
         _self.options.previewer = '.previewer'+param.index;
-        var imgs = _self.meows[param.index].imgs || [];
-        imgs.forEach(function (img, j) {
-          _self.list.push({src:img,w:1200,h:700})
-        })
-        _self.$refs.previewer.show(param.i)
+        _self.$refs.previewer[param.index].show(param.i)
+        setTimeout(function () {
+          _self.isView = false;
+        },1000);
         param.event.cancelBubble = true;
-        // param.event.preventDefault=true;//阻止默认事件（原生方法）
         param.event.stop;//阻止冒泡（原声方法）
         return false
       },
@@ -253,7 +256,16 @@
         this.loadMore();
       },
       onScrollBottom(){
-        // console.log('on-scroll-bottom');
+        console.log('on-scroll-bottom');
+        var _self = this
+        if (_self.onFetching) {
+          // do nothing
+        } else {
+          _self.onFetching = true
+          setTimeout(() => {
+            _self.loadMore()
+          }, 100)
+        }
       },
       //获取数据
       loadData(){
@@ -277,7 +289,7 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response);
+          // console.log(response);
           let data = response.data;
           _self.setData(data);
         })
@@ -294,7 +306,6 @@
         } else {
           _self.meows.push(...data.meows);
         }
-        _self.loadMoreStatus.show=false;
         _self.loadMoreStatus.showLoading=false;
         _self.$refs.scroller.donePulldown();
         _self.$refs.scroller.donePullup();
@@ -302,12 +313,23 @@
         if(meows.length < _self.pagination.pageSize){
           _self.hasMore = false;
           _self.loadMoreStatus.show=true;
-          _self.loadMoreStatus.showLoading=false;
           _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
           _self.$refs.scroller.disablePullup();
         } else {
+          _self.onFetching = false;
           _self.pagination.pageNo++
+          _self.loadMoreStatus.show=false;
         }
+        _self.meows.forEach(function (item,index) {
+          item.prevImgs = [];
+          if( item.imgs && item.imgs.length > 0 ){
+            item.imgs.forEach(function (img, j) {
+              item.prevImgs.push({src: _self.getRealPath(img)});
+            })
+          }else{
+            item.prevImgs = [{src:_self.checkImg(''),w:800,h:400}];
+          }
+        });
       },
 
       //点赞
