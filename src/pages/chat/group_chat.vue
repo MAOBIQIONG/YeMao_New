@@ -33,7 +33,6 @@
                   <div class="text" v-tap="{methods:show,text:message.content}" v-html="filterImgs(message.content)"></div>
                 </div>
               </li>
-              <li class="bot-li"></li>
             </ul>
           </div>
         </div>
@@ -48,7 +47,7 @@
 
 <script>
   import {LoadMore, Scroller, Previewer, TransferDom,} from 'vux'
-  import Previewer2 from '@/components/meow/previewer2'  
+  import Previewer2 from '@/components/meow/previewer2'
   import chat from '../../components/chat/chat.vue'
   export default {
     directives: {
@@ -207,6 +206,7 @@
         var ch = document.documentElement.clientHeight;
         var bh = document.getElementById("inputBox").offsetHeight;
         var height = sh-ch+bh*2.5; // div高度-屏幕高度+头部+底部高度
+            height = sh-ch;
         var h = height > 0 ? height : 0;
         _self.$nextTick(
           ()=>{
@@ -383,6 +383,7 @@
     margin-left: 0.2rem;
     background-color: #f2f2f2;
     font-size: 0.3rem;
+    padding-bottom: 3rem;
   }
   .message .self{
     position: relative;

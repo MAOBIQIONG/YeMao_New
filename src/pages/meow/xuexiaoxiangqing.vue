@@ -12,8 +12,11 @@
         <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(alumni.school_logo)})`}"></div>
         <div class="mingcheng">
           <div class="xuexiao">{{alumni.school_name}}</div>
-          <!--  v-tap="{methods:toUrl2,pagename:'groupchat',query:{id:'343647591',name:'内部群001',img:'./static/images/logo.png'}}" -->
-          <div class="jrxs"><span>+&nbsp;加入学校</span><span>+&nbsp;校友交流</span></div>
+          <!--   -->
+          <div class="jrxs">
+            <span v-if="alumni.addMark==0" v-tap="{methods:joinAlumnis}">+&nbsp;加入学校</span>
+            <span v-if="alumni.addMark==1" v-tap="{methods:toUrl2,pagename:'groupchat',query:{id:alumni.group.tid,name:alumni.group.tname,img:alumni.group.icon}}">+&nbsp;校友交流</span>
+          </div>
         </div>
       </div>
       <div class="xxjj">
@@ -60,15 +63,17 @@
         <p style="text-align:center;">{{confirmMsg}}</p>
       </confirm>
     </div>
+    <toast v-model="toastShow" :time="1000" type="text" width="5rem">{{toastMsg}}</toast>
   </div>
 </template>
 
 <script>
-import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
+import {Loading,Confirm,TransferDomDirective as TransferDom,Toast} from 'vux';
   export default {
     components:{
       Loading,
-      Confirm
+      Confirm,
+      Toast
     },
     directives: {
       TransferDom
@@ -83,6 +88,8 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
         confirmMsg:'',
         user_id:null,
         alumniList:[],
+        toastShow:false,
+        toastMsg:'',
       }
     },
     watch:{
@@ -120,6 +127,10 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
       toUrl2: function (params) {
         console.log("params.pagename:"+params.pagename)
         this.$router.push({name: params.pagename, query: params.query})
+      },
+      showToast(msg){
+        this.toastShow = true;
+        this.toastMsg = msg;
       },
       // 详情页
       toDetails (param) {
@@ -217,7 +228,28 @@ import {Loading,Confirm,TransferDomDirective as TransferDom} from 'vux';
           this.addAlumnis();
         }
       },
-      addAlumnis(){}
+      addAlumnis(){},
+
+      joinAlumnis(){
+        let _self = this;
+        let params = {
+          interfaceId: common.interfaceIds.addAlumnis,
+          user_id: _self.user._id,
+          aa_id: _self.itemId,
+        }
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data;
+          if( data && data.code==200 ){
+            _self.alumni.addMark = 1; // 0、为加入，1、已加入。
+            _self.showToast('加入成功！');
+          }else{
+            var msg = common.isNull(data.msg) ? '加入失败！' : data.msg;
+            _self.showToast(msg);
+          }
+        })
+      }
     }
   }
 </script>
