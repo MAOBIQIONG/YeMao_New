@@ -602,7 +602,7 @@ export default {
           let params = {
             interfaceId:common.interfaceIds.modifyOrders,
             coll:common.collections.orderList,
-            data:{invited_state:0,project_winBidder:''},
+            data:{invited_state:0,project_winBidder:'',project_state:0},
             wheredata:{
                 _id:_self.order_id,
             },
@@ -613,9 +613,9 @@ export default {
               console.log(response)
               var data = response.data;
               if( data.code == 200 ){
-                _self.showToast("已拒绝");
+                _self.showToast("已发布");
               }else{
-                _self.showToast("拒绝失败!");
+                _self.showToast("发布失败!");
               }
           });
         },
