@@ -106,6 +106,10 @@ import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
 import guide from '@/pages/main/guide'
 import maintain from '@/pages/main/maintain'
+import carousel from '@/pages/share/carousel'
+import feedback from '@/pages/share/feedback'
+import share from '@/pages/share/share'
+import shareregistration from '@/pages/share/share-registration'
 
 Vue.use(Router)
 
@@ -130,6 +134,28 @@ const routeArray = [
   {
     path: '/',
     redirect: '/home/index'
+  },
+  //轮播活动页面
+  {
+    path: '/carousel',
+    name: 'carousel',
+    component: carousel,
+  },
+  {
+    path: '/feedback',
+    name: 'feedback',
+    component: feedback,
+  },
+  //推广邀请页面
+  {
+    path: '/share',
+    name: 'share',
+    component: share,
+  },
+  {
+    path: '/shareregistration',
+    name: 'shareregistration',
+    component: shareregistration,
   },
   // 引导页
   {
