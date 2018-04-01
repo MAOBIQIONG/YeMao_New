@@ -247,15 +247,19 @@ export default {
             if(!this.isNull(item.project_winBidder)){
                 if(item.project_winBidder===this.user_id){
                     if(item.project_state==1) {
-                        buttonState.btns_type = 1;
+                        if(item.invited_state == 1) {
+                          buttonState.btns_type = 3;
+                        } else {
+                           buttonState.btns_type = 1;
+                        }
                     }             
                 } else{
                     if(item.project_state==1) {
                         buttonState.btns_type = 2;
                     }    
                 }         
-            } else {
-                buttonState.btns_type = 3;
+            }else {
+                buttonState.btns_type = 4;
             }
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: item._id}})
@@ -555,6 +559,7 @@ export default {
               var data = response.data;
               if( data.code == 200 ){
                 _self.showToast("已拒绝");
+                _self.cancelPart_dom();
               }else{
                 _self.showToast("拒绝失败!");
               }

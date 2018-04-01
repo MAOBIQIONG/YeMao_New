@@ -25,6 +25,7 @@ import search from '@/pages/index/search'
 import searchjieguo from '@/pages/index/searchjieguo'
 import searchresults from '@/pages/index/search-results'
 import daichulixq from '@/pages/employer/daichulixq'
+import invitedesigner from '@/pages/employer/invitedesigner'
 import fabudingdan from '@/pages/employer/fabudingdan'
 import myorderchuli from '@/pages/employer/myorderchuli'
 import orderpingjia from '@/pages/employer/orderpingjia'
@@ -493,6 +494,11 @@ const routeArray = [
   { path: '/daichulixq',
     name: 'daichulixq',
     component: daichulixq
+  },
+  {
+    path:'/invitedesigner',
+    name:'invitedesigner',
+    component:invitedesigner
   },
   { path: '/fabudingdan',
     name: 'fabudingdan',

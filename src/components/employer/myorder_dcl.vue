@@ -63,7 +63,7 @@
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'cancelOrder'}">取消订单</div>
                         <template v-if="item.invited_state==2">
-                            <div class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'reselect'}">
+                            <div class="db-qrdd" v-tap="{methods:toSelectDesigner,pagename:'invitedesigner',oid:item._id}">
                                       重新选择
                             </div>
                             <div class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'republish'}">
@@ -94,7 +94,7 @@
                                   </div>
                               </template>
                           </template>
-                        <template v-else>
+                          <template v-else>
                             <template  v-if="isNull(item.project_winBidder)">
                                 <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                                 <div class="db-sxdd noRefresh" v-else>刷新订单</div>
@@ -105,7 +105,7 @@
                                 </div>
                             </template>
 
-                        </template>
+                          </template>
                         </template>
 
                     </div>
@@ -158,6 +158,9 @@ export default {
             }
 
         );
+    },
+    destroyed(){
+      common.delStorage('reselect2');
     },
     props:{
         lockX:{
@@ -266,6 +269,10 @@ export default {
             this.$router.push({name: params})
             console.log("toUrl",params);
         },
+        toSelectDesigner(params){
+          common.setStorage('reselect',1);
+          this.$router.push({name:params.pagename,query:{oid:params.oid}});
+        },
         showToast(msg){
             this.showMark = true;
             this.showMsg = msg;
@@ -288,23 +295,29 @@ export default {
                 btns_type:0,
             };
             //判断是否有人抢单
-            if(params.item.sub.length>0){
-                //判断是否已选择设计师
-                if(this.isNull(params.item.project_winBidder)){
-                    buttonState.btns_type = 1;
-                } else {
-                    buttonState.btns_type = 2;
-                }
-            }else{
-                if(common.isNull(params.item.project_winBidder)){
-                    buttonState.btns_type = 3;
-                } else{
-                    if(params.item.project_state==2) {
-                        buttonState.btns_type = 2;
-                    }
-                }
-                
+            console.log(params);
+            if(params.item.invited_state==2){
+              buttonState.btns_type = 4;
+            } else {
+              if(params.item.sub.length>0){
+                  //判断是否已选择设计师
+                  if(this.isNull(params.item.project_winBidder)){
+                      buttonState.btns_type = 1;
+                  } else {
+                      buttonState.btns_type = 2;
+                  }
+              }else{
+                  if(common.isNull(params.item.project_winBidder)){
+                      buttonState.btns_type = 3;
+                  } else{
+                      if(params.item.project_state==2) {
+                          buttonState.btns_type = 2;
+                      }
+                  }
+                  
+              }
             }
+
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: params.item._id}})
         },
@@ -367,9 +380,9 @@ export default {
                         _self.$store.state.indexRefreshMark = 1;
                         _self.$store.state.employerRefreshMark = 1;
                         _self.isRefreshed = true;
-                        setTimeout(()=>{
-                            _self.goback();
-                        },1500);
+                        // setTimeout(()=>{
+                        //     _self.goback();
+                        // },1500);
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }

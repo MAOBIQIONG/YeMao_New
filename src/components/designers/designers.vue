@@ -57,18 +57,31 @@
           </div>
         </div>
         <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
+        <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+        <div v-transfer-dom>
+            <confirm v-model="confirmShow"
+                @on-confirm = "compOnConfirm()"
+            >
+            <p style="text-align:center;">{{confirmMsg}}</p>
+            </confirm>
+        </div>
       </div>
     </scroller>
   </div>
 </template>
 
 <script>
-  import {LoadMore, Scroller, Rater  } from 'vux'
+  import {LoadMore, Scroller, Rater,Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
   export default {
+    directives: {
+        TransferDom
+    },
     components: {
       Scroller,
       LoadMore,
-      Rater
+      Rater,
+      Toast,
+      Confirm,
     },
     props:{
       value: String,                   // 模糊查询字符串
@@ -77,6 +90,7 @@
     },
     data() {
       return {
+        designerid:null,
         sortMark:0,
         designers: [],
         // 加载
@@ -119,6 +133,11 @@
           show:true,
         },
         hasMore:true,
+        showMark:false,
+        showMsg:"",
+        confirmShow:false,
+        confirmMsg:"确定选择该设计师吗？",
+        confirmType:"reselect",
       }
     },
     activated: function () {
@@ -155,6 +174,7 @@
     },
     destroyed: function() {
       console.log("designers destroyed:");
+      common.delStorage('reselect')
     },
     watch:{
       pullUpDownStatus:{
@@ -171,6 +191,9 @@
       }
     },
     methods: {
+      goback () {
+          this.$router.goBack()
+      },
       toUrl: function (params) {
         this.$router.push({name: params.pagename,query:params.query || {}})
       },
@@ -185,7 +208,65 @@
       // 详情页
       toDetails (param) {
         // console.log("param.id:"+param.id)
+        var reselect = common.getStorage('reselect');
+        if(!common.isNull(reselect)){
+          common.setStorage('reselect2',1);
+        };
         this.$router.push({name: 'sjszxxq', query: {id: param.id}})
+      },
+      showToast(msg){
+          this.showMark = true;
+          this.showMsg = msg;
+      },
+      showConfirm(params){
+            this.confirmShow = true;
+            this.designerid = params.designerid;
+            this.confirmType = params.type
+            if(params.type == "reselect"){
+                this.confirmMsg = "确定选择该设计师吗？"
+            }
+            // console.log(this.order_id);
+      },
+      compOnConfirm(){
+          if(this.confirmType=="reselect"){
+              this.reselect();
+          }
+      },
+      reselect(){
+        let oid = this.$route.query.oid;
+        if(common.isNull(oid)){console.error('没有获取订单id');return;}
+        console.log(this.designerid,oid);
+        let _self = this;
+        let params = {
+          interfaceId:common.interfaceIds.modifyOrders,
+          coll:common.collections.orderList,
+          data:{invited_state:1,project_winBidder:_self.designerid},
+          wheredata:{
+              _id:oid,
+          },
+        };
+        _self.$axios.post('/mongoApi', {
+            params: params
+        }, response => {
+            console.log(response)
+            var data = response.data;
+            if( data.code == 200 ){
+              _self.showToast("重新选择成功");
+              setTimeout(function(){
+                _self.goback();
+              },1000);
+            }else{
+              _self.showToast("选择失败!");
+            }
+        });        
+      },
+      resizeScroller(){
+        //获取页面字体大小
+        let fontSize = getComputedStyle(document.getElementsByTagName('body')[0]).fontSize;
+        console.log(fontSize);
+        // this.height ='-' + parseInt(fontSize.replace('px','')*1.2)
+        this.height = '';
+        console.log('height',this.height);
       },
       /*******************************************************/
       // 项目类型名称
@@ -203,6 +284,7 @@
         _self.pagination.pageNo = 0;
         _self.hasMore = true;
         _self.loadMoreStatus.show=false;
+        _self.$refs.scroller.donePullup();
         _self.loadData();
       },
       //上拉加载
@@ -228,6 +310,7 @@
       // 加载更多
       loadData () {
         var _self = this;
+        _self.loadMoreStatus.tip= _self.loadMoreStatus.tipLoading;
         var params = {
           interfaceId: common.interfaceIds.getDesigners,
           pageNo: _self.pagination.pageNo,
@@ -275,6 +358,7 @@
 
       setUserData(data){
         var _self = this;
+        _self.$refs.scroller.enablePullup();
         // 设计师
         var designers = data.designers || [];
         //判断页码是否为0
@@ -284,6 +368,7 @@
           _self.designers = [..._self.designers, ...designers];
         }
         //判断数据是否有一页
+        _self.loadMoreStatus.show=false;
         _self.loadMoreStatus.showLoading=false;
         _self.$refs.scroller.donePulldown();
         _self.$refs.scroller.donePullup();
@@ -291,6 +376,7 @@
         if ( designers.length < _self.pagination.pageSize ) {
           _self.hasMore = false;
           _self.loadMoreStatus.show=true;
+          _self.loadMoreStatus.showLoading=false;
           _self.loadMoreStatus.tip=_self.loadMoreStatus.tipNoData;
           _self.$refs.scroller.disablePullup();
         } else {
@@ -309,10 +395,17 @@
       },
       beInvited(p){
         var user = common.getObjStorage("userInfo") || {};
+        var reselect = common.getObjStorage('reselect');
+        var reselect2 = common.getObjStorage('reselect2');
         if(common.isNull(user._id)){
           this.$router.push({name:'login'});
         } else {
-          this.$router.push({name:'fabudingdan',query:{designerid:p.designerid}});
+          if(!common.isNull(reselect)||!common.isNull(reselect2)){
+            p.type="reselect";
+            this.showConfirm(p);
+          }else {
+            this.$router.push({name:'fabudingdan',query:{designerid:p.designerid}});
+          }
         }
 
       },
