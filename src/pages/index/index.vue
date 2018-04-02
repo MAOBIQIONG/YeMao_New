@@ -182,7 +182,6 @@
 <script>
   import {LoadMore, Scroller, Swiper, SwiperItem, Divider, XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Confirm,TransferDomDirective as TransferDom} from 'vux'
   import store from '@/vuex/store'
-
   export default {
     directives: {
         TransferDom
@@ -528,9 +527,22 @@
         var _self = this;
         // 轮播图
         _self.imgList = data.imgList || [];
+        var imgList = data.imgList || [];
+        imgList.forEach(function (item, index) {
+          if( index ==0){
+            item.url="/carousel"
+          }else if( index ==1) {
+            item.url="/feedback"
+          }
+        })
+        console.log(imgList)
         // 通知
         _self.noticeList = data.noticeList || [];
       },
+
+
+
+
 
       setOrderData(data){
         var _self = this;
