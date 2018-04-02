@@ -15,7 +15,7 @@
       <!--图片上传-->
       <div class="sctp">
         <div class="img-upload">
-          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
+          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',imgsrc:img  }">
             <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
           </div>
           <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
@@ -74,6 +74,10 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      toPreviewer(params){
+        common.setStorage('imageUrl',params.imgsrc);
+        this.$router.push({name: params.pagename})     
       },
       // toast
       showToast(msg){

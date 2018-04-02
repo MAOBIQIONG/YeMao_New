@@ -105,13 +105,13 @@ import zuopinshangchuan from '@/pages/meow/zuopinshangchuan'
 import haibao from '@/pages/meow/haibao'
 import haibaoxq from '@/pages/meow/haibaoxq'
 import gerenzuoping from '@/pages/meow/gerenzuoping'
+import uploadImgPreviewer from '@/pages/meow/uploadImgPreviewer'
 import guide from '@/pages/main/guide'
 import maintain from '@/pages/main/maintain'
 import carousel from '@/pages/share/carousel'
 import feedback from '@/pages/share/feedback'
 import share from '@/pages/share/share'
 import shareregistration from '@/pages/share/share-registration'
-
 Vue.use(Router)
 
 Router.prototype.goBack = function (num) {
@@ -230,6 +230,11 @@ const routeArray = [
   { path: '/gerenzuoping',
     name: 'gerenzuoping',
     component: gerenzuoping
+  },
+  {
+    path:'/uploadImgPreviewer',
+    name:'uploadImgPreviewer',
+    component:uploadImgPreviewer
   },
   { path: '/haibao',
     name: 'haibao',
