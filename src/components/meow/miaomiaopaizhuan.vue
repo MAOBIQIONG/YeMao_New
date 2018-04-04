@@ -54,7 +54,7 @@
 
         lockX:true,
         lockY:false,
-        height:"-1",
+        height: common.getDeviceHeight(), // 1
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -268,4 +268,7 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/miaomiaopaizuan.css';
+  .content{
+    padding-bottom: 0.2rem;
+  }
 </style>

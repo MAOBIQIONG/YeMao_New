@@ -111,7 +111,7 @@
         onFetching: true,
         lockX:true,
         lockY:false,
-        height:"-200",
+        height: common.getDeviceHeight(3.1), // -200
         pagination: {
           pageNo: 0,
           pageSize: 10

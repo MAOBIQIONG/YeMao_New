@@ -83,7 +83,8 @@
         onFetching: true,
         lockX:true,
         lockY:false,
-        height:"-50",
+        height: common.getDeviceHeight(0.7), // -50
+
         pagination: {
           pageNo: 0,
           pageSize: 10
@@ -94,7 +95,7 @@
         },
         pulldownConfig:{
           content: '下拉刷新',
-          height: 60,
+          height: 80,
           autoRefresh: false,
           downContent: '下拉刷新',
           upContent: '放开刷新',

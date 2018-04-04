@@ -1,5 +1,5 @@
 <template>
-  <div class="bg"><!-- p-fixed -->
+  <div class="bg">
     <div class="top">
       <div class="search">
         <div class="search-input">
@@ -17,7 +17,7 @@
         <tab-item class="vux-center" key="1">订单</tab-item>
       </tab>
     </div>
-    <div class="content content-p">
+    <div class="content-box">
         <designers :is="index==0?'designers':'orders'" :value="searchValue" :blank="height"></designers> <!-- keep-alive -->
     </div>
   </div>
@@ -38,7 +38,7 @@
       return {
         index: 0,
         searchValue:'',
-        height:'0.3rem',             // 数据离屏幕高度的间隔
+        height:'0rem',             // 数据离屏幕高度的间隔
       }
     },
     created: function () {
@@ -79,17 +79,21 @@
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  .vux-tab{
+    height: 0.88rem !important;
+  }
+</style>
 <style lang="less" scoped>
   @import "../../../static/css/index/search-jieguo.css";
-  .content{
-    width:7.5rem;
-    padding-top: 1.2rem;
+  .content-box{
   }
   .top{
-    height:0.8rem;
+    height: 2.28rem;
+    position: relative;
   }
   .tabs{
-    position: fixed;
+    position: absolute;
     /*沉浸式样式*/
     top:1.2rem;
     /*非沉浸式样式*/
@@ -106,5 +110,6 @@
   .bg{
     background: #f2f2f2;
     height: 100%;
+    overflow: hidden;
   }
 </style>
