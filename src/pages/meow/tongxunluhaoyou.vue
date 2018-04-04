@@ -17,9 +17,9 @@
         <div class="dshy-left">
           <span>{{contactsArr.length}}</span>个通讯录好友
         </div>
-        <div class="dshy-right">
+        <!-- <div class="dshy-right">
           全部加入
-        </div>
+        </div> -->
       </div>
 </div>
     <div class="content" style="padding-top:3rem;">
@@ -271,7 +271,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                 params: params
             }, response => {
                 console.log(JSON.stringify(response));
-                alert(JSON.stringify(response));
+                // alert(JSON.stringify(response));
                 var data = response.data
                 if (data) {
                    _self.setData(data);

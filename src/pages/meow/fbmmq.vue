@@ -15,10 +15,11 @@
       <!--图片上传-->
       <div class="sctp">
         <div class="img-upload">
-          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',imgsrc:img  }">
+          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:img,index:index  }">
             <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
           </div>
           <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
+          <!-- <div  v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522829879013&di=71a628cfbf77aeae198fdcc46bd40753&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D307475008%2C2549700829%26fm%3D214%26gp%3D0.jpg',index:0  }" :style="{position:'absolute',zIndex:'9',width:'50px',height:'50px',backgroundImage: 'url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522829879013&di=71a628cfbf77aeae198fdcc46bd40753&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D307475008%2C2549700829%26fm%3D214%26gp%3D0.jpg)'}"></div> -->
         </div>
       </div>
     </div>
@@ -61,12 +62,25 @@
       }
     },
     created: function () {
+      var _self = this;
       console.log("created:")
       // 用户信息
       var userInfo = common.getObjStorage("userInfo");
       this.params.user_id = userInfo._id;
       // 清除图片缓存
       uploadImg2.clearImgArr(true);
+      //接收来自预览页操作后传回的数据；
+      var dataFromPreviewer = _self.$store.state.dataFromPreviewer;
+      if(!common.isNull(dataFromPreviewer)){
+        console.log(dataFromPreviewer);
+        uploadImg2.imgArr=dataFromPreviewer.uploadImg2.imgArr;
+        uploadImg2.imgBase64=dataFromPreviewer.uploadImg2.imgBase64;
+        _self.base64Arr=dataFromPreviewer.self.imgBase64;
+        _self.params.imgs=dataFromPreviewer.self.imgArr;
+      }
+    },
+    destroyed(){
+      this.$store.state.dataFromPreviewer=null;
     },
     methods: {
       goback () {
@@ -76,7 +90,19 @@
         this.$router.push({name: pagename})
       },
       toPreviewer(params){
-        common.setStorage('imageUrl',params.imgsrc);
+        let _self = this;
+        _self.$store.state.dataToPreviewer = {
+            imgsrc:params.src,
+            imageIndex:params.index,
+            uploadImg2:{
+              imgArr:uploadImg2.imgArr,
+              imgBase64:uploadImg2.imgBase64,             
+            },
+            self:{
+              imgArr: _self.params.imgs, 
+              imgBase64:_self.base64Arr,     
+            }
+        }
         this.$router.push({name: params.pagename})     
       },
       // toast
