@@ -9,8 +9,8 @@
     <!--发布订单内容-->
     <div class="content p-static">
       <div class="touxiang">
-        <div class="tu" v-tap="{ methods:triggerFile }" style="overflow: hidden">
-          <img :src="getAvatar(logo)" style="width: 100%;margin-top: 0rem;"/>
+        <div class="tu" v-tap="{ methods:triggerFile }" style="overflow: hidden;background-position:center center;backgroundSize:cover" :style="{backgroundImage:`url(${getAvatar(logo)})`}">
+          <!-- <img :src="getAvatar(logo)" style="width: 100%;margin-top: 0rem;"/> -->
         </div>
         <p>上传图片</p>
       </div>

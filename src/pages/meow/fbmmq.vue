@@ -77,6 +77,7 @@
         uploadImg2.imgBase64=dataFromPreviewer.uploadImg2.imgBase64;
         _self.base64Arr=dataFromPreviewer.self.imgBase64;
         _self.params.imgs=dataFromPreviewer.self.imgArr;
+        _self.params.title = dataFromPreviewer.text;
       }
     },
     destroyed(){
@@ -89,11 +90,12 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
-      toPreviewer(params){
+      toPreviewer(p){
         let _self = this;
         _self.$store.state.dataToPreviewer = {
-            imgsrc:params.src,
-            imageIndex:params.index,
+            imgsrc:p.src,
+            imageIndex:p.index,
+            text:_self.params.title,
             uploadImg2:{
               imgArr:uploadImg2.imgArr,
               imgBase64:uploadImg2.imgBase64,             
@@ -103,7 +105,7 @@
               imgBase64:_self.base64Arr,     
             }
         }
-        this.$router.push({name: params.pagename})     
+        this.$router.push({name: p.pagename})     
       },
       // toast
       showToast(msg){
