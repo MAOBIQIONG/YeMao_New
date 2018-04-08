@@ -32,7 +32,7 @@
           </div>
           <div class="xmlx-right">
             <group class="xmlx-kuang">
-              <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
+              <x-address @on-hide="logHide" @on-show="logShow" title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
             </group>
           </div>
         </div>
@@ -120,7 +120,7 @@
             <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:img,index:index  }">
               <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
             </div>
-            <!-- <div  v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522829879013&di=71a628cfbf77aeae198fdcc46bd40753&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D307475008%2C2549700829%26fm%3D214%26gp%3D0.jpg',index:0  }" :style="{position:'absolute',zIndex:'9',width:'50px',height:'50px',backgroundImage: 'url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522829879013&di=71a628cfbf77aeae198fdcc46bd40753&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D307475008%2C2549700829%26fm%3D214%26gp%3D0.jpg)'}"></div> -->
+            <div  v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522829879013&di=71a628cfbf77aeae198fdcc46bd40753&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D307475008%2C2549700829%26fm%3D214%26gp%3D0.jpg',index:0  }" :style="{position:'absolute',zIndex:'9',width:'50px',height:'50px',backgroundImage: 'url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522829879013&di=71a628cfbf77aeae198fdcc46bd40753&imgtype=jpg&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D307475008%2C2549700829%26fm%3D214%26gp%3D0.jpg)'}"></div>
             <div id="markbottom" class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
           </div>
         </div>
@@ -147,6 +147,7 @@
       Scroller
     },
     store,
+
     data () {
       return {
         isInvited: false,
@@ -155,7 +156,7 @@
         order_id: null,
         isShow: true,
         typeList: [],
-        city: ['上海市'],
+        city: ['310000'],
         deadLine: common.getSomeday(-1),
         startTime: common.getSomeday(-1),
         endTime: common.getSomeday(-2),
@@ -272,6 +273,7 @@
         this.$router.push({name: pagename})
       },
       toPreviewer(p){
+        console.log(this.city);
         let _self = this;
         _self.$store.state.dataToPreviewer = {
             imgsrc:p.src,
