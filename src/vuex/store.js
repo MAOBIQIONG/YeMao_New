@@ -25,6 +25,9 @@ const state = {
   directionOrderTab:0,
   //案例列表刷新状态
   caseRefreshMark:0,
+  //上传图片预览删除中间数组
+  dataToPreviewer:null,
+  dataFromPreviewer:null,
 
 }
 

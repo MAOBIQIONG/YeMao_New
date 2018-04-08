@@ -17,9 +17,9 @@
         <div class="dshy-left">
           <span>{{contactsArr.length}}</span>个通讯录好友
         </div>
-        <div class="dshy-right">
+        <!-- <div class="dshy-right">
           全部加入
-        </div>
+        </div> -->
       </div>
 </div>
     <div class="content" style="padding-top:3rem;">
@@ -34,8 +34,11 @@
 
             <p class="xinge"><span v-if="item.canJoin==1">夜猫用户：</span><span v-else>联系人：</span><span>{{item.user_name}}</span></p>
             <p class="name"><span>手机号：</span>{{item.phoneNumbers[0].value}}</p>
-            <div class="biaoqian" v-if="item.canJoin==1"  v-tap="{methods:showConfirm,uid:item.uid,type:'addAlumnis'}">
+            <div class="biaoqian" v-if="item.canJoin==1&&item.flag==0"  v-tap="{methods:showConfirm,uid:item.uid,type:'addAlumnis'}">
               加入校友
+            </div>
+            <div class="biaoqian" v-if="item.canJoin==1&&item.flag==1" style="color:#F2F2F2">
+              已加入
             </div>
           </div>
         </div>
@@ -216,7 +219,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                             }
                             c.phoneNumbers.forEach(function(item,index){
                                 if(item.type=="mobile"){
-                                    phoneArr.push(item.value.replace(/\s/g,''));
+                                    phoneArr.push(item.value.replace(/\s/g,'').replace(/^((\+86)|(86))+/,''));
                                 }
                             });
                         },undefined);
@@ -254,9 +257,15 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
         },
         getUsers(phoneArr){
             let _self = this;
+            let aa_id = this.$route.query.aa_id;
+            if(common.isNull(aa_id)){
+              console.error("没有获取aa_id");
+              return;
+            }
             let params = {
                 interfaceId:common.interfaceIds.getUsersByPhone,
                 phones:phoneArr,
+                aa_id:aa_id
             }
             _self.$axios.post('/mongoApi', {
                 params: params
@@ -299,12 +308,13 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                     // console.log('data-c2:'+JSON.stringify(c2));
                     c1.phoneNumbers.reduce(function(a3,c3,i3,arr3){
                         // console.log('phoneNumbers-c3:'+JSON.stringify(c3));
-                        if(new String(c3.value).replace(/\s/g,'') == new String(c2.phone).replace(/\s/g,'')){
+                        if(new String(c3.value).replace(/\s/g,'').replace(/^((\+86)|(86))+/,'') == new String(c2.phone).replace(/\s/g,'')){
                             // console.log('data-c2.phone==phoneNumbers-c3');
                             c1.user_name = c2.user_name;
                             c1.canJoin = 1;
+                            c1.flag = c2.flag;
                             c1.uid=c2._id;
-                            if(new String(c2.phone).replace(/\s/g,'')==_self.user.phone){
+                            if(new String(c2.phone).replace(/\s/g,'').replace(/^((\+86)|(86))+/,'')==_self.user.phone){
                                 c1.canJoin = 0;
                             }
                         }
@@ -342,8 +352,12 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                 }, response => {
                     console.log(JSON.stringify(response))
                     var data = response.data;
-
-                     _self.showToast('已加入！');
+                    if(data.code==200){
+                        _self.showToast('已加入！');
+                    } else {
+                      _self.showToast(data.msg);
+                    }
+                    
 
                 })
         }

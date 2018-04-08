@@ -424,6 +424,7 @@
         _self.subParams.project_endTime = common.string2TimeStamp(_self.endTime);
         // 邀请设计师
         _self.subParams.project_winBidder = _self.isInvited===true ? _self.designerid : '';
+        _self.subParams.invited_state = _self.isInvited ===true? 1:0;
         _self.subParams.project_state = _self.isInvited===true ? 1: 0;
         var params = {
           interfaceId:common.interfaceIds.addOrders,
