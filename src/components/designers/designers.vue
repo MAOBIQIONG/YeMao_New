@@ -34,7 +34,7 @@
                 </div>
                 <div class="sn-bottom">
                   <div class="sb-nianling">{{item.working_years}}年</div>
-                  <div class="st-pingxin" style="width: 2.5rem">
+                  <div class="st-pingxin" style="width: 2.2rem">
                     <rater v-model="item.composite_score" star="<i class='icon iconfont icon-star-red'></i>" active-color="#FF9900" :disabled="true" :max="5" :margin="5" :font-size="14"></rater>
                   </div>
                   <!--<div class="sb-qian" v-if="item.authenticating_state>5">签</div>-->
@@ -259,7 +259,7 @@
             }else{
               _self.showToast("选择失败!");
             }
-        });        
+        });
       },
       resizeScroller(){
         //获取页面字体大小
