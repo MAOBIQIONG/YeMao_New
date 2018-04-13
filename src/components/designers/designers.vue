@@ -428,4 +428,10 @@
     margin-top: 0rem !important;
     margin-bottom: 0.2rem;
   }
+  /*iPhoneX的适配沉浸式样式*/
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3){
+    .sjs-list{
+      margin-top: 0.2rem !important;
+    }
+  }
 </style>

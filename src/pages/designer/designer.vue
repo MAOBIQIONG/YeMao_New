@@ -183,6 +183,12 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/designer.css';
+  /*iPhoneX的适配沉浸式样式*/
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .top-menu{
+      top:1.4rem;
+    }
+  }
   .designer {
     /*background-color: #f2f2f2;*/
     width: 100%;
