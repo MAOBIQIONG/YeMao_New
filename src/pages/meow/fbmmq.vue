@@ -18,7 +18,7 @@
           <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
             <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
           </div>
-          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
+          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile}"></div>
         </div>
       </div>
     </div>

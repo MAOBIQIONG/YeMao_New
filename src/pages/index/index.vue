@@ -540,10 +540,6 @@
         _self.noticeList = data.noticeList || [];
       },
 
-
-
-
-
       setOrderData(data){
         var _self = this;
         // 订单
