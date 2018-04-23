@@ -13,11 +13,17 @@
   </body>
   <script>
     // 解决ios软件盘弹出,底部输入框被顶起
+    var originalHeight=document.documentElement.clientHeight || document.body.clientHeight;
     window.onresize=function(){
       console.log("onresize:")
       //软键盘弹起与隐藏  都会引起窗口的高度发生变化
-      var  resizeHeight=document.documentElement.clientHeight || document.body.clientHeight;
-      console.log("resizeHeight:"+resizeHeight)
+      var resizeHeight=document.documentElement.clientHeight || document.body.clientHeight;
+      console.log("resizeHeight:"+resizeHeight);
+      if( originalHeight <= resizeHeight  ){ // 关闭软键盘
+        console.log("关闭软键盘:")
+        document.activeElement.blur();
+      }
+      // 修改评论页面content高度
       var content = document.getElementById("content");
       if( content && common.browser.versions.ios ){
         var h = resizeHeight > 100 ? resizeHeight-100 : resizeHeight;

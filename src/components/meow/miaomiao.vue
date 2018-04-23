@@ -131,7 +131,7 @@
 
         lockX:true,
         lockY:false,
-        height:"-55",
+        height: common.getDeviceHeight(1.2), // -55
         pagination: {
           pageNo: 0,
           pageSize: 10

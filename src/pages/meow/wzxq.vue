@@ -129,10 +129,10 @@ export default {
                 type:Boolean,
                 default:false
             },
-            height:{
-                type:String,
-                default:"-44"
-            }
+//            height:{
+//                type:String,
+//                default:"-44"
+//            }
         },
     data: function () {
         return {
@@ -148,6 +148,8 @@ export default {
             comments:[],
             imgs:[],
             index:0,
+
+            height: common.getDeviceHeight(),
             pagination:{
                 pageNo:0,
                 pageSize:10,

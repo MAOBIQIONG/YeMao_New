@@ -371,7 +371,8 @@ body,html{
   line-height: 0.8rem;
   font-size: 0.32rem;
   border-bottom: 1px solid #F2F2F2;
-  position: fixed;
+  /*position: fixed;*/
+  position: absolute;
   background: white;
   top: 0;
   left:0;
@@ -527,11 +528,11 @@ body,html{
   margin-top: 0.05rem;
 }
 .sjs-list .sjs-top .st-neirong .sn-top .sb-qian {
-  border: 1px solid #ffe354;
+  border: 0.02rem solid #ffe354;
   background-color: #fff9d9;
   border-radius: 0.08rem;
   float: left;
-  font-size: 0.24rem;
+  font-size: 0.2rem;
   text-align: center;
   color: #cda566;
   padding: 0.01rem 0.06rem;
@@ -549,8 +550,8 @@ body,html{
 }
 .sjs-list .sjs-top .st-neirong .sn-top .sb-ysm {
   float: left;
-  border: 1px solid #6ddacf;
-  font-size: 0.24rem;
+  border: 0.02rem solid #6ddacf;
+  font-size: 0.2rem;
   color: #6ddacf;
   text-align: center;
   border-radius: 0.08rem;
@@ -568,9 +569,9 @@ body,html{
 }
 .sjs-list .sjs-top .st-neirong .sn-top .sb-yrz {
   float: left;
-  border: 1px solid #142aa4;
+  border: 0.02rem solid #142aa4;
   color: #142aa4;
-  font-size: 0.24rem;
+  font-size: 0.2rem;
   text-align: center;
   border-radius: 0.08rem;
   padding: 0.01rem 0.06rem;

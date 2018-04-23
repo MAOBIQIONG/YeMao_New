@@ -666,6 +666,16 @@ const common = {
     return avatar;
   },
 
+  // 根据设备高度计算height
+  getDeviceHeight: function (num) {
+    var originalRate = 0.1;
+    var rate = common.checkFloat(num);
+    rate = rate<=0 ? originalRate : rate*originalRate;
+    var diviceH = document.documentElement.clientHeight;
+    var h = diviceH*rate;
+    return "-"+h;
+  },
+
   uuid:function () {
       var s = [];
       var hexDigits = "0123456789abcdef";

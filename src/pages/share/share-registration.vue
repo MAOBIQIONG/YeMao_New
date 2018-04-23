@@ -331,16 +331,13 @@
   }
 
   .box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: relative;
+    width: 7.5rem;
+    height: 14rem;
     background: url("../../../static/images/share/share2.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
   }
-
   .bj {
     position: absolute;
     width: 5.5rem;
@@ -350,6 +347,14 @@
     background-repeat: no-repeat;
     bottom: .3rem;
     left: 1rem;
+  }
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .box {
+      height: 16rem;
+    }
+    .bj {
+      bottom: .6rem;
+    }
   }
   .anniu{
     width: 2.8rem;
@@ -378,16 +383,12 @@
     left: 0.7rem;
     color: #f6f336;
   }
-
   .login-shuru .ls-shouji,
   .login-shuru .ls-yanzheng{
     width: 4.1rem;
     height: 0.5rem;
     margin: auto;
     margin-top: 0.15rem;
-    background: url("../../../static/images/share/kuan.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
     position: relative;
   }
   .login-shuru .ls-yanzheng{
@@ -397,15 +398,20 @@
   .login-shuru .ls-shouji .yanzheng,
   .login-shuru .ls-yanzheng .shouji,
   .login-shuru .ls-yanzheng .yanzheng {
-    width: 3.9rem;
+    width: 4.1rem;
     height: 0.5rem;
     display: block;
     border: none;
-    margin:auto;
     background: transparent;
     font-size: 0.28rem;
     color: #757575;
+    padding-left: 0.1rem;
     outline: medium;
+  }
+  .login-shuru .ls-shouji .shouji{
+    background: url("../../../static/images/share/kuan.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
   }
   .login-shuru .ls-yanzheng .yanzheng{
     width: 2rem;
@@ -414,7 +420,6 @@
     background: url("../../../static/images/share/kuan.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    padding-left: 0.1rem;
   }
   .login-shuru .ls-shouji .del,
   .login-shuru .ls-yanzheng .del {
@@ -438,7 +443,7 @@
     top: 0;
     right: 0rem;
     height: 0.5rem;
-    line-height: 0.5rem;
+    line-height: 0.55rem;
     font-size: 0.24rem;
     color: #FFFFFF;
   }

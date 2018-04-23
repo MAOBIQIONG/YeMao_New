@@ -126,6 +126,14 @@
                         <div class="db-sxdd" v-if="canRefresh(order.refresh_date)" v-tap="{methods:refreshOrders,id:order._id}">刷新订单</div>
                         <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                     </template>
+                    <template v-else-if="buttonState.btns_type==4">
+                        <div class="db-qrdd" v-tap="{methods:toSelectDesigner,pagename:'invitedesigner',oid:order._id}">
+                                  重新选择
+                        </div>
+                        <div class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'republish',msg:'确认重新发布吗？'}">
+                                  重新发布
+                        </div>
+                    </template>
                 </div>
                 <div class="db-right" v-if="buttonState.state=='dzf'">
                     <div class="db-qxdd" v-tap ="{methods:showConfirm,id:order._id,type:'cancelOrder',msg:'确定要取消该订单吗？'}">取消订单</div>
@@ -161,6 +169,15 @@
                         </div>
                     </template>
                     <template v-if="buttonState.btns_type==3">
+                        <div class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'refuseInvitation',msg:'确定拒绝吗？'}" >拒绝邀请</div>
+                        <div class="db-qrdd" v-tap="{methods:improveTheOrder,id:order._id}">
+                            完善信息
+                        </div>
+                        <div class="db-qrdd" v-tap="{methods:showConfirm,id:order._id,type:'confirmTheOrderByDesigner',msg:'确认该订单吗？'}">
+                            确认订单
+                        </div>
+                    </template>
+                    <template v-if="buttonState.btns_type==4">
                         <div class="db-qxdd" v-tap="{methods:showConfirm,id:order._id,type:'canclePart',msg:'确定取消抢单吗？'}" >取消抢单</div>
                     </template>
 
@@ -203,7 +220,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             //订单装填完善标志位
             improved:0,
             isSubmissionConfirmed:0,
-            confirmType:"",//cancelOrder取消订单confirmTheOrderByDesigner设计师确认订单，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交,canclePart取消抢单
+            confirmType:"",//cancelOrder取消订单confirmTheOrderByDesigner设计师确认订单，submissionDesign提交设计，commitImprove确认完善,submissionConfirm 确认提交,canclePart取消抢单,refuseInvitation拒绝邀请
             user_id:null,
             userInfo:null,
             order:{
@@ -548,6 +565,58 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             }
             })
         },
+        refuseInvitation(){
+          let _self = this;
+          let params = {
+            interfaceId:common.interfaceIds.modifyOrders,
+            coll:common.collections.orderList,
+            data:{invited_state:2,project_winBidder:''},
+            wheredata:{
+                _id:_self.order_id,
+            },
+          };
+          _self.$axios.post('/mongoApi', {
+              params: params
+          }, response => {
+              console.log(response)
+              var data = response.data;
+              if( data.code == 200 ){
+                _self.showToast("已拒绝");
+                setTimeout(()=>{
+                    _self.goback();
+                },1500);
+              }else{
+                _self.showToast("拒绝失败!");
+              }
+          });
+        },
+        toSelectDesigner(params){
+          common.setStorage('reselect',1);
+          this.$router.push({name:params.pagename,query:{oid:params.oid}});
+        },
+        republish(){
+          let _self = this;
+          let params = {
+            interfaceId:common.interfaceIds.modifyOrders,
+            coll:common.collections.orderList,
+            data:{invited_state:0,project_winBidder:'',project_state:0},
+            wheredata:{
+                _id:_self.order_id,
+            },
+          };
+          _self.$axios.post('/mongoApi', {
+              params: params
+          }, response => {
+              console.log(response)
+              var data = response.data;
+              if( data.code == 200 ){
+                _self.showToast("已发布");
+                setTimeout(function(){_self.goback();},1500);
+              }else{
+                _self.showToast("发布失败!");
+              }
+          });
+        },
         compOnConfirm(type){
             if(this.confirmType=="cancelOrder"){
                 this.cancelOrder();
@@ -566,6 +635,12 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             }
             if(this.confirmType =="canclePart"){
                 this.canclePart();
+            }
+            if(this.confirmType =="refuseInvitation"){
+                this.refuseInvitation();
+            }
+            if(this.confirmType == "republish"){
+                this.republish();
             }
         },
       //数据初始化

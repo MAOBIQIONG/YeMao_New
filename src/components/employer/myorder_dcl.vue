@@ -62,41 +62,50 @@
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" v-tap="{methods:showConfirm,id:item._id,type:'cancelOrder'}">取消订单</div>
-                        <template v-if="item.sub.length>0">
-                            <template v-if="isNull(item.project_winBidder)">
-                                <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
-                                <div class="db-sxdd noRefresh" v-else>刷新订单</div>
-                                <div class="db-qrdd"
-                                    v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
-                                 >
-                                 选择设计师
-                                </div>
-                            </template>
-
-                            <template v-else>
-                                <!-- <div class="db-sxdd">
-                                    刷新订单
-                                </div> -->
-                                <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
-                                    确认完善信息
-                                </div>
-                                <div v-else class="db-qrdd"  style="display: none">
-                                    <!-- 等待完善订单 -->
-                                </div>
-                            </template>
+                        <template v-if="item.invited_state==2">
+                            <div class="db-qrdd" v-tap="{methods:toSelectDesigner,pagename:'invitedesigner',oid:item._id}">
+                                      重新选择
+                            </div>
+                            <div class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'republish'}">
+                                      重新发布
+                            </div>
                         </template>
                         <template v-else>
+                          <template v-if="item.sub.length>0">
+                              <template v-if="isNull(item.project_winBidder)">
+                                  <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
+                                  <div class="db-sxdd noRefresh" v-else>刷新订单</div>
+                                  <div class="db-qrdd"
+                                      v-tap="{ methods:toParts, id: item._id, uid: item.user_id }"
+                                  >
+                                  选择设计师
+                                  </div>
+                              </template>
 
+                              <template v-else>
+                                  <!-- <div class="db-sxdd">
+                                      刷新订单
+                                  </div> -->
+                                  <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
+                                      确认完善
+                                  </div>
+                                  <div v-else class="db-qrdd"  style="display: none">
+                                      <!-- 等待完善订单 -->
+                                  </div>
+                              </template>
+                          </template>
+                          <template v-else>
                             <template  v-if="isNull(item.project_winBidder)">
                                 <div class="db-sxdd" v-if="item.refreshFlag==1" v-tap="{methods:showConfirm,id:item._id,type:'refreshOrders'}">刷新订单</div>
                                 <div class="db-sxdd noRefresh" v-else>刷新订单</div>
                             </template>
                             <template v-else>
                                 <div v-if="item.project_state==2" class="db-qrdd" v-tap="{methods:showConfirm,id:item._id,type:'commitImprove'}">
-                                        确认完善信息
+                                        确认完善
                                 </div>
                             </template>
 
+                          </template>
                         </template>
 
                     </div>
@@ -150,6 +159,9 @@ export default {
 
         );
     },
+    destroyed(){
+      common.delStorage('reselect2');
+    },
     props:{
         lockX:{
             type:Boolean,
@@ -166,7 +178,7 @@ export default {
     },
     data(){
         return {
-            confirmType:"",//cancelOrder取消订单，commitImprove确认完善,refreshOrders刷新订单
+            confirmType:"",//cancelOrder取消订单，commitImprove确认完善,refreshOrders刷新订单,reselect重新选择，republish	重新发布
             order_id:null,
             orderList: [],
             pagination: {
@@ -257,6 +269,10 @@ export default {
             this.$router.push({name: params})
             console.log("toUrl",params);
         },
+        toSelectDesigner(params){
+          common.setStorage('reselect',1);
+          this.$router.push({name:params.pagename,query:{oid:params.oid}});
+        },
         showToast(msg){
             this.showMark = true;
             this.showMsg = msg;
@@ -279,23 +295,29 @@ export default {
                 btns_type:0,
             };
             //判断是否有人抢单
-            if(params.item.sub.length>0){
-                //判断是否已选择设计师
-                if(this.isNull(params.item.project_winBidder)){
-                    buttonState.btns_type = 1;
-                } else {
-                    buttonState.btns_type = 2;
-                }
-            }else{
-                if(common.isNull(params.item.project_winBidder)){
-                    buttonState.btns_type = 3;
-                } else{
-                    if(params.item.project_state==2) {
-                        buttonState.btns_type = 2;
-                    }
-                }
-                
+            console.log(params);
+            if(params.item.invited_state==2){
+              buttonState.btns_type = 4;
+            } else {
+              if(params.item.sub.length>0){
+                  //判断是否已选择设计师
+                  if(this.isNull(params.item.project_winBidder)){
+                      buttonState.btns_type = 1;
+                  } else {
+                      buttonState.btns_type = 2;
+                  }
+              }else{
+                  if(common.isNull(params.item.project_winBidder)){
+                      buttonState.btns_type = 3;
+                  } else{
+                      if(params.item.project_state==2) {
+                          buttonState.btns_type = 2;
+                      }
+                  }
+                  
+              }
             }
+
             common.setStorage('buttonState',buttonState);
             this.$router.push({name: 'daichulixq', query: {id: params.item._id}})
         },
@@ -358,9 +380,9 @@ export default {
                         _self.$store.state.indexRefreshMark = 1;
                         _self.$store.state.employerRefreshMark = 1;
                         _self.isRefreshed = true;
-                        setTimeout(()=>{
-                            _self.goback();
-                        },1500);
+                        // setTimeout(()=>{
+                        //     _self.goback();
+                        // },1500);
                     } else {
                         _self.showToast('取消失败联系管理员');
                     }
@@ -552,8 +574,10 @@ export default {
                 this.confirmMsg = '确认刷新订单吗？'
             } else if(params.type == "commitImprove"){
                 this.confirmMsg = '确认信息已完善吗？'
+            } else if(params.type == "republish"){
+                this.confirmMsg = '确认重新发布吗？'
             }
-            console.log(this.order_id);
+            // console.log(this.order_id);
         },
         renderAfterOperate(){
             let _self = this;
@@ -582,6 +606,31 @@ export default {
             if(this.confirmType =="commitImprove"){
                 this.updateStateAfterImprove();
             }
+            if(this.confirmType == "republish"){
+                this.republish();
+            }
+        },
+        republish(){
+          let _self = this;
+          let params = {
+            interfaceId:common.interfaceIds.modifyOrders,
+            coll:common.collections.orderList,
+            data:{invited_state:0,project_winBidder:'',project_state:0},
+            wheredata:{
+                _id:_self.order_id,
+            },
+          };
+          _self.$axios.post('/mongoApi', {
+              params: params
+          }, response => {
+              console.log(response)
+              var data = response.data;
+              if( data.code == 200 ){
+                _self.showToast("已发布");
+              }else{
+                _self.showToast("发布失败!");
+              }
+          });
         },
     }
 }

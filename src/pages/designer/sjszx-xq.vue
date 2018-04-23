@@ -154,11 +154,12 @@
         </swiper>
       </div>
     </div>
-  </div>
+  <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+  </div>  
 </template>
 
 <script>
-  import {Tab, TabItem, Swiper, SwiperItem, InlineCalendar, Rater} from 'vux'
+  import {Tab, TabItem, Swiper, SwiperItem, InlineCalendar, Rater,Toast} from 'vux'
 
   export default {
     components: {
@@ -167,7 +168,8 @@
       TabItem,
       Swiper,
       SwiperItem,
-      Rater
+      Rater,
+      Toast
     },
     data() {
       return {
@@ -182,6 +184,8 @@
         /**日历**/
         dates: [],
         return6Rows: true,
+        showMark:false,
+        showMsg:"",
       }
     },
     activated: function () {
@@ -226,6 +230,10 @@
         } else {
           this.$router.push({name: 'login'})
         }
+      },
+      showToast(msg){
+          this.showMark = true;
+          this.showMsg = msg;
       },
       toChws: function (params) {
         var _self = this;
@@ -361,11 +369,12 @@
           var data = response.data;
           var tips = '';
           if (data && data.code == 200) {
-            tips = _self.chw.collectFlag == 0 ? '取消成功！' : '收藏成功！';
+            tips = _self.collectFlag == 0 ? '取消成功！' : '收藏成功！';
           } else {
-            tips = _self.chw.collectFlag == 0 ? '取消失败！' : '收藏失败！';
+            tips = _self.collectFlag == 0 ? '取消失败！' : '收藏失败！';
           }
           _self.showToast(tips);
+
         })
       },
     }

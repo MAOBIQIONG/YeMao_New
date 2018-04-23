@@ -2,44 +2,12 @@
   <div class="templete-body designer">
     <!--头部导航-->
     <div class="header p-absolute">
+      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
       <span>设计师</span>
-      <div class="header-right" v-tap="{methods:toWhere,pagename:'message'}">
-        <span><img src="../../../static/images/designer/ling.png"/></span>
-        <div class="hongdian" v-if="user.unread_number>0"></div>
-      </div>
     </div>
     <div class="top-menu">
-      <!--模块-->
-      <div class="mokuai">
-        <ul>
-          <li v-tap="{methods:toWhere,pagename:'shejishigerenzhongxin'}">
-            <p>
-              <img src="../../../static/images/designer/geren.png"/>
-            </p>
-            <p>个人中心</p>
-          </li>
-          <li v-tap="{methods:toWhere,pagename:'mymoney'}">
-            <p>
-              <img src="../../../static/images/designer/qianbao.png"/>
-            </p>
-            <p>钱包</p>
-          </li>
-          <li v-tap="{methods:toWhere,pagename:'renzheng'}">
-            <p>
-              <img src="../../../static/images/designer/renzhen.png"/>
-            </p>
-            <p>认证中心</p>
-          </li>
-          <li v-tap="{methods:toMyOrder,pagename:'myorderdesigner'}">
-            <p>
-              <img src="../../../static/images/designer/dingdan.png"/>
-            </p>
-            <p>订单</p>
-          </li>
-        </ul>
-      </div>
       <!--智能排序-->
-      <div class="sanxuan">
+      <div class="sanxuan" style="margin-top:0">
         <div class="sx-cont">
           <ul>
             <li v-tap="{ methods:showArea, areaMark:0 }" :class="areaMark==0&&showMark==true ? 'up' : ''">
@@ -109,7 +77,7 @@
         sortName1: '年限',         // 排序名称
         sortName2: '认证',         // 排序名称
         sortMark: 0,               // 排序标识
-        height:'4rem',             // 数据离屏幕高度的间隔
+        height:'2.3rem',             // 数据离屏幕高度的间隔
         top:'2.85rem',             // 下拉提示框距离顶部的高度
       }
     },
@@ -120,6 +88,9 @@
     created: function () {
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
+    },
+    mounted(){
+      this.$refs.design.resizeScroller();
     },
     methods: {
       goback() {
@@ -183,12 +154,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/designer/designer.css';
-  /*iPhoneX的适配沉浸式样式*/
-  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
-    .top-menu{
-      top:1.4rem;
-    }
-  }
   .designer {
     /*background-color: #f2f2f2;*/
     width: 100%;
