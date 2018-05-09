@@ -42,7 +42,7 @@
               <div class="xt-right"><input type="text" placeholder="请输入项目标题" v-model="subParams.project_title" maxlength="20"/></div>
             </div>
             <div class="xmbt-bottom">
-              <textarea class="xt-txt" placeholder="请详细描述一下项目的内容" v-model="subParams.project_describe" maxlength="200"></textarea>
+              <textarea class="xt-txt" placeholder="请详细描述一下项目的内容,500字以内" maxlength="500" v-model="subParams.project_describe"></textarea>
             </div>
           </div>
           <div class="ys-time">
@@ -59,7 +59,7 @@
                 <span>抢单截止日期</span>
               </div>
               <div class="qdtime-right">
-                <datetime v-model="deadLine" :start-date="deadLine" class="shijian"></datetime>
+                <datetime v-model="deadLine" :start-date="today" class="shijian"></datetime>
               </div>
             </div>
           </div>
@@ -109,7 +109,7 @@
                   <span>设计起止时间</span>
                 </div>
                 <div class="gb-right">
-                  <span><datetime v-model="startTime"　:start-date="deadLine" class="shijian"></datetime></span> / <span><datetime v-model="endTime" :start-date="deadLine" class="shijian"></datetime></span>
+                  <span><datetime v-model="startTime"　:start-date="today" class="shijian"></datetime></span> / <span><datetime v-model="endTime" :start-date="tomorrow" class="shijian"></datetime></span>
                 </div>
               </div>
             </div>
@@ -157,6 +157,8 @@
         isShow: true,
         typeList: [],
         city: ['310000'],
+        today: common.getSomeday(-1),
+        tomorrow: common.getSomeday(-2),
         deadLine: common.getSomeday(-1),
         startTime: common.getSomeday(-1),
         endTime: common.getSomeday(-2),
