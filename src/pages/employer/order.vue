@@ -59,7 +59,7 @@
               <span><img src="../../../static/images/employer/06.png"/></span><span>地区：</span>
             </div>
             <div class="box-right">
-              <span>{{order.project_region}}</span> 
+              <span>{{order.project_region}}</span>
             </div>
           </div>
         </div>
@@ -101,7 +101,9 @@
               </div>
             </div>
             <div class="qb-content">{{bid.schemeExplains}}</div>
-            <div class="qb-botton" v-if="user_id!=null&&user_id==order.user_id" v-tap="{methods:confirmFun,uid:bid.user_id}">选择设计师</div>
+            <div class="qb-botton" v-if="user_id!=null&&user_id==order.user_id&&order.project_state==0" v-tap="{methods:confirmFun,uid:bid.user_id}">选择设计师</div>
+            <div class="qb-botton" v-else-if="order.project_state>0&&bid.user._id==order.project_winBidder">已选中</div>
+            <div class="qb-botton1" v-else>未选中</div>
           </div>
         </div>
 
@@ -418,9 +420,10 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
+          // console.log(response)
           var data = response.data;
           if ( data && data.code==200 ) {
+            _self.order.project_state=1;
             _self.$store.state.indexRefreshMark = 1;
             _self.$store.state.employerRefreshMark = 1;
             _self.showToast('选择成功！');

@@ -528,11 +528,11 @@ body,html{
   margin-top: 0.05rem;
 }
 .sjs-list .sjs-top .st-neirong .sn-top .sb-qian {
-  border: 0.02rem solid #ffe354;
+  border: 1px solid #ffe354;
   background-color: #fff9d9;
   border-radius: 0.08rem;
   float: left;
-  font-size: 0.2rem;
+  font-size: 0.24rem;
   text-align: center;
   color: #cda566;
   padding: 0.01rem 0.06rem;
@@ -550,8 +550,8 @@ body,html{
 }
 .sjs-list .sjs-top .st-neirong .sn-top .sb-ysm {
   float: left;
-  border: 0.02rem solid #6ddacf;
-  font-size: 0.2rem;
+  border: 1px solid #6ddacf;
+  font-size: 0.24rem;
   color: #6ddacf;
   text-align: center;
   border-radius: 0.08rem;
@@ -569,9 +569,9 @@ body,html{
 }
 .sjs-list .sjs-top .st-neirong .sn-top .sb-yrz {
   float: left;
-  border: 0.02rem solid #142aa4;
+  border: 1px solid #142aa4;
   color: #142aa4;
-  font-size: 0.2rem;
+  font-size: 0.24rem;
   text-align: center;
   border-radius: 0.08rem;
   padding: 0.01rem 0.06rem;
@@ -757,7 +757,20 @@ body,html{
   margin-top: 0.2rem;
   background: -webkit-linear-gradient(left, #f64098, #f67ab6);
   background: linear-gradient(to right,#f64098, #f67ab6); /* 标准的语法 */
-
+}
+.qdsjs-list .qdsjs-box .qb-botton1{
+  float: right;
+  width: 2rem;
+  height: 0.54rem;
+  font-size: 0.28rem;
+  line-height: 0.54rem;
+  text-align: center;
+  border-radius: 0.54rem;
+  color: #aaa;
+  margin-right: 0.2rem;
+  margin-top: 0.2rem;
+  background: -webkit-linear-gradient(left, #f64098, #f67ab6);
+  background: linear-gradient(to right,#f0f0f0, #f2f2f2);
 }
 /*订单确认后详情页*/
 .ddxq {
