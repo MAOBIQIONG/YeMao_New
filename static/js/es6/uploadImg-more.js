@@ -117,7 +117,7 @@ const uploadImg2 ={
       multiple:true,
       maximum:uploadImg2.maxLen-uploadImg2.imgArr.length,
       system:false,
-      selected:uploadImg2.imgArr,
+      // selected:uploadImg2.imgArr,
       onmaxed:function(){
         plus.nativeUI.alert("最多只能选择"+uploadImg2.maxLen+"张图片");
       }

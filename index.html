@@ -19,10 +19,12 @@
       //软键盘弹起与隐藏  都会引起窗口的高度发生变化
       var resizeHeight=document.documentElement.clientHeight || document.body.clientHeight;
       console.log("resizeHeight:"+resizeHeight);
-      if( originalHeight <= resizeHeight  ){ // 关闭软键盘
-        console.log("关闭软键盘:")
-        document.activeElement.blur();
-      }
+//      if( originalHeight == resizeHeight ){ // 关闭软键盘
+//        console.log("关闭软键盘:")
+//        setTimeout(function () {
+//          document.activeElement.blur();
+//        },100)
+//      }
       // 修改评论页面content高度
       var content = document.getElementById("content");
       if( content && common.browser.versions.ios ){
@@ -38,7 +40,7 @@
       if( common.browser.versions.ios ){
         console.log("currentWebview:"+plus.webview.currentWebview().id)
         plus.webview.currentWebview().setStyle({
-          softinputMode: "adjustResize"  // 弹出软键盘时自动改变webview的高度
+          softinputMode: "adjustResize"  // 弹出软z键盘时自动改变webview的高度
         });
       }
       // 通知栏消息点击监听

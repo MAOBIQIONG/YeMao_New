@@ -3,7 +3,7 @@
     <div class="top">
       <div class="search">
         <div class="search-input">
-          <form class="mission_search_form">
+          <form class="mission_search_form" onSubmit="return false;">
             <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
             <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
             <!--<span class="searchcha">×</span>-->
@@ -18,7 +18,7 @@
       </tab>
     </div>
     <div class="content-box">
-        <designers :is="index==0?'designers':'orders'" :value="searchValue" :blank="height"></designers> <!-- keep-alive -->
+        <designers :is="index==0?'designers':'orders'" :value="searchValue" :blank="height" ref="child"></designers> <!-- keep-alive -->
     </div>
   </div>
 </template>
@@ -60,19 +60,27 @@
       key(e){
         var _self=this;
         if(e.keyCode=='13'){
-          if( common.isNull(_self.searchValue) == true ){
+          if( common.isNull(_self.searchValue) ){
             _self.showToast("请输入搜索内容！");
             return;
           }
           _self.search({value:_self.searchValue});
+          setTimeout(function () {
+            document.activeElement.blur();
+          },100)
         }
       },
       search:function (param) {
         var _self = this;
-        if( _self.historySearch.indexOf(param.value) < 0 ){
-          _self.historySearch.push(param.value);
-          common.setStorage("historySearch",_self.historySearch);
+        var historySearch = common.getObjStorage("historySearch") || [];
+        var index = historySearch.indexOf(param.value);
+        if( index >= 0 ){
+          historySearch.splice(index,1);
         }
+        historySearch.push(param.value);
+        common.setStorage("historySearch",historySearch);
+        // 刷新组件
+        _self.$refs.child.loadMore();
       },
     },
 

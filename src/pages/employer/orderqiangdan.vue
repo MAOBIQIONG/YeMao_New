@@ -18,7 +18,7 @@
         </div>
         <div class="fangan">
           <div class="tle"><span>方案说明</span></div>
-          <textarea class="xt-txt" placeholder="请详细描述一下方案的内容" v-model="subParams.schemeExplains"></textarea>
+          <textarea class="xt-txt" placeholder="请详细描述一下方案的内容,500字以内" maxlength="500" v-model="subParams.schemeExplains"></textarea>
         </div>
       </div>
     </div>

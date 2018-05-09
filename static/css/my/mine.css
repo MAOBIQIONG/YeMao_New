@@ -98,7 +98,8 @@
 
 .yijian {
 	width: 7rem;
-	height: 3.4rem;
+	/*height: 3.4rem;*/
+  height:2.6rem;
 	background: white;
 	margin-left: 0.25rem;
 }

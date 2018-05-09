@@ -384,6 +384,11 @@
         //判断页码是否为0
         if( _self.pagination.pageNo == 0 ){
           _self.orderList = orderList;
+          this.$nextTick(
+            ()=>{
+              this.$refs.scroller.reset({top:0});
+            }
+          );
         }else{
           _self.orderList = [..._self.orderList, ...orderList];
         }

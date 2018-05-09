@@ -2,7 +2,7 @@
   <div class="">
     <div class="search">
       <div class="search-input">
-        <form class="mission_search_form">
+        <form class="mission_search_form" onSubmit="return false;">
           <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
           <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
           <!--<span class="searchcha">×</span>-->
@@ -63,37 +63,49 @@
       this.initData();
     },
     methods: {
-      /**************************************/
+      // 返回
+      goback(){
+        this.$router.goBack();
+      },
+      // 路由
+      toUrl(param){
+        this.$router.push({name:param.pagename});
+      },
+      // 提示
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
       },
-      goback(){
-        this.$router.goBack();
-      },
-      toUrl(param){
-        this.$router.push({name:param.pagename});
-      },
+
+      // 监听软件盘按键
       key(e){
         var _self=this;
         if(e.keyCode=='13'){
-          if( common.isNull(_self.searchValue) == true ){
+          if( common.isNull(_self.searchValue) ){
             _self.showToast("请输入搜索内容！");
             return;
           }
           _self.search({value:_self.searchValue});
+          setTimeout(function () {
+            document.activeElement.blur();
+          },100)
         }
       },
+
+      // 搜索
       search:function (param) {
-        console.log("param:"+JSON.stringify(param))
         var _self = this;
-        if( _self.historySearch.indexOf(param.value) < 0 ){
-          _self.historySearch.push(param.value);
-          common.setStorage("historySearch",_self.historySearch);
+        var index = _self.historySearch.indexOf(param.value);
+        if( index >= 0 ){
+          _self.historySearch.splice(index,1);
         }
+        _self.historySearch.push(param.value);
+        common.setStorage("historySearch",_self.historySearch);
         common.setStorage("searchValue",param.value);
-        _self.toUrl({pagename:'searchresults'})// searchjieguo
+        _self.toUrl({pagename:'searchresults'})
       },
+
+      // 清除搜索记录
       clearHistory(param){
         var _self = this;
         if( param.index < 0 ){
@@ -103,9 +115,7 @@
         }
         common.setStorage("historySearch",_self.historySearch);
       },
-      /**
-       * interface
-       * */
+
       // 初始化首页
       initData () {
         var _self = this

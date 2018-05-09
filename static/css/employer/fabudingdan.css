@@ -1,8 +1,12 @@
 
 .fb-content {
+  height:100%;
+  overflow: auto;
   width: 100%;
   font-size: 0.28rem;
   background: #F2F2F2;
+  position: absolute;
+  top:1.2rem;
 }
 
 .fb-content .xmlx {

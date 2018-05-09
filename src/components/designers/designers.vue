@@ -281,6 +281,11 @@
         //判断页码是否为0
         if( _self.pagination.pageNo == 0 ){
           _self.designers = designers;
+          this.$nextTick(
+            ()=>{
+              this.$refs.scroller.reset({top:0});
+            }
+          );
         }else{
           _self.designers = [..._self.designers, ...designers];
         }

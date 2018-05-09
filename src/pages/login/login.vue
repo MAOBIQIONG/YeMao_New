@@ -279,7 +279,7 @@
             clearInterval(interval);
             _self.$refs.verify_btn.innerText = "重新获取";
             // 重置获取验证码状态及验证码
-            _self.is_verify = false;
+            _self.is_verify = false; // 重置获取验证码状态
             _self.verify_code = '';
             _self.verify_phone = '';
           }
@@ -299,6 +299,8 @@
             _self.verify_code = data.obj;
             _self.verify_phone = params.mobile;
             _self.count_down(120);
+          }else{
+            _self.is_verify = false; // 重置获取验证码状态
           }
         })
       },
@@ -326,12 +328,12 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          // _self.is_verify = false;
           var data = response.data;
           if( data ) {
             if( data.code == 201 ){
               _self.getVerificationCode();
             }else{
+              _self.is_verify = false; // 重置获取验证码状态
               if( !common.isNull(data.msg) ){
                 _self.showToast(data.msg);
               }else{
@@ -339,6 +341,7 @@
               }
             }
           }else{
+            _self.is_verify = false; // 重置获取验证码状态
             _self.showToast('网络异常，请重试!');
           }
         })

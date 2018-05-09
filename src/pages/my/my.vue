@@ -1,84 +1,89 @@
 <template>
   <div class="my">
-    <!--头部-->
-    <div class="mine-top">
-      <div class="shezhi" v-tap="{ methods:toUrlAfterLogin, pagename:'set' }">
-        <img src="../../../static/images/my/shezhi1.png" />
+    <div class="top-bg"></div>
+    <scroller lock-x @on-scroll="onScroll" ref="scroller">
+      <div>
+        <!--头部-->
+        <div class="mine-top">
+          <div class="shezhi" v-tap="{ methods:toUrlAfterLogin, pagename:'set' }">
+            <img src="../../../static/images/my/shezhi1.png" />
+          </div>
+          <div class="tu-nicheng">
+            <div class="touxiang" v-tap="{ methods:modifyAvatar }" :style="{backgroundImage:`url(${checkAvatar(userInfo.img)})`}">
+              <!-- <img :src="checkAvatar(userInfo.img)" /> -->
+            </div>
+            <div class="nicheng"><span>{{userInfo.user_name || tips}}</span></div>
+          </div>
+        </div>
+        <!--消息栏-->
+        <div class="msage-top">
+          <ul>
+            <li v-tap="{methods:toUrlAfterLogin,pagename:'message'}">
+              <p>
+                <img src="../../../static/images/my/xiaoxi.png" />
+              </p>
+              <p>消息</p>
+            </li>
+            <li v-tap="{methods:toUrlAfterLogin,pagename:'mineshouchang'}">
+              <p>
+                <img src="../../../static/images/my/shouchang.png" />
+              </p>
+              <p>收藏</p>
+            </li>
+            <li v-tap="{methods:toUrlAfterLogin,pagename:'minepinlun'}">
+              <p>
+                <img src="../../../static/images/my/pinglun.png" />
+              </p>
+              <p>评论中心</p>
+            </li>
+            <li v-tap="{methods:toUrlAfterLogin,pagename:'miaomiaoquan'}">
+              <p>
+                <img src="../../../static/images/my/miaomiao.png" />
+              </p>
+              <p>喵喵圈</p>
+            </li>
+          </ul>
+        </div>
+        <!--我的消息-->
+        <div class="my-msg">
+          <div class="liebiao">
+            <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minehuodong'}">
+              <div class="xingxi">我参与的活动</div>
+              <div class="list-right"></div>
+            </div>
+            <div class="list tz" v-tap="{methods:toMyResume}">
+              <div class="xingxi">简历中心</div>
+              <div class="list-right"></div>
+            </div>
+            <div class="list" v-tap="{methods:toQa}">
+              <div class="xingxi">我的问答</div>
+              <div class="list-right"></div>
+            </div>
+          </div>
+        </div>
+        <!--意见反馈-->
+        <div class="yijian">
+          <div class="liebiao">
+            <!--<div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">-->
+            <!--<div class="xingxi">客服中心</div>-->
+            <!--<div class="list-right"></div>-->
+            <!--</div>-->
+            <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'yijian'}">
+              <div class="xingxi">意见反馈</div>
+              <div class="list-right"></div>
+            </div>
+            <div class="list" v-tap="{methods:shareApp}">
+              <div class="xingxi">分享夜猫</div>
+              <div class="list-right"><span>{{cacheSize}}</span></div>
+            </div>
+            <div class="list" v-tap="{methods:toUrl,pagename:'mineguanyu'}">
+              <div class="xingxi">关于夜猫</div>
+              <div class="list-right"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="tu-nicheng">
-        <div class="touxiang" v-tap="{ methods:modifyAvatar }" :style="{backgroundImage:`url(${checkAvatar(userInfo.img)})`}">
-          <!-- <img :src="checkAvatar(userInfo.img)" /> -->
-        </div>
-        <div class="nicheng"><span>{{userInfo.user_name || tips}}</span></div>
-      </div>
-    </div>
-    <!--消息栏-->
-    <div class="msage-top">
-      <ul>
-        <li v-tap="{methods:toUrlAfterLogin,pagename:'message'}">
-          <p>
-            <img src="../../../static/images/my/xiaoxi.png" />
-          </p>
-          <p>消息</p>
-        </li>
-        <li v-tap="{methods:toUrlAfterLogin,pagename:'mineshouchang'}">
-          <p>
-            <img src="../../../static/images/my/shouchang.png" />
-          </p>
-          <p>收藏</p>
-        </li>
-        <li v-tap="{methods:toUrlAfterLogin,pagename:'minepinlun'}">
-          <p>
-            <img src="../../../static/images/my/pinglun.png" />
-          </p>
-          <p>评论中心</p>
-        </li>
-        <li v-tap="{methods:toUrlAfterLogin,pagename:'miaomiaoquan'}">
-          <p>
-            <img src="../../../static/images/my/miaomiao.png" />
-          </p>
-          <p>喵喵圈</p>
-        </li>
-      </ul>
-    </div>
-    <!--我的消息-->
-    <div class="my-msg">
-      <div class="liebiao">
-        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'minehuodong'}">
-          <div class="xingxi">我参与的活动</div>
-          <div class="list-right"></div>
-        </div>
-        <div class="list tz" v-tap="{methods:toMyResume}">
-          <div class="xingxi">简历中心</div>
-          <div class="list-right"></div>
-        </div>
-        <div class="list" v-tap="{methods:toQa}">
-          <div class="xingxi">我的问答</div>
-          <div class="list-right"></div>
-        </div>
-      </div>
-    </div>
-    <!--意见反馈-->
-    <div class="yijian">
-      <div class="liebiao">
-        <!--<div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'maintain'}">-->
-        <!--<div class="xingxi">客服中心</div>-->
-        <!--<div class="list-right"></div>-->
-        <!--</div>-->
-        <div class="list" v-tap="{methods:toUrlAfterLogin,pagename:'yijian'}">
-          <div class="xingxi">意见反馈</div>
-          <div class="list-right"></div>
-        </div>
-        <div class="list" v-tap="{methods:shareApp}">
-          <div class="xingxi">分享夜猫</div>
-          <div class="list-right"><span>{{cacheSize}}</span></div>
-        </div>
-        <div class="list" v-tap="{methods:toUrl,pagename:'mineguanyu'}">
-          <div class="xingxi">关于夜猫</div>
-          <div class="list-right"></div>
-        </div>
-      </div>
-    </div>
+    </scroller>
     <!-- 分享弹窗-->
     <div class="pop" v-if="showPop==true">
       <div class="pop-bottom">
@@ -98,12 +103,13 @@
 </template>
 
 <script>
-  import { Toast,Loading,TransferDomDirective as TransferDom} from 'vux'
+  import { Scroller,Toast,Loading,TransferDomDirective as TransferDom} from 'vux'
   export default {
     directives: {
       TransferDom,
     },
     components: {
+      Scroller,
       Toast,
       Loading
     },
@@ -118,6 +124,13 @@
         showLoad: false,
         showLoadMsg: ''
       }
+    },
+    mounted(){
+      this.$nextTick(
+        ()=>{
+          this.$refs.scroller.reset();
+        }
+      );
     },
     created: function () {
       console.log("created:")
@@ -268,6 +281,17 @@
         })
       },
 
+      /******监听滚动*****/
+      onScroll(position){
+        // console.log("on-scroll",position);
+        var _self = this;
+        if( position ){
+          var size = position.top/50;
+          size = 4.6-size;
+          $(".top-bg").css('height',size+'rem')
+        }
+      },
+
     }
   }
 </script>
@@ -275,4 +299,12 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/my/mine.css';
+
+  .top-bg{
+    width: 100%;
+    height: 4.6rem;
+    background: #fd70bc;
+    position: absolute;
+    z-index: 0;
+  }
 </style>
