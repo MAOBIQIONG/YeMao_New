@@ -1,119 +1,122 @@
 <template>
   <div class="templete-body fabudingdan">
+    <div class="header-static"></div>
     <div class="header p-absolute">
       <div class="header-left" v-tap="{ methods:goback }"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
-    <!--发布订单内容-->
-    <div class="fb-content">
-      <div class="xmlx">
-        <div class="xmlx-left">
-          <span>项目类型</span>
-        </div>
-        <div class="xmlx-right">
-          <select class="xmlx-kuang" v-model="subParams.project_type">
-            <option value="">请选择类型</option>
-            <option v-for="(item,index) in typeList" :value="item._id" :key="index">{{item.type_name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="xmlx">
-        <div class="xmlx-left">
-          <span>项目地区</span>
-        </div>
-        <div class="xmlx-right">
-          <group class="xmlx-kuang">
-            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
-          </group>
-        </div>
-      </div>
-      <div class="xmbt">
-        <div class="xmbt-top">
-          <div class="xt-left"><span>项目标题</span></div>
-          <div class="xt-right"><input type="text" placeholder="请输入项目标题" v-model="subParams.project_title" maxlength="20"/></div>
-        </div>
-        <div class="xmbt-bottom">
-          <textarea class="xt-txt" placeholder="请详细描述一下项目的内容,500字以内" maxlength="500" v-model="subParams.project_describe"></textarea>
-        </div>
-      </div>
-      <div class="ys-time">
-        <div class="ys">
-          <div class="ys-left">
-            <span>预算</span>
+      <!--发布订单内容-->
+    <div class="content1">
+      <div class="fb-content">
+        <div class="xmlx">
+          <div class="xmlx-left">
+            <span>项目类型</span>
           </div>
-          <div class="ys-right">
-            <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget"/>
+          <div class="xmlx-right">
+            <select class="xmlx-kuang" v-model="subParams.project_type">
+              <option value="">请选择类型</option>
+              <option v-for="(item,index) in typeList" :value="item._id" :key="index">{{item.type_name}}</option>
+            </select>
           </div>
         </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>抢单截止日期</span>
+        <div class="xmlx">
+          <div class="xmlx-left">
+            <span>项目地区</span>
           </div>
-          <div class="qdtime-right">
-              <datetime v-model="deadLine" :start-date="today" class="shijian"></datetime>
+          <div class="xmlx-right">
+            <group class="xmlx-kuang">
+              <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
+            </group>
           </div>
         </div>
-      </div>
-      <div class="bt-mj-gs">
         <div class="xmbt">
-          <div class="xmbt-left">
-            <span>设计单位</span>
+          <div class="xmbt-top">
+            <div class="xt-left"><span>项目标题</span></div>
+            <div class="xt-right"><input type="text" placeholder="请输入项目标题" v-model="subParams.project_title" maxlength="20"/></div>
           </div>
-          <div class="xmbt-right">
-            <input type="text" placeholder="请输入设计单位" v-model="unit" ref="unit"/>
-          </div>
-        </div>
-        <div class="xmmj">
-          <div class="xmbt-left">
-            <span>设计面积</span>
-          </div>
-          <div class="xmbt-right">
-            <input type="text" placeholder="请输入设计面积" v-model="area" ref="area"/>
+          <div class="xmbt-bottom">
+            <textarea class="xt-txt" placeholder="请详细描述一下项目的内容" v-model="subParams.project_describe" maxlength="200"></textarea>
           </div>
         </div>
-        <div class="sjsd">
-          <div class="sjsd-top">设计深度</div>
-          <div class="sjsd-bottom">
-            <div class="fanan">
-              <checker
-                type="checkbox"
-                selected-item-class="demo5-item-selected"
-                @on-change="onChange" v-model="subParams.project_depth">
-                <checker-item key="0" value="0" class="fa">方案</checker-item>
-                <checker-item key="1" value="1" class="fa">扩初</checker-item>
-                <checker-item key="2" value="2" class="fa">施工</checker-item>
-              </checker>
+        <div class="ys-time">
+          <div class="ys">
+            <div class="ys-left">
+              <span>预算</span>
+            </div>
+            <div class="ys-right">
+              <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget"/>
+            </div>
+          </div>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>抢单截止日期</span>
+            </div>
+            <div class="qdtime-right">
+                <datetime v-model="deadLine" :start-date="deadLine" class="shijian"></datetime>
             </div>
           </div>
         </div>
-        <div class="gongshi">
-          <div class="gs">
+        <div class="bt-mj-gs">
+          <div class="xmbt">
             <div class="xmbt-left">
-              <span>工时</span>
+              <span>设计单位</span>
             </div>
             <div class="xmbt-right">
-              <input type="text" placeholder="请输入工时" v-model="hours" ref="hours"/>
+              <input type="text" placeholder="请输入设计单位" v-model="unit" ref="unit"/>
             </div>
           </div>
-          <div class="gsh-bottom">
-            <div class="gb-left">
-              <span>设计起止时间</span>
+          <div class="xmmj">
+            <div class="xmbt-left">
+              <span>设计面积</span>
             </div>
-            <div class="gb-right">
-              <span><datetime v-model="startTime"　:start-date="today" class="shijian"></datetime></span> / <span><datetime v-model="endTime" :start-date="tomorrow" class="shijian"></datetime></span>
+            <div class="xmbt-right">
+              <input type="text" placeholder="请输入设计面积" v-model="area" ref="area"/>
+            </div>
+          </div>
+          <div class="sjsd">
+            <div class="sjsd-top">设计深度</div>
+            <div class="sjsd-bottom">
+              <div class="fanan">
+                <checker
+                  type="checkbox"
+                  selected-item-class="demo5-item-selected"
+                  @on-change="onChange" v-model="subParams.project_depth">
+                  <checker-item key="0" value="0" class="fa">方案</checker-item>
+                  <checker-item key="1" value="1" class="fa">扩初</checker-item>
+                  <checker-item key="2" value="2" class="fa">施工</checker-item>
+                </checker>
+              </div>
+            </div>
+          </div>
+          <div class="gongshi">
+            <div class="gs">
+              <div class="xmbt-left">
+                <span>工时</span>
+              </div>
+              <div class="xmbt-right">
+                <input type="text" placeholder="请输入工时" v-model="hours" ref="hours"/>
+              </div>
+            </div>
+            <div class="gsh-bottom">
+              <div class="gb-left">
+                <span>设计起止时间</span>
+              </div>
+              <div class="gb-right">
+                <span><datetime v-model="startTime"　:start-date="deadLine" class="shijian"></datetime></span> / <span><datetime v-model="endTime" :start-date="deadLine" class="shijian"></datetime></span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="sctp">
-        <div class="sc-top">上传图片</div>
-        <div class="img-upload">
-          <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
-            <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
+        <div class="sctp">
+          <div class="sc-top">上传图片</div>
+          <div class="img-upload">
+            <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}">
+              <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
+            </div>
+            <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
           </div>
-          <div class="upload-handle" v-if="base64Arr.length<9" v-tap="{ methods:triggerFile }"></div>
         </div>
       </div>
     </div>
@@ -145,8 +148,6 @@
         isShow: true,
         typeList: [],
         city: ['上海市'],
-        today: common.getSomeday(-1),
-        tomorrow: common.getSomeday(-2),
         deadLine: common.getSomeday(-1),
         startTime: common.getSomeday(-1),
         endTime: common.getSomeday(-2),

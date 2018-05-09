@@ -47,6 +47,7 @@
 </script>
 
 <style scoped>
+
   .tabs{
     height:1.2rem;
     width: 100%;
@@ -64,7 +65,6 @@
     background-color: rgb(255, 255, 255);
     text-align: center;
     border-top:1px solid #f2f2f2;
-
     position: fixed;
     bottom: 0;
     left: 0;
@@ -82,6 +82,7 @@
   }
   .tabs .tabbar-txt{
     font-size: .28rem !important;
+    /*padding-bottom:0.5rem;*/
   }
   /**为选中**/
   .tabs .item-index{
@@ -121,7 +122,18 @@
   .tabs .tabbar-active.item-my{
     background: url('../../../static/images/my-hover.png') ;
   }
-
+  /*iPhoneX的适配沉浸式底部样式*/
+  @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .tabs{
+      height: 1.6rem;
+      line-height: 1.2rem;
+      padding: .01rem 0 .07rem 0;
+    }
+    .tabs .tabbar-item{
+      padding:0;
+      background-position:  center top .1rem !important;
+    }
+  }
   @-webkit-keyframes heartAnim {
     from {
       -webkit-transform: scale(1);

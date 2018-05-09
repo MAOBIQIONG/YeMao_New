@@ -21,9 +21,9 @@
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
-        :class="{scroller:true}"   
-    >  
-        <div class="content content-p" style="padding-top:0;" >
+        :class="{scroller:true}"
+    >
+        <div class="content" style="padding-top:0;" >
             <div class="jianli" @click="toDetail(item._id)" v-for="(item,index) in list" :key="index">
                 <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.school_logo)})`}">
                 <!-- <img src="../../../static/images/bj.jpg"/> -->
@@ -42,7 +42,7 @@
   </div>
 </template>
 
-<script>    
+<script>
 import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Data} from 'vux'
   export default {
     components:{
@@ -58,7 +58,7 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
         lockY:{
             type:Boolean,
             default:false
-        }, 
+        },
     },
     data: function () {
       return {
@@ -105,7 +105,7 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
     },
     created(){
         var _self = this;
-        var user = common.getObjStorage("userInfo") || {};       
+        var user = common.getObjStorage("userInfo") || {};
         if( !common.isNull(user._id) ){
             _self.user_id = user._id;
         } else {
@@ -138,7 +138,7 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
             } else {
                 console.log('没有获取用户信息');
                 _self.$router.push({name:"login"});
-            }   
+            }
         },
         // 头像
         checkAvatar (path) {
@@ -146,7 +146,7 @@ import {Scroller,LoadMore,Toast,Value2nameFilter as value2name,ChinaAddressV4Dat
         },
         checkImg(path){
         return common.getDefultImg(path);
-        },    
+        },
         loadData(){
             console.log('this is loadData');
             let _self = this;
