@@ -29,6 +29,7 @@
     data () {
       return {
         /**日历**/
+        old_dates: [],
         dates: [],
         disablePast: true,
         return6Rows: true,
@@ -70,12 +71,21 @@
           var data = response.data;
           if( data ){
             _self.dates = data.days || [];
+            _self.dates.forEach(function (item,index) {
+              _self.old_dates.push(item);
+            })
           }
         })
       },
       submit: function () {
         console.log("submit:")
         var _self = this;
+        // 验证日期是否有改动
+        if( JSON.stringify(_self.old_dates)==JSON.stringify(_self.dates) ){
+          _self.goback();
+          return;
+        }
+        // 避免多次提交
         if( _self.isSubmit == true ) return;
         _self.isSubmit = true;
         var params = {

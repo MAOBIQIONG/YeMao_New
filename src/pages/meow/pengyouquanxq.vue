@@ -43,7 +43,9 @@
                 </div>
               </div>
               <div class="sjs-content">
-                <div class="sc-jiesao sc-jieshao1">{{meow.title}}</div>
+                <div class="sc-jiesao sc-jieshao1">
+                  <pre v-html="meow.title"></pre>
+                </div>
               </div>
               <div class="sjs-bottom sjs-bottom1">
                 <ul>

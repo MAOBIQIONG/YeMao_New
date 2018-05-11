@@ -40,7 +40,10 @@
               </div>
             </div>
             <div class="sjs-content">
-              <div class="sc-jiesao">{{item.title}}</div>
+              <!--<div class="sc-jiesao">{{item.title}}</div>-->
+              <div class="sc-jiesao">
+                <pre v-html="item.title"></pre>
+              </div>
             </div>
             <div class="sjs-bottom">
               <ul>

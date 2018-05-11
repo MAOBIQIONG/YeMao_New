@@ -1,7 +1,8 @@
 
 .content .jianli {
   width: 7.5rem;
-  height: 2rem;
+  /*height: 2rem;*/
+  overflow:auto;zoom:1;
 }
 
 .content .jianli .touxiang {
@@ -25,13 +26,20 @@
 .content .jianli .jieshao {
   float: left;
   width: 5.3rem;
-  height: 2rem;
+  min-height: 2rem;
+  max-height: 3rem;
   border-bottom: 1px solid #F2F2F2;
   font-size: 0.28rem;
 }
 
 .content .jianli .jieshao p {
   line-height: 0.5rem;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .content .jianli .jieshao .name {
@@ -43,18 +51,12 @@
 .content .jianli .jieshao .qiwan {
   font-size: 0.28rem;
   color: #999999;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
 }
 
 .content .jianli .jieshao .xinge {
   font-size: 0.28rem;
   color: #999999;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
 }
 
 /*# sourceMappingURL=shouchang-jianli.css.map */

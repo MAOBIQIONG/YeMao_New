@@ -39,14 +39,14 @@
 
 .content .gh-sjh .list .yzm {
   width: 2.4rem;
-  height: 0.7rem;
-  line-height: 0.7rem;
+  height: 0.65rem;
+  line-height: 0.65rem;
   text-align: center;
   border: 1px solid #ff4fae;
   color: #ff4fae;
   border-radius: 0.1rem;
   position: absolute;
-  top: 0.05rem;
+  top: 0.075rem;
   right: 0.2rem;
 }
 

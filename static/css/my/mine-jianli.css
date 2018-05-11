@@ -1,7 +1,7 @@
 
 .content .jbxx {
 	width: 6.9rem;
-	height: 7.7rem;
+	/*height: 7.7rem;*/
 	border: 2px solid #dbd9db;
 	margin: 0.3rem;
 }
@@ -36,15 +36,16 @@
 
 .content .jbxx .xq {
 	width: 6.5rem;
-	height: 4rem;
+	/*height: 4rem;*/
 	margin: 0.3rem 0.2rem;
 	font-size: 0.28rem;
 }
 
 .content .jbxx .xq .xinxi-list {
-	height: 0.8rem;
+	/*height: 0.8rem;*/
 	line-height: 0.8rem;
 	color: #999999;
+  overflow:auto;zoom:1;
 }
 
 .content .jbxx .xq .xinxi-list .xx-left {
@@ -84,9 +85,9 @@
 }
 
 .content .qwgz .qwgz-top {
-	width: 6.9rem;
-	height: 0.9rem;
-	margin: 0.3rem;
+	width: 100%;
+	min-height: 0.9rem;
+	padding: 0.5rem;
 	font-size: 0.28rem;
 	text-align: center;
 	position: relative;

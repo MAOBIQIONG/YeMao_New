@@ -35,6 +35,9 @@
       console.log("created:")
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
+      if( _self.userInfo ){
+        _self.user_name = _self.userInfo.user_name;
+      }
     },
     methods: {
       goback(){
@@ -58,7 +61,11 @@
           _self.showToast('昵称为2到8位（中文、字母、数字）!');
           return;
         }
-        _self.checkUserName();
+        if( _self.user_name==_self.userInfo.user_name ){
+          this.goback();
+        }else{
+          _self.checkUserName();
+        }
       },
 
       checkUserName(){

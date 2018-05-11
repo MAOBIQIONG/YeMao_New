@@ -4,7 +4,7 @@
     <div class="header-static"></div>
     <div class="header p-absolute">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
-      <span>案列详情</span>
+      <span>详情</span>
       <div class="header-right" v-tap="{methods:delConfirm}" v-if="userInfo._id!=null&&userInfo._id!=undefined&&userInfo._id==chw.user_id">删除</div>
     </div>
 
@@ -28,7 +28,8 @@
               <img :src="checkAvatar(chw.user.img)"/>
             </div>
             <p>{{chw.user.user_name}}</p>
-            <div class="shijian">{{timeStamp2String(chw.create_date)}}</div>
+            <div class="shijian" v-if="chw.type==1||chw.type==2">{{chw.date}}</div>
+            <div class="shijian" v-else>{{timeStamp2String(chw.create_date)}}</div>
           </div>
           <div class="xc-banner">
             <!--轮播-->
@@ -173,6 +174,7 @@
     created() {
       var _self = this;
       _self.chw_id = _self.$route.query.id;
+      _self.parentPage = _self.$route.query.page; // parentPage==1，用来刷新设计师个人中心
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.initData();
     },
@@ -316,7 +318,7 @@
         this.$axios.post('/mongoApi', {
           params
         }, (response) => {
-          console.log(response)
+          // console.log(response)
           let data = response.data;
           _self.setInitData(data);
           _self.loadData();
@@ -333,9 +335,13 @@
         _self.chw = data.chw || {};
         _self.answer_id = _self.chw.user._id;
         var imgs = _self.chw.imgs || [];// 图片
-        imgs.forEach(function (item, index) {
-          _self.imgs.push({img: _self.getDefultImg(item)});
-        })
+        if( imgs.length>0 ){
+          imgs.forEach(function (item, index) {
+            _self.imgs.push({img: _self.getDefultImg(item)});
+          })
+        }else {
+          _self.imgs.push({img: _self.getDefultImg("")});
+        }
         // 评论
         _self.comments = data.comments || [];
         if (_self.comments.length < _self.pagination.pageSize) {
@@ -414,8 +420,13 @@
           let data = response.data;
           if (data.code == 200) {
             _self.$store.state.caseRefreshMark = 1;
+            // 刷新点赞数
+            var num = _self.chw.likeFlag == 1 ? -1 : 1;
+            _self.chw.like += num;
+            // 重置点赞状态
             _self.chw.likeFlag = _self.chw.likeFlag == 1 ? 0 : 1;
-            _self.chw.like += _self.chw.likeFlag == 1 ? 1 : -1;
+            // 设置点赞\评论缓存。
+            _self.setChwCache(num,0);
           } else {
             _self.showToast("点赞失败!")
           }
@@ -439,7 +450,7 @@
         this.$axios.post('/mongoApi', {
           params
         }, (response) => {
-          console.log(response)
+          // console.log(response)
           let data = response.data;
           if (data.code == 200) {
             _self.$store.state.caseRefreshMark = 1;
@@ -470,6 +481,8 @@
         }
         // 重置评论框内容
         _self.comment_text = '';
+        // 设置点赞\评论缓存。
+        _self.setChwCache(0,1);
       },
 
       // 确认删除
@@ -494,6 +507,19 @@
             _self.showToast("删除失败!")
           }
         })
+      },
+
+      // 若由设计师个人中心页面进入，点赞时设置点赞缓存。
+      setChwCache(likeNum,commentNum){
+        console.log("setChwCache:")
+        var _self = this;
+        console.log("setChwCache:"+_self.parentPage)
+        if( _self.parentPage==1 ){
+          var chwCache = common.getObjStorage("chwCache") || {};
+          var like = common.checkInt(chwCache.like)+likeNum;
+          var comments = common.checkInt(chwCache.comments)+commentNum;
+          common.setStorage("chwCache",{_id:_self.chw_id,like:like,comments:comments,type:_self.chw.type})
+        }
       },
     }
   }

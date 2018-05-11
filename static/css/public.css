@@ -30,6 +30,14 @@ body::-webkit-scrollbar {
 a {
   text-decoration: none;
 }
+pre{
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  overflow-x: hidden;
+}
 /**templete body**/
 .templete-body{
   height: 100%;
@@ -1474,4 +1482,29 @@ body,html{
 }
 .anonymous.hover{
   background: #f65aa6;
+}
+
+/**公共样式**/
+/**cell box**/
+.cell-box{}
+.cell-box .cell{
+  height: 0.8rem;
+  line-height: 0.8rem;
+  width: 100%;
+  margin-left: 0.2rem;
+  padding-right: 0.2rem;
+  border-bottom: 1px solid #F2F2F2;
+  /*display:-webkit-box;*/
+  /*-webkit-box-flex:1;*/
+}
+/**图片**/
+.icon-right-arrow{
+  background: url('../images/jiangou.png') center right 0.4rem no-repeat;
+  background-size: 0.3rem auto;
+}
+
+/**vux样式重写**/
+/**confirm 确认按钮样式**/
+.weui-dialog__ft .weui-dialog__btn_primary{
+  color: #f65aa6 !important;
 }

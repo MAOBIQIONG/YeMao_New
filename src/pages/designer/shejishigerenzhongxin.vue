@@ -69,7 +69,7 @@
         <swiper v-model="index" height="100%" :show-dots="false" @on-index-change="onIndexChange" class="swps">
           <swiper-item key="0">
             <div v-if="cases.length==0" class="noData">暂无数据</div>
-            <div class="alzs-list" v-for="item in cases" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
+            <div class="alzs-list" v-for="item in cases" v-tap="{methods:toUrl,pagename:'anliexq',query:{id:item._id,page:1}}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)"/>
@@ -82,7 +82,7 @@
               <div class="al-bottom">
                 <div class="al-left">
                   <p><span><img
-                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.like}}</span></p>
                   <p><span><img
                     src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
@@ -93,7 +93,7 @@
           </swiper-item>
           <swiper-item key="1">
             <div v-if="honors.length==0" class="noData">暂无数据</div>
-            <div class="alzs-list" v-for="item in honors" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
+            <div class="alzs-list" v-for="item in honors" v-tap="{methods:toUrl,pagename:'anliexq',query:{id:item._id,page:1}}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)"/>
@@ -106,18 +106,18 @@
               <div class="al-bottom">
                 <div class="al-left">
                   <p><span><img
-                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.like}}</span></p>
                   <p><span><img
                     src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
-                <div class="al-right">{{getStringDate(item.create_date)}}</div>
+                <div class="al-right">{{item.date}}</div>
               </div>
             </div>
             <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
           </swiper-item>
           <swiper-item key="2">
             <div v-if="works.length==0" class="noData">暂无数据</div>
-            <div class="alzs-list" v-for="item in works" v-tap="{methods:toUrl,pagename:'anliexq',id:item._id}">
+            <div class="alzs-list" v-for="item in works" v-tap="{methods:toUrl,pagename:'anliexq',query:{id:item._id,page:1}}">
               <div class="al-top">
                 <div class="touxiang">
                   <img :src="getDefultImg(item.cover)"/>
@@ -130,11 +130,11 @@
               <div class="al-bottom">
                 <div class="al-left">
                   <p><span><img
-                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.like}}</span></p>
                   <p><span><img
                     src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
-                <div class="al-right">{{getStringDate(item.create_date)}}</div>
+                <div class="al-right">{{item.date}}</div>
               </div>
             </div>
             <div class="more" v-if="works.length==3" v-tap="{methods:toChws, flag:2}">查看更多</div>
@@ -161,7 +161,9 @@
       return {
         index: 0,
         user: {},
-        loadMark: 1,
+        typeIndex: 1,
+        pageOne: false,
+        pageTwo: false,
         cases: [],
         honors: [],
         works: [],
@@ -179,35 +181,36 @@
     },
     activated: function () {
       var _self = this;
-      if (_self.isInit == true) {
-        var userInfo = common.getObjStorage("userInfo") || {};
-        if (common.isNull(userInfo._id) != true) {
-          _self.user_id = userInfo._id;
-        }
+      var userInfo = common.getObjStorage("userInfo") || {};
+      if ( !common.isNull(userInfo._id) && !common.isNull(_self.user_id) &&
+           userInfo._id!=_self.user_id ) {
+        _self.user_id = userInfo._id;
         _self.index = 0;
-        _self.loadMark = 1;
         _self.cases = [];
         _self.honors = [];
         _self.works = [];
+        _self.typeIndex = 1;
+        _self.pageOne = false;
+        _self.pageTwo = false;
         _self.initData();
       }
-      _self.isInit = true;
+      // 刷新案例、荣誉、作品点赞、评论数量。
+      _self.refreshNum();
     },
     created: function () {
-      console.log("created:")
       var _self = this;
       var userInfo = common.getObjStorage("userInfo") || {};
-      if (common.isNull(userInfo._id) != true) {
+      if( !common.isNull(userInfo._id) ) {
         _self.user_id = userInfo._id;
+        _self.initData();
       }
-      _self.initData();
     },
     methods: {
       goback() {
         this.$router.goBack();
       },
       toUrl: function (params) {
-        this.$router.push({name: params.pagename, query: {id: params.id}})
+        this.$router.push({name: params.pagename, query: params.query})
       },
       toChws: function (params) {
         this.$router.push({name: 'anlielist', query: {flag: params.flag}})
@@ -234,8 +237,13 @@
       onIndexChange(index) {
         console.log("index:" + index)
         var _self = this;
-        if (index == _self.loadMark) {
-          console.log("getChw:")
+        if( index==1 && _self.pageOne==false ){
+          _self.pageOne=true;
+          _self.typeIndex=index;
+          _self.getChw();
+        }else if( index==2 && _self.pageTwo==false ){
+          _self.pageTwo=true;
+          _self.typeIndex=index;
           _self.getChw();
         }
       },
@@ -254,7 +262,6 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          // console.log(response);
           var data = response.data
           if (data) {
             _self.user = data.user || {};
@@ -266,8 +273,9 @@
 
       // 获取personalChw:
       getChw() {
+        console.log("getChw：")
         var _self = this;
-        if (common.isNull(_self.user_id)) {
+        if ( common.isNull(_self.user_id) ) {
           return;
         }
         var params = {
@@ -276,23 +284,38 @@
           pageSize: 3,
           where: {
             user_id: _self.user_id,
-            type: _self.loadMark
+            type: _self.typeIndex
           }
         }
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          // console.log(response);
           var data = response.data
           if (data) {
-            if (_self.loadMark == 1) {
+            if (_self.typeIndex == 1) {
               _self.honors = data.chws || [];
-            } else if (_self.loadMark == 2) {
+            } else if (_self.typeIndex == 2) {
               _self.works = data.chws || [];
             }
-            _self.loadMark++;
           }
         })
+      },
+
+      // 刷新案例、荣誉、作品点赞、评论数量。
+      refreshNum(){
+        var _self = this;
+        var chwCache = common.getObjStorage("chwCache");
+        if( chwCache ){ // _id/like/comments/type
+          var type = common.checkInt(chwCache.type);
+          var arr = type==0 ? _self.cases :type==1 ? _self.honors : type==2 ? _self.works : [];
+          arr.forEach(function (item,index) {
+            if( item._id==chwCache._id && !common.isNull(chwCache._id) ){
+              item.like += chwCache.like;
+              item.comments += chwCache.comments;
+              common.setStorage("chwCache",null);
+            }
+          })
+        }
       },
     }
   }

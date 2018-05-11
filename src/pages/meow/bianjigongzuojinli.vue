@@ -2,9 +2,9 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:showFun}"><img src="../../../static/images/back.png" /></div>
       <span>编辑工作经历</span>
-      <div class="header-right" @click="saveData()">保存</div>
+      <div class="header-right" v-tap="{methods:saveData}">保存</div>
     </div>
     <!--发布订单内容-->
     <div class="content content-p">
@@ -36,26 +36,41 @@
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="dataParams.description" class="area" maxlength="300" placeholder="请输入工作描述"></textarea>
-        <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
+        <textarea v-model="dataParams.description" class="area" :maxlength="limitNum" placeholder="请输入工作描述"></textarea>
+        <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>{{limitNum}}</span></p>
       </div>
       <div class="tjgzjl" @click="removeData()">
         删除此工作经历
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em" :time="1000"></toast>
+    <div v-transfer-dom>
+      <confirm v-model="show"
+               title="温馨提示"
+               @on-cancel="onCancel"
+               @on-confirm="onConfirm"
+               @on-show="onShow"
+               @on-hide="onHide">
+        <p style="text-align:center;">确认放弃编辑?</p>
+      </confirm>
+    </div>
   </div>
 </template>
 
 <script>
-import {Datetime,Toast} from 'vux'
+import {Datetime,Toast, Confirm, TransferDomDirective as TransferDom } from 'vux'
 export default {
+    directives: {
+      TransferDom
+    },
     components: {
       Datetime,
-      Toast
+      Toast,
+      Confirm
     },
     data: function () {
       return {
+        limitNum: 300,
         value2: '2015-10-12',
         value4: '2025-10-12',
         dataParams:{
@@ -69,6 +84,7 @@ export default {
         toastShow:false,
         toastText:"",
         isEdit:false,
+        show: false,
       }
     },
     created(){
@@ -106,6 +122,25 @@ export default {
             this.toastShow = true;
             this.toastText = msg;
         },
+        onCancel () {
+          console.log('on cancel')
+        },
+        onConfirm (msg) {
+          console.log('on confirm')
+          // if (msg) {
+          // alert(msg)
+          // }
+          this.$router.goBack()
+        },
+        onHide () {
+          console.log('on hide')
+        },
+        onShow () {
+          console.log('on show')
+        },
+        showFun(){
+            this.show=true;
+        },
         //留言字数限制
         wzxz(){
             $(".area").bind("input propertychange",function(){
@@ -129,7 +164,7 @@ export default {
             _self.$axios.post('/mongoApi', {
                 params: params
                 }, response => {
-                    console.log(response);
+                    // console.log(response);
                     var data = response.data.we;
                     _self.dataParams = data;
                 });
@@ -180,7 +215,7 @@ export default {
             _self.$axios.post('/mongoApi', {
                 params: params
                 }, response => {
-                    console.log(response);
+                    // console.log(response);
                     _self.showToast("保存成功！")
                     setTimeout(()=>{_self.$router.goBack()},1000);
 
@@ -201,7 +236,7 @@ export default {
             _self.$axios.post('/mongoApi', {
                 params: params
                 }, response => {
-                    console.log(response);
+                    // console.log(response);
                     _self.showToast("删除成功！")
                     setTimeout(()=>{_self.$router.goBack()},1000);
                 });

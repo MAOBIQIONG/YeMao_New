@@ -9,16 +9,16 @@
     <div class="content content-p">
       <div class="ymm">
         <div class="left"><span>原密码</span></div>
-        <div class="right"><input v-model="old_password" type="text" placeholder="输入旧密码"/></div>
+        <div class="right"><input v-model="old_password" type="password" placeholder="输入旧密码"/></div>
       </div>
       <div class="xmm-qr">
         <div class="xmm">
           <div class="left"><span>新密码</span></div>
-          <div class="right"><input v-model="new_password" type="text" placeholder="输入新密码"/></div>
+          <div class="right"><input v-model="new_password" type="password" placeholder="输入新密码"/></div>
         </div>
         <div class="qrmm">
           <div class="left"><span>确认密码</span></div>
-          <div class="right"><input v-model="com_password" type="text" placeholder="确认新密码"/></div>
+          <div class="right"><input v-model="com_password" type="password" placeholder="确认新密码"/></div>
         </div>
       </div>
       <div class="gunzhe">密码由6-20位字符组成区分大小写</div>
@@ -108,9 +108,15 @@
         var reg = /^[0-9a-zA-Z_#]{6,16}$/;
         if( common.isNull(_self.new_password) ){
           _self.showToast('请输入新密码!');
-          return;
+          return;新密码不能与旧密码一致
         }else if( !reg.test(_self.new_password) ){
           _self.showToast('密码为6-16位的数字或字母！');
+          return;
+        }else if( _self.new_password==_self.old_password ){
+          _self.showToast('!');
+          return;
+        }else if( common.isNull(_self.com_password) ){
+          _self.showToast('请输入确认密码!');
           return;
         }else if( _self.new_password !== _self.com_password ){
           _self.showToast('密码不一致！');

@@ -11,13 +11,17 @@
         <div class="right"><span>{{userInfo.user_name}}</span></div>
       </div>
       <div class="xggh">
-        <div class="xgdl" v-tap="{ methods:toUrl , pagename:'setpassword'}">
-          <div class="left"><span>修改登陆密码</span></div>
-          <div class="right"><img src="../../../static/images/jiangou.png"></div>
-        </div>
-        <div class="xgdl"v-tap="{ methods:toUrl , pagename:'setnum'}">
-          <div class="left"><span>更换手机号</span></div>
-          <div class="right"><img src="../../../static/images/jiangou.png"></div>
+        <!--<div class="xgdl" v-tap="{ methods:toUrl , pagename:'setpassword'}">-->
+          <!--<div class="left"><span>修改登录密码</span></div>-->
+          <!--<div class="right"><img src="../../../static/images/jiangou.png"></div>-->
+        <!--</div>-->
+        <!--<div class="xgdl"v-tap="{ methods:toUrl , pagename:'setnum'}">-->
+          <!--<div class="left"><span>更换手机号</span></div>-->
+          <!--<div class="right"><img src="../../../static/images/jiangou.png"></div>-->
+        <!--</div>-->
+        <div class="cell-box">
+          <div class="cell icon-right-arrow" v-tap="{ methods:toUrl , pagename:'setpassword'}">修改登录密码</div>
+          <div class="cell icon-right-arrow" v-tap="{ methods:toUrl , pagename:'setnum'}">更换手机号</div>
         </div>
       </div>
     </div>

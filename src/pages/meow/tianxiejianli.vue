@@ -20,7 +20,7 @@
             <span>姓名</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.real_name" type="text" placeholder="请输入姓名" />
+            <input v-model="dataParams.real_name" type="text" placeholder="请输入姓名" maxlength="8" />
           </div>
         </div>
         <div class="qdtime">
@@ -53,7 +53,7 @@
             <span>毕业院校</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.school_name" type="text" placeholder="请输入毕业院校" />
+            <input v-model="dataParams.school_name" type="text" placeholder="请输入毕业院校" maxlength="10" />
           </div>
         </div>
         <div class="qdtime">
@@ -72,7 +72,7 @@
             <span>最高学历</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" />
+            <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" maxlength="10" />
           </div>
         </div>
         <div class="qdtime">

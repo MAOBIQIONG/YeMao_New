@@ -13,7 +13,7 @@
         </div>
         <div class="list">
           <div class="left"><span>登录密码：</span></div>
-          <div class="right"><input v-model="password" type="text" placeholder="请输入登录密码"/></div>
+          <div class="right"><input v-model="password" type="password" placeholder="请输入登录密码"/></div>
         </div>
         <div class="list">
           <div class="left"><span>新手机号码：</span></div>
@@ -77,7 +77,8 @@
         if( common.isNull(_self.old_phone) ){
           _self.showToast('请输入旧手机号码!');
           return;
-        }else if( !reg.test(_self.old_phone) ){
+        }else if( !reg.test(_self.old_phone) || !reg.test(_self.userInfo.phone) ||
+          _self.userInfo.phone!=_self.old_phone ){
           _self.showToast('旧手机号码输入错误!');
           return;
         }else if( common.isNull(_self.password) ){
@@ -185,13 +186,14 @@
       // 倒计时
       count_down(time){
         var _self = this;
+        _self.$refs.verify_btn.innerText = time + "秒后重新获取";
         var interval = setInterval(function () {
           if( !_self.$refs.verify_btn ) return;
           // 开始
           time--;
           _self.$refs.verify_btn.innerText = time + "秒后重新获取";
-          if( time == 0 ) {
-            clearInterval(t);
+          if( time <= 0 ) {
+            clearInterval(interval);
             _self.$refs.verify_btn.innerText = "重新获取";
             // 重置获取验证码状态及验证码
             _self.is_verify = false;
