@@ -43,7 +43,11 @@
             <span>出生年月</span>
           </div>
           <div class="qdtime-right">
-            <datetime v-model="dataParams.birthday" class="shijian" placeholder="请选择生日" style="padding-right:0" :min-year="1949"></datetime>
+            <datetime class="shijian" placeholder="请选择生日" style="padding-right:0"
+                      :min-year="1949"
+                      :end-date="getCurrDate()"
+                      @on-change="onChange"
+                      v-model="dataParams.birthday"></datetime>
           </div>
         </div>
       </div>
@@ -210,6 +214,23 @@
         },
         toUrl: function (pagename) {
             this.$router.push({name: pagename})
+        },
+        getCurrDate(){
+          var currTime = common.getCurrentTimeStamp();
+          return common.timeStamp2String(currTime,'ymd');
+        },
+        onChange(date){
+            console.log("date:"+date);
+//            if( date ){
+//              var currTime = common.getCurrentTimeStamp();
+//              var dateTime = common.string2TimeStamp(date);
+//              var sDate = new Date(currTime);
+//              var eDate = new Date(dateTime);
+//              var year = sDate.getYear()-eDate.getYear();
+//              if( Math.abs(year) < 18 || Math.abs(year) > 65 ){
+//                this.showToast("系统检测到您出生年月可能选择错误！");
+//              }
+//            }
         },
         //留言字数限制
         wzxz(){

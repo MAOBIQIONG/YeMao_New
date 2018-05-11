@@ -20,7 +20,7 @@
             <span>学校名称</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.school_name" type="text" placeholder="请输入学校名称" />
+            <input v-model="dataParams.school_name" type="text" placeholder="请输入学校名称,20字以内" maxlength="20"/>
           </div>
         </div>
         <div class="qdtime">
@@ -36,7 +36,7 @@
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="dataParams.school_description" class="area" placeholder="填写学校简介"></textarea>
+        <textarea v-model="dataParams.school_description" class="area" placeholder="填写学校简介,200字以内" maxlength="200"></textarea>
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em" :time="1500"></toast>

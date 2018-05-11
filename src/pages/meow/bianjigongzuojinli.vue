@@ -14,7 +14,7 @@
             <span>企业名称</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.company_name" type="text" placeholder="请输入企业名称" />
+            <input v-model="dataParams.company_name" type="text" placeholder="请输入企业名称,20字以内" maxlength="20" />
           </div>
         </div>
         <div class="qdtime">
@@ -22,7 +22,7 @@
             <span>职位</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.positions" type="text" placeholder="请输入职位" />
+            <input v-model="dataParams.positions" type="text" placeholder="请输入职位,20字以内" maxlength="20" />
           </div>
         </div>
         <div class="qdtime zzsj">

@@ -14,7 +14,7 @@
             <span>职位</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.expected_positions" type="text"placeholder="请输入职位" />
+            <input v-model="dataParams.expected_positions" type="text" placeholder="请输入职位,20字以内" maxlength="20" />
           </div>
         </div>
         <div class="qdtime">
@@ -22,7 +22,7 @@
             <span>期望月薪</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.expected_salary" type="text"placeholder="请输入期望月薪" />
+            <input v-model="salary" type="text" placeholder="请输入期望月薪"  ref="expectedSalary"/>
           </div>
         </div>
         <div class="qdtime">
@@ -31,7 +31,7 @@
           </div>
           <div class="qdtime-right">
             <group class="xmlx-kuang">
-              <x-address placeholder="请选择城市"   title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.expected_city" style="height:0.8rem;line-height:0.8rem;"></x-address>
+              <x-address placeholder="请选择城市" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.expected_city" style="height:0.8rem;line-height:0.8rem;"></x-address>
             </group>
           </div>
         </div>
@@ -39,7 +39,7 @@
       <!--留言-->
       <div class="pc-shuru">
         <textarea v-model="dataParams.expected_description" class="area" maxlength="300" placeholder="对于期望工作的描述"></textarea>
-        <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
+        <p class="xianzhi"><span class="zs">{{300-dataParams.expected_description.length}}</span>/<span>300</span></p>
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
@@ -64,7 +64,7 @@
         },
         dataParams:{
             expected_positions:"",
-            expected_salary:"",
+            expected_salary: 0,
             expected_city:[],
             expected_description:"",
         },
@@ -109,9 +109,13 @@
                 _self.showToast("请填写期望职位");
                 return;
             }
+            var salary = _self.dataParams.expected_salary;
             if( common.isNull(_self.dataParams.expected_salary) ){
                 _self.showToast("请填写期望薪资");
                 return;
+            }
+            if( salary.indexOf(".")==salary.length-1 ){
+              _self.dataParams.expected_salary = salary.substring(0,salary.length-1);
             }
             if( common.isNull(_self.dataParams.expected_city) ){
                 _self.showToast("请填写期望工作城市");
@@ -123,8 +127,6 @@
             }
             // common.setStorage('resumeParams3',_self.dataParams);
             _self.submit();
-            
-
         },
         //留言字数限制
         wzxz(){
@@ -191,6 +193,27 @@
                     setTimeout(()=>{_self.loadingShow = false; _self.toUrl('zuopinshangchuan');},10)
                 });
          },
+    },
+    computed: {
+      // 计算属性的 getter
+      salary: {
+        // getter
+        get: function () {
+          return this.dataParams.expected_salary;
+        },
+        // setter
+        set: function (newValue) {
+          var _self = this;
+          newValue = newValue.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+          newValue = newValue.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+          newValue = newValue.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+          newValue = newValue.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+          newValue = newValue>=1000000 ? newValue.substring(0,7) : newValue;
+          newValue = newValue.indexOf('.')>0 ? newValue.substring(0,newValue.indexOf('.')+3) : newValue;
+          _self.$refs.expectedSalary.value = newValue;
+          _self.dataParams.expected_salary = newValue;
+        }
+      },
     }
   }
 </script>
