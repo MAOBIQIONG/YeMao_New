@@ -24,44 +24,24 @@
         <p class="xingmin"><span>{{resume.real_name}}</span>/<span>{{resume.gender}}</span>/<span>{{getAge(resume.birthday)}}岁</span>/<span>{{getCityName(resume.city)}}</span></p>
         <div class="xq">
           <div class="xinxi-list">
-            <div class="xx-left">
-              工作年限：
-            </div>
-            <div class="xx-right">
-              {{getWorkYears(resume.working_year)}}
-            </div>
+            <div class="xx-left">工作年限</div>
+            <div class="xx-right">{{getWorkYears(resume.working_year)}}</div>
           </div>
           <div class="xinxi-list">
-            <div class="xx-left">
-              学 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：
-            </div>
-            <div class="xx-right">
-                {{resume.education}}
-            </div>
+            <div class="xx-left"><span class="word2">学历</span></div>
+            <div class="xx-right">{{resume.education}}</div>
           </div>
           <div class="xinxi-list">
-            <div class="xx-left">
-              邮 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：
-            </div>
-            <div class="xx-right">
-                {{resume.email}}
-            </div>
+            <div class="xx-left word2"><span class="word2">邮箱</span></div>
+            <div class="xx-right">{{resume.email}}</div>
           </div>
           <div class="xinxi-list">
-            <div class="xx-left">
-              毕业院校：
-            </div>
-            <div class="xx-right">
-                {{resume.school_name}}
-            </div>
+            <div class="xx-left">毕业院校</div>
+            <div class="xx-right">{{resume.school_name}}</div>
           </div>
           <div class="xinxi-list">
-            <div class="xx-left">
-              设计类型：
-            </div>
-            <div class="xx-right">
-                {{getTypeName(resume.type)}}
-            </div>
+            <div class="xx-left">设计类型</div>
+            <div class="xx-right">{{getTypeName(resume.type)}}</div>
           </div>
         </div>
       </div>

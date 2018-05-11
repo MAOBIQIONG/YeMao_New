@@ -13,9 +13,7 @@
             <span class="shengyu">剩余可提现金额</span>
             <span>{{user.account_balance}}</span>元
           </div>
-          <div class="list-right">
-            全额提现
-          </div>
+          <div class="list-right" v-tap="{methods:setAllCash}">全额提现</div>
         </div>
         <div class="ys-time">
           <div class="qdtime">
@@ -66,7 +64,7 @@
                @on-confirm="onConfirm"
                @on-show="onShow"
                @on-hide="onHide">
-        <p style="text-align:center;">确认选择该设计师吗?</p>
+        <p style="text-align:center;">确认提现吗?</p>
       </confirm>
     </div>
   </div>
@@ -133,13 +131,17 @@
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
       },
+      setAllCash(){
+        this.data.withdrawal_amount = this.user.account_balance;
+      },
       confirmFun:function () {
         var _self = this;
         if( common.isNull(_self.data.user_id) == true ){
           _self.showToast("未成功获取用户信息!");
           return
         }
-        if( common.checkFloat(_self.user.account_balance) <= 0 ){
+        if( common.checkFloat(_self.user.account_balance)<=0 ||
+          _self.user.account_balance<_self.data.withdrawal_amount ){
           _self.showToast("余额不足!");
           return
         }
@@ -194,7 +196,7 @@
           if( data && data.code == 200 && data.code1 == 200 ){
             setTimeout(function () {
               _self.toUrl('tixianchenggong');
-          },1000)
+            },1000)
           }else{
             _self.showToast("提现失败！");
           }

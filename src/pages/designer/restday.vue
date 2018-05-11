@@ -98,6 +98,8 @@
         }, response => {
           var data = response.data;
           if( data && data.code == 200 ){
+            // 刷新设计师个人中心页面
+            _self.$store.state.designerCenterMark=1;
             _self.showToast("提交成功！");
             setTimeout(function () {
               _self.goback();

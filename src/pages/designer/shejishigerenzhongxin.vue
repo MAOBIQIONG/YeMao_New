@@ -59,7 +59,7 @@
       </div>
       <!--滑动轮播-->
       <div class="huadonglunpo">
-        <tab :line-width=2 active-color='#fc378c' v-model="index">
+        <tab :line-width=3 active-color='#fc378c' @on-item-click="onIndexChange" v-model="index">
           <tab-item class="vux-center" key="0">案例展示</tab-item>
           <tab-item class="vux-center" key="1">个人荣誉</tab-item>
           <tab-item class="vux-center" key="2">我的作品</tab-item>
@@ -181,9 +181,12 @@
     },
     activated: function () {
       var _self = this;
+      var rcm = _self.$store.state.designerCenterMark;
       var userInfo = common.getObjStorage("userInfo") || {};
       if ( !common.isNull(userInfo._id) && !common.isNull(_self.user_id) &&
-           userInfo._id!=_self.user_id ) {
+         (userInfo._id!=_self.user_id || rcm>0 ) ) {
+        console.log("刷新设计师个人中心页面:")
+        _self.$store.state.designerCenterMark=0;
         _self.user_id = userInfo._id;
         _self.index = 0;
         _self.cases = [];
@@ -194,8 +197,6 @@
         _self.pageTwo = false;
         _self.initData();
       }
-      // 刷新案例、荣誉、作品点赞、评论数量。
-      _self.refreshNum();
     },
     created: function () {
       var _self = this;
@@ -303,19 +304,25 @@
 
       // 刷新案例、荣誉、作品点赞、评论数量。
       refreshNum(){
-        var _self = this;
-        var chwCache = common.getObjStorage("chwCache");
-        if( chwCache ){ // _id/like/comments/type
-          var type = common.checkInt(chwCache.type);
-          var arr = type==0 ? _self.cases :type==1 ? _self.honors : type==2 ? _self.works : [];
-          arr.forEach(function (item,index) {
-            if( item._id==chwCache._id && !common.isNull(chwCache._id) ){
-              item.like += chwCache.like;
-              item.comments += chwCache.comments;
-              common.setStorage("chwCache",null);
-            }
-          })
-        }
+//        var _self = this;
+//        var chwCache = common.getObjStorage("chwCache");
+//        if( chwCache ){ // _id/like/comments/type
+//          var del = common.checkInt(chwCache.del);   // 删除
+//          var type = common.checkInt(chwCache.type); // 类型
+//          var arr = type==0 ? _self.cases :type==1 ? _self.honors : type==2 ? _self.works : [];
+//          arr.forEach(function (item,index) {
+//            if( item._id==chwCache._id && !common.isNull(chwCache._id) ){
+//              console.log("del:"+del)
+//              if( del==1 ){
+//                arr.splice(index,1);
+//              }else{
+//                item.like += chwCache.like;
+//                item.comments += chwCache.comments;
+//              }
+//              common.setStorage("chwCache",null);
+//            }
+//          })
+//        }
       },
     }
   }

@@ -26,6 +26,7 @@
 .content .jbxx p {
 	text-align: center;
 	font-size: 0.32rem;
+  color: #666;
 }
 
 .content .jbxx .xingmin {
@@ -50,6 +51,13 @@
 
 .content .jbxx .xq .xinxi-list .xx-left {
 	float: left;
+  width: 4em;
+  color: #666;
+  margin-right: 0.25rem;
+}
+.word2{
+  letter-spacing:2em; /*如果需要y个字两端对齐，则为(x-y)/(y-1),这里是（4-2）/(2-1)=2em */
+  margin-right:-2em; /*同上*/
 }
 
 .content .jbxx .xq .xinxi-list .xx-right {

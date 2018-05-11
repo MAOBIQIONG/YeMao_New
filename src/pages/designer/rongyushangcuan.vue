@@ -183,7 +183,8 @@
           _self.is_submit = true;
           var data = response.data;
           if( data && response.code == '200' ){
-            // this.$store.state.employerRefreshMark = 1;
+            // 刷新设计师个人中心页面
+            _self.$store.state.designerCenterMark=1;
             _self.showToast("上传成功！");
             setTimeout(function () {
               _self.goback();

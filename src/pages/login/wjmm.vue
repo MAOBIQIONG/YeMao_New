@@ -125,7 +125,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log("response:"+response)
+          // console.log("response:"+response)
           _self.is_submit = false;
           var data = response.data;
           if( data && data.code==200 ){

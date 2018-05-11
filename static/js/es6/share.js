@@ -96,7 +96,8 @@ const myshare ={
           share.authorize(function() {
             myshare.shareMessage(share, ids[i - 1].ex);
           }, function(e) {
-            alert("认证授权失败：" + e.code + " - " + e.message);
+            alert("认证授权失败");
+            // alert("认证授权失败：" + e.code + " - " + e.message);
           });
         }
       }
@@ -107,14 +108,16 @@ const myshare ={
     myshare.msg.extra = { scene: ex };
     share.send(myshare.msg, function() {
       // console.log("分享到\"" + share.description + "\"成功！ ");
-      alert("分享到\"" + share.description + "\"成功！ ");
+      alert("分享成功！ ");
+      // alert("分享到\"" + share.description + "\"成功！ ");
       /**
        * 分享成功,可进行其他操作
        * **/
       myshare.callback();
     }, function(e) {
       // console.log("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
-      alert("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
+      alert("分享失败！ ");
+      // alert("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
     });
   }
 

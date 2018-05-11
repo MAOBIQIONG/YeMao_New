@@ -100,6 +100,8 @@
           var data = response.data;
           if( data && response.code == '200' ){
             _self.showToast("修改成功！");
+            // 刷新设计师个人中心页面
+            _self.$store.state.designerCenterMark=1;
             _self.userInfo.description = _self.user.description;
             common.setStorage("userInfo",_self.userInfo);
             setTimeout(function () {

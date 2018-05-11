@@ -108,12 +108,12 @@
         var reg = /^[0-9a-zA-Z_#]{6,16}$/;
         if( common.isNull(_self.new_password) ){
           _self.showToast('请输入新密码!');
-          return;新密码不能与旧密码一致
+          return;
         }else if( !reg.test(_self.new_password) ){
           _self.showToast('密码为6-16位的数字或字母！');
           return;
         }else if( _self.new_password==_self.old_password ){
-          _self.showToast('!');
+          _self.showToast('新密码不能与旧密码一致!');
           return;
         }else if( common.isNull(_self.com_password) ){
           _self.showToast('请输入确认密码!');

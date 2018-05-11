@@ -147,6 +147,8 @@
           if( data && response.code == '200' ){
             _self.showToast("修改成功！");
             _self.$store.state.designerRefreshMark = 1;
+            // 刷新设计师个人中心页面
+            _self.$store.state.designerCenterMark=1;
             _self.userInfo.user_type = _self.user.user_type;
             _self.userInfo.working_years = _self.user.working_years;
             _self.userInfo.hourly_wage = _self.user.hourly_wage;

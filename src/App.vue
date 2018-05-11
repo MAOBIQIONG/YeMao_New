@@ -12,14 +12,34 @@
     <transition :name="'vux-pop-'+ ($store.state.direction==0?'in':'out')">
       <router-view v-if="!$route.meta.keepAlive"></router-view>
     </transition>
+    <div v-transfer-dom>
+      <confirm v-model="show"
+               title="温馨提示"
+               @on-cancel="onCancel"
+               @on-confirm="onConfirm"
+               @on-show="onShow"
+               @on-hide="onHide">
+        <p style="text-align:center;">{{showTips}}</p>
+      </confirm>
+    </div>
   </div>
 </template>
 
 <script>
+  import { Confirm,TransferDomDirective as TransferDom } from 'vux'
   export default {
     name: 'app',
+    directives: {
+      TransferDom
+    },
+    components: {
+      Confirm,
+    },
     data () {
-      return {}
+      return {
+        show: false,
+        showTips: '',
+      }
     },
     created () {
       // console.log('$route.meta.keepAlive:' + this.$route.meta.keepAlive)
@@ -29,13 +49,36 @@
         // 监听android后退键
         plus.key.addEventListener('backbutton',function () {
           var path = _self.$route.path;
-          if( path.indexOf('home/') > 0 ){
+          // console.log("currPath:"+path);
+          if( path.indexOf('home/')>=0 ){
             plus.runtime.quit();
+          }else if( path.indexOf('/fbwd')>=0 || path.indexOf('/fbmmq')>=0 ||
+            path.indexOf('/fabudingdan')>=0 ){
+            _self.showFun('确认放弃编辑?');
           }else{
             _self.$router.goBack();
           }
         },false);
       }, false );
+    },
+    methods:{
+      onCancel () {
+        console.log('on cancel')
+      },
+      onConfirm (msg) {
+        console.log('on confirm')
+        this.$router.goBack()
+      },
+      onHide () {
+        console.log('on hide')
+      },
+      onShow () {
+        console.log('on show')
+      },
+      showFun(tips){
+        this.showTips = tips;
+        this.show=true;
+      },
     }
   }
 </script>

@@ -427,7 +427,9 @@
             // 重置点赞状态
             _self.chw.likeFlag = _self.chw.likeFlag == 1 ? 0 : 1;
             // 设置点赞\评论缓存。
-            _self.setChwCache(num,0);
+            // _self.setChwCache(num,0);
+            // 刷新设计师个人中心页面
+            _self.$store.state.designerCenterMark=1;
           } else {
             _self.showToast("点赞失败!")
           }
@@ -483,7 +485,9 @@
         // 重置评论框内容
         _self.comment_text = '';
         // 设置点赞\评论缓存。
-        _self.setChwCache(0,1);
+        // _self.setChwCache(0,1);
+        // 刷新设计师个人中心页面
+        _self.$store.state.designerCenterMark=1;
       },
 
       // 确认删除
@@ -504,6 +508,8 @@
           if (data.code == 200) {
             _self.$store.state.caseRefreshMark = 1;
             _self.goback();
+            // 刷新设计师个人中心页面
+            _self.$store.state.designerCenterMark=1;
           } else {
             _self.showToast("删除失败!")
           }
@@ -514,7 +520,6 @@
       setChwCache(likeNum,commentNum){
         console.log("setChwCache:")
         var _self = this;
-        console.log("setChwCache:"+_self.parentPage)
         if( _self.parentPage==1 ){
           var chwCache = common.getObjStorage("chwCache") || {};
           var like = common.checkInt(chwCache.like)+likeNum;

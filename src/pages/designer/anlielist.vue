@@ -2,7 +2,7 @@
   <div class="anlist" >
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>{{title}}</span>
     </div>
     <!--发布订单内容-->
@@ -22,10 +22,11 @@
             </div>
             <div class="al-bottom">
               <div class="al-left">
-                <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                <p><span><img src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.like}}</span></p>
                 <p><span><img src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
               </div>
-              <div class="al-right">{{getStringDate(item.create_date)}}</div>
+              <div class="al-right" v-if="type==0">{{getStringDate(item.create_date)}}</div>
+              <div class="al-right" v-else>{{item.date}}</div>
             </div>
           </div>
           <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
@@ -68,16 +69,22 @@
     activated: function () {
       console.log("anlielist activated:")
       var _self = this;
-      if( _self.isInit == true  ){
-        var userInfo = common.getObjStorage("userInfo") || {};
-        if( common.isNull(userInfo._id) != true ){
-          _self.user_id = userInfo._id;
-        }
+      var path = _self.$route.path;
+      var userInfo = common.getObjStorage("userInfo") || {};
+      if( !common.isNull(userInfo._id) ){
+        _self.chws=[];
+        _self.pageNo= 0;
+        _self.pageSize=10;
+        _self.onFetching=true;
+        _self.user_id = userInfo._id;
         _self.type = _self.$route.query.flag;
         _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
         _self.initData();
+        // 重置页面滚动距离
+         _self.$nextTick(() => {
+           _self.$refs.scrollerBottom.reset({top:0})
+         })
       }
-      _self.isInit = true;
     },
     created: function () {
       console.log("anlielist created:")
@@ -85,10 +92,10 @@
       var userInfo = common.getObjStorage("userInfo") || {};
       if( common.isNull(userInfo._id) != true ){
         _self.user_id = userInfo._id;
+        _self.type = _self.$route.query.flag;
+        _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
+        _self.initData();
       }
-      _self.type = _self.$route.query.flag;
-      _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
-      _self.initData();
     },
     methods: {
       goback(){
@@ -129,15 +136,12 @@
           return;
         }
         var params = {
-          interfaceId: common.interfaceIds.queryData,
-          coll: common.collections.personalChw,
+          interfaceId: common.interfaceIds.getPersonalChw,
+          pageNo: _self.pageNo,
+          pageSize: _self.pageSize,
           where: {
             user_id: _self.user_id,
             type: common.checkInt(_self.type)
-          },
-          other: {
-            skip: _self.pageNo*_self.pageSize,
-            limit:_self.pageSize
           }
         };
         _self.$axios.post('/mongoApi', {
@@ -146,20 +150,17 @@
           // console.log(response);
           var data = response.data
           if ( data ) {
+            var chws = data.chws || [];
             //判断页码是否为0
             if( _self.pageNo == 0 ){
-              _self.chws = data;
+              _self.chws = chws;
             }else{
-              _self.chws = [..._self.chws, ...data];
+              _self.chws = [..._self.chws, ...chws];
             }
-            //重置页面滚动距离
-            _self.$nextTick(() => {
-              _self.$refs.scrollerBottom.reset()
-            })
             //底部加载动画
             _self.showLoading = false;
             //判断数据是否有一页
-            if ( data.length < _self.pageSize ) {
+            if ( chws.length < _self.pageSize ) {
               _self.loadtext = _self.loadnomore;
             } else {
               _self.loadtext = _self.loadmore;

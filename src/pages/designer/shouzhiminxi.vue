@@ -127,7 +127,7 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response);
+          // console.log(response);
           var data = response.data
           if ( data ) {
             var payments = data.payments || [];

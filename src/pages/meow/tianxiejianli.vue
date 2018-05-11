@@ -115,7 +115,7 @@
       <!--留言-->
       <div class="pc-shuru">
         <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="dataParams.description"></textarea>
-        <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
+        <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>300</span></p>
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
