@@ -1,8 +1,9 @@
 
 .pinglun-list {
 	width: 7.5rem;
-	height: 1.2rem;
+	/*height: 1.2rem;*/
 	border-bottom: 0.01rem solid #F2F2F2;
+  overflow:auto;zoom:1;
 }
 
 .pinglun-list .pl-left {
@@ -24,12 +25,13 @@
 .pinglun-list .pl-content {
 	float: left;
 	width: 4.8rem;
-	height: 1.2rem;
+	/*min-height: 1.2rem;*/
 	font-size: 0.24rem;
 }
 
 .pinglun-list .pl-content p {
 	line-height: 0.4rem;
+  word-wrap:break-word
 }
 .pinglun-list .pl-content .sezhi{
 color: #3e5c9a;

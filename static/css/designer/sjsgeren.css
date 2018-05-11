@@ -260,6 +260,7 @@
   height: 0.4rem;
   line-height: 0.4rem;
   font-size: 0.28rem;
+  display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 
 .content .lunpo .alzs-list .al-top .al-right .nenrong {

@@ -35,6 +35,7 @@
         <ul class="renyuan" v-else @click="toUrl('collectionOrder')">
           <li v-for="(item,index) in collects.orders" :key="index">
             <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])"/>
+            <img v-else :src="checkImg('')"/>
           </li>
         </ul>
       </div>
@@ -47,6 +48,7 @@
         <ul class="renyuan" v-else @click="toUrl('collectionQa')">
           <li v-for="(item,index) in collects.qas" :key="index">
             <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])"/>
+            <img v-else :src="checkImg('')"/>
           </li>
         </ul>
       </div>
@@ -59,6 +61,7 @@
         <ul class="renyuan" v-else @click="toUrl('collectionMxt')">
           <li v-for="(item,index) in collects.mxts" :key="index">
             <img v-if="item.imgs&&item.imgs.length>0" :src="checkImg(item.imgs[0])"/>
+            <img v-else :src="checkImg('')"/>
           </li>
         </ul>
       </div>

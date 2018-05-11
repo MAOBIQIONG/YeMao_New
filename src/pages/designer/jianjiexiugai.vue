@@ -10,7 +10,7 @@
       <!--留言-->
       <div class="pc-shuru">
         <textarea v-model="user.description" class="area" maxlength="100" placeholder="一句话描述一下自己吧"></textarea>
-        <p class="xianzhi"><span class="zs">100</span>/<span>100</span></p>
+        <p class="xianzhi"><span class="zs">{{100-user.description.length}}</span>/<span>100</span></p>
       </div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>

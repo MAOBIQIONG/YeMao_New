@@ -94,7 +94,7 @@
               <div class="al-bottom">
                 <div class="al-left">
                   <p><span><img
-                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.like}}</span></p>
                   <p><span><img
                     src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
@@ -118,11 +118,11 @@
               <div class="al-bottom">
                 <div class="al-left">
                   <p><span><img
-                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.like}}</span></p>
                   <p><span><img
                     src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
-                <div class="al-right">{{getStringDate(item.create_date)}}</div>
+                <div class="al-right">{{item.date}}</div>
               </div>
             </div>
             <div class="more" v-if="honors.length==3" v-tap="{methods:toChws, flag:1}">查看更多</div>
@@ -142,11 +142,11 @@
               <div class="al-bottom">
                 <div class="al-left">
                   <p><span><img
-                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.collection}}</span></p>
+                    src="../../../static/images/designer/anli_xihuan.png"></span><span>{{item.like}}</span></p>
                   <p><span><img
                     src="../../../static/images/designer/anli_liulan.png"></span><span>{{item.comments}}</span></p>
                 </div>
-                <div class="al-right">{{getStringDate(item.create_date)}}</div>
+                <div class="al-right">{{item.date}}</div>
               </div>
             </div>
             <div class="more" v-if="works.length==3" v-tap="{methods:toChws, flag:2}">查看更多</div>
@@ -155,7 +155,7 @@
       </div>
     </div>
   <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
-  </div>  
+  </div>
 </template>
 
 <script>
