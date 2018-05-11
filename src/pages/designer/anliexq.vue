@@ -24,7 +24,7 @@
       >
         <div>
           <div class="xc-top">
-            <div class="touxiang">
+            <div class="touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:chw.user._id}}">
               <img :src="checkAvatar(chw.user.img)"/>
             </div>
             <p>{{chw.user.user_name}}</p>
@@ -47,7 +47,8 @@
             <div class="gzpj-list" v-for="(item,index) in comments" :key="index">
               <div class="pl-top">
                 <div class="left">
-                  <img v-if="item.anonymous==0" :src="checkAvatar(item.user.img)"/>
+                  <img v-if="item.anonymous==0" :src="checkAvatar(item.user.img)"
+                       v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}"/>
                   <img v-else :src="checkAvatar('')"/>
                 </div>
                 <div v-if="item.anonymous==0" class="center">
@@ -56,7 +57,7 @@
                   <div class="sb-ysm" v-if="item.user.authenticating_state>1">已实名</div>
                   <div class="sb-yrz" v-if="item.user.authenticating_state>3">已认证</div>
                 </div>
-                <div v-else class="center">匿名用户</div>
+                <div v-else class="center">匿名</div>
                 <div class="right" v-if="item.type==0">{{getDateDiff(item.create_date)}}</div>
                 <div class="right comment__employee" v-if="item.type==1">雇主评价</div>
               </div>
@@ -214,8 +215,8 @@
       goback() {
         this.$router.goBack();
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:param.query})
       },
       onIndexChange(index) {
         this.index = index

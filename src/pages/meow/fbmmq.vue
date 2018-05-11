@@ -2,7 +2,7 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:showFun}"><img src="../../../static/images/back.png" /></div>
       <span>发表动态</span>
       <div class="header-right" v-tap="{ methods:submit }">发布</div>
     </div>
@@ -27,11 +27,21 @@
       <loading :show="showLoad" :text="showLoadMsg"></loading>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+    <div v-transfer-dom>
+      <confirm v-model="show"
+               title="温馨提示"
+               @on-cancel="onCancel"
+               @on-confirm="onConfirm"
+               @on-show="onShow"
+               @on-hide="onHide">
+        <p style="text-align:center;">确认放弃编辑?</p>
+      </confirm>
+    </div>
   </div>
 </template>
 
 <script>
-  import { Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
+  import { Confirm,Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
   import store from '@/vuex/store'
   import uploadImg2 from "../../../static/js/es6/uploadImg-more";
   export default {
@@ -40,7 +50,8 @@
     },
     components: {
       Toast,
-      Loading
+      Loading,
+      Confirm
     },
     store,
     data: function () {
@@ -58,7 +69,8 @@
         showMark:false,
         showMsg:"",
         showLoad: false,
-        showLoadMsg: '...'
+        showLoadMsg: '...',
+        show:false,
       }
     },
     created: function () {
@@ -111,6 +123,25 @@
       showToast(msg){
         this.showMark = true;
         this.showMsg = msg;
+      },
+      onCancel () {
+        console.log('on cancel')
+      },
+      onConfirm (msg) {
+        console.log('on confirm')
+        // if (msg) {
+        // alert(msg)
+        // }
+        this.$router.goBack()
+      },
+      onHide () {
+        console.log('on hide')
+      },
+      onShow () {
+        console.log('on show')
+      },
+      showFun(){
+        this.show=true;
       },
       // loading
       showLoading() {

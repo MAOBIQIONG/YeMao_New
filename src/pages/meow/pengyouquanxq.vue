@@ -24,10 +24,10 @@
           <div class="mm-list">
             <div class="sjse-list">
               <div class="sjs-top">
-                <div class="st-touxiang">
+                <div class="st-touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:meow.user_id}}">
                   <img :src="checkAvatar(meow.user.img)"/>
                 </div>
-                <div class="st-neirong">
+                <div class="st-neirong" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:meow.user_id}}">
                   <div class="sn-top">
                     <div class="st-nicheng">{{meow.user.user_name}}</div>
                     <div class="st-pingxin"></div>
@@ -68,7 +68,7 @@
           <!--评价列表-->
           <div class="liuyan">
             <div class="comment-box" v-for="(com,index) in comments" :key="index">
-              <div class="left">
+              <div class="left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:com.user._id}}">
                 <div class="img"><img :src="checkAvatar(com.user.img)"/></div>
               </div>
               <div class="right">
@@ -253,8 +253,8 @@
       goback () {
         this.$router.goBack()
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:param.query})
       },
       showToast(msg){
         this.showMark = true;

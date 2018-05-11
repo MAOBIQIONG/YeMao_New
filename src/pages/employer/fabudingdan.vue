@@ -1,7 +1,7 @@
 <template>
   <div class="templete-body fabudingdan">
     <div class="header p-static">
-      <div class="header-left" v-tap="{ methods:goback }"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{ methods:showFun }"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
@@ -130,21 +130,32 @@
 
     <!--弹窗-->
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+    <div v-transfer-dom>
+      <confirm v-model="show"
+               title="温馨提示"
+               @on-cancel="onCancel"
+               @on-confirm="onConfirm"
+               @on-show="onShow"
+               @on-hide="onHide">
+        <p style="text-align:center;">确认放弃编辑?</p>
+      </confirm>
+    </div>
   </div>
 </template>
 
 <script>
-  import { Scroller,XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast } from 'vux'
+  import { Scroller,XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast, Confirm } from 'vux'
   import store from '@/vuex/store'
   export default {
     components: {
-      XAddress,
+        XAddress,
       Datetime,
       Group,
       Checker,
       CheckerItem,
       Toast,
-      Scroller
+      Scroller,
+      Confirm
     },
     store,
 
@@ -187,6 +198,7 @@
         showMsg: '',
         addressData: ChinaAddressV4Data,
         height:'',
+        show:false,
       }
     },
     created: function () {
@@ -273,6 +285,25 @@
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
+      },
+      onCancel () {
+        console.log('on cancel')
+      },
+      onConfirm (msg) {
+        console.log('on confirm')
+        // if (msg) {
+        // alert(msg)
+        // }
+        this.$router.goBack()
+      },
+      onHide () {
+        console.log('on hide')
+      },
+      onShow () {
+        console.log('on show')
+      },
+      showFun(){
+        this.show=true;
       },
       toPreviewer(p){
         console.log(this.city);

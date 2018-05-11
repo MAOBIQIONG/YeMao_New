@@ -2,9 +2,9 @@
   <div class="fbwd">
     <!--头部导航-->
     <div class="header">
-      <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:showFun}"><img src="../../../static/images/back.png" /></div>
       <span>发布问题</span>
-      <div class="header-right" @click="submit">完成</div>
+      <div class="header-right" v-tap="{methods:submit}">完成</div>
     </div>
     <div class="content content-p">
       <div class="xgnc">
@@ -30,11 +30,21 @@
       <loading :show="showLoad" :text="showLoadMsg"></loading>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
+    <div v-transfer-dom>
+      <confirm v-model="show"
+               title="温馨提示"
+               @on-cancel="onCancel"
+               @on-confirm="onConfirm"
+               @on-show="onShow"
+               @on-hide="onHide">
+        <p style="text-align:center;">确认放弃编辑?</p>
+      </confirm>
+    </div>
   </div>
 </template>
 
 <script>
-    import { Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
+    import { Confirm,Toast,Loading,TransferDomDirective as TransferDom } from 'vux'
     import uploadImg2 from "../../../static/js/es6/uploadImg-more";
     export default {
         directives: {
@@ -42,7 +52,8 @@
         },
         components: {
             Toast,
-            Loading
+            Loading,
+            Confirm,
         },
         data: function () {
             return {
@@ -63,6 +74,7 @@
                     is_del:0,
                     imgs:[]
                 },
+                show:false,
             }
         },
         created(){
@@ -102,6 +114,25 @@
             toUrl: function (pagename) {
                 this.$router.push({name: pagename})
             },
+            onCancel () {
+              console.log('on cancel')
+            },
+            onConfirm (msg) {
+              console.log('on confirm')
+              // if (msg) {
+              // alert(msg)
+              // }
+              this.$router.goBack()
+            },
+            onHide () {
+              console.log('on hide')
+            },
+            onShow () {
+              console.log('on show')
+            },
+            showFun(){
+              this.show=true;
+            },
             toPreviewer(p){
               let _self = this;
               _self.$store.state.dataToPreviewer = {
@@ -113,14 +144,14 @@
                   },
                   uploadImg2:{
                     imgArr:uploadImg2.imgArr,
-                    imgBase64:uploadImg2.imgBase64,             
+                    imgBase64:uploadImg2.imgBase64,
                   },
                   self:{
-                    imgArr: _self.params.imgs, 
-                    imgBase64:_self.base64Arr,     
+                    imgArr: _self.params.imgs,
+                    imgBase64:_self.base64Arr,
                   }
               }
-              this.$router.push({name: p.pagename})     
+              this.$router.push({name: p.pagename})
             },
             //留言字数限制
             wzxz(){

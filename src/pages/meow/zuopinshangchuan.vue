@@ -132,7 +132,10 @@ export default {
                       _self.loadingShow = false;
                       _self.showToast('提交成功');
                       uploadImg2.clearImgArr(true);
-                      setTimeout(()=>{_self.toUrl('shouchangjianli');},1500)
+                      // setTimeout(()=>{_self.toUrl('shouchangjianli');},1500)
+                      setTimeout(()=>{
+                        _self.$router.goBack(-4)
+                      },1500)
                   } else {
                       _self.showToast('提交失败');
                   }

@@ -27,7 +27,7 @@
         <div>
           <div class="pinlunlist">
             <div class="top-pinlun">
-              <div class="tp-left">
+              <div class="tp-left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:comment.user._id}}">
                 <span><img :src="checkAvatar(comment.user.img)"/></span><span>{{comment.user.user_name}}</span>
               </div>
               <div class="tp-right" v-tap="{methods:chwLike}">
@@ -213,8 +213,8 @@
       goback () {
         this.$router.goBack()
       },
-      toUrl: function (pagename) {
-        this.$router.push({name: pagename})
+      toUrl: function (param) {
+        this.$router.push({name: param.pagename,query:param.query})
       },
       showToast(msg){
         this.toastShow = true;

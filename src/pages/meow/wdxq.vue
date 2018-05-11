@@ -33,7 +33,7 @@
                           <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
                       </div> -->
                   <div class="nichengshijian">
-                      <div class="ns-left">
+                      <div class="ns-left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:chw.user._id}}">
                       <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
                       </div>
                       <div class="tm-right">
@@ -78,7 +78,7 @@
                   <p>热门评论</p>
                   <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
                       <div class="top-pinlun">
-                          <div class="tp-left">
+                          <div class="tp-left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}">
                               <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
                           </div>
                           <div class="tp-right"  v-tap="{methods:commentLike,comment_id:item._id,commentArrId:index}">
@@ -279,8 +279,8 @@ export default {
         goback () {
             this.$router.goBack()
         },
-        toUrl: function (pagename) {
-            this.$router.push({name: pagename})
+        toUrl: function (param) {
+          this.$router.push({name: param.pagename,query:param.query})
         },
         toCommentDetail:function(param){
             this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
