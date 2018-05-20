@@ -103,6 +103,7 @@
     },
     data () {
       return {
+        user:{},
         orderList: [],
         sortName: '智能排序',
         sortMark: 0,

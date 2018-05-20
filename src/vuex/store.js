@@ -21,15 +21,17 @@ const state = {
   designerRefreshMark: 0,
   // 设计师个人中心页面刷新
   designerMark:0,
-  //我的订单tab状态
+  // 我的订单tab状态
   orderTabIndex:0,
-  //我的订单页面动画方向
+  // 我的订单页面动画方向
   directionOrderTab:0,
-  //案例列表刷新状态
+  // 案例列表刷新状态
   caseRefreshMark:0,
-  //上传图片预览删除中间数组
+  // 上传图片预览删除中间数组
   dataToPreviewer:null,
   dataFromPreviewer:null,
+  // 首页未读消息刷新状态
+  unreadNumRefreshMark:0,
 
 }
 

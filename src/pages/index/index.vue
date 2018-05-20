@@ -202,7 +202,7 @@
         confirmShow:false,
         confirmMsg:'您还未实名认证，是否前往认证？',
         srollFlag: 0,
-        user:{unread_number:0},
+        user:{},
         imgList: [],
         noticeList: [],
         orderList: [],
@@ -258,14 +258,6 @@
     activated: function () {
       // console.log("index activated:")
       var _self = this;
-      var irm = _self.$store.state.indexRefreshMark
-      if ( irm > 0 ) {
-        _self.$store.state.indexRefreshMark = 0
-        _self.pagination.pageNo = 0;
-        _self.pagination.pageSize = 10;
-        _self.onFetching = true;
-        _self.initData()
-      }
       // 初始化im
       var user = common.getObjStorage("userInfo") || {};
       _self.user = user;
@@ -275,6 +267,22 @@
           token: user.wy_token,
         });
       }
+      // 首页刷新
+      var irm = _self.$store.state.indexRefreshMark
+      if ( irm > 0 ) {
+        _self.$store.state.indexRefreshMark = 0;
+        _self.pagination.pageNo = 0;
+        _self.pagination.pageSize = 10;
+        _self.onFetching = true;
+        _self.initData()
+      }
+      // 首页未读刷新
+      var urm = _self.$store.state.unreadNumRefreshMark;
+      if ( urm > 0 ) {
+        _self.$store.state.unreadNumRefreshMark = 0;
+        _self.getUnreadNum();
+      }
+
       let isAuthenicatedTip = common.getStorage('isAuthenicatedTip');
       if(user.authenticating_state===0 && parseInt(isAuthenicatedTip) === 0){
           _self.confirmShow = true;
@@ -292,11 +300,15 @@
     created: function () {
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
-      this.initData();
+      // 添加'全国'
       if( ChinaAddressV4Data[0].value!="100000" ){
         ChinaAddressV4Data.splice(0, 0, {name:"全国",value:"100000"});
         ChinaAddressV4Data.splice(1, 0, {"name":"全国","value":"100100","parent":"100000"});
       }
+      // 数据加载
+      _self.initData();
+      //h 获取用户未读数量
+      _self.getUnreadNum();
     },
     mounted(){
       this.$nextTick(
@@ -460,6 +472,24 @@
           }
         })
       },
+      // 初始化首页
+      getUnreadNum () {
+        var _self = this
+        if(common.isNull(_self.user._id)) return;
+        var params = {
+          interfaceId: common.interfaceIds.getUnreadNum,
+          user_id: _self.user._id
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data
+          if ( data ) {
+            _self.user.unread_number = data.num || 0;
+            common.setStorage("userInfo",_self.user);
+          }
+        })
+      },
 
       //下拉刷新
       refreshPageDate(){
@@ -542,7 +572,7 @@
             item.url="/feedback"
           }
         })
-        console.log(imgList)
+        // console.log(imgList)
         // 通知
         _self.noticeList = data.noticeList || [];
       },

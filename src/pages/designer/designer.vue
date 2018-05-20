@@ -103,6 +103,7 @@
     },
     data() {
       return {
+        user:{},
         areaMark: 0,               // 选择显示排序区域
         showMark: false,           // 排序区域显示标识
         sortName0: '智能排序',      // 排序名称

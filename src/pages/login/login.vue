@@ -221,6 +221,7 @@
               common.setStorage("login_account",_self.phone);
               this.$store.state.pageIndex = 0;
               _self.toUrl({'pagename':'index'});
+              _self.$store.state.unreadNumRefreshMark = 1;
             }else{
               _self.showToast(data.msg);
             }

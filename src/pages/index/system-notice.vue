@@ -258,6 +258,11 @@
                 }
               })
             }
+            // 刷新用户未读数量
+            var user = common.getObjStorage("userInfo")||{};
+            var num = common.checkInt(user.unread_number);
+            user.unread_number = num>0 ? num-1 : 0;
+            common.setStorage("userInfo",user);
           }else{
             console.log("查询出错！")
           }
