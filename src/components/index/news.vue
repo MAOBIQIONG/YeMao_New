@@ -138,7 +138,7 @@
         var pagename = common.checkInt(params.scene)==1 ? 'groupchat' : 'liaotian';
         this.$router.push({name: pagename,query:params.query || {}});
         // 刷新用户未读数量
-        this.state.unreadNumRefreshMark = 1;
+        this.$store.state.unreadNumRefreshMark = 1;
       },
       getDataStr(date){
         return common.timeStamp2String(date,'ymdhm');

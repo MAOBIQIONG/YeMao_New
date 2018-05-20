@@ -282,6 +282,8 @@
         _self.$store.state.unreadNumRefreshMark = 0;
         _self.getUnreadNum();
       }
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
 
       let isAuthenicatedTip = common.getStorage('isAuthenicatedTip');
       if(user.authenticating_state===0 && parseInt(isAuthenicatedTip) === 0){
@@ -309,14 +311,11 @@
       _self.initData();
       //h 获取用户未读数量
       _self.getUnreadNum();
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     mounted(){
-      this.$nextTick(
-        ()=>{
-          this.$refs.scroller.disablePullup();
-          this.$refs.scroller.reset({top:0});
-        }
-      );
+      this.nextTick();
     },
     watch:{
       pullUpDownStatus:{
@@ -444,6 +443,7 @@
           // 按城市查询订单
           _self.pagination.pageNo = 0;
           _self.loadMore();
+          _self.nextTick();
         }
       },
       logShow (str) {
@@ -472,24 +472,6 @@
           }
         })
       },
-      // 初始化首页
-      getUnreadNum () {
-        var _self = this
-        if(common.isNull(_self.user._id)) return;
-        var params = {
-          interfaceId: common.interfaceIds.getUnreadNum,
-          user_id: _self.user._id
-        };
-        _self.$axios.post('/mongoApi', {
-          params: params
-        }, response => {
-          var data = response.data
-          if ( data ) {
-            _self.user.unread_number = data.num || 0;
-            common.setStorage("userInfo",_self.user);
-          }
-        })
-      },
 
       //下拉刷新
       refreshPageDate(){
@@ -503,6 +485,14 @@
       loadMore(){
         let _self = this;
         _self.loadData();
+      },
+      nextTick(){
+        this.$nextTick(
+          ()=>{
+            this.$refs.scroller.disablePullup();
+            this.$refs.scroller.reset({top:0});
+          }
+        );
       },
       scroll(position){
         // console.log("on-scroll",position);
@@ -639,7 +629,37 @@
             if(differ>=1440){
               return parseInt(differ/ 1440) + "天前来过";
             }
+        },
+
+      // 初始化首页
+      getUnreadNum () {
+        var _self = this
+        if(common.isNull(_self.user._id)) return;
+        var params = {
+          interfaceId: common.interfaceIds.getUnreadNum,
+          user_id: _self.user._id
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data
+          if ( data ) {
+            _self.user.unread_number = data.num || 0;
+            common.setStorage("userInfo",_self.user);
+          }
+        })
+      },
+
+      // 接收消息后，检查未读消息数量
+      receiveMsg(){
+        // 刷新用户未读数量
+        var _self = this;
+        var num = common.checkInt(_self.user.unread_number);
+        if( !common.isNull(_self.user._id) && num==0 ){
+          _self.user.unread_number = 1;
+          common.setStorage("userInfo",_self.user);
         }
+      },
 
     }
   }
