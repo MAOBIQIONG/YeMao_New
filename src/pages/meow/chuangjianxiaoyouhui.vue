@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-cjxy">
     <!--头部导航-->
     <div class="header p-static">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
@@ -24,14 +24,17 @@
           </div>
         </div>
         <div class="qdtime">
-          <div class="qdtime-left">
+          <!-- <div class="qdtime-left">
             <span>选择学校地区</span>
-          </div>
-          <div class="qdtime-right">
-            <group class="xmlx-kuang">
-              <x-address placeholder="请选择学校地区" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.school_address" style="height:0.8rem;line-height:0.8rem;"></x-address>
+          </div> -->
+          <!-- <div class="qdtime-right">
+            <group class="xmlx-kuang"  style="border:2px solid red; width:4rem;text-align:right;">
+              <x-address placeholder="请选择学校地区" raw-value title="" :list="addressData"  value-text-align="right" v-model="dataParams.school_address" style="height:0.8rem;line-height:0.8rem;" :hideDistrict="false"></x-address>
             </group>
-          </div>
+          </div> -->
+            <group label-width="3rem" label-align="left">
+              <x-address title="请选择学校地区" raw-value :list="addressData" hide-district value-text-align="right" v-model="dataParams.school_address" label-align="end"></x-address>
+            </group>
         </div>
       </div>
       <!--留言-->
@@ -173,4 +176,18 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
+</style>
+<style>
+.p-cjxy .weui-cell_access{
+  display:flex!important;
+  width:100%!important;
+}
+
+.p-cjxy .vux-popup-picker-value {
+  text-align:right!important;
+  max-width:4rem!important;
+}
+.p-cjxy .weui-cell {
+ justify-content:space-between!important;
+}
 </style>
