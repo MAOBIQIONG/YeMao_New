@@ -252,6 +252,11 @@
             if( param.type == 0 ){
               _self.$router.push({name: 'haibao', query: param.query})
             }
+            // 刷新用户未读数量
+            var user = common.getObjStorage("userInfo")||{};
+            var num = common.checkInt(user.unread_number);
+            user.unread_number = num>0 ? num-1 : 0;
+            common.setStorage("userInfo",user);
           }else{
             _self.dataList.forEach(function (item,index) {
               if( item._id == param.nid ){

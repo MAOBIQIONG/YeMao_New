@@ -795,6 +795,7 @@ const common = {
     getNoticeList:'getNoticeList',                 // 通知列表
     getNoticeDetails:'getNoticeDetails',           // 系统通知详情
     chooseDesigner:'chooseDesigner',               // 选择设计师
+    getUnreadNum:'getUnreadNum',                   // 获取用户未读总数
 
   },
 

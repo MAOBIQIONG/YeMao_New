@@ -103,6 +103,7 @@
     },
     data() {
       return {
+        user:{},
         areaMark: 0,               // 选择显示排序区域
         showMark: false,           // 排序区域显示标识
         sortName0: '智能排序',      // 排序名称
@@ -116,10 +117,21 @@
     activated: function () {
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
+      // 首页未读刷新
+      var urm = _self.$store.state.unreadNumRefreshMark;
+      console.log("urm:"+urm)
+      if ( urm > 0 ) {
+        _self.$store.state.unreadNumRefreshMark = 0;
+        _self.getUnreadNum();
+      }
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     created: function () {
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     methods: {
       goback() {
@@ -173,6 +185,36 @@
             _self.sortName1 = name;
           }
           this.$refs.design.refreshData(_self.sortMark);
+        }
+      },
+
+      // 初始化首页
+      getUnreadNum () {
+        var _self = this
+        if(common.isNull(_self.user._id)) return;
+        var params = {
+          interfaceId: common.interfaceIds.getUnreadNum,
+          user_id: _self.user._id
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data
+          if ( data ) {
+            _self.user.unread_number = data.num || 0;
+            common.setStorage("userInfo",_self.user);
+          }
+        })
+      },
+
+      // 接收消息后，检查未读消息数量
+      receiveMsg(){
+        // 刷新用户未读数量
+        var _self = this;
+        var num = common.checkInt(_self.user.unread_number);
+        if( !common.isNull(_self.user._id) && num==0 ){
+          _self.user.unread_number = 1;
+          common.setStorage("userInfo",_self.user);
         }
       },
 

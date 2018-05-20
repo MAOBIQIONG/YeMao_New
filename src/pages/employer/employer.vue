@@ -103,6 +103,7 @@
     },
     data () {
       return {
+        user:{},
         orderList: [],
         sortName: '智能排序',
         sortMark: 0,
@@ -160,6 +161,14 @@
         _self.onFetching = true;
         _self.loadMore()
       }
+      // 首页未读刷新
+      var urm = _self.$store.state.unreadNumRefreshMark;
+      if ( urm > 0 ) {
+        _self.$store.state.unreadNumRefreshMark = 0;
+        _self.getUnreadNum();
+      }
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
 
       let footprint2 = common.getObjStorage('footprint2');
       if(!common.isNull(footprint2)){
@@ -175,6 +184,8 @@
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
       _self.loadMore()
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     mounted(){
       this.$nextTick(
@@ -384,11 +395,6 @@
         //判断页码是否为0
         if( _self.pagination.pageNo == 0 ){
           _self.orderList = orderList;
-          this.$nextTick(
-            ()=>{
-              this.$refs.scroller.reset({top:0});
-            }
-          );
         }else{
           _self.orderList = [..._self.orderList, ...orderList];
         }
@@ -406,7 +412,36 @@
           _self.pagination.pageNo++;
           _self.loadMoreStatus.show=false;
         }
-      }
+      },
+      // 初始化首页
+      getUnreadNum () {
+        var _self = this
+        if(common.isNull(_self.user._id)) return;
+        var params = {
+          interfaceId: common.interfaceIds.getUnreadNum,
+          user_id: _self.user._id
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data
+          if ( data ) {
+            _self.user.unread_number = data.num || 0;
+            common.setStorage("userInfo",_self.user);
+          }
+        })
+      },
+
+      // 接收消息后，检查未读消息数量
+      receiveMsg(){
+        // 刷新用户未读数量
+        var _self = this;
+        var num = common.checkInt(_self.user.unread_number);
+        if( !common.isNull(_self.user._id) && num==0 ){
+          _self.user.unread_number = 1;
+          common.setStorage("userInfo",_self.user);
+        }
+      },
 
     }
   }

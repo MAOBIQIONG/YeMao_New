@@ -143,13 +143,14 @@
     },
     activated: function () {
       console.log("designers activated:")
-      var drm = this.$store.state.designerRefreshMark;
+      var _self = this;
+      var drm = _self.$store.state.designerRefreshMark;
       if ( drm > 0 ) {
-        this.$store.state.designerRefreshMark = 0;
-        this.pagination.pageNo = 0;
-        this.pagination.pageSize = 10;
-        this.onFetching = true;
-        this.loadMore()
+        _self.$store.state.designerRefreshMark = 0;
+        _self.pagination.pageNo = 0;
+        _self.pagination.pageSize = 10;
+        _self.onFetching = true;
+        _self.loadMore()
       }
     },
     created: function () {
@@ -365,11 +366,6 @@
         //判断页码是否为0
         if( _self.pagination.pageNo == 0 ){
           _self.designers = designers;
-          this.$nextTick(
-            ()=>{
-              this.$refs.scroller.reset({top:0});
-            }
-          );
         }else{
           _self.designers = [..._self.designers, ...designers];
         }
@@ -422,7 +418,7 @@
           return false
         }
         return true;
-      }
+      },
     }
   }
 </script>

@@ -186,6 +186,7 @@
               _self.$store.state.pageIndex = 0;
               _self.toUrl({'pagename':'index'});
               _self.$store.state.designerRefreshMark = 1;
+              _self.$store.state.unreadNumRefreshMark = 1;
             }else{
               _self.showToast(data.msg);
             }
