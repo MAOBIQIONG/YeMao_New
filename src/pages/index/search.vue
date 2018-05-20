@@ -1,14 +1,24 @@
 <template>
   <div class="">
-    <div class="search">
-      <div class="search-input">
-        <form class="mission_search_form" onSubmit="return false;">
-          <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
-          <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
-          <!--<span class="searchcha">×</span>-->
-        </form>
+    <!--<div class="search">-->
+      <!--<div class="search-input">-->
+        <!--<form class="mission_search_form" onSubmit="return false;">-->
+          <!--<span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>-->
+          <!--<input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>-->
+          <!--&lt;!&ndash;<span class="searchcha">×</span>&ndash;&gt;-->
+        <!--</form>-->
+      <!--</div>-->
+      <!--<span v-tap="{methods:goback}">取消</span>-->
+    <!--</div>-->
+    <div class="search-components">
+      <div class="search-box">
+        <div class="search-box-center">
+          <form class="mission_search_form" onSubmit="return false;">
+            <input type="search" id="search-inp" class="icon-left-search" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
+          </form>
+        </div>
+        <div class="search-box-right" v-tap="{methods:goback}">取消</div>
       </div>
-      <span v-tap="{methods:goback}">取消</span>
     </div>
     <div class="content content-p">
       <!--热门搜索-->

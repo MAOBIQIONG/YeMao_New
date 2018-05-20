@@ -1,16 +1,27 @@
 <template>
   <div class="bg">
     <div class="top">
-      <div class="search">
-        <div class="search-input">
-          <form class="mission_search_form" onSubmit="return false;">
-            <span class="searchtu"><img src="../../../static/images/index/searchbtn.png"/></span>
-            <input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
-            <!--<span class="searchcha">×</span>-->
-          </form>
+      <!--<div class="search">-->
+        <!--<div class="search-input">-->
+          <!--<form class="" onSubmit="return false;">-->
+            <!--<span class="searchtu"mission_search_form><img src="../../../static/images/index/searchbtn.png"/></span>-->
+            <!--<input type="search" id="search-inp" class="search-inp" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>-->
+            <!--&lt;!&ndash;<span class="searchcha">×</span>&ndash;&gt;-->
+          <!--</form>-->
+        <!--</div>-->
+        <!--<span v-tap="{ methods:toUrl , pagename:'index'}">取消</span>-->
+      <!--</div>-->
+      <div class="search-components">
+        <div class="search-box">
+          <div class="search-box-center">
+            <form class="mission_search_form" onSubmit="return false;">
+              <input type="search" id="search-inp" class="icon-left-search" placeholder="搜索" @keyup="key($event)" v-model="searchValue"/>
+            </form>
+          </div>
+          <div class="search-box-right" v-tap="{ methods:toUrl , pagename:'index'}">取消</div>
         </div>
-        <span v-tap="{ methods:toUrl , pagename:'index'}">取消</span>
       </div>
+
       <!--tab选项卡-->
       <tab :line-width=2 active-color='#fc378c'  v-model="index" class="tabs">
         <tab-item class="vux-center" key="0">设计师</tab-item>

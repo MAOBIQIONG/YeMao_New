@@ -422,7 +422,6 @@ body,html{
   display: inline-block;
   background-color: #f3f3f3;
   border: none;
-  margin-top: 0.02rem;
   outline: medium;
 }
 
@@ -1498,8 +1497,14 @@ body,html{
   /*-webkit-box-flex:1;*/
 }
 /**图片**/
+/**向右箭头**/
 .icon-right-arrow{
   background: url('../images/jiangou.png') center right 0.4rem no-repeat;
+  background-size: 0.3rem auto;
+}
+/**左侧搜索图标**/
+.icon-left-search{
+  background: url('../images/index/search.png') left 0.2rem center no-repeat;
   background-size: 0.3rem auto;
 }
 
@@ -1507,4 +1512,65 @@ body,html{
 /**confirm 确认按钮样式**/
 .weui-dialog__ft .weui-dialog__btn_primary{
   color: #f65aa6 !important;
+}
+
+/**顶部搜索组件样式**/
+.search-components{
+  height: 1.2rem;
+  line-height: 0.6rem;
+  width: 100%;
+  padding-top: 0.5rem;
+  font-size: 0.32rem;
+  border-bottom: 1px solid #F2F2F2;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.search-box{
+  height: 100%;
+  display:-webkit-box;
+}
+.search-box .search-box-left{
+  min-width: 1rem;
+}
+.search-box .search-box-center{
+  -webkit-box-flex:1;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  margin-left: 0.25rem;
+  background-color: #f3f3f3;
+  border-radius: 0.1rem;
+}
+.search-box .search-box-center input{
+  width: 100%;
+  height: 0.5rem;
+  line-height: normal;
+  font-size: 0.32rem;
+  background-color: #f3f3f3;
+  border: none;
+  outline: medium;
+  border-radius: 0px !important;
+  text-indent: 0.6rem;
+}
+
+/**修改placeholder样式**/
+.search-box .search-box-center input::-webkit-input-placeholder { /* WebKit browsers */
+  font-size: 0.32rem !important;
+}
+.search-box .search-box-center input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size: 0.32rem !important;
+}
+.search-box .search-box-center input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size: 0.32rem !important;
+}
+.search-box .search-box-center input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  font-size: 0.32rem !important;
+}
+
+.search-box .search-box-right{
+  min-width: 1rem;
+  color: #f6449b;
+  text-align: center;
 }

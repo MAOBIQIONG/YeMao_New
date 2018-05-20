@@ -211,7 +211,7 @@
         sortMark: 0,
         znpxMark: false,
         addressData: ChinaAddressV4Data,
-        value: ['上海市'],
+        value: ['全国'],
         city: '',
 
         onFetching: true,
@@ -292,7 +292,11 @@
     created: function () {
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
-      this.initData()
+      this.initData();
+      if( ChinaAddressV4Data[0].value!="100000" ){
+        ChinaAddressV4Data.splice(0, 0, {name:"全国",value:"100000"});
+        ChinaAddressV4Data.splice(1, 0, {"name":"全国","value":"100100","parent":"100000"});
+      }
     },
     mounted(){
       this.$nextTick(
@@ -410,9 +414,9 @@
       },
       logHide (str) {
         var _self = this
-        console.log('on-hide', str)
+        // console.log('on-hide', str)
         if ( str == true ) {
-          console.log('value', _self.value)
+          // console.log('value', _self.value)
           if (_self.value[0] == '110000' || _self.value[0] == '120000' ||
             _self.value[0] == '310000' || _self.value[0] == '500000') {
             _self.value[1] = '--'
@@ -421,6 +425,9 @@
           }
           var city = _self.getName(_self.value);
           _self.city = city.trim();
+          if( _self.value[0]=="100000" || _self.value[1]=="100100" ){
+            _self.city = null;
+          }
           // console.log('city', _self.city)
           // 按城市查询订单
           _self.pagination.pageNo = 0;
@@ -602,8 +609,6 @@
             if(differ>=1440){
               return parseInt(differ/ 1440) + "天前来过";
             }
-
-
         }
 
     }
