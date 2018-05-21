@@ -4,7 +4,7 @@
       <!-- 评论输入框 -->
       <div id="inputBox" class="input-box">
         <div class="input">
-          <input id="commentInput" v-model="comment_text" type="text" :placeholder="comment_placeholder" @focus="inputFocus()" ref="commentInput">
+          <input id="commentInput" v-model="comment_text" type="text" :placeholder="comment_placeholder" maxlength="500" @focus="inputFocus()" ref="commentInput">
         </div>
         <div class="emoji">
           <div class="left" v-tap="{methods:showEmoji}"></div>

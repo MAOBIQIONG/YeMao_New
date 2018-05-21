@@ -100,22 +100,22 @@
         </div>
       </scroller>
     </div>
-    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
-    <div v-transfer-dom>
-      <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
-    </div>
-    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete" :class="showSheet==true?'':'vux-actionsheet-rec'"></actionsheet>
     <div class="chat-box">
       <!-- 评论输入框 -->
       <div class="input-box">
         <div class="input">
-          <input v-model="comment_text" type="text" :placeholder="comment_placeholder" v-on:blur.lazy="commentBlur" ref="commentInput">
+          <input v-model="comment_text" type="text" :placeholder="comment_placeholder" maxlength="500" v-on:blur.lazy="commentBlur" ref="commentInput">
         </div>
         <div class="send-btn" :class="is_submit?'hover':''">
           <div class="btn" v-tap="{methods:commentMeow}">发送</div>
         </div>
       </div>
     </div>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+    <div v-transfer-dom>
+      <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
+    </div>
+    <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete" :class="showSheet==true?'':'vux-actionsheet-rec'"></actionsheet>
   </div>
 </template>
 
@@ -352,6 +352,9 @@
         }else {
           _self.addComment();
         }
+        setTimeout(function () {
+          document.activeElement.blur();
+        },50)
       },
       //下拉刷新
       refreshPageDate(){
@@ -634,6 +637,10 @@
       //删除喵喵圈
       removeMoew(){
         let _self = this;
+        if( common.isNull(_self.userInfo._id) ||
+            _self.userInfo._id!=_self.meow.user_id ){
+          return;
+        }
         let params = {
           interfaceId:common.interfaceIds.removeMeow,
           _id: _self.miao_id,                 // 喵喵圈ID

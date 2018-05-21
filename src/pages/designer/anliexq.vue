@@ -89,7 +89,7 @@
       <!-- 评论输入框 -->
       <div class="input-box">
         <div class="input">
-          <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
+          <input v-model="comment_text" type="text" :placeholder="comment_placeholder" maxlength="500">
         </div>
         <!--<div class="anonymous-box" v-tap="{methods:anonymousFun}">-->
           <!--<div class="anonymous" :class="anonymous==1?'hover':''">匿</div>-->
@@ -264,6 +264,9 @@
         } else {
           _self.addComment();
         }
+        setTimeout(function () {
+          document.activeElement.blur();
+        },50)
       },
       // confirm
       compOnConfirm(){

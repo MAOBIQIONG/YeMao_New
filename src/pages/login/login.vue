@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <!--头部导航-->
-    <div class="header">
+    <div class="header p-absolute">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <div class="header-right zc"v-tap="{ methods:toUrl , pagename:'zhuche'}">注册</div>
     </div>
@@ -221,7 +221,6 @@
               common.setStorage("login_account",_self.phone);
               this.$store.state.pageIndex = 0;
               _self.toUrl({'pagename':'index'});
-              _self.$store.state.unreadNumRefreshMark = 1;
             }else{
               _self.showToast(data.msg);
             }
