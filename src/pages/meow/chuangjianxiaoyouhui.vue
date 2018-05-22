@@ -39,7 +39,7 @@
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="dataParams.school_description" class="area" placeholder="填写学校简介,200字以内" maxlength="200"></textarea>
+        <textarea v-model="dataParams.school_description" class="area" placeholder="填写学校简介,300字以内" maxlength="300"></textarea>
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em" :time="1500"></toast>

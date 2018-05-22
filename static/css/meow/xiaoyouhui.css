@@ -2,6 +2,7 @@
 .content .jianli {
   width: 7.5rem;
   height: 1.6rem;
+  
 }
 
 .content .jianli .touxiang {
@@ -21,6 +22,8 @@
 }
 
 .content .jianli .jieshao {
+  text-overflow:ellipis;
+  overflow:hidden;
   position: relative;
   float: left;
   width: 5.7rem;
@@ -30,7 +33,7 @@
 }
 
 .content .jianli .jieshao p {
-  line-height: 0.5rem;
+  line-height: 0.42rem;
 }
 
 .content .jianli .jieshao .name {

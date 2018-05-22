@@ -1,4 +1,4 @@
-// 'use strict'
+  // 'use strict'
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
@@ -81,4 +81,4 @@ const webpackConfig = {
     ]
   }
 }
-module.exports = vuxLoader.merge(webpackConfig, { plugins: ['vux-ui'] })
+module.exports = vuxLoader.merge(webpackConfig, { plugins: ['vux-ui','progress-bar'] })
