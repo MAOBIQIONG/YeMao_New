@@ -98,6 +98,7 @@
   #app{
     width: 100%;
     height:100%;
+    -webkit-overflow-scrolling: touch;
   }
   .vux-pop-out-enter-active,
   /*.vux-pop-out-leave-active,*/

@@ -101,7 +101,7 @@
       <!-- 评论输入框 -->
       <div class="input-box">
           <div class="input">
-              <input v-model="comment_text" type="text" :placeholder="comment_placeholder">
+              <input v-model="comment_text" type="text" :placeholder="comment_placeholder" maxlength="500">
           </div>
           <div class="send-btn" :class="is_submit?'hover':''">
               <div class="btn" v-tap="{methods:commentchw}">发送</div>
@@ -389,6 +389,9 @@ export default {
             }else {
                 _self.addComment();
             }
+            setTimeout(function () {
+              document.activeElement.blur();
+            },50)
         },
 
         addComment(){
