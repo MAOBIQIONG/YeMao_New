@@ -21,7 +21,7 @@
           <div :style="{ height: blank }"></div>
           <div class="sjs-list" v-for="item in designers">
             <div class="sjs-top" v-tap="{methods:toDetails, id:item._id}">
-              <div class="st-touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)}`}"></div>
+              <div class="st-touxiang" :style="{'backgroundImage': 'url(' + checkAvatar(item.img) + ')'}"></div>
               <div class="st-neirong">
                 <div class="sn-top">
                   <div class="st-nicheng">{{item.user_name}}</div>

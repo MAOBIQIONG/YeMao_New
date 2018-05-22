@@ -7,7 +7,7 @@
         <!--地区选择-->
         <div class="crity">
           <group>
-            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="value"></x-address>
+            <x-address @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="center" v-model="value"></x-address>
           </group>
         </div>
         <div class="id-xiaoxi" v-tap="{ methods:toUrl , pagename:'message' }">
@@ -210,7 +210,7 @@
         sortName: '智能排序',
         sortMark: 0,
         znpxMark: false,
-        addressData: ChinaAddressV4Data,
+        addressData: [],
         value: ['全国'],
         city: '',
 
@@ -258,6 +258,8 @@
     activated: function () {
       // console.log("index activated:")
       var _self = this;
+      // 设置底部导航栏状态
+      _self.$store.state.pageIndex = 0;
       // 初始化im
       var user = common.getObjStorage("userInfo") || {};
       _self.user = user;
@@ -302,10 +304,11 @@
     created: function () {
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
+      _self.addressData = _self.addressData.concat(ChinaAddressV4Data);
       // 添加'全国'
-      if( ChinaAddressV4Data[0].value!="100000" ){
-        ChinaAddressV4Data.splice(0, 0, {name:"全国",value:"100000"});
-        ChinaAddressV4Data.splice(1, 0, {"name":"全国","value":"100100","parent":"100000"});
+      if( _self.addressData[0].value!="100000" ){
+        _self.addressData.splice(0, 0, {name:"全国",value:"100000"});
+        _self.addressData.splice(1, 0, {"name":"全国","value":"100100","parent":"100000"});
       }
       // 数据加载
       _self.initData();
@@ -421,7 +424,8 @@
       },
       // 地区
       getName (value) {
-        return value2name(value, ChinaAddressV4Data)
+        var _self = this;
+        return value2name(value, _self.addressData)
       },
       logHide (str) {
         var _self = this
@@ -719,7 +723,7 @@
   .bg-clo{background-color:rgba(255,255,255,1);}
   .bg-clo1{background-color:rgba(0,0,0,.1)}
   .sousuo{
-    width:5.5rem !important;
+    width:5rem !important;
     background-color:rgba(0,0,0,.1) !important;
   }
   .sousuo1{
@@ -728,6 +732,10 @@
   }
   .page{
     display: flex;
+  }
+  .crity{
+    width: 1.45rem;
+    overflow: hidden;
   }
   /**首页背景**/
   #page{

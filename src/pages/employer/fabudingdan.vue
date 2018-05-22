@@ -647,43 +647,6 @@
     height: 100%;
     overflow: auto;
   }
-  /*地区*/
-  .vux-no-group-title {
-    margin-top:0 !important;
-    font-size: 0.28rem !important;
-  }
-  .weui-cells{
-    background: transparent !important;
-  }
-  .weui-cell_access {
-    padding:0 !important;
-    /*width: 1.8rem;*/
-    height: 0.8rem;
-    display:inline-block!important;
-  }
-  .weui-cell_access .weui-cell__ft{
-    position: static !important;
-    line-height: 0.8rem;
-    padding-right: 0 !important;
-  }
-  .vux-cell-value{
-    color: #999999;
-  }
-  .vux-cell-primary vux-popup-picker-select-box{
-    width: 100%;
-  }
-  .vux-popup-picker-value{
-    /*width: 2.9rem;*/
-    display:block;
-    text-align: left;
-    height: 0.8rem !important;
-    line-height: 0.8rem !important;
-    overflow:hidden;
-    padding-left: 0.1rem;
-    word-break:keep-all;           /* 不换行 */
-    white-space:nowrap;          /* 不换行 */
-    text-overflow:ellipsis;
-  }
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -694,5 +657,8 @@
   .demo5-item-selected {
     background: #f65aa6;
     color:#fff;
+  }
+  .xmlx-kuang{
+    width: 1.5rem;
   }
 </style>

@@ -44,7 +44,7 @@
             </li>
           </ul>
         </div>
-        <div @click="collect()">
+        <div v-tap="{methods:collect}" style="background: none;height: 0px;color: inherit;">
           <div class="scsjs" v-if="collectFlag==0">
             收藏设计师
           </div>
@@ -154,7 +154,7 @@
         </swiper>
       </div>
     </div>
-  <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
+    <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
 </template>
 
