@@ -111,7 +111,8 @@
             _self.userInfo.user_name = _self.user_name;
             common.setStorage("userInfo",_self.userInfo);
             setTimeout(function () {
-              _self.$router.goBack(-2);
+              _self.goback();
+              // _self.$router.goBack(-2);
             },1000)
           }else{
             _self.showToast('修改失败!');

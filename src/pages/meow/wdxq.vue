@@ -43,7 +43,8 @@
                 <div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">
                 </div>
                   <div class="neirongshijian">
-                      {{chw.description}}
+                      <!--{{chw.description}}-->
+                      <pre v-html="chw.description"></pre>
                       <div class="bottom">
                       <div class="bottom-zan" :class="{confirmColor:chw.likeFlag == 1}" v-tap="{methods:chwLike}">
                           <span id="praise" ref="like">
@@ -118,7 +119,7 @@
       <!-- 评论输入框 -->
       <div class="input-box">
           <div class="input">
-              <input v-model="comment_text" type="text" :placeholder="comment_placeholder" maxlength="500" @blur="commentBlur" ref="commentInput">
+              <input v-model="comment_text" type="text" :placeholder="comment_placeholder" @blur="commentBlur" ref="commentInput">
           </div>
           <div class="send-btn" :class="is_submit?'hover':''">
               <div class="btn" v-tap="{methods:commentchw}">发送</div>
@@ -449,9 +450,9 @@ export default {
             }else {
                 _self.addComment();
             }
-            setTimeout(function () {
-              document.activeElement.blur();
-            },50)
+          setTimeout(function () {
+            document.activeElement.blur();
+          },50)
         },
 
         addComment(){

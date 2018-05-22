@@ -28,7 +28,7 @@
         <div class="weida-list" v-for="(item,index) in QAList" :key="index">
             <div class="weida" @click="toDetails(item._id)">
             <div class="wd-top">
-            <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.user.img)}`}">
+            <div class="touxiang" :style="{'backgroundImage': 'url(' + checkAvatar(item.user.img) + ')'}">
                 <!-- <img v-if="item.user.img" :src="checkAvatar(item.user.img)"/>
                 <img v-else src="../../../static/images/bj.jpg"/> -->
             </div>

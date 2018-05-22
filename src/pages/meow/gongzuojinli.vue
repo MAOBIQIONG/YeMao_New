@@ -20,7 +20,7 @@
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
-        :class="{scroller:true}"    
+        :class="{scroller:true}"
     >
         <!--编辑工作经历-->
         <div class="content content-p" style="padding-top:0;position:static">
@@ -28,7 +28,7 @@
                 <div class="gzjl">
                 <div class="rzsj">
                     <div class="rzsj-left">
-                    <span>{{item.start_time}}</span>-<span>{{item.end_time}}</span>
+                    <span>{{item.start_time}}</span>~<span>{{item.end_time}}</span>
                     </div>
                     <div class="rzsj-right" @click="edit(item._id)">
                     <span><img src="../../../static/images/sx1.png"></span><span>编辑</span>
@@ -162,7 +162,7 @@ import {Scroller,LoadMore,Toast,Loading} from 'vux'
         nextStep(){
             // common.setStorage('resumeParams2',this.list);
             this.toUrl('qiwanggongzuo');
-           
+
         },
         showToast(msg){
             this.toastShow = true;
@@ -184,7 +184,7 @@ import {Scroller,LoadMore,Toast,Loading} from 'vux'
                 }, response => {
                     console.log(response);
                     let data = response.data
-                    _self.setData(data);                 
+                    _self.setData(data);
                 });
         },
         setData(data){

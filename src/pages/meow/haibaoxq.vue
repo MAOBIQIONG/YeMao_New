@@ -5,7 +5,7 @@
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
     </div>
     <div class="content" :style="'background-image:url('+checkImg(activity.details_img)+')'">
-      <div class="bottom" :class="activity.state<2 ? 'hover' : ''" v-tap="{methods:canyu}">{{getActivityStateName(activity.state)}}</div>
+      <div class="bottom" :class="activity.state<2 ? 'hover' : ''" v-tap="{methods:canyu,state:activity.state}">{{getActivityStateName(activity.state)}}</div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
   </div>
@@ -55,7 +55,7 @@
       },
 
       // 参与
-      canyu(){
+      canyu(params){
         if( common.checkInt(params.state) >= 2 ) return;
         var _self = this;
         if( common.isNull(_self.userInfo._id) ){

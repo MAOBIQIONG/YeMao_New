@@ -25,7 +25,8 @@
                 <div slot="right-menu">
                   <swipeout-button type="warn" v-tap="{methods:deleteSth,id:item._id,type:item.comment_type,floor:item.floor,did:item.comment_id}">删除</swipeout-button>
                 </div>
-                <div slot="content" :class="{'vux-1px-b': index !== comments.length, 'vux-1px-t': index === 1}">
+                <!--<div slot="content" :class="{'vux-1px-b': index !== comments.length, 'vux-1px-t': index === 1}">-->
+                <div slot="content">
                   <div class="pinglun-list">
                     <div class="pl-left">
                       <img :src="checkAvatar(item.user.img)" />

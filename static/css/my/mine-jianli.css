@@ -36,9 +36,9 @@
 }
 
 .content .jbxx .xq {
-	width: 6.5rem;
+	width: 5.6rem;
 	/*height: 4rem;*/
-	margin: 0.3rem 0.2rem;
+	margin: 0.3rem auto;
 	font-size: 0.28rem;
 }
 
@@ -67,9 +67,10 @@
 .content .qwgz {
 	position: relative;
 	width: 7.5rem;
-	height: 3.5rem;
+	/*height: 3.5rem;*/
 	margin-top: 0.2rem;
 	display: inline-block;
+  overflow: auto;zoom: 1;
 }
 
 .content .qwgz .left {
@@ -114,10 +115,11 @@
 .content .qwgz .qwgz-bottom {
 	font-size: 0.28rem;
 	width: 5.6rem;
-	height: 1.2rem;
+	min-height: 1.2rem;
 	text-align: center;
 	margin: auto;
 	color: #999999;
+  padding-bottom: 1.25rem;
 }
 
 .content .gzjl {
@@ -196,6 +198,7 @@
 }
 
 .content .gzjl .gzjl-content .gc-list .neirong .list-neirong {
+  width: 5.6rem;
 	font-size: 0.28rem;
 	line-height: 0.4rem;
   color: #999999;
@@ -238,8 +241,8 @@
 }
 
 .content .zwms .zwms-content {
-	width: 6.48rem;
-	height:2.5rem;
+	width: 5.6rem;
+	min-height:2.5rem;
 	margin: auto;
 	margin-top: 0.3rem;
 	font-size: 0.28rem;
