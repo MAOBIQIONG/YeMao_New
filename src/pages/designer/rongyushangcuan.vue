@@ -13,7 +13,7 @@
           <span>荣誉名称</span>
         </div>
         <div class="xmlx-right">
-          <input v-model="data.title" type="text" placeholder="请输入荣誉名称" maxlength="25"/>
+          <input v-model="data.title" type="text" placeholder="请输入荣誉名称,25字以内" maxlength="25"/>
         </div>
       </div>
       <div class="xmbt">
@@ -21,11 +21,11 @@
           <div class="xt-left"><span>获得荣誉时间</span></div>
           <div class="xt-right">
             <!--<input type="text"placeholder="请输入荣誉时间" />-->
-            <datetime v-model="data.date"class="shijian"></datetime>
+            <datetime v-model="data.date" :end-date="curr_date" class="shijian"></datetime>
           </div>
         </div>
         <div class="xmbt-bottom">
-          <textarea v-model="data.description" class="xt-txt" placeholder="详细描述你的荣誉"></textarea>
+          <textarea v-model="data.description" class="xt-txt" placeholder="详细描述你的荣誉,500字以内" maxlength="500"></textarea>
         </div>
       </div>
       <div class="sctp">

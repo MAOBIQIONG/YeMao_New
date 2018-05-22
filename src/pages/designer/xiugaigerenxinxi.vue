@@ -153,6 +153,9 @@
             _self.userInfo.working_years = _self.user.working_years;
             _self.userInfo.hourly_wage = _self.user.hourly_wage;
             common.setStorage("userInfo",_self.userInfo);
+            setTimeout(function () {
+              _self.goback();
+            },1600)
           }else{
             _self.showToast("修改失败！");
           }

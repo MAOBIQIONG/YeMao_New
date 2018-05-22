@@ -42,6 +42,7 @@
 
  .alzs-list .al-top .al-right .nenrong {
 	height: 0.8rem;
+  line-height: 0.4rem;
 	overflow: hidden;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;

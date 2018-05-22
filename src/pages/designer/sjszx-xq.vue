@@ -237,7 +237,7 @@
       },
       toChws: function (params) {
         var _self = this;
-        _self.$router.push({name: 'anlielist', query: {flag: params.flag}})
+        _self.$router.push({name: 'anlielist', query: {flag:params.flag,uid:_self.user_id}})
       },
       checkLogin() {
         var _self = this;
