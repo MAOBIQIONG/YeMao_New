@@ -394,6 +394,9 @@
         _self.pagination.pageNo = 0;
         _self.sortMark = mark;
         _self.loadMore();
+        _self.$nextTick(() => {
+          _self.$refs.scroller.reset({top: 0})
+        })
       },
       beInvited(p){
         var user = common.getObjStorage("userInfo") || {};

@@ -6,12 +6,12 @@
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
-    <scroller
-      :height="height"
-      :lock-x="true"
-      :lock-y="false"
-      ref="scroller"
-    >
+    <!--<scroller-->
+      <!--:height="height"-->
+      <!--:lock-x="true"-->
+      <!--:lock-y="false"-->
+      <!--ref="scroller"-->
+    <!--&gt;-->
       <!--发布订单内容-->
       <div class="content1">
         <div class="fb-content">
@@ -126,7 +126,7 @@
           </div>
         </div>
       </div>
-    </scroller>
+    <!--</scroller>-->
 
     <!--弹窗-->
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
