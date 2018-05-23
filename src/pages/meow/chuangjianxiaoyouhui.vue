@@ -168,7 +168,11 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-            setTimeout(()=>{_self.loadingShow = false; _self.toUrl('xiaoyouhui');},1500)
+            setTimeout(()=>{
+              _self.loadingShow = false;
+              // _self.toUrl('xiaoyouhui');
+              _self.goback();
+            },1500)
         });
       },
     }

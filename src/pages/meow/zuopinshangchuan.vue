@@ -142,24 +142,24 @@ export default {
               });
        },
       triggerFile(){
-          console.log("trigger:")
-          var _self = this;
-          // 首先清空图片数组
-          _self.dataParams.works_imgs = [];
-          // 调用相机、相册
-          uploadImg2.init({
+        console.log("trigger:")
+        var _self = this;
+        // 首先清空图片数组
+        _self.dataParams.works_imgs = [];
+        // 调用相机、相册
+        uploadImg2.init({
           callback:function (path) {
-              console.log("path:"+path)
-              _self.base64Arr.push(path);
+            console.log("path:"+path)
+            _self.base64Arr.push(path);
           },
           successfun:function (path) {
-              _self.dataParams.works_imgs.push(path);
-              if( _self.dataParams.works_imgs.length == _self.base64Arr.length ){
-                  uploadImg2.clearImgArr(true);
-                  _self.submit2();
-              }
+            _self.dataParams.works_imgs.push(path);
+            if( _self.dataParams.works_imgs.length == _self.base64Arr.length ){
+              uploadImg2.clearImgArr(true);
+              _self.submit2();
+            }
           },
-          });
+        });
       },
 
       // 清除
