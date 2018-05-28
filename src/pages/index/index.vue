@@ -709,6 +709,9 @@
     white-space:nowrap;          /* 不换行 */
     text-overflow:ellipsis;
   }
+  #page .vux-tap-active:active {
+      background-color:transparent!important;
+    }
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
