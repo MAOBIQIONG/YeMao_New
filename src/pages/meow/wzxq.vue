@@ -81,7 +81,8 @@
                 </div>
                 <div class="bottom">
                 <div class="left-bt">
-                    {{item.create_date | dateToStringSecond}}
+                    <!--{{item.create_date | dateToStringSecond}}-->
+                  {{getDate(item.c)}}
                 </div>
                 <div class="right-bt">
                     <span v-tap="{methods:toCommentDetail,comment_id:item._id,chw_id:chw_id}">
@@ -259,6 +260,9 @@ export default {
         toCommentDetail:function(param){
             this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
         },
+        getDate: function (time) {
+            return common.timeStamp2String(time);
+        },
         //点赞
         like_dom(param){
             var _self = this;
@@ -409,10 +413,11 @@ export default {
             this.$axios.post('/mongoApi',{
                 params
             },(response)=>{
-                console.log(response)
+                // console.log(response)
                 let data = response.data;
                 if( data.code == 200 ){
                     _self.showToast("评论成功!")
+                    params.data._id = data.ids[0];
                     _self.addCommentHmtl(params.data);
                 }else{
                     _self.showToast("评论失败!")
@@ -435,9 +440,10 @@ export default {
             data.like = 0;
             data.likeFlag = 0;
             data.replys = [];
-            if(_self.loadPageEnd === true){
-              _self.comments.unshift(data);
-            }
+            _self.comments.unshift(data);
+//            if(_self.loadPageEnd === true){
+//              _self.comments.unshift(data);
+//            }
             // 重置评论框内容
             _self.comment_text = '';
         },

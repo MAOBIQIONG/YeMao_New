@@ -95,7 +95,8 @@
                       </div>
                       <div class="bottom">
                           <div class="left-bt">
-                              {{item.create_date | dateToStringSecond}}
+                              <!--{{item.create_date | dateToStringSecond}}-->
+                            {{getDate(item.create_date)}}
                           </div>
                           <div class="right-bt">
                               <span v-tap="{methods:toCommentDetail,comment_id:item._id,chw_id:chw_id}">
@@ -285,6 +286,9 @@ export default {
         },
         toCommentDetail:function(param){
             this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
+        },
+        getDate: function (time) {
+          return common.timeStamp2String(time);
         },
         // 头像
         checkAvatar (path) {
