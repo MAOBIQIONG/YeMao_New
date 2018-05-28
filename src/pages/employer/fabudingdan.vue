@@ -1,6 +1,7 @@
 <template>
   <div class="templete-body fabudingdan">
-    <div class="header p-static">
+    <div class="header-static"></div>
+    <div class="header p-absolute">
       <div class="header-left" v-tap="{ methods:showFun }"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
@@ -659,7 +660,7 @@
   /**解决软件盘弹出，文本框被顶起**/
   .fabudingdan{
     background-color: #f2f2f2;
-    overflow: auto;
+    /*overflow: auto;*/
   }
   .content1{
     height: 100%;
