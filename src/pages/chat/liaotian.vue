@@ -166,6 +166,9 @@
     methods: {
       goback(){
         this.$router.goBack();
+        setTimeout(function () {
+          document.activeElement.blur();
+        },100)
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})

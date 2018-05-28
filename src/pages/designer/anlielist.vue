@@ -69,16 +69,16 @@
     activated: function () {
       console.log("anlielist activated:")
       var _self = this;
-      var path = _self.$route.path;
+      _self.type = _self.$route.query.flag;
+      _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
+      var uid = _self.$route.query.uid;
       var userInfo = common.getObjStorage("userInfo") || {};
-      if( !common.isNull(userInfo._id) ){
+      _self.user_id = !common.isNull(uid) ? uid : !common.isNull(userInfo._id) ? userInfo._id : null;
+      if( !common.isNull(_self.user_id) ){
         _self.chws=[];
         _self.pageNo= 0;
         _self.pageSize=10;
         _self.onFetching=true;
-        _self.user_id = userInfo._id;
-        _self.type = _self.$route.query.flag;
-        _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
         _self.initData();
         // 重置页面滚动距离
          _self.$nextTick(() => {
@@ -89,11 +89,12 @@
     created: function () {
       console.log("anlielist created:")
       var _self = this;
+      var uid = _self.$route.query.uid;
+      _self.type = _self.$route.query.flag;
+      _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
       var userInfo = common.getObjStorage("userInfo") || {};
-      if( common.isNull(userInfo._id) != true ){
-        _self.user_id = userInfo._id;
-        _self.type = _self.$route.query.flag;
-        _self.title = _self.type==0 ? '案例展示' : _self.type==1 ? '个人荣誉' : _self.type==2 ? '我的作品' :'';
+      _self.user_id = !common.isNull(uid) ? uid : !common.isNull(userInfo._id) ? userInfo._id : null;
+      if( !common.isNull(_self.user_id) ){
         _self.initData();
       }
     },

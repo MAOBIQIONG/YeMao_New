@@ -23,9 +23,11 @@
         </div>
       </div>
     </div>
-    <!--退出登陆-->
-    <div class="tcdl" v-tap="{methods:submit}">
-      <span>提交</span>
+    <!--<div class="tcdl" v-tap="{methods:submit}">-->
+      <!--<span>提交</span>-->
+    <!--</div>-->
+    <div class="submit-btn">
+      <div class="btn" v-tap="{methods:submit}">提交</div>
     </div>
     <toast v-model="showMark" type="text" :text="showMsg"width="5.5rem"></toast>
   </div>
@@ -60,6 +62,9 @@
     methods: {
       goback() {
         this.$router.goBack();
+        setTimeout(function () {
+          document.activeElement.blur();
+        },100)
       },
       toUrl(name) {
         this.$router.push({name: name});
@@ -150,4 +155,8 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import "../../../static/css/my/yijian.css";
+  .content .pc-photo{
+    max-height: 5rem;
+    overflow-y: auto;
+  }
 </style>

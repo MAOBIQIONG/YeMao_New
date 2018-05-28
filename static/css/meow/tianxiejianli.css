@@ -10,7 +10,7 @@
   width:100%;
   display: inline-block;
   text-align: center;
-  border-bottom: 2px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
 }
 .content .touxiang .tu{
   width:1.5rem;
@@ -71,13 +71,13 @@
   outline: medium;
 }
 .content .ys-time .qdtime:last-child {
-  border: none;
+  /*border: none;*/
 }
 
 .content .pc-shuru {
   position: relative;
   width: 100%;
-  border-top: 1px solid #F2F2F2;
+  /*border-top: 1px solid #F2F2F2;*/
   margin: auto;
   background-color: white;
 }

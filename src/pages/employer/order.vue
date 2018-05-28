@@ -424,6 +424,7 @@
           var data = response.data;
           if ( data && data.code==200 ) {
             _self.order.project_state=1;
+            _self.order.project_winBidder=_self.project_winBidder;
             _self.$store.state.indexRefreshMark = 1;
             _self.$store.state.employerRefreshMark = 1;
             _self.showToast('选择成功！');

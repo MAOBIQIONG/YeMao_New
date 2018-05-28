@@ -618,12 +618,16 @@
         let _self = this;
         // 一级评论删除
         if( params.floor == 0 ){
+          // 删除评论数
+          _self.meow.comments = _self.meow.comments>0 ? _self.meow.comments-1 : 0;
+          // 删除评论
           _self.comments.forEach(function (item,index) {
             if( params._id == item._id.toString() ){
               _self.comments.splice(index,1);
             }
           })
         }else{
+          // 删除回复
           _self.comments.forEach(function (item,index) {
             item.replys.forEach(function (ite,inde) {
               if( params._id == ite._id.toString() ){

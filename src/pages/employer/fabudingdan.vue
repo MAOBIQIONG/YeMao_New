@@ -6,12 +6,12 @@
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
-    <scroller
-      :height="height"
-      :lock-x="true"
-      :lock-y="false"
-      ref="scroller"
-    >
+    <!--<scroller-->
+      <!--:height="height"-->
+      <!--:lock-x="true"-->
+      <!--:lock-y="false"-->
+      <!--ref="scroller"-->
+    <!--&gt;-->
       <!--发布订单内容-->
       <div class="content1">
         <div class="fb-content">
@@ -126,7 +126,7 @@
           </div>
         </div>
       </div>
-    </scroller>
+    <!--</scroller>-->
 
     <!--弹窗-->
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
@@ -144,9 +144,12 @@
 </template>
 
 <script>
-  import { Scroller,XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast, Confirm } from 'vux'
+  import { Scroller,XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast, Confirm, TransferDomDirective as TransferDom } from 'vux'
   import store from '@/vuex/store'
   export default {
+    directives: {
+      TransferDom
+    },
     components: {
         XAddress,
       Datetime,
@@ -252,12 +255,12 @@
       console.log(fontSize);
       this.height ='-' + remHeight
       console.log('height',this.height);
-      // console.log('mounted');
-      this.$nextTick(
-        ()=>{
-          this.$refs.scroller.reset({top:0});
-        }
-      );
+      console.log('mounted');
+      // this.$nextTick(
+      //   ()=>{
+      //     this.$refs.scroller.reset({top:0});
+      //   }
+      // );
       var dataFromPreviewer = this.$store.state.dataFromPreviewer;
       if(!common.isNull(dataFromPreviewer)){
         let screenHeight =document.documentElement.clientHeight;
@@ -459,35 +462,38 @@
       validate(improve){
         var _self = this;
         if(improve){
-          if( common.isNull(_self.userInfo) == true ){
+          if( common.isNull(_self.userInfo) ){
             _self.showToast("未成功获取用户信息!");
             return false
           }
         }else {
-          if( common.isNull(_self.subParams.user_id) == true ){
+          if( common.isNull(_self.subParams.user_id) ){
             _self.showToast("未成功获取用户信息!");
             return false
           }
         }
-
-        if( common.isNull(_self.subParams.project_type) == true ){
+        if( common.isNull(_self.subParams.project_type) ){
           _self.showToast("请选择项目类型!");
           return false
         }
-        if( common.isNull(_self.subParams.project_region) == true ){
+        if( common.isNull(_self.subParams.project_region) ){
           _self.showToast("请选择项目地区!");
           return false
         }
-        if( common.isNull(_self.subParams.project_title) == true ){
+        if( common.isNull(_self.subParams.project_title) ){
           _self.showToast("请输入项目标题!");
           return false
         }
-        if( common.isNull(_self.subParams.project_describe) == true ){
+        if( common.isNull(_self.subParams.project_describe) ){
           _self.showToast("请输入项目描述!");
           return false
         }
-        if( common.isNull(_self.subParams.project_budget) == true ){
+        var budget = _self.subParams.project_budget;
+        if( common.isNull(budget) ){
           _self.showToast("请输入预算金额!");
+          return false
+        }else if( common.checkFloat(budget)==0 ){
+          _self.showToast("预算金额不能为0!");
           return false
         }
         var currdate = common.getSomeday();
@@ -495,20 +501,32 @@
           _self.showToast("抢单截止日期不能小于等于当前日期!");
           return false
         }
-        if( common.isNull(_self.subParams.project_unit) == true ){
+        var unit = _self.subParams.project_unit;
+        if( common.isNull(unit) ){
           _self.showToast("请输入设计单位!");
           return false
+        }else if( common.checkFloat(unit)==0 ){
+          _self.showToast("设计单位不能为0!");
+          return false
         }
-        if( common.isNull(_self.subParams.project_area) == true ){
+        var area = _self.subParams.project_area;
+        if( common.isNull(area) ){
           _self.showToast("请选择设计面积!");
+          return false
+        }else if( common.checkFloat(area)==0 ){
+          _self.showToast("设计面积不能为0!");
           return false
         }
         if( _self.subParams.project_depth.length == 0 ){
           _self.showToast("请选择设计深度!");
           return false
         }
-        if( common.isNull(_self.subParams.project_workHours) == true ){
+        var hours = _self.subParams.project_workHours;
+        if( common.isNull(hours) ){
           _self.showToast("请输入工时!");
+          return false
+        }else if( common.checkFloat(hours)==0 ){
+          _self.showToast("工时不能为0!");
           return false
         }
         if( !common.dateCompare(_self.deadLine,_self.startTime) ){
@@ -647,43 +665,6 @@
     height: 100%;
     overflow: auto;
   }
-  /*地区*/
-  .vux-no-group-title {
-    margin-top:0 !important;
-    font-size: 0.28rem !important;
-  }
-  .weui-cells{
-    background: transparent !important;
-  }
-  .weui-cell_access {
-    padding:0 !important;
-    /*width: 1.8rem;*/
-    height: 0.8rem;
-    display:inline-block!important;
-  }
-  .weui-cell_access .weui-cell__ft{
-    position: static !important;
-    line-height: 0.8rem;
-    padding-right: 0 !important;
-  }
-  .vux-cell-value{
-    color: #999999;
-  }
-  .vux-cell-primary vux-popup-picker-select-box{
-    width: 100%;
-  }
-  .vux-popup-picker-value{
-    /*width: 2.9rem;*/
-    display:block;
-    text-align: left;
-    height: 0.8rem !important;
-    line-height: 0.8rem !important;
-    overflow:hidden;
-    padding-left: 0.1rem;
-    word-break:keep-all;           /* 不换行 */
-    white-space:nowrap;          /* 不换行 */
-    text-overflow:ellipsis;
-  }
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -694,5 +675,8 @@
   .demo5-item-selected {
     background: #f65aa6;
     color:#fff;
+  }
+  .xmlx-kuang{
+    width: 1.5rem;
   }
 </style>

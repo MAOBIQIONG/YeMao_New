@@ -763,6 +763,7 @@ const common = {
     queryByUserId:'queryByUserId',                 // 根据user_id查询单个集合数据
     queryList:'queryList',                         // 分页查询数据
     queryResumeById:'queryResumeById',             // 人才简历详情
+    updateResumeById:'updateResumeById',           // 修改简历
     queryWEById:'queryWEById',                     // 工作经历详情
     addAA:'addAlumniAssoc',                        // 添加校友会
     queryAlumniById:'queryAlumniById',             // 校友会详情
