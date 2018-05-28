@@ -144,9 +144,12 @@
 </template>
 
 <script>
-  import { Scroller,XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast, Confirm } from 'vux'
+  import { Scroller,XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, Toast, Confirm, TransferDomDirective as TransferDom } from 'vux'
   import store from '@/vuex/store'
   export default {
+    directives: {
+      TransferDom
+    },
     components: {
         XAddress,
       Datetime,
@@ -252,12 +255,12 @@
       console.log(fontSize);
       this.height ='-' + remHeight
       console.log('height',this.height);
-      // console.log('mounted');
-      this.$nextTick(
-        ()=>{
-          this.$refs.scroller.reset({top:0});
-        }
-      );
+      console.log('mounted');
+      // this.$nextTick(
+      //   ()=>{
+      //     this.$refs.scroller.reset({top:0});
+      //   }
+      // );
       var dataFromPreviewer = this.$store.state.dataFromPreviewer;
       if(!common.isNull(dataFromPreviewer)){
         let screenHeight =document.documentElement.clientHeight;
@@ -459,35 +462,38 @@
       validate(improve){
         var _self = this;
         if(improve){
-          if( common.isNull(_self.userInfo) == true ){
+          if( common.isNull(_self.userInfo) ){
             _self.showToast("未成功获取用户信息!");
             return false
           }
         }else {
-          if( common.isNull(_self.subParams.user_id) == true ){
+          if( common.isNull(_self.subParams.user_id) ){
             _self.showToast("未成功获取用户信息!");
             return false
           }
         }
-
-        if( common.isNull(_self.subParams.project_type) == true ){
+        if( common.isNull(_self.subParams.project_type) ){
           _self.showToast("请选择项目类型!");
           return false
         }
-        if( common.isNull(_self.subParams.project_region) == true ){
+        if( common.isNull(_self.subParams.project_region) ){
           _self.showToast("请选择项目地区!");
           return false
         }
-        if( common.isNull(_self.subParams.project_title) == true ){
+        if( common.isNull(_self.subParams.project_title) ){
           _self.showToast("请输入项目标题!");
           return false
         }
-        if( common.isNull(_self.subParams.project_describe) == true ){
+        if( common.isNull(_self.subParams.project_describe) ){
           _self.showToast("请输入项目描述!");
           return false
         }
-        if( common.isNull(_self.subParams.project_budget) == true ){
+        var budget = _self.subParams.project_budget;
+        if( common.isNull(budget) ){
           _self.showToast("请输入预算金额!");
+          return false
+        }else if( common.checkFloat(budget)==0 ){
+          _self.showToast("预算金额不能为0!");
           return false
         }
         var currdate = common.getSomeday();
@@ -495,20 +501,32 @@
           _self.showToast("抢单截止日期不能小于等于当前日期!");
           return false
         }
-        if( common.isNull(_self.subParams.project_unit) == true ){
+        var unit = _self.subParams.project_unit;
+        if( common.isNull(unit) ){
           _self.showToast("请输入设计单位!");
           return false
+        }else if( common.checkFloat(unit)==0 ){
+          _self.showToast("设计单位不能为0!");
+          return false
         }
-        if( common.isNull(_self.subParams.project_area) == true ){
+        var area = _self.subParams.project_area;
+        if( common.isNull(area) ){
           _self.showToast("请选择设计面积!");
+          return false
+        }else if( common.checkFloat(area)==0 ){
+          _self.showToast("设计面积不能为0!");
           return false
         }
         if( _self.subParams.project_depth.length == 0 ){
           _self.showToast("请选择设计深度!");
           return false
         }
-        if( common.isNull(_self.subParams.project_workHours) == true ){
+        var hours = _self.subParams.project_workHours;
+        if( common.isNull(hours) ){
           _self.showToast("请输入工时!");
+          return false
+        }else if( common.checkFloat(hours)==0 ){
+          _self.showToast("工时不能为0!");
           return false
         }
         if( !common.dateCompare(_self.deadLine,_self.startTime) ){

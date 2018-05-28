@@ -1561,7 +1561,7 @@ body,html{
   height: 0.8rem !important;
   line-height: 0.8rem !important;
   overflow:hidden;
-  padding-left: 0.1rem;
+  /*padding-left: 0.1rem;*/
   word-break:keep-all;           /* 不换行 */
   white-space:nowrap;          /* 不换行 */
   text-overflow:ellipsis;

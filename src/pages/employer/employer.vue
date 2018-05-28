@@ -260,6 +260,9 @@
           _self.sortMark = param.value;
           _self.pagination.pageNo = 0;
           _self.loadMore();
+          _self.$nextTick(() => {
+            _self.$refs.scroller.reset({top: 0})
+          })
         }
       },
       // 抢单

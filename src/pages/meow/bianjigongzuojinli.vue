@@ -2,7 +2,7 @@
   <div>
     <!--头部导航-->
     <div class="header">
-      <div class="header-left" v-tap="{methods:showFun}"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:showFun,flag:0}"><img src="../../../static/images/back.png" /></div>
       <span>编辑工作经历</span>
       <div class="header-right" v-tap="{methods:saveData}">保存</div>
     </div>
@@ -39,7 +39,7 @@
         <textarea v-model="dataParams.description" class="area" :maxlength="limitNum" placeholder="请输入工作描述"></textarea>
         <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>{{limitNum}}</span></p>
       </div>
-      <div class="tjgzjl" @click="removeData()">
+      <div class="tjgzjl" v-tap="{methods:showFun,flag:1}">
         删除此工作经历
       </div>
     </div>
@@ -51,7 +51,7 @@
                @on-confirm="onConfirm"
                @on-show="onShow"
                @on-hide="onHide">
-        <p style="text-align:center;">确认放弃编辑?</p>
+        <p style="text-align:center;" v-text="confirmTips"></p>
       </confirm>
     </div>
   </div>
@@ -84,7 +84,9 @@ export default {
         toastShow:false,
         toastText:"",
         isEdit:false,
-        show: false,
+        show: false,                  // confirm确认提示框显隐标识
+        confirmTips: '',              // confirm确认提示框内容
+        confirmFlag: 0                // confirm确认提示框标识
       }
     },
     created(){
@@ -127,10 +129,12 @@ export default {
         },
         onConfirm (msg) {
           console.log('on confirm')
-          // if (msg) {
-          // alert(msg)
-          // }
-          this.$router.goBack()
+          var _self = this;
+          if( _self.confirmFlag==0 ){
+            _self.$router.goBack();
+          }else if( _self.confirmFlag==1 ){
+            _self.removeData();
+          }
         },
         onHide () {
           console.log('on hide')
@@ -138,8 +142,15 @@ export default {
         onShow () {
           console.log('on show')
         },
-        showFun(){
-            this.show=true;
+        showFun (params) {
+          var _self = this;
+          _self.confirmFlag=params.flag;
+          if( _self.confirmFlag==0 ){
+            _self.confirmTips='确认放弃编辑?';
+          }else if( _self.confirmFlag==1 ){
+            _self.confirmTips='确认删除该条纪录?';
+          }
+          _self.show=true;
         },
         //留言字数限制
         wzxz(){
