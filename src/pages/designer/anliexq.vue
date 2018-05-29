@@ -25,7 +25,8 @@
         <div>
           <div class="xc-top">
             <div class="touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:chw.user._id}}">
-              <img :src="checkAvatar(chw.user.img)"/>
+              <!--<img :src="checkAvatar(chw.user.img)"/>-->
+              <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(chw.user.img) + ')'}"></div>
             </div>
             <p>{{chw.user.user_name}}</p>
             <div class="shijian" v-if="chw.type==1||chw.type==2">{{chw.date}}</div>
@@ -47,9 +48,14 @@
             <div class="gzpj-list" v-for="(item,index) in comments" :key="index">
               <div class="pl-top">
                 <div class="left">
-                  <img v-if="item.anonymous==0" :src="checkAvatar(item.user.img)"
-                       v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}"/>
-                  <img v-else :src="checkAvatar('')"/>
+                  <!--<img v-if="item.anonymous==0" :src="checkAvatar(item.user.img)"-->
+                       <!--v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}"/>-->
+                  <!--<img v-else :src="checkAvatar('')"/>-->
+                  <div class="img"
+                       v-if="item.anonymous==0"
+                       :style="{backgroundImage: 'url(' + checkAvatar(item.user.img) + ')'}"
+                       v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}"></div>
+                  <div class="img" v-else :style="{backgroundImage: 'url(' + checkAvatar('') + ')'}"></div>
                 </div>
                 <div v-if="item.anonymous==0" class="center">
                   <span class="comment__username">{{item.user.user_name}}</span>

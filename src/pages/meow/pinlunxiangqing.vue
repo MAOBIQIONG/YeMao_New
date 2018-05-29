@@ -27,8 +27,10 @@
         <div>
           <div class="pinlunlist">
             <div class="top-pinlun">
-              <div class="tp-left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:comment.user._id}}">
-                <span><img :src="checkAvatar(comment.user.img)"/></span><span>{{comment.user.user_name}}</span>
+              <div class="tp-left3" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:comment.user._id}}">
+                <!--<span><img :src="checkAvatar(comment.user.img)"/></span><span>{{comment.user.user_name}}</span>-->
+                <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(comment.user.img) + ')'}"></div>
+                <p class="name">{{comment.user.user_name}}</p>
               </div>
               <div class="tp-right" v-tap="{methods:chwLike}">
                 <span>{{comment.like}}</span>

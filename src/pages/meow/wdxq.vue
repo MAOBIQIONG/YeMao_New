@@ -33,11 +33,15 @@
                           <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
                       </div> -->
                   <div class="nichengshijian">
-                      <div class="ns-left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:chw.user._id}}">
-                      <span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>
+                      <!--<div class="ns-left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:chw.user._id}}">-->
+                          <!--<span><img :src="checkAvatar(chw.user.img)"/></span><span>{{chw.user.user_name}}</span>-->
+                      <!--</div>-->
+                      <div class="ns-left2" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:chw.user._id}}">
+                          <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(chw.user.img) + ')'}"></div>
+                          <p class="name">{{chw.user.user_name}}</p>
                       </div>
                       <div class="tm-right">
-                      <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
+                          <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
                       </div>
                   </div>
                 <div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">
@@ -68,8 +72,9 @@
                   <div class="pinglun">
                   <div class="dsr">
                       <ul>
-                      <li v-for="(l,i) in likes" :key="i">
-                          <img :src="checkAvatar(l.user.img)"/>
+                      <li v-for="(l,i) in likes" :key="i" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:l.user._id}}">
+                          <!--<img :src="checkAvatar(l.user.img)"/>-->
+                          <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(l.user.img) + ')'}"></div>
                       </li>
                       </ul>
                       <div class="dianzhan" v-tap="{methods:toLikeMember,chw_id:chw_id}">
@@ -79,8 +84,10 @@
                   <p>热门评论</p>
                   <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
                       <div class="top-pinlun">
-                          <div class="tp-left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}">
-                              <span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>
+                          <div class="tp-left2" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}">
+                              <!--<span><img :src="checkAvatar(item.user.img)"/></span><span>{{item.user.user_name}}</span>-->
+                            <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(item.user.img) + ')'}"></div>
+                            <p class="name">{{item.user.user_name}}</p>
                           </div>
                           <div class="tp-right"  v-tap="{methods:commentLike,comment_id:item._id,commentArrId:index}">
                               <span>{{item.like}}</span>

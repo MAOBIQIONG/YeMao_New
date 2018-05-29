@@ -25,7 +25,8 @@
             <div class="sjse-list">
               <div class="sjs-top">
                 <div class="st-touxiang" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:meow.user_id}}">
-                  <img :src="checkAvatar(meow.user.img)"/>
+                  <!--<img :src="checkAvatar(meow.user.img)"/>-->
+                  <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(meow.user.img) + ')'}"></div>
                 </div>
                 <div class="st-neirong" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:meow.user_id}}">
                   <div class="sn-top">
@@ -69,7 +70,8 @@
           <div class="liuyan">
             <div class="comment-box" v-for="(com,index) in comments" :key="index">
               <div class="left" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:com.user._id}}">
-                <div class="img"><img :src="checkAvatar(com.user.img)"/></div>
+                <!--<div class="img"><img :src="checkAvatar(com.user.img)"/></div>-->
+                <div class="image" :style="{backgroundImage: 'url(' + checkAvatar(com.user.img) + ')'}"></div>
               </div>
               <div class="right">
                 <div class="comment-title">

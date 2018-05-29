@@ -38,6 +38,27 @@
   vertical-align: middle;
 }
 
+/*******************重写******************/
+.content .nichengshijian .ns-left2 {
+  float: left;
+  display:-webkit-box;
+}
+.content .nichengshijian .ns-left2 .img {
+  width:0.6rem;
+  height: 0.6rem;
+  margin: 0.1rem 0.2rem 0rem 0rem;
+  border-radius: 50%;
+  /*background-image:url(images/text.png);*/
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+.content .nichengshijian .ns-left2 .name{
+  -webkit-box-flex:1;
+  margin-left: 0rem;
+  margin-top: 0rem;
+}
+
 .content .nichengshijian .tm-right {
   float: right;
 }
@@ -143,6 +164,17 @@
   height: 100%;
   display: block;
 }
+/*******************重写******************/
+.pinglun .dsr ul li .img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  /*background-image:url(images/text.png);*/
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
 .pinglun .dsr .dianzhan {
   float: left;
   height: 0.8rem;
@@ -178,6 +210,29 @@
   border-radius: 50%;
   display: inline-block;
   vertical-align: middle;
+}
+
+/*******************重写******************/
+.pinglun .pinlunlist .top-pinlun .tp-left2 {
+  float: left;
+  line-height: 0.8rem;
+  font-size: 0.28rem;
+  display:-webkit-box;
+}
+.pinglun .pinlunlist .top-pinlun .tp-left2 .img {
+  width:0.6rem;
+  height: 0.6rem;
+  margin: 0.1rem;
+  border-radius: 50%;
+  /*background-image:url(images/text.png);*/
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+.pinglun .pinlunlist .top-pinlun .tp-left2 .name{
+  -webkit-box-flex:1;
+  margin-left: 0rem;
+  margin-top: 0rem;
 }
 
 .pinglun .pinlunlist .top-pinlun .tp-right {

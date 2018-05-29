@@ -1275,6 +1275,15 @@ body,html{
   vertical-align: middle;
   border-radius: 50%;
 }
+.comment-box .left .image{
+  height: 0.6rem;
+  width: 0.6rem;
+  border-radius: 50%;
+  /*background-image:url(images/text.png);*/
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+}
 
 .comment-box .right{
   padding: 0.2rem 0rem 0.2rem 0.2rem;

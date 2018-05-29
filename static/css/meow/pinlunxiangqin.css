@@ -50,6 +50,30 @@
   vertical-align: middle;
 }
 
+ /*******************重写******************/
+.pinlunlist .top-pinlun .tp-left3 {
+  float: left;
+  line-height: 0.8rem;
+  height:0.5rem;
+  font-size: 0.28rem;
+  display:-webkit-box;
+}
+.pinlunlist .top-pinlun .tp-left3 .img {
+  width:0.6rem;
+  height: 0.6rem;
+  margin: 0.1rem;
+  border-radius: 50%;
+  /*background-image:url(images/text.png);*/
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+.pinlunlist .top-pinlun .tp-left3 .name{
+  -webkit-box-flex:1;
+  margin-left: 0rem;
+  margin-top: 0rem;
+}
+
  .pinlunlist .top-pinlun .tp-right {
   float: right;
   line-height: 0.5rem;

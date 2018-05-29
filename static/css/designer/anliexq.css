@@ -26,6 +26,17 @@
   display: block;
 }
 
+/*******************重写******************/
+.xc-top .touxiang .img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  /*background-image:url(images/text.png);*/
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
 .xc-top p {
   float: left;
   font-size: 0.28rem;
@@ -146,6 +157,16 @@
   width: 100%;
   height: 100%;
   display: block;
+}
+/*******************重写******************/
+.pingjia-list .gzpj-list .pl-top .left .img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  /*background-image:url(images/text.png);*/
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
 }
 .pingjia-list .gzpj-list .pl-top .center{
   font-size: 0.28rem;
