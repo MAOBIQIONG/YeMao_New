@@ -10,7 +10,8 @@
       <div class="xinximokuai">
         <div class="ximk-top">
           <div class="touxiang">
-            <img :src="checkAvatar(user.img)"/>
+            <!--<img :src="checkAvatar(user.img)"/>-->
+            <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(user.img) + ')'}"></div>
           </div>
           <div class="xiright">
             <div class="nicheng">

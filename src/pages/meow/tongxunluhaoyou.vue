@@ -10,7 +10,7 @@
       <!--搜索-->
       <div class="shousuo">
         <div class="sskuang">
-          <input type="search" class="sc" placeholder="搜索" v-model="searchText"/>
+          <input type="search" class="sc" placeholder="搜索" v-model="searchText" style="border-radius: 0rem;"/>
         </div>
       </div>
       <div class="dshy">
@@ -357,7 +357,7 @@ import{Confirm,Toast,TransferDomDirective as TransferDom} from 'vux'
                     } else {
                       _self.showToast(data.msg);
                     }
-                    
+
 
                 })
         }

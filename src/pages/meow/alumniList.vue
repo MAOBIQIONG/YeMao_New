@@ -6,7 +6,7 @@
       <span>成员列表</span>
     </div>
     <div class="content content-p">
-      <div class="dzlist" v-for="(item,index) in alumnisList" :key="index">
+      <div class="dzlist" v-for="(item,index) in alumnisList" :key="index" v-tap="{methods:toDetails,id:item.user_id}">
         <div class="left" :style="{backgroundImage:`url(${checkAvatar(item.user.img)})`}"></div>
         <div class="right">{{item.user.user_name}}</div>
         <!-- <div class="renzheng">
@@ -23,7 +23,8 @@
   export default {
     data: function () {
       return {
-          alumnisList:[]
+        user:{},
+        alumnisList:[]
       }
     },
     methods: {
@@ -37,6 +38,15 @@
         checkAvatar (path) {
             return common.getAvatar(path)
         },
+        // 详情页
+        toDetails (param) {
+          var _self = this;
+          if( !common.isNull(_self.user._id) && _self.user._id==param.id ){
+            _self.$router.push({name: 'shejishigerenzhongxin'});
+          } else {
+            _self.$router.push({name: 'sjszxxq', query: {id: param.id}});
+          }
+        },
     },
     created(){
         let _self = this;
@@ -46,10 +56,11 @@
             _self.alumnisList = alumnisList;
         }
         console.log('alumnisList',alumnisList);
+        this.user = common.getObjStorage("userInfo") || {};
     },
-    destroyed(){
-        common.delStorage('alumnisList');
-    }
+//    destroyed(){
+//        common.delStorage('alumnisList');
+//    }
   }
 </script>
 <style scoped>

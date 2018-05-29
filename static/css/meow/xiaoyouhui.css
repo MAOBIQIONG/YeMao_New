@@ -2,7 +2,7 @@
 .content .jianli {
   width: 7.5rem;
   height: 1.6rem;
-  
+
 }
 
 .content .jianli .touxiang {
@@ -42,8 +42,17 @@
 }
 
 .content .jianli .jieshao .xinge {
+  height: 0.8rem;
+  overflow: hidden;
   font-size: 0.24rem;
   color: #d6d2d6;
+
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  overflow-x: hidden;
 }
 
 .content .jianli .jieshao .biaoqian {

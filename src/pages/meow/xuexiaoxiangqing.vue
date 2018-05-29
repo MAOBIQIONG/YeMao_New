@@ -31,10 +31,12 @@
           <div class="guanliyuan" v-tap="{methods:toDetails,id:alumni.user_id}">
             <div class="gly">
               <div class="touxiang" v-if="alumni.user!=null&&alumni.user!=undefined">
-                <img :src="checkAvatar(alumni.user.img)" />
+                <!--<img :src="checkAvatar(alumni.user.img)" />-->
+                <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(alumni.user.img) + ')'}"></div>
               </div>
               <div class="touxiang" v-else>
-                <img src="../../../static/images/bj.jpg" />
+                <!--<img src="../../../static/images/bj.jpg" />-->
+                <div class="img default"></div>
               </div>
               <p class="nicheng" v-if="alumni.user!=null&&alumni.user!=undefined">{{alumni.user.user_name}}</p>
               <p class="nicheng" v-else>昵称</p>
@@ -50,7 +52,10 @@
               <span v-else>0</span>人
             </div>
             <ul class="cylist" v-for="(item,index) in alumniList.slice(0,7)" :key="index">
-              <li><img :src="checkAvatar(item.user.img)" /></li>
+              <li>
+                <!--<img :src="checkAvatar(item.user.img)" />-->
+                <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(item.user.img) + ')'}"></div>
+              </li>
             </ul>
           </div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
@@ -179,6 +184,7 @@ import {Loading,Confirm,TransferDomDirective as TransferDom,Toast} from 'vux';
             params: params
         }, response => {
           // console.log(response);
+          _self.loadingShow = false;
           let data = response.data.alumni;
           _self.data = data;
           if (data) {
