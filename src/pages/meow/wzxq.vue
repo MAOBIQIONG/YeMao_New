@@ -261,7 +261,7 @@ export default {
             this.$router.push({name:'pinlunxiangqing',query:{comment_id:param.comment_id,chw_id:param.chw_id}});
         },
         getDate: function (time) {
-            return common.timeStamp2String(time);
+            return common.getDateDiff(time);
         },
         //点赞
         like_dom(param){
