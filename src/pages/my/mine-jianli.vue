@@ -406,7 +406,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     height: 0.88rem;
     background: url("../../../static/images/xin.png") no-repeat;
     background-size: 0.6rem 0.6rem;
-    background-position: center right;
+    background-position: center center;
 
   }
   .hr-hover{
@@ -414,7 +414,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     height: 0.88rem;
     background: url("../../../static/images/xinghove.png") no-repeat;
     background-size: 0.6rem 0.6rem;
-    background-position: center right;
+    background-position: center center;
   }
     .imgNoData{
         width: 4.5rem;
