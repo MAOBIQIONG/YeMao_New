@@ -118,8 +118,17 @@ Router.prototype.goBack = function (num) {
   if( num == null || num == undefined ){
     num = -1;
   }
-  this.isBack = true
-  window.history.go(num)
+  this.isBack = true;
+
+// 检测是否存在聚焦元素，如果存在，失去焦点（关闭软键盘）
+  if( document.activeElement.className!='' ){
+    document.activeElement.blur();
+    setTimeout(function () {
+      window.history.go(num);
+    },200);
+  }else{
+    window.history.go(num);
+  }
 }
 
 const routeArray = [

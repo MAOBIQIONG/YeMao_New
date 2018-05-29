@@ -13,10 +13,13 @@
         :height="height"
         :lock-x="lockX"
         :lock-y="lockY"
+        :use-pulldown="true"
         :use-pullup="true"
+        :pulldown-config="pulldownConfig"
         :pullup-config = "pullupConfig"
         @on-scroll="scroll"
         @on-scroll-bottom="onScrollBottom"
+        @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
       >
@@ -188,7 +191,17 @@
           pageSize: 10
         },
         pullUpDownStatus: {
+          pulldownStatus: 'default',
           pullupStatus: 'default'
+        },
+        pulldownConfig:{
+          content: '下拉刷新',
+          height: 60,
+          autoRefresh: false,
+          downContent: '下拉刷新',
+          upContent: '放开刷新',
+          loadingContent: '刷新中...',
+          clsPrefix: 'xs-plugin-pulldown-'
         },
         pullupConfig:{
           content: '上拉加载',
@@ -375,6 +388,10 @@
       scroll(position){
         // console.log("on-scroll",position);
       },
+      pullDownLoading(){
+        console.log('on-pull-down-loading');
+        this.refreshPageDate();
+      },
       pullUpLoading(){
         console.log('on-pull-up-loading');
         this.loadMore();
@@ -464,6 +481,7 @@
         }
         _self.loadMoreStatus.show=false;
         _self.loadMoreStatus.showLoading=false;
+        _self.$refs.scroller.donePulldown();
         _self.$refs.scroller.donePullup();
         //判断数据是否有一页
         if(comments.length < _self.pagination.pageSize){
