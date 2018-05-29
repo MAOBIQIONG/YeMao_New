@@ -121,7 +121,8 @@
         </div>
       </div>
       <!--聊天-->
-      <div class="mmlt" v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:resume.user_id,name:resume.real_name,img:resume.img}}">喵 喵 聊 天</div>
+      <div class="mmlt" v-if="isMyResume" v-tap="{methods:toUrlWUI,pagename:'tianxiejianli'}">编 辑 简 历</div>
+      <div class="mmlt" v-else v-tap="{methods:toUrlWUI,pagename:'liaotian',query:{id:resume.user_id,name:resume.real_name,img:resume.img}}">喵 喵 聊 天</div>
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <loading :show="loadingShow" text="加载中"></loading>
@@ -180,6 +181,11 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
         let user = common.getObjStorage("userInfo");
         if( !common.isNull(user._id) ){
             this.user_id = user._id;
+            /******************************************************/
+            let resume_user_id = common.getStorage('resume_user_id');
+            if(resume_user_id==this.user_id){
+              this.isMyResume = true;
+            }
         } else {
             console.log('未获取用户参数');
         }
@@ -189,7 +195,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
             if(resume_user_id==this.user_id){
                 this.isMyResume = true;
             }
-            common.delStorage('resume_user_id');
+            // common.delStorage('resume_user_id');
             this.requestData();
         }
         if(isUserId){

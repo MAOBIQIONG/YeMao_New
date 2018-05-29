@@ -29,7 +29,8 @@
               <li v-for="(message, index) in dataArray" :key="index" :class="message.from==user._id?'an-move-right':'an-move-left'">
                 <p class="time"> <span v-text="getDataStr(message.create_date)"></span></p>
                 <div class="main" :class="message.sender==user._id?'self':''">
-                  <img class="avatar" :src="message.sender==user._id?ownerAvatarUrl:checkAvatar(message.user.img)">
+                  <!--<img class="avatar" :src="message.sender==user._id?ownerAvatarUrl:checkAvatar(message.user.img)">-->
+                  <div class="avatar img" :style="{backgroundImage: message.sender==user._id? 'url('+ownerAvatarUrl+')' : 'url('+checkAvatar(message.user.img)+')'}"></div>
                   <div class="text" v-tap="{methods:show,text:message.content}" v-html="filterImgs(message.content)"></div>
                 </div>
               </li>
@@ -478,6 +479,12 @@
     left: 0;
     animation: moveLeft .7s ease;
      -webkit-animation:moveLeft .7s ease;
+  }
+  .an-move-left .main .img{
+    /*background-image:url(images/text.png);*/
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
   }
   .an-move-right{
     /*left: 0;*/

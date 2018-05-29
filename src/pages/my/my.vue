@@ -20,7 +20,8 @@
           <ul>
             <li v-tap="{methods:toUrlAfterLogin,pagename:'message'}">
               <p>
-                <img src="../../../static/images/my/xiaoxi.png" />
+                <img src="../../../static/images/my/xiaoxi.png"/>
+                <span class="dot icon-dot-red" v-if="userInfo.unread_number>0"></span>
               </p>
               <p>消息</p>
             </li>
@@ -72,10 +73,10 @@
               <div class="xingxi">意见反馈</div>
               <div class="list-right"></div>
             </div>
-            <div class="list" v-tap="{methods:shareApp}">
-              <div class="xingxi">分享夜猫</div>
-              <div class="list-right"><span>{{cacheSize}}</span></div>
-            </div>
+            <!--<div class="list" v-tap="{methods:shareApp}">-->
+              <!--<div class="xingxi">分享夜猫</div>-->
+              <!--<div class="list-right"><span>{{cacheSize}}</span></div>-->
+            <!--</div>-->
             <div class="list" v-tap="{methods:toUrl,pagename:'mineguanyu'}">
               <div class="xingxi">关于夜猫</div>
               <div class="list-right"></div>
@@ -136,11 +137,22 @@
       console.log("created:")
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     activated: function () {
       console.log("activated:")
       var _self = this;
       _self.userInfo = common.getObjStorage("userInfo") || {};
+      // 首页未读刷新
+      var urm = _self.$store.state.unreadNumRefreshMark;
+      console.log("urm:"+urm)
+      if ( urm > 0 ) {
+        _self.$store.state.unreadNumRefreshMark = 0;
+        _self.getUnreadNum();
+      }
+      // 重置监听接收消息回调
+      wyim.callback = _self.receiveMsg;
     },
     methods: {
       goback(){
@@ -292,6 +304,36 @@
         }
       },
 
+      // 初始化首页
+      getUnreadNum () {
+        var _self = this
+        if(common.isNull(_self.userInfo._id)) return;
+        var params = {
+          interfaceId: common.interfaceIds.getUnreadNum,
+          user_id: _self.userInfo._id
+        };
+        _self.$axios.post('/mongoApi', {
+          params: params
+        }, response => {
+          var data = response.data
+          if ( data ) {
+            _self.userInfo.unread_number = data.num || 0;
+            common.setStorage("userInfo",_self.userInfo);
+          }
+        })
+      },
+
+      // 接收消息后，检查未读消息数量
+      receiveMsg(){
+        // 刷新用户未读数量
+        var _self = this;
+        var num = common.checkInt(_self.userInfo.unread_number);
+        if( !common.isNull(_self.userInfo._id) && num==0 ){
+          _self.userInfo.unread_number = 1;
+          common.setStorage("userInfo",_self.userInfo);
+        }
+      },
+
     }
   }
 </script>
@@ -306,5 +348,16 @@
     background: #fd70bc;
     position: absolute;
     z-index: 0;
+  }
+  .msage-top ul li p{
+    position: relative;
+  }
+  .dot{
+    display: block;
+    width: 0.2rem;
+    height: 0.2rem;
+    position: absolute;
+    top: 0rem;
+    right: 0.5rem;
   }
 </style>

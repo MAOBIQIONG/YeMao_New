@@ -1513,6 +1513,11 @@ body,html{
   background: url('../images/index/search.png') left 0.2rem center no-repeat;
   background-size: 0.3rem auto;
 }
+/**红点**/
+.icon-dot-red{
+  background: url('../images/red.png') center center no-repeat;
+  background-size: 0.2rem 0.2rem;
+}
 
 /**vux样式重写**/
 /**confirm 确认按钮样式**/
