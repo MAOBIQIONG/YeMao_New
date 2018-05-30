@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="templete-body">
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
@@ -7,115 +7,117 @@
       <div class="header-right" @click="nextStep()">下一步</div>
     </div>
     <!--发布订单内容-->
-    <div class="content content-p">
-      <div class="touxiang">
-           <div class="tu" v-tap="{ methods:modifyAvatar}" :style="{backgroundImage:`url(${checkAvatar(dataParams.img)})`}">
-               <!-- <img src="../../../static/images/meow/xiangji.png" v-if="isNull(dataParams.img)"/> -->
+    <div class="content">
+      <div class="flex-content">
+        <div class="touxiang">
+             <div class="tu" v-tap="{ methods:modifyAvatar}" :style="{backgroundImage:`url(${checkAvatar(dataParams.img)})`}">
+                 <!-- <img src="../../../static/images/meow/xiangji.png" v-if="isNull(dataParams.img)"/> -->
+              </div>
+              <p>上传头像</p>
+        </div>
+        <div class="ys-time">
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>姓名</span>
             </div>
-            <p>上传头像</p>
-      </div>
-      <div class="ys-time">
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>姓名</span>
-          </div>
-          <div class="qdtime-right">
-            <input v-model="dataParams.real_name" type="text" placeholder="请输入姓名" maxlength="8" />
-          </div>
-        </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>性别</span>
-          </div>
-          <div class="qdtime-right">
-            <checker v-model="dataParams.gender" radio-required default-item-class="demo1-item" selected-item-class="demo1-item-selected">
-              <checker-item value="男">男</checker-item>
-              <checker-item value="女">女</checker-item>
-            </checker>
-            <!--<form action="" method="get">-->
-              <!--<label><input name="Fruit" type="radio" value="男" />男 </label>-->
-              <!--<label><input name="Fruit" type="radio" value="女" />女</label>-->
-            <!--</form>-->
-          </div>
-        </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>出生年月</span>
-          </div>
-          <div class="qdtime-right">
-            <datetime class="shijian" placeholder="请选择生日" style="padding-right:0"
-                      :min-year="1949"
-                      :end-date="getCurrDate()"
-                      @on-change="onChange"
-                      v-model="dataParams.birthday"></datetime>
-          </div>
-        </div>
-      </div>
-      <div class="ys-time">
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>毕业院校</span>
-          </div>
-          <div class="qdtime-right">
-            <input v-model="dataParams.school_name" type="text" placeholder="请输入毕业院校" maxlength="10" />
-          </div>
-        </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>设计类型</span>
-          </div>
-          <div class="qdtime-right">
-            <select class="xmlx-kuang" v-model="dataParams.type">
-              <option value="">请选择类型</option>
-              <option v-for="item in typeList" :value="item._id">{{item.type_name}}</option>
-            </select>
-          </div>
-        </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>最高学历</span>
-          </div>
-          <div class="qdtime-right">
-            <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" maxlength="10" />
-          </div>
-        </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>工作年限</span>
-          </div>
             <div class="qdtime-right">
-                <select class="xmlx-kuang rtl" v-model="dataParams.working_year">
-                    <option value="">请选择工作年限</option>
-                    <option :value="item._id" v-for="(item,index) in workyearList" :key="index">{{item.type_name}}</option>
-                </select>
+              <input v-model="dataParams.real_name" type="text" placeholder="请输入姓名" maxlength="8" />
             </div>
+          </div>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>性别</span>
+            </div>
+            <div class="qdtime-right">
+              <checker v-model="dataParams.gender" radio-required default-item-class="demo1-item" selected-item-class="demo1-item-selected">
+                <checker-item value="男">男</checker-item>
+                <checker-item value="女">女</checker-item>
+              </checker>
+              <!--<form action="" method="get">-->
+                <!--<label><input name="Fruit" type="radio" value="男" />男 </label>-->
+                <!--<label><input name="Fruit" type="radio" value="女" />女</label>-->
+              <!--</form>-->
+            </div>
+          </div>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>出生年月</span>
+            </div>
+            <div class="qdtime-right">
+              <datetime class="shijian" placeholder="请选择生日" style="padding-right:0"
+                        :min-year="1949"
+                        :end-date="getCurrDate()"
+                        @on-change="onChange"
+                        v-model="dataParams.birthday"></datetime>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="ys-time">
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>邮箱</span>
+        <div class="ys-time">
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>毕业院校</span>
+            </div>
+            <div class="qdtime-right">
+              <input v-model="dataParams.school_name" type="text" placeholder="请输入毕业院校" maxlength="10" />
+            </div>
           </div>
-          <div class="qdtime-right"style="line-height:normal">
-            <x-input name="email" placeholder="请输入邮箱地址" is-type="email" text-align="right" v-model="dataParams.email"></x-input>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>设计类型</span>
+            </div>
+            <div class="qdtime-right">
+              <select class="xmlx-kuang rtl" v-model="dataParams.type">
+                <option value="">请选择类型</option>
+                <option v-for="item in typeList" :value="item._id">{{item.type_name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>最高学历</span>
+            </div>
+            <div class="qdtime-right">
+              <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" maxlength="10" />
+            </div>
+          </div>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>工作年限</span>
+            </div>
+              <div class="qdtime-right">
+                  <select class="xmlx-kuang rtl" v-model="dataParams.working_year">
+                      <option value="">请选择工作年限</option>
+                      <option :value="item._id" v-for="(item,index) in workyearList" :key="index">{{item.type_name}}</option>
+                  </select>
+              </div>
           </div>
         </div>
-        <div class="qdtime">
-          <div class="qdtime-left">
-            <span>所在城市</span>
+        <div class="ys-time">
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>邮箱</span>
+            </div>
+            <div class="qdtime-right"style="line-height:normal">
+              <x-input name="email" placeholder="请输入邮箱地址" is-type="email" text-align="right" v-model="dataParams.email"></x-input>
+            </div>
           </div>
-          <div class="qdtime-right">
-            <group class="xmlx-kuang">
-              <!-- <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address> -->
-                <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city"></x-address>
-            </group>
+          <div class="qdtime">
+            <div class="qdtime-left">
+              <span>所在城市</span>
+            </div>
+            <div class="qdtime-right">
+              <group class="xmlx-kuang">
+                <!-- <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address> -->
+                  <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city"></x-address>
+              </group>
+            </div>
           </div>
         </div>
-      </div>
-      <!--留言-->
-      <div class="pc-shuru">
-        <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="dataParams.description"></textarea>
-        <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>300</span></p>
+        <!--留言-->
+        <div class="pc-shuru">
+          <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="dataParams.description"></textarea>
+          <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>300</span></p>
+        </div>
       </div>
     </div>
     <toast v-model="toastShow" type="text" :text="toastText" width="4em"></toast>
@@ -196,7 +198,7 @@
         // }
     },
     mounted: function () {
-      this. wzxz()
+      // this. wzxz()
       console.log("mounted!!",this.dataParams);
     },
     methods: {
@@ -350,6 +352,9 @@
         submit(){
           let _self = this;
           _self.loadingShow = true;
+          setTimeout(function () {
+            _self.loadingShow = false;
+          },5000);
           let params = {
               interfaceId:common.interfaceIds.saveDataFun,
               coll:common.collections.resumes,
@@ -430,12 +435,18 @@
     color: #f65aa6;
   }
   .xmlx-kuang.rtl{
-        direction: rtl;
-
+    direction: rtl;
   }
-    .weui-cell{
-        padding-right:0!important;
-    }
+  .weui-cell{
+    padding-right:0!important;
+  }
+  .content{
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  .flex-content{
+    padding-top: 1.2rem;
+  }
 </style>
 
 
