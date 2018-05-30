@@ -229,7 +229,7 @@ export default {
     },
     methods:{
         toUrl: function (params) {
-            this.$router.push({name: params})   
+            this.$router.push({name: params})
             console.log("toUrl",params);
         },
         showToast(msg){
@@ -252,12 +252,12 @@ export default {
                         } else {
                            buttonState.btns_type = 1;
                         }
-                    }             
+                    }
                 } else{
                     if(item.project_state==1) {
                         buttonState.btns_type = 2;
-                    }    
-                }         
+                    }
+                }
             }else {
                 buttonState.btns_type = 4;
             }
@@ -517,13 +517,13 @@ export default {
             this.confirmType = params.type
             if(params.type == "confirmTheOrderByDesigner"){
                 this.confirmMsg = "确定该订单吗？"
-            } 
+            }
             if(params.type == "canclePart"){
                 this.confirmMsg = "确定取消抢单吗？"
-            } 
+            }
             if(params.type == "refuseInvitation"){
                 this.confirmMsg = "确定拒绝吗？"
-            } 
+            }
         },
         compOnConfirm(){
             if(this.confirmType=="confirmTheOrderByDesigner"){
@@ -545,12 +545,9 @@ export default {
         refuseInvitation(){
           let _self = this;
           let params = {
-            interfaceId:common.interfaceIds.modifyOrders,
-            coll:common.collections.orderList,
-            data:{invited_state:2,project_winBidder:''},
-            wheredata:{
-                _id:_self.order_id,
-            },
+            interfaceId:common.interfaceIds.refuseInvitation,
+            user_id: _self.user_id,
+            order_id:_self.order_id,
           };
           _self.$axios.post('/mongoApi', {
               params: params

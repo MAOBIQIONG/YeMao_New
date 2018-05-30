@@ -313,6 +313,7 @@ body,html{
   font-size: 0.28rem;
   display: -webkit-box;
   margin-top: 0.2rem;
+  word-wrap: break-word;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
@@ -755,6 +756,7 @@ body,html{
   margin-left: 0.12rem;
   margin-top: 0.24rem;
   line-height: 0.46rem;
+  word-wrap: break-word;
 }
 
 .qdsjs-list .qdsjs-box .qb-botton {
@@ -945,6 +947,7 @@ body,html{
   width: 7rem;
   margin-left: 0.25rem;
   line-height: 0.5rem;
+  word-wrap: break-word;
 }
 
 .ddxq .ddxq-bottom .chakangengduo {

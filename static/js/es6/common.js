@@ -759,6 +759,7 @@ const common = {
     modifyOrders:'modifyOrders',                   // 修改订单
     refreshOrders:'refreshOrders',                 // 刷新订单
     getDesignerOrders:'getDesignerOrders',         // 查询设计师未处理订单
+    refuseInvitation:'refuseInvitation',           // 设计师拒绝邀请设计
     saveDataFun:'saveDataFun',                     // 保存数据，有则修改，无则保存
     queryByUserId:'queryByUserId',                 // 根据user_id查询单个集合数据
     queryList:'queryList',                         // 分页查询数据
