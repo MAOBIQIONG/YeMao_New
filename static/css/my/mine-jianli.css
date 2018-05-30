@@ -121,6 +121,9 @@
 	color: #999999;
   padding-bottom: 1.25rem;
 }
+.content .qwgz .qwgz-bottom p{
+  word-wrap: break-word;
+}
 
 .content .gzjl {
 	width: 7.5rem;
@@ -202,6 +205,7 @@
 	font-size: 0.28rem;
 	line-height: 0.4rem;
   color: #999999;
+  word-wrap: break-word;
 }
 
 .content .zwms {
@@ -248,6 +252,7 @@
 	font-size: 0.28rem;
 	line-height: 0.4rem;
 	color: #999999;
+  word-wrap: break-word;
 }
 
 .content .grzp {

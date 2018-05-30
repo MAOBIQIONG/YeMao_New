@@ -4,13 +4,15 @@
       <!--<router-view v-if="$route.meta.keepAlive"></router-view>-->
     <!--</keep-alive>-->
     <!--<router-view v-if="!$route.meta.keepAlive"></router-view>-->
+    <!-- 所有keapAlive页面 -->
     <transition :name="'vux-pop-'+ ($store.state.direction==0?'in':'out')">
       <keep-alive>
-        <router-view v-if="$route.meta.keepAlive"></router-view>
+        <router-view v-if="$route.meta.keepAlive" ref="routerView"></router-view>
       </keep-alive>
     </transition>
+    <!-- 所有未keapAlive页面 -->
     <transition :name="'vux-pop-'+ ($store.state.direction==0?'in':'out')">
-      <router-view v-if="!$route.meta.keepAlive"></router-view>
+      <router-view v-if="!$route.meta.keepAlive" ref="routerView2"></router-view>
     </transition>
     <div v-transfer-dom>
       <confirm v-model="show"
@@ -51,7 +53,22 @@
           var path = _self.$route.path;
           // console.log("currPath:"+path);
           if( path.indexOf('home/')>=0 ){
-            plus.runtime.quit();
+            if( path.indexOf('/meow')>=0 ){
+              // 清除预览图片
+              var len = $(".pswp.vux-previewer.pswp--open").length;
+              if( len > 0 ){
+                $(".pswp.vux-previewer.pswp--open").find(".pswp__bg").attr("style","");
+                $(".pswp.vux-previewer.pswp--open").attr("style","");
+                $(".pswp.vux-previewer.pswp--open").attr("aria-hidden","true");
+                $(".pswp.vux-previewer.pswp--open").attr("class","pswp vux-previewer");
+              }else{
+                plus.runtime.quit();
+              }
+            }else{
+              plus.runtime.quit();
+            }
+          }else if( path.indexOf('/pengyouquanxq')>=0 ){
+            _self.$refs.routerView2.appVueFun();
           }else if( path.indexOf('/fbwd')>=0 || path.indexOf('/fbmmq')>=0 ||
             path.indexOf('/fabudingdan')>=0 ){
             _self.showFun('确认放弃编辑?');

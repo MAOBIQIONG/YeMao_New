@@ -10,7 +10,7 @@
       <!--搜索-->
       <div class="shousuo">
         <div class="sskuang">
-          <input type="search" class="sc" placeholder="搜索" v-model="searchText" style="border-radius: 0rem;line-height: normal;"/>
+          <input type="search" class="sc" placeholder="搜索" v-model="searchText"/>
         </div>
       </div>
       <div class="dshy">

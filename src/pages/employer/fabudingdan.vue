@@ -1,7 +1,6 @@
 <template>
   <div class="templete-body fabudingdan">
-    <div class="header-static"></div>
-    <div class="header p-absolute">
+    <div class="header">
       <div class="header-left" v-tap="{ methods:showFun }"><img src="../../../static/images/back.png" /></div>
       <span>订单详情</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
@@ -659,12 +658,17 @@
 <style>
   /**解决软件盘弹出，文本框被顶起**/
   .fabudingdan{
-    background-color: #f2f2f2;
-    /*overflow: auto;*/
+    background-color: #fff;
   }
   .content1{
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #F2F2F2;
+    border:1px solid #F2F2F2;
+  }
+  .fb-content{
+    padding-top: 1.2rem;
   }
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -21,9 +21,9 @@
           <!--评论列表-->
           <div class="content">
             <swipeout class="vux-1px-tb">
-              <swipeout-item transition-mode="follow" v-for="(item,index) in comments" :key="index">
+              <swipeout-item transition-mode="follow" ref="swipeoutItem" v-for="(item,index) in comments" :key="index">
                 <div slot="right-menu">
-                  <swipeout-button type="warn" v-tap="{methods:deleteSth,id:item._id,type:item.comment_type,floor:item.floor,did:item.comment_id}">删除</swipeout-button>
+                  <swipeout-button type="warn" v-tap="{methods:deleteSth,id:item._id,type:item.comment_type,floor:item.floor,did:item.comment_id,index:index}">删除</swipeout-button>
                 </div>
                 <!--<div slot="content" :class="{'vux-1px-b': index !== comments.length, 'vux-1px-t': index === 1}">-->
                 <div slot="content">
@@ -84,6 +84,7 @@
         deleteId: '',
         deleteFloor: 0,
         deleteType: 0,
+        deleteIndex: 0,
         // 下拉更新，上拉加载参数
         lockX:true,
         lockY:false,
@@ -289,6 +290,7 @@
         _self.deleteFloor = params.floor;
         _self.deleteType = params.type;
         _self.data_id = params.did;
+        _self.deleteIndex = params.index;
       },
       onDelete(){
         var _self = this;
@@ -310,6 +312,8 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
+          // 清除删除样式
+          _self.$refs.swipeoutItem[_self.deleteIndex].close();
           let data = response.data;
           if( data.code == 200 ){
             // 刷新喵喵圈首页

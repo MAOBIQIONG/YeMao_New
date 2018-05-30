@@ -118,7 +118,7 @@
     </div>
     <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     <div v-transfer-dom>
-      <previewer2 :list="list" ref="previewer" :options="options"></previewer2>
+      <previewer2 :list="list" ref="previewer" :options="options" @on-close="previewerClose"></previewer2>
     </div>
     <actionsheet v-model="showSheet" :menus="menus" show-cancel @on-click-menu-delete="onDelete" :class="showSheet==true?'':'vux-actionsheet-rec'"></actionsheet>
   </div>
@@ -166,6 +166,7 @@
         deleteFloor:0,
         // 图片预览
         list:[],
+        preShowMark: false,
         options: {
           getThumbBoundsFn(index) {
             console.log("getThumbBoundsFn:"+index)
@@ -294,7 +295,11 @@
         return common.getDateDiff(time);
       },
       show (index) {
-        this.$refs.previewer.show(index)
+        this.$refs.previewer.show(index);
+        this.preShowMark = true;
+      },
+      previewerClose: function () {
+        this.preShowMark = false;
       },
       //点赞
       dianzan(){
@@ -684,6 +689,18 @@
             _self.showToast("删除失败!")
           }
         })
+      },
+
+      // app.vue父组件调用函数
+      appVueFun(){
+        console.log("appVueFun:");
+        var _self = this;
+        if( _self.preShowMark ){
+          _self.preShowMark = false;
+          _self.$refs.previewer.close();
+        }else{
+          _self.$router.goBack();
+        }
       },
     }
   }
