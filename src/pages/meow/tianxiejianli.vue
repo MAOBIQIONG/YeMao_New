@@ -74,10 +74,14 @@
           </div>
           <div class="qdtime">
             <div class="qdtime-left">
-              <span>最高学历</span>
+              <span>最高学历</span>          
             </div>
             <div class="qdtime-right">
-              <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" maxlength="10" />
+              <!-- <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" maxlength="10" /> -->
+              <select class="xmlx-kuang rtl" v-model="dataParams.education">
+                <option value="" selected="selected">请选择学历</option>
+                <option v-for="(item,index) in educationList" :value="item" :key="index">{{item}}</option>
+              </select>
             </div>
           </div>
           <div class="qdtime">
@@ -97,20 +101,22 @@
             <div class="qdtime-left">
               <span>邮箱</span>
             </div>
-            <div class="qdtime-right"style="line-height:normal">
+            <div class="qdtime-right" style="line-height:normal">
               <x-input name="email" placeholder="请输入邮箱地址" is-type="email" text-align="right" v-model="dataParams.email"></x-input>
             </div>
           </div>
           <div class="qdtime">
-            <div class="qdtime-left">
+            <!-- <div class="qdtime-left">
               <span>所在城市</span>
             </div>
             <div class="qdtime-right">
               <group class="xmlx-kuang">
-                <!-- <x-address :placeholder="'请选择城市'" @on-hide="logHide" @on-show="logShow" raw-value title="" :list="addressData" hide-district value-text-align="right" v-model="params.city" style="height:1rem;line-height:1rem;"></x-address> -->
                   <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city"></x-address>
               </group>
-            </div>
+            </div> -->
+            <group label-width="3rem" label-align="left">
+              <x-address title="所在城市" raw-value :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" label-align="end"></x-address>
+            </group>
           </div>
         </div>
         <!--留言-->
@@ -173,6 +179,9 @@
             toastShow:false,
             toastText:"",
             loadingShow:false,
+            educationList:[
+              '博士','硕士','本科','大专','高中','中专','其他'
+            ]
         }
     },
     created(){
@@ -447,6 +456,20 @@
   .flex-content{
     padding-top: 1.2rem;
   }
+</style>
+<style>
+.templete-body .weui-cell_access{
+  display:flex!important;
+  width:100%!important;
+}
+
+.templete-body .vux-popup-picker-value {
+  text-align:right!important;
+  max-width:4rem!important;
+}
+.templete-body .weui-cell {
+ justify-content:space-between!important;
+}
 </style>
 
 
