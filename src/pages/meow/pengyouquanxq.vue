@@ -64,7 +64,7 @@
               </div>
               <div class="pinjia">
                 <p class="dz" :class="meow.likeFlag==1?'hover':''" v-tap="{methods:dianzan}"><span>{{meow.like}}</span></p>
-                <p class="comments"><span></span><span>{{meow.comments}}</span></p>
+                <p class="comments" v-tap="{methods:meowComment}"><span></span><span>{{meow.comments}}</span></p>
                 <div v-if="userInfo._id!=null&&userInfo._id==meow.user_id" class="more more-icon" v-tap="{methods:deleteSth,id:meow._id,flag:0}"></div>
               </div>
             </div>
@@ -105,7 +105,7 @@
         </div>
       </scroller>
     </div>
-    <div class="chat-box">
+    <div class="chat-box" v-if="comment_show">
       <!-- 评论输入框 -->
       <div class="input-box">
         <div class="input">
@@ -150,7 +150,9 @@
         // 评论
         comments:[],
         is_submit:false,
+        comment_show: false,  // 评论框隐藏显示
         comment_placeholder:'填写评论',
+        comment_placeholder2:'填写评论',
         comment_id:'',
         comment_text:'',
         answer_id:'',
@@ -321,6 +323,7 @@
       // 回复
       replyFun(params){
         var _self = this;
+        _self.comment_show=true;
         // 二级回复点击到自己的回复,显示是否删除
         if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
           if( _self.userInfo._id == params.uid ){
@@ -338,7 +341,9 @@
           id = "#"+params.aid;
           _self.answer_id = params.uid;
           _self.answer_name = params.name;
-          _self.comment_placeholder = '回复'+_self.answer_name+':';
+          _self.comment_placeholder = '回复 '+_self.answer_name+':';
+        }else{
+          _self.comment_placeholder = _self.comment_placeholder2;
         }
         if( !$(id).hasClass('bg-clo-1') ){
           $(id).addClass('bg-clo-1');
@@ -348,14 +353,30 @@
           },100)
         }
       },
+      // 喵喵圈评论
+      meowComment(){
+        console.log("initParams:")
+        var _self = this;
+        _self.comment_show=true;
+        _self.initParams();
+        setTimeout(function () {
+          _self.commentOnBlur();
+        },200)
+      },
+      // 初始化评论参数：默认评论苗苗圈
+      initParams(){
+        console.log("initParams:")
+        var _self = this;
+        _self.comment_placeholder = _self.comment_placeholder2;
+        _self.comment_id = _self.miao_id;
+        _self.answer_id = _self.meow.user._id;
+        _self.floor = 0;
+      },
       // 失去焦点
       commentBlur(){
         console.log("blur:")
         var _self = this;
-        _self.comment_placeholder = '填写评论';
-        _self.comment_id = _self.miao_id;
-        _self.answer_id = _self.meow.user._id;
-        _self.floor = 0;
+        // _self.initParams();
       },
       // 获取焦点
       commentOnBlur(params){
@@ -601,6 +622,7 @@
         }
         // 重置评论框内容
         _self.comment_text = '';
+        _self.comment_show=false;
       },
 
       onDelete(){
