@@ -29,7 +29,8 @@
                 <div slot="content">
                   <div class="pinglun-list">
                     <div class="pl-left">
-                      <img :src="checkAvatar(item.user.img)" />
+                      <!--<img :src="checkAvatar(item.user.img)" />-->
+                      <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(item.user.img) + ')'}"></div>
                     </div>
                     <div class="pl-content">
                       <p class="sezhi">{{item.user.user_name}}</p>
@@ -312,8 +313,6 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          // 清除删除样式
-          _self.$refs.swipeoutItem[_self.deleteIndex].close();
           let data = response.data;
           if( data.code == 200 ){
             // 刷新喵喵圈首页
@@ -324,7 +323,7 @@
             // 刷新喵喵圈首页
             _self.$store.state.meowRefreshMark = 1;
             _self.showToast("删除成功!")
-            self.removeCommentHmtl(params);
+            _self.removeCommentHmtl(params);
           }else{
             _self.showToast("删除失败!")
           }
@@ -333,15 +332,9 @@
       // 清除页面html
       removeCommentHmtl(params){
         let _self = this;
-        // 一级评论删除
-        if( params.floor == 0 ){
-          _self.comments.forEach(function (item,index) {
-            if( params._id == item._id.toString() ){
-              _self.comments.splice(index,1);
-            }
-          })
-        }else{
-        }
+        // 清除删除样式
+        _self.$refs.swipeoutItem[_self.deleteIndex].close();
+        _self.comments.splice(_self.deleteIndex,1);
       },
 
     }

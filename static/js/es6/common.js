@@ -544,8 +544,34 @@ const common = {
     var num = (maxWith-width)/size;
     return common.isNull(lines) ? Math.floor(num) : Math.floor(num)*lines;
   },
-
-  /*****************5、字典表数据转换*******************/
+  //15、计算字符串长度，字母、数字计两个字符
+  /**
+   * 计算行内文字个数 =（屏幕宽度-（行宽+内外边框））/ 文字尺码
+   * param：
+   * 1、width：行宽+内外边框
+   * 2、size：文字尺码
+   * 3、lines：行数
+   * */
+  /**
+   * 获取字符串的特殊长度，一个汉字算单位一个长度，两个数字或字符算一个单位长度
+   * @param val
+   * @returns
+   */
+  getStringLength:function (val) {
+    var str = new String(val);
+    var bytesCount = 0;
+    for (var i = 0 ,n = str.length; i < n; i++) {
+      var c = str.charCodeAt(i);
+      if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+        bytesCount += 1;
+      } else {
+        bytesCount += 2;
+      }
+    }
+    var len = (bytesCount/2).toFixed(0);
+    return common.checkInt(len);
+  },
+/*****************5、字典表数据转换*******************/
   //1、项目类型
   getProjectTypes: function (){
     var types = [ { "_id" : "5a4248b1160048792cd9d35a", "type_name" : "策划设计", "img":"./static/images/index/c_cehua_01_03.png" },

@@ -65,10 +65,11 @@
         </div>
         <div class="ddxq-bottom">
           <div class="biaoqi">订单详情</div>
-          <div class="neirong">
-            <span ref="project_describe">{{getMaxlen(order.project_describe)}}</span>
+          <div class="neirong" :class="viewMore?'':'lastline-space-ellipsis'" :title="order.project_describe" ref="project_describe">
+            {{order.project_describe}}
           </div>
           <div class="chakangengduo" v-tap="{methods:viewMoreFun}" v-if="shoViewMore==true">{{viewText}}</div>
+          <!--<div class="lastline-space-ellipsis" :title="order.project_describe">{{order.project_describe}}</div>-->
         </div>
       </div>
       <!--抢单列表设计师-->
@@ -273,18 +274,15 @@
 
       // 订单详情字数限制
       getMaxlen(text){
-        var str = '',minLen=6;
         var _self = this;
-        var width = 0.5,fontSize=0.28,lines=3;// margin:.5,font-size:.3,行数:3;
+        var width = 2.18,fontSize=0.28,lines=3;// margin:.5、查看更多按钮长度：1.68,font-size:.3,行数:3;
         var num = common.getMaxlenInlineNum(width,fontSize,lines);
-        if( text && text.length > num ){
+        var len = common.getStringLength(text);
+        if( len > num ){
           _self.shoViewMore = true;
-          str = text.substring(0,num-minLen) + '...';
         }else{
           _self.shoViewMore = false;
-          str = text;
         }
-        return str;
       },
 
       // 订单详情查看\收起
@@ -292,8 +290,6 @@
         var _self = this;
         _self.viewMore = _self.viewMore==false ? true : false;
         _self.viewText = _self.viewMore==false ? '点击查看更多' : '收起';
-        var desc = _self.viewMore==false ? _self.getMaxlen(_self.order.project_describe) : _self.order.project_describe;
-        _self.$refs.project_describe.innerHTML = desc;
       },
       // 项目深度
       collectFun(flag){
@@ -349,7 +345,7 @@
             _self.shoViewMore = false;
             _self.viewMore = false;
             _self.viewText = '点击查看更多';
-            _self.$refs.project_describe.innerHTML = _self.getMaxlen(_self.order.project_describe);
+            _self.getMaxlen(_self.order.project_describe);
           }
         })
       },
@@ -451,5 +447,38 @@
   .od-condent .od-renshu .gengduo {
     background: url('../../../static/images/more.png') center center no-repeat;
     background-size: .5rem .5rem;
+  }
+  .lastline-space-ellipsis{
+    position: relative;
+    max-height: 1.5rem;/*用像素表示，不要用em，以免造成不同浏览器下计算出现小数点取舍不同导致1像素的差距【行高*截取行数】*/
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-all;/*强制打散字符*/
+    line-height: 0.5rem;
+    color:#fff;/*同背景色*/
+  }
+  .lastline-space-ellipsis::before,.lastline-space-ellipsis::after{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    color: #333;/*实际文本颜色*/
+    content: attr(title);
+  }
+  .lastline-space-ellipsis::before{
+    display: block;
+    z-index: 1;/*显示在最上面，展示前面的(截取行数-1)行字符*/
+    max-height: 1rem;/*根据行高和截取行数调整，值为[(截取行数-1)*行高]*/
+    overflow: hidden;
+    background-color: #fff;/*同背景色*/
+  }
+  .lastline-space-ellipsis::after{
+    display: -webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    -webkit-line-clamp:3;/*截取行数*/
+    text-indent: -1.68rem;/*行首缩进字符数，值为[-(截取行数-1)*尾部留空字符数]，取负值把每行多padding-right的部分给缩进回去*/
+    padding-right: 1.68rem;/*尾部留空字符数: '查看更多按钮宽度'*/
   }
 </style>

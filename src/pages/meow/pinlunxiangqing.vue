@@ -308,10 +308,10 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response)
           let data = response.data;
+          // console.log("data1:"+JSON.stringify(data))
           _self.setInitData(data);
-          _self.loadData();
+          // _self.loadData();
         })
       },
       setInitData(data){
@@ -344,8 +344,8 @@
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          // console.log(response);
           let data = response.data;
+          // console.log("data2:"+JSON.stringify(data))
           _self.setData(data);
           console.log('数据设置完成');
         })

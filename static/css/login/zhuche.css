@@ -64,14 +64,14 @@
 }
   .xmlx-right .xmlx-kuang {
   width: 5.8rem;
-  height: 0.72rem;
-  border: none;
+  height: 0.6rem;
   display: block;
   border: none;
   color: #757575;
   font-size: 0.28rem;
   background: white;
   outline: medium;
+  margin-top: 0.1rem;
 }
 
 

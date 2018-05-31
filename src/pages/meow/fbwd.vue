@@ -8,7 +8,7 @@
     </div>
     <div class="content content-p">
       <div class="xgnc">
-        <div class="left"><input v-model="params.title" type="text" maxlength="20" placeholder="标题（最多20字）" class="btname" ref="title"></div>
+        <div class="left"><input v-model="params.title" type="text" maxlength="38" placeholder="标题（最多38字）" class="btname" ref="title"></div>
       </div>
       <!--留言-->
       <div class="pc-shuru">
