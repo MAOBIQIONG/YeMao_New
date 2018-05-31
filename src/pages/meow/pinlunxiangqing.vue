@@ -3,7 +3,7 @@
     <!--头部导航-->
     <div class="header-static"></div>
     <div class="header">
-      <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
+      <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
       <span>评论详情</span>
     </div>
     <div class="content">
@@ -398,23 +398,22 @@
           interfaceId:common.interfaceIds.addComments,
           data: {
             user_id: _self.user_id,               // 评论人
-            comment_id: _self.comment_id,             // 评论对象ID
+            comment_id: _self.comment_id,         // 评论对象ID
             content: _self.comment_text,          // 评论内容
             comment_type: 5,                      // 评论类型：0、喵喵圈，1、案例展示，2、个人荣誉，3、我的作品，4、喵学堂，5、问答。
             answer_id: _self.answer_id,           // 回复ID：一级评论、喵喵圈动态发布人ID，二级评论、一级评论发布人ID，回复、回复发布人
-            floor: _self.floor                   // 评论层级
+            floor: _self.floor                    // 评论层级
           }
         };
         this.$axios.post('/mongoApi',{
           params
         },(response)=>{
-          console.log(response)
+          // console.log(response)
           let data = response.data;
           if( data.code == 200 || (data.code == 400 && data.result.ok == 1)){
             _self.showToast("评论成功!")
             params.data._id = data.ids[0];
             _self.addCommentHtml(params.data);
-
           }else{
             _self.showToast("评论失败!")
           }
@@ -422,9 +421,8 @@
       },
       // 添加评论html
       addCommentHtml(data){
-        console.log(data);
+        console.log("data:"+data);
         var _self = this;
-
         // 添加评论记录
         data.user = {
           authenticating_state: _self.userInfo.authenticating_state,
@@ -433,6 +431,7 @@
           _id: _self.userInfo._id
         };
         data.create_date = new Date().getTime();
+        console.log("data.floor:"+data.floor);
         if( data.floor == 0 ){ // 一级评论
           // 修改评论数量
           _self.comment.replys += 1;
@@ -446,19 +445,7 @@
           }
         }
         // 添加回复记录
-        if(_self.loadPageEnd == true){
-          _self.replys.push(data);
-        }
-
-        // _self.replys.forEach(function (item,index) {
-        //     if( data.comment_id == item._id.toString() ){
-        //         if( item.replys ){
-        //             item.replys.push(data);
-        //         }else{
-        //             item.replys = [data];
-        //         }
-        //     }
-        // })
+        _self.replys.push(data);
         // 重置评论框内容
         _self.comment_text = '';
       },
@@ -478,7 +465,6 @@
       },
       // 回复
       replyFun(params){
-
         var _self = this;
         // 删除自己的评论、回复
         if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
