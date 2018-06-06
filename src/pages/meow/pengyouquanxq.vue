@@ -323,15 +323,18 @@
       // 回复
       replyFun(params){
         var _self = this;
-        _self.comment_show=true;
         // 二级回复点击到自己的回复,显示是否删除
         if( !common.isNull(_self.userInfo._id) && !common.isNull(params.uid) ){
           if( _self.userInfo._id == params.uid ){
+            // 隐藏评论框
+            _self.comment_show=false;
             var delParams = {id:params.aid,flag:1,floor:1};
             _self.deleteSth(delParams);
             return;
           }
         }
+        // 显示评论框
+        _self.comment_show=true;
         // 二级评论
         var id = "#"+params.id;
         _self.comment_id = params.id;

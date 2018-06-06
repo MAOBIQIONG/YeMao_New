@@ -439,7 +439,7 @@ export default {
                 }
             }
             _self.$axios.post('/mongoApi', {
-                params: params
+              params: params
             }, response => {
                 var data = response.data;
                 var tips = '';

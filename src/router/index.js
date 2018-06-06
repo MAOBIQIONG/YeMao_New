@@ -120,15 +120,23 @@ Router.prototype.goBack = function (num) {
   }
   this.isBack = true;
 
-// 检测是否存在聚焦元素，如果存在，失去焦点（关闭软键盘）
-  if( document.activeElement.className!='' ){
+
+  setTimeout(function () {
     document.activeElement.blur();
-    setTimeout(function () {
-      window.history.go(num);
-    },200);
-  }else{
+  },0);
+  setTimeout(function () {
     window.history.go(num);
-  }
+  },200);
+
+// 检测是否存在聚焦元素，如果存在，失去焦点（关闭软键盘）
+//   if( document.activeElement.className!='' ){
+//     document.activeElement.blur();
+//     setTimeout(function () {
+//       window.history.go(num);
+//     },200);
+//   }else{
+//     window.history.go(num);
+//   }
 }
 
 const routeArray = [

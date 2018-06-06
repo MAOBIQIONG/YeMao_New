@@ -68,6 +68,8 @@
   font-size: 0.28rem;
   line-height: 0.4rem;
   margin-left: 0.2rem;
+  padding-top: 0.2rem;
+  min-height: 1rem;
 }
 
 .content .neirongshijian .bottom {

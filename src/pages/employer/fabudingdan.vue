@@ -109,12 +109,17 @@
                   <span>设计起止时间</span>
                 </div>
                 <div class="gb-right">
-                  <span><datetime v-model="startTime"　:start-date="today" class="shijian"></datetime></span> / <span><datetime v-model="endTime" :start-date="tomorrow" class="shijian"></datetime></span>
+                  <!--<span><datetime v-model="startTime"　:start-date="today"></datetime></span> / <span><datetime v-model="endTime" :start-date="tomorrow"></datetime></span>-->
+                  <div class="flex-box">
+                    <div class="f1"><datetime v-model="startTime"　:start-date="today"></datetime></div>
+                    <div class="f2">/</div>
+                    <div class="f1"><datetime v-model="endTime" :start-date="tomorrow"></datetime></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="sctp" id="image-upload">
+          <div class="sctp" id="image-upload" v-if="!improve">
             <div class="sc-top">上传图片</div>
             <div class="img-upload">
               <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:img,index:index  }">
@@ -684,4 +689,8 @@
   .xmlx-kuang{
     width: 1.5rem;
   }
+
+  .flex-box{}
+  .flex-box .f1{ min-width: 1.2rem; }
+  .flex-box .f2{ padding: 0 0.1rem; }
 </style>

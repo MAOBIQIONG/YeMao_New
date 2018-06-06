@@ -1646,3 +1646,8 @@ body,html{
   color: #f6449b;
   text-align: center;
 }
+
+
+/**弹性盒子**/
+.flex-box{ display:-webkit-box;}
+.flex-box .f1{ -webkit-box-flex:1; }

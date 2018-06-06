@@ -26,24 +26,24 @@
         </div>
       </div>
       <div class="liebiao">
-        <div class="list">
-          <div class="xingxi">管理员</div>
-          <div class="guanliyuan" v-tap="{methods:toDetails,id:alumni.user_id}">
-            <div class="gly">
-              <div class="touxiang" v-if="alumni.user!=null&&alumni.user!=undefined">
-                <!--<img :src="checkAvatar(alumni.user.img)" />-->
-                <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(alumni.user.img) + ')'}"></div>
-              </div>
-              <div class="touxiang" v-else>
-                <!--<img src="../../../static/images/bj.jpg" />-->
-                <div class="img default"></div>
-              </div>
-              <p class="nicheng" v-if="alumni.user!=null&&alumni.user!=undefined">{{alumni.user.user_name}}</p>
-              <p class="nicheng" v-else>昵称</p>
-            </div>
-          </div>
-          <!--<div class="list-right"><img src="../../../static/images/jiangou.png"></div>-->
-        </div>
+        <!--<div class="list">-->
+          <!--<div class="xingxi">管理员</div>-->
+          <!--<div class="guanliyuan" v-tap="{methods:toDetails,id:alumni.user_id}">-->
+            <!--<div class="gly">-->
+              <!--<div class="touxiang" v-if="alumni.user!=null&&alumni.user!=undefined">-->
+                <!--&lt;!&ndash;<img :src="checkAvatar(alumni.user.img)" />&ndash;&gt;-->
+                <!--<div class="img" :style="{backgroundImage: 'url(' + checkAvatar(alumni.user.img) + ')'}"></div>-->
+              <!--</div>-->
+              <!--<div class="touxiang" v-else>-->
+                <!--&lt;!&ndash;<img src="../../../static/images/bj.jpg" />&ndash;&gt;-->
+                <!--<div class="img default"></div>-->
+              <!--</div>-->
+              <!--<p class="nicheng" v-if="alumni.user!=null&&alumni.user!=undefined">{{alumni.user.user_name}}</p>-->
+              <!--<p class="nicheng" v-else>昵称</p>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--&lt;!&ndash;<div class="list-right"><img src="../../../static/images/jiangou.png"></div>&ndash;&gt;-->
+        <!--</div>-->
         <div class="list tz" v-tap="{methods:toUrlAfterLogin,pagename:'alumniList'}">
           <div class="xingxi">校友成员</div>
           <div class="xycy">

@@ -74,7 +74,7 @@
           </div>
           <div class="qdtime">
             <div class="qdtime-left">
-              <span>最高学历</span>          
+              <span>最高学历</span>
             </div>
             <div class="qdtime-right">
               <!-- <input v-model="dataParams.education" type="text" placeholder="请输入最高学历" maxlength="10" /> -->

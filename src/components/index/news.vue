@@ -25,7 +25,8 @@
               <!--消息列表-->
               <div class="xiaoxi-list" v-for="item in dataList" v-tap="{methods:toUrl,scene:item.scene,query:{id:item.user.id,name:item.user.name,img:item.user.img}}">
                 <div class="xl-touxiang">
-                  <img :src="checkAvatar(item.user.img)" />
+                  <!--<img :src="checkAvatar(item.user.img)" />-->
+                  <div class="img" :style="{backgroundImage: 'url('+checkAvatar(item.user.img)+')'}"></div>
                 </div>
                 <div class="xiao-right">
                   <div class="xr-top">
