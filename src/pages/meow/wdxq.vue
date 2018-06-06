@@ -44,7 +44,10 @@
                           <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
                       </div>
                   </div>
-                <div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">
+                <!--<div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">-->
+                <!--</div>-->
+                <div class="tupian2" v-if="chw.imgs && chw.imgs.length>0">
+                   <img :src="checkAvatar(chw.imgs[0])"/>
                 </div>
                   <div class="neirongshijian">
                       <!--{{chw.description}}-->
@@ -760,4 +763,15 @@ export default {
       overflow: hidden;
       margin:0 auto 0.2rem;
     }
+  .tupian2{
+    width: 7.2rem;
+    text-align: center;
+    /*height: 2.6rem;*/
+    max-height:7rem;
+    overflow: hidden;
+    margin:0 auto 0.2rem;
+  }
+  .tupian2 img{
+     max-height:7rem;
+  }
 </style>
