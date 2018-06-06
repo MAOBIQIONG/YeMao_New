@@ -115,7 +115,7 @@
               </group>
             </div> -->
             <group label-width="3rem" label-align="left">
-              <x-address title="所在城市" raw-value :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" label-align="end"></x-address>
+              <x-address @on-hide="logHide" title="所在城市" raw-value :list="addressData" hide-district value-text-align="right" v-model="value3" label-align="end"></x-address>
             </group>
           </div>
         </div>
@@ -132,7 +132,7 @@
 </template>
 
 <script>
-  import { XAddress, ChinaAddressV4Data, Datetime, Group, Checker, CheckerItem, XInput ,Toast,Loading } from 'vux'
+  import { XAddress, ChinaAddressV4Data, Value2nameFilter as value2name, Datetime, Group, Checker, CheckerItem, XInput ,Toast,Loading } from 'vux'
   export default {
     components: {
       XAddress,
@@ -157,7 +157,7 @@
                 project_region:['上海市'],
             },
             addressData: ChinaAddressV4Data,
-            value3: ['中山市'],
+            value3: ['上海市'],
             value1: '2015-11-12',
             value2: '2015-10-12',
             value4: '2025-10-12',
@@ -172,7 +172,7 @@
                 education:"",
                 working_year:"",
                 email:"",
-                city:[],
+                city:"",
                 description:"",
                 status:0,
             },
@@ -322,18 +322,24 @@
             })
         },
         // 地区
+        getName (value) {
+          return value2name(value, ChinaAddressV4Data)
+        },
+        // 地区
         logHide (str) {
-            var obj = this;
-            console.log('on-hide', str)
-            if( str == true ){
+          var obj = this;
+          console.log('on-hide', str)
+          if( str == true ){
             console.log('value', obj.value3)
             if( obj.value3[0] == '110000' || obj.value3[0] == '120000' ||
-                obj.value3[0] == '310000' || obj.value3[0] == '500000' ){
-                obj.value3[1] = '--';
+              obj.value3[0] == '310000' || obj.value3[0] == '500000' ){
+              obj.value3[1] = '--';
             }else{
-                obj.value3[0] = '--';
+              obj.value3[0] = '--';
             }
-            }
+          }
+          var city = obj.getName(obj.value3);
+          obj.dataParams.city = city.trim();
         },
         logShow (str) {
             console.log('on-show',str)
@@ -355,6 +361,9 @@
                         // common.setStorage("resumeId",data._id);
                         _self.dataParams.user_id = _self.user_id;
                         _self.dataParams = data;
+                        if( !common.isNull(data.city) ){
+                          _self.value3 = [data.city];
+                        }
                     }
                 });
         },

@@ -51,6 +51,7 @@
 .content .ys-time .qdtime .qdtime-right {
   float: right;
   height: 0.8rem;
+  min-width: 1.2rem;
 }
 
 .content .ys-time .qdtime .qdtime-right input {

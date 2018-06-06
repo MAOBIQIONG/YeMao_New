@@ -31,7 +31,7 @@
           </div>
           <div class="qdtime-right">
             <group class="xmlx-kuang">
-              <x-address placeholder="请选择城市" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.expected_city" style="height:0.8rem;line-height:0.8rem;"></x-address>
+              <x-address @on-hide="logHide" placeholder="请选择城市" title="" :list="addressData" hide-district value-text-align="right" v-model="value3" style="height:0.8rem;line-height:0.8rem;"></x-address>
             </group>
           </div>
         </div>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-  import { XAddress, ChinaAddressV4Data,Group,Toast,Loading} from 'vux'
+  import { XAddress, ChinaAddressV4Data,Value2nameFilter as value2name,Group,Toast,Loading} from 'vux'
   export default {
     components: {
       XAddress,
@@ -62,10 +62,11 @@
         subParams:{
           project_region:['上海市'],
         },
+        value3:['上海市'],
         dataParams:{
             expected_positions:"",
             expected_salary: 0,
-            expected_city:[],
+            expected_city:"",
             expected_description:"",
         },
         toastShow:false,
@@ -143,18 +144,23 @@
             })
         },
         // 地区
+        getName (value) {
+          return value2name(value, ChinaAddressV4Data)
+        },
         logHide (str) {
-            var obj = this;
-            console.log('on-hide', str)
-            if( str == true ){
+          var obj = this;
+          console.log('on-hide', str)
+          if( str == true ){
             console.log('value', obj.value3)
             if( obj.value3[0] == '110000' || obj.value3[0] == '120000' ||
-                obj.value3[0] == '310000' || obj.value3[0] == '500000' ){
-                obj.value3[1] = '--';
+              obj.value3[0] == '310000' || obj.value3[0] == '500000' ){
+              obj.value3[1] = '--';
             }else{
-                obj.value3[0] = '--';
+              obj.value3[0] = '--';
             }
-            }
+          }
+          var city = obj.getName(obj.value3);
+          obj.dataParams.expected_city = city.trim();
         },
         logShow (str) {
             console.log('on-show',str)
@@ -173,7 +179,10 @@
                     console.log(response);
                     let data = response.data.data
                     if(!common.isNull(data)) {
-                        _self.dataParams = data;
+                      _self.dataParams = data;
+                      if( !common.isNull(data.expected_city) ){
+                        _self.value3 = [data.expected_city];
+                      }
                     }
                 });
         },

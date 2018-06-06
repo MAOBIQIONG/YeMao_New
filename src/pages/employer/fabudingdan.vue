@@ -119,7 +119,7 @@
               </div>
             </div>
           </div>
-          <div class="sctp" id="image-upload" v-if="!improve">
+          <div class="sctp" id="image-upload" v->
             <div class="sc-top">上传图片</div>
             <div class="img-upload">
               <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:img,index:index  }">
