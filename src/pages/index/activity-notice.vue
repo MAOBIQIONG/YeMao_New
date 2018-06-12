@@ -80,12 +80,12 @@
           clsPrefix: 'xs-plugin-pulldown-'
         },
         pullupConfig:{
-          content: '上拉加载',
+          content: '', // 上拉加载
           pullUpHeight: 60,
           height: 40,
           autoRefresh: false,
-          downContent: '放开加载',
-          upContent: '上拉加载',
+          downContent: '', // 放开加载
+          upContent: '', // 上拉加载
           loadingContent: '',
           clsPrefix: 'xs-plugin-pullup-'
         },
@@ -117,16 +117,12 @@
       // console.log("news activated:")
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
-      if( !common.isNull(_self.user._id) ){
-        _self.loadData();
-      }
+      _self.loadData();
     },
     created: function () {
       var _self = this;
       _self.user = common.getObjStorage("userInfo") || {};
-      if( !common.isNull(_self.user._id) ){
-        _self.loadData();
-      }
+      _self.loadData();
     },
     methods: {
       goback() {

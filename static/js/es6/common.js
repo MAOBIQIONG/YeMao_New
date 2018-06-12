@@ -1,4 +1,5 @@
 var root = 'http://101.132.96.90:8080/upload/img/';
+    root = 'http://www.jianlianyemao.com/upload/img/';
 let interfaceIds = {
   insertData:'insertData',                       // 插入一条
   insertMany:'insertMany',                       // 插入多条

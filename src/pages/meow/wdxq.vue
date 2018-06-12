@@ -47,7 +47,7 @@
                 <!--<div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">-->
                 <!--</div>-->
                 <div class="tupian2" v-if="chw.imgs && chw.imgs.length>0">
-                   <img :src="checkAvatar(chw.imgs[0])"/>
+                   <img :src="checkImg(chw.imgs[0])"/>
                 </div>
                   <div class="neirongshijian">
                       <!--{{chw.description}}-->
@@ -305,14 +305,10 @@ export default {
             return common.getAvatar(path)
         },
         checkImg(path){
-            return common.getDefultImg(path);
+            return common.getRealImgPath(path);
         },
         toLikeMember(p){
             this.$router.push({name:'dianzhan',query:{chw_id:p.chw_id}});
-        },
-        // 头像
-        checkAvatar (path) {
-            return common.getAvatar(path)
         },
         removeLikeUser(uid){
             let _self = this;

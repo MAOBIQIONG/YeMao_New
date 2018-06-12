@@ -19,23 +19,23 @@ const uploadImg2 ={
       return true;
   },
   init:function(param){
-    if( param && !uploadImg2.isNull(param.maxLen) ){
-      uploadImg2.maxLen = param.maxLen;
-    }
-    if( param && !uploadImg2.isNull(param.maxH)){
-      uploadImg2.maxH = param.maxH;
-    }
-    if( param && !uploadImg2.isNull(param.maxW) ){
-      uploadImg2.maxW = param.maxW;
-    }
-    if( param && !uploadImg2.isNull(param.uploadPath) ){
-      uploadImg2.uploadPath = param.uploadPath;
-    }
-    if( param && !uploadImg2.isNull(param.callback) ){
-      uploadImg2.callback = param.callback;
-    }
-    if( param && !uploadImg2.isNull(param.successfun) ){
-      uploadImg2.successfun = param.successfun;
+    if( param ){
+      uploadImg2.maxLen = uploadImg2.isNull(param.maxLen) ? 9 : param.maxLen;
+      if( !uploadImg2.isNull(param.maxH) ){
+        uploadImg2.maxH = param.maxH;
+      }
+      if( !uploadImg2.isNull(param.maxW) ){
+        uploadImg2.maxW = param.maxW;
+      }
+      if( !uploadImg2.isNull(param.uploadPath) ){
+        uploadImg2.uploadPath = param.uploadPath;
+      }
+      if( !uploadImg2.isNull(param.callback) ){
+        uploadImg2.callback = param.callback;
+      }
+      if( !uploadImg2.isNull(param.successfun) ){
+        uploadImg2.successfun = param.successfun;
+      }
     }
 
     var a = [{
@@ -134,11 +134,12 @@ const uploadImg2 ={
       EXIF.getData(image, function() {
         EXIF.getAllTags(this);
         Orientation = EXIF.getTag(this, 'Orientation');
-        // console.log("Orientation = " + Orientation);
+        console.log("Orientation = " + Orientation);
         var imgData =  uploadImg2.getBase64ImageConvert(Orientation,image);
         uploadImg2.imgArr.push(imgPath);
         uploadImg2.imgBase64.push({"filePath":imgPath,"base64Data":imgData});
-        uploadImg2.callback(imgPath);
+        // uploadImg2.callback(imgPath);
+        uploadImg2.callback("data:image/png;base64,"+imgData);
       });
     }
   },
@@ -164,7 +165,7 @@ const uploadImg2 ={
     var ctx = canvas.getContext("2d");
     var base64 = null;
     //修复ios
-    if (navigator.userAgent.match(/iphone/i)) {
+    if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/Android/i)) {
       console.log('iphone');
       //如果方向角不为1，都需要进行旋转
       if(Orientation != "" && Orientation != undefined  && Orientation != 1){
@@ -201,10 +202,13 @@ const uploadImg2 ={
         ctx.drawImage(img, 0, 0, width, height);
       }
       base64 = canvas.toDataURL("image/png", 1);
-    }else if (navigator.userAgent.match(/Android/i)) {// 修复android
-      ctx.drawImage(img, 0, 0, width, height);
-      base64 = canvas.toDataURL("image/png", 1);
-    }else{
+    }
+    // else if (navigator.userAgent.match(/Android/i)) {// 修复android
+    //   console.log('Android');
+    //   ctx.drawImage(img, 0, 0, width, height);
+    //   base64 = canvas.toDataURL("image/png", 1);
+    // }
+    else{
       base64 = canvas.toDataURL("image/png", 1);
     }
     return base64.replace("data:image/png;base64,", "");

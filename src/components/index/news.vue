@@ -81,12 +81,12 @@
           clsPrefix: 'xs-plugin-pulldown-'
         },
         pullupConfig:{
-          content: '上拉加载',
+          content: '', // 上拉加载
           pullUpHeight: 60,
           height: 40,
           autoRefresh: false,
-          downContent: '放开加载',
-          upContent: '上拉加载',
+          downContent: '', // 放开加载
+          upContent: '', // 上拉加载
           loadingContent: '',
           clsPrefix: 'xs-plugin-pullup-'
         },

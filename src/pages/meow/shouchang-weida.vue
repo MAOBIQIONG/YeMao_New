@@ -151,7 +151,7 @@ export default {
             return common.getAvatar(path)
         },
         checkImg(path){
-            return common.getDefultImg(path);
+            return common.getRealImgPath(path);
         },
         showToast(msg){
             this.toast.show = true;

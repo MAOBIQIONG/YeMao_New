@@ -120,7 +120,6 @@ Router.prototype.goBack = function (num) {
   }
   this.isBack = true;
 
-
   setTimeout(function () {
     document.activeElement.blur();
   },0);

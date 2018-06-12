@@ -119,7 +119,7 @@
               </div>
             </div>
           </div>
-          <div class="sctp" id="image-upload" v->
+          <div class="sctp" id="image-upload" v-if="improve!=1">
             <div class="sc-top">上传图片</div>
             <div class="img-upload">
               <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:img,index:index  }">
@@ -288,8 +288,8 @@
       this.$store.state.dataFromPreviewer=null;
     },
     methods: {
-      goback(){
-        this.$router.goBack();
+      goback(num){
+        this.$router.goBack(num);
       },
       toUrl: function (pagename) {
         this.$router.push({name: pagename})
@@ -447,16 +447,18 @@
         _self.$axios.post('/mongoApi', {
           params: params
         }, response => {
-          console.log(response)
+          // console.log(response)
+          // 关闭软键盘
+          document.activeElement.blur();
           var data = response.data;
           if( data.code == 200 ){
             _self.showToast("完善成功!");
             setTimeout(function () {
               if(!common.isNull(common.getStorage('fromMyOrderDetail'))){
-                _self.$router.go(-2);
-                return;
+                _self.goback(-2);
+              }else{
+                _self.goback();
               }
-              _self.goback();
             },1000)
           }else{
             _self.showToast("完善失败!");
