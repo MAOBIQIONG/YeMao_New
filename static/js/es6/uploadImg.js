@@ -30,9 +30,7 @@ const uploadImg ={
     },
 
     init:function(param){
-    	if( param && !uploadImg.isNull(param.maxLen) ){
-    		uploadImg.maxLen = param.maxLen;
-    	}
+      uploadImg2.maxLen = uploadImg2.isNull(param.maxLen) ? 9 : param.maxLen;
     	if( param && !uploadImg.isNull(param.maxH)){
     		uploadImg.maxH = param.maxH;
     	}
@@ -104,7 +102,7 @@ const uploadImg ={
       plus.gallery.pick(function(file) {
         plus.io.resolveLocalFileSystemURL(file,function(entry){
           //图片：entry.toLocalURL()
-          uploadImg.uploadHead(entry.toLocalURL(),1); /*上传图片*/
+          uploadImg.uploadHead(entry.toLocalURL(),0); /*上传图片*/
         })
       }, function(error) {
         console.log("galleryBtn error: " + JSON.stringify(error));
@@ -177,7 +175,7 @@ const uploadImg ={
       var ctx = canvas.getContext("2d");
       var base64 = null;
       //修复ios
-      if (navigator.userAgent.match(/iphone/i)) {
+      if (navigator.userAgent.match(/iphone/i) || navigator.userAgent.match(/Android/i)) {
         console.log('iphone');
         //如果方向角不为1，都需要进行旋转
         //alert(Orientation);
@@ -215,10 +213,12 @@ const uploadImg ={
           ctx.drawImage(img, 0, 0, width, height);
         }
         base64 = canvas.toDataURL("image/png", 0.8);
-      }else if (navigator.userAgent.match(/Android/i)) {// 修复android
-        ctx.drawImage(img, 0, 0, width, height);
-          base64 = canvas.toDataURL("image/png", 0.8);
-      }else{
+      }
+      // else if (navigator.userAgent.match(/Android/i)) {// 修复android
+      //   ctx.drawImage(img, 0, 0, width, height);
+      //     base64 = canvas.toDataURL("image/png", 0.8);
+      // }
+      else{
           base64 = canvas.toDataURL("image/png", 0.8);
       }
       return base64.replace("data:image/png;base64,", "");
