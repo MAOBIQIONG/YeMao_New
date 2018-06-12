@@ -96,6 +96,20 @@
       _self.userInfo = common.getObjStorage("userInfo") || {};
       _self.loadData();
     },
+    activated: function () {
+      console.log("huodong activated:");
+      var _self = this;
+      // 活动列表刷新
+      var obj = _self.$store.state.activityObj || {};
+      if ( !common.isNull(obj.act_id) ) {
+        _self.activitys.forEach(function (item, index) {
+          if( obj.act_id==item._id.toString() ){
+            item.state= obj.state || 0;
+          }
+        });
+        _self.$store.state.activityObj=null;
+      }
+    },
     mounted(){
       this.$nextTick(
         ()=>{

@@ -115,6 +115,7 @@
               _self.activity.participants.splice(index,1);
               _self.activity.state = 0;
             }
+            _self.$store.state.activityObj = {act_id:_self.act_id,state:_self.activity.state};
           }else{
               _self.showToast("报名失败！");
           }
