@@ -13,6 +13,7 @@ import uploadImg from '../static/js/es6/uploadImg.js'
 import uploadImg2 from '../static/js/es6/uploadImg-more.js'
 import share from '../static/js/es6/share.js';
 import pay from '../static/js/es6/beecloud.js';
+import asynApi from '../static/js/es6/asynApi.js';
 // 引用API文件
 import api from './api/api.js'
 // 全局引入iconfont.css
@@ -34,6 +35,7 @@ window.uploadImg = uploadImg
 window.uploadImg2 = uploadImg2
 window.myshare = share
 window.mypay = pay
+window.asynApi = asynApi
 window.wyim = im
 
 router.beforeEach(function (to, from, next) {

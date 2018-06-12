@@ -64,6 +64,10 @@
         }else if( common.browser.versions.android ){
           wyim.createMessage(msg);
         }
+        // 接收到设计师认证审核通知，刷新用户信息
+        if( common.checkInt(msg.type)==2 ){ // 0、活动通知，1、订单通知，2、审核通知，3、系统通知(后台手动推送)
+          asynApi.refreshUserInfo();
+        }
       });
     })
     //运行环境从前台切换到后台事件

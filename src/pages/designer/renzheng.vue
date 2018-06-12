@@ -51,9 +51,9 @@
       _self.userInfo = common.getObjStorage("userInfo") || {};
       if( common.isNull(_self.userInfo._id) != true ){
         _self.state = _self.userInfo.authenticating_state;
-        _self.realName = _self.state==1 ? '认证中' : _self.state>=2 ? '已认证' : '未认证';
-        _self.platformName = _self.state==3 ? '认证中' : _self.state>=4 ? '已认证' : '未认证';
-        _self.signName = _self.state==5 ? '认证中' : _self.state==6 ? '已认证' : '未认证';
+        _self.realName = _self.state==1 ? '认证中' :　_self.state==1.1 ? '认证失败' : _self.state>=2 ? '已认证' : '未认证';
+        _self.platformName = _self.state==3 ? '认证中' : _self.state==3.1 ? '认证失败' : _self.state>=4 ? '已认证' : '未认证';
+        _self.signName = _self.state==5 ? '认证中' : _self.state==5.1 ? '认证失败' : _self.state==6 ? '已认证' : '未认证';
       }
     },
     methods: {
@@ -71,7 +71,7 @@
 
       toSmrz: function () {
         var _self = this;
-        if( _self.state == 0 ){
+        if( _self.state==0 || _self.state==1.1 ){
           _self.$router.push({name: 'shimingrenzheng'})
         }else if( _self.state == 1 ){
           _self.showToast('实名认证中!');
@@ -85,7 +85,7 @@
          _self.showToast('请先进行实名认证!');
        }else if( _self.state == 1 ){
          _self.showToast('实名认证中!');
-       }else if( _self.state == 2 ){
+       }else if( _self.state == 2 || _self.state==3.1 ){
           _self.$router.push({name: 'pingtairenzheng'})
        }else if( _self.state == 3 ){
          _self.showToast('平台认证中!');
@@ -103,7 +103,7 @@
          _self.showToast('请先进行平台认证!');
        }else if( _self.state == 3 ){
          _self.showToast('平台认证中!');
-       }else if( _self.state == 4 ){
+       }else if( _self.state == 4 || _self.state==5.1 ){
           _self.$router.push({name: 'qianyuesjs'})
        }else if( _self.state == 5 ){
          _self.showToast('签约认证中!');
