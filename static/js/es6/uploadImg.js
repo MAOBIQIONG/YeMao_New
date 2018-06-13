@@ -11,6 +11,7 @@ const uploadImg ={
     isUpload: true,                                   //是否上传
     flag:0,                                           //拍照类型：0、拍照；1、相册;
     waiting: null,                                    //加载动画
+    encoderOptions: 0.8,                              //图片质量
 
     //检测数据
     isNull:function(ele){
@@ -30,7 +31,8 @@ const uploadImg ={
     },
 
     init:function(param){
-      uploadImg2.maxLen = uploadImg2.isNull(param.maxLen) ? 9 : param.maxLen;
+      uploadImg.maxLen = uploadImg.isNull(param.maxLen) ? 9 : param.maxLen;
+      uploadImg.encoderOptions = uploadImg.isNull(param.encoderOptions) ? 0.8 : param.encoderOptions;
     	if( param && !uploadImg.isNull(param.maxH)){
     		uploadImg.maxH = param.maxH;
     	}
@@ -212,14 +214,14 @@ const uploadImg ={
         }else{
           ctx.drawImage(img, 0, 0, width, height);
         }
-        base64 = canvas.toDataURL("image/png", 0.8);
+        base64 = canvas.toDataURL("image/png", uploadImg.encoderOptions);
       }
       // else if (navigator.userAgent.match(/Android/i)) {// 修复android
       //   ctx.drawImage(img, 0, 0, width, height);
-      //     base64 = canvas.toDataURL("image/png", 0.8);
+      //     base64 = canvas.toDataURL("image/png", uploadImg.encoderOptions);
       // }
       else{
-          base64 = canvas.toDataURL("image/png", 0.8);
+          base64 = canvas.toDataURL("image/png", uploadImg.encoderOptions);
       }
       return base64.replace("data:image/png;base64,", "");
     },
@@ -244,7 +246,7 @@ const uploadImg ={
       canvas.height = height; //设置新的图片的长度
       var ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0, width, height); //绘图
-      var dataURL = canvas.toDataURL("image/png", 0.8);
+      var dataURL = canvas.toDataURL("image/png", uploadImg.encoderOptions);
       return dataURL.replace("data:image/png;base64,", "");
     },
 

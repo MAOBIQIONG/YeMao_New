@@ -131,6 +131,7 @@
       triggerFile(params){
         var _self = this;
         uploadImg.init({
+          encoderOptions: 0.95,
           callback: function (path) {
             if( params.index < 3 ){
               _self.imgs[params.index].img = path;
