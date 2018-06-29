@@ -9,7 +9,7 @@
         <span class="tabbar-txt">雇主</span>
       </a>
       <a id="meow" v-tap="{ methods:cgLink , pagename:'meow' }" class="tabbar-item item-meow" :class="$store.state.pageIndex==2 ? 'tabbar-active' : ''">
-        <span class="tabbar-txt">喵喵圈</span>
+        <span class="tabbar-txt"></span>
       </a>
       <a id="designer" v-tap="{ methods:cgLink , pagename:'designer' }" class="tabbar-item item-designer" :class="$store.state.pageIndex==3 ? 'tabbar-active' : ''">
         <span class="tabbar-txt">设计师</span>
@@ -49,7 +49,7 @@
 <style scoped>
 
   .tabs{
-    height:1.2rem;
+    height:1rem;
     width: 100%;
     position: relative;
     display: -webkit-box;
@@ -60,7 +60,7 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: .14rem 0 .07rem 0;
+    padding: .15rem 0 .07rem 0;
     color: #929292;
     background-color: rgb(255, 255, 255);
     text-align: center;
@@ -71,9 +71,9 @@
     z-index: 100;
   }
   .tabs .tabbar-item{
-    padding: .1rem 0 .2rem;
-    background-size: auto .45rem !important;
-    background-position:  center top .25rem !important;
+    padding: 0rem 0 .2rem;
+    background-size: auto .4rem !important;
+    background-position:  center top .35rem !important;
     background-repeat: no-repeat !important;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
@@ -81,7 +81,7 @@
     flex: 1;
   }
   .tabs .tabbar-txt{
-    font-size: .28rem !important;
+    font-size: .22rem !important;
     /*padding-bottom:0.5rem;*/
   }
   /**为选中**/
@@ -92,6 +92,9 @@
     background: url('../../../static/images/employer.png') ;
   }
   .tabs .item-meow{
+    height: 1rem;
+    background-size: auto .6rem !important;
+    background-position: center top .1rem !important;
     background: url('../../../static/images/logo.png') ;
   }
   .tabs .item-designer{
