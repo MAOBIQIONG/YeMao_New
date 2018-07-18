@@ -3,14 +3,15 @@
   width: 100%;
   height: 100%;
   font-size: 0.28rem;
-  background: white;
-  padding-bottom: 0.4rem;
+  background: #F7F7F7;
 }
 .content .touxiang{
   width:100%;
-  display: inline-block;
+  height: 3rem;
   text-align: center;
-  border-bottom: 1px solid #f2f2f2;
+  padding-top: 0.2rem;
+  background: white;
+  /*border-bottom: 1px solid #f2f2f2;*/
 }
 .content .touxiang .tu{
   width:1.5rem;
@@ -19,6 +20,7 @@
   display: block;
   border-radius: 50%;
   margin: 0.2rem auto;
+  margin-bottom: 0;
   background-position:center center;
   background-size:cover;
 }
@@ -33,7 +35,7 @@
 .content .ys-time {
   width: 100%;
   background: white;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
 }
 
 .content .ys-time .qdtime {
@@ -46,18 +48,24 @@
 
 .content .ys-time .qdtime .qdtime-left {
   float: left;
+  line-height: 0.78rem;
+  color: #4B4B4B;
 }
 
 .content .ys-time .qdtime .qdtime-right {
   float: right;
   height: 0.8rem;
+  width: 5rem;
+  /*margin-right: 1.5rem;*/
 }
 
 .content .ys-time .qdtime .qdtime-right input {
   border: none;
   font-size: 0.28rem;
+  width: 5rem;
+  height: 0.7rem;
+  color: #4B4B4B!important;
   outline: medium;
-  text-align: right;
 }
  .xmlx-kuang{
   /*width: 2.9rem;*/
@@ -66,7 +74,7 @@
   display: block;
   border: none;
   font-size: 0.28rem;
-  color: #999999;
+  color: #4B4B4B;
   background: white;
   outline: medium;
 }
@@ -79,16 +87,26 @@
   width: 100%;
   /*border-top: 1px solid #F2F2F2;*/
   margin: auto;
+  padding-bottom: 0.4rem;
   background-color: white;
 }
+.content .pc-shuru p{
+  line-height: 0.6rem;
+  padding-left: 0.2rem;
+}
 
-.content .pc-shuru .area {
+.content .pc-shuru .area-box{
   width: 6.9rem;
-  height: 3.4rem;
-  margin: 0.2rem 0.3rem;
+  height: 3.6rem;
+  margin: 0 0.3rem;
+  border: 1px solid #E3E3E3;
+}
+.content .pc-shuru .area {
+  width: 6.8rem;
+  height: 3.2rem;
   border: none;
-  background: #F2F2F2;
   line-height: 0.4rem;
+  padding: 0.2rem;
   background: white;
   outline: medium;
   resize: none;
@@ -97,7 +115,8 @@
   position: absolute;
   font-size: 0.24rem;
   background: white;
-  right: 0.1rem;
-  bottom: 0.1rem;
+  height: 0.2rem;
+  right: 0.5rem;
+  bottom: 0.7rem;
 }
 /*# sourceMappingURL=tianxiejianli.css.map */

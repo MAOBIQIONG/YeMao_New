@@ -8,7 +8,7 @@
     </div>
     <div class="content content-p">
       <!--留言-->
-      <div class="pc-shuru">
+      <div class="pc-shuru2">
         <textarea v-model="params.title" class="area" maxlength="300" placeholder="请输入动态"></textarea>
         <p class="xianzhi"><span class="zs">{{300-params.title.length}}</span>/<span>300</span></p>
       </div>
@@ -260,5 +260,36 @@
   .pc-shuru{
     border: 1px solid #cccccc;
     border-radius: 5px;
+  }
+  /*2018/7.17页面样式重写*/
+  .pc-shuru2{
+    position: relative;
+    width: 6.5rem !important;
+    height: 3.4rem;
+    margin: auto;
+    margin-top: 0.2rem;
+    border-bottom: 1px solid #EFEFEF;
+  }
+  .pc-shuru2 .area{
+    width: 100%;
+    height: 2.8rem;
+    border: none;
+    outline: medium;
+    resize: none;
+    color: #4B4B4B;
+    font-size: 0.34rem;
+  }
+  .pc-shuru2 .xianzhi{
+    position: absolute;
+    background: #F1F1F1;
+    right: 0.1rem;
+    bottom: 0.2rem;
+    width: 1.26rem;
+    height: 0.48rem;
+    line-height: 0.48rem;
+    font-size:0.22rem;
+    color: #5D5D5D;
+    text-align: center;
+    border-radius: 0.48rem;
   }
 </style>

@@ -2,14 +2,15 @@
 .fb-content {
   width: 100%;
   font-size: 0.28rem;
-  background: #F2F2F2;
+  background: white;
 }
 
 .fb-content .xmlx {
-  width: 100%;
+  width:6.9rem;
+  margin: auto;
   height: 0.8rem;
   background: white;
-  margin-bottom: 0.1rem;
+  border-bottom: 1px solid #F2F2F2;
 }
 
 .fb-content .xmlx .xmlx-left {
@@ -17,17 +18,15 @@
   font-size: 0.28rem;
   height: 0.8rem;
   line-height: 0.8rem;
-  margin-left: 0.3rem;
 }
 
 .fb-content .xmlx .xmlx-right {
   float: right;
   height: 0.8rem;
-  margin-right: 0.3rem;
 }
 
 .fb-content .xmlx .xmlx-right .xmlx-kuang {
-  height: 0.8rem;
+  height: 0.75rem;
   border: none;
   display: block;
   font-size: 0.28rem;
@@ -44,21 +43,22 @@
 }
 
 .fb-content .xmbt .xmbt-top {
-  width: 100%;
+  width:6.9rem;
   height: 0.8rem;
+  margin: auto;
   line-height: 0.8rem;
   border-bottom: 1px solid #F2F2F2;
 }
 
 .fb-content .xmbt .xmbt-top .xt-left {
   float: left;
-  margin-left: 0.3rem;
+  line-height: 0.78rem;
 }
 
 .fb-content .xmbt .xmbt-top .xt-right {
   float: right;
   height: 0.8rem;
-  margin-right: 1.4rem;
+  width: 4.9rem;
 }
 
 .fb-content .xmbt .xmbt-top .xt-right input {
@@ -69,15 +69,22 @@
 
 .fb-content .xmbt .xmbt-bottom {
   width: 6.9rem;
-  height: 260px;
+  height:2.6rem;
   margin-left: 0.3rem;
 }
+.fb-content .xmbt .xmbt-bottom .xt-left{
+  width: 2rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  float: left;
 
+}
 .fb-content .xmbt .xmbt-bottom .xt-txt {
-  width: 100%;
+  float: left;
+  width: 4.9rem;
   height: 2.4rem;
-  margin: 0.1rem 0;
   font-size: 0.28rem;
+  padding-top: 0.3rem;
   border: none;
   outline: medium;
   resize: none;
@@ -86,11 +93,10 @@
 .fb-content .ys-time {
   width: 100%;
   background: white;
-  margin-bottom: 0.1rem;
 }
 
 .fb-content .ys-time .ys {
-  width: 7.2rem;
+  width: 6.9rem;
   height: 0.8rem;
   line-height: 0.8rem;
   margin-left: 0.3rem;
@@ -99,22 +105,24 @@
 
 .fb-content .ys-time .ys .ys-left {
   float: left;
+  line-height: 0.78rem;
 }
 
 .fb-content .ys-time .ys .ys-right {
   float: right;
+  width: 4.9rem;
   height: 0.8rem;
-  margin-right: 1.4rem;
+  text-align: right;
 }
-
 .fb-content .ys-time .ys .ys-right input {
   border: none;
+  width: 4.5rem;
   font-size: 0.28rem;
   outline: medium;
 }
 
 .fb-content .ys-time .qdtime {
-  width: 7.2rem;
+  width: 6.9rem;
   height: 0.8rem;
   line-height: 0.8rem;
   margin-left: 0.3rem;
@@ -123,13 +131,14 @@
 
 .fb-content .ys-time .qdtime .qdtime-left {
   float: left;
+  line-height: 0.78rem;
+
 }
 
 .fb-content .ys-time .qdtime .qdtime-right {
   float: right;
   height: 0.8rem;
   line-height: 0.8rem;
-  margin-right: 0.3rem;
 }
 
 .fb-content .bt-mj-gs {
@@ -141,7 +150,7 @@
 .fb-content .bt-mj-gs .xmbt,
 .fb-content .bt-mj-gs .xmmj,
 .fb-content .bt-mj-gs .gs {
-  width: 7.2rem;
+  width: 6.9rem;
   height: 0.8rem;
   line-height: 0.8rem;
   margin-left: 0.3rem;
@@ -152,6 +161,7 @@
 .fb-content .bt-mj-gs .xmmj .xmbt-left,
 .fb-content .bt-mj-gs .gs .xmbt-left {
   float: left;
+  line-height: 0.78rem;
 }
 
 .fb-content .bt-mj-gs .xmbt .xmbt-right,
@@ -159,49 +169,50 @@
 .fb-content .bt-mj-gs .gs .xmbt-right {
   float: right;
   height: 0.8rem;
-  margin-right: 1.4rem;
+  width: 4.9rem;
 }
 
 .fb-content .bt-mj-gs .xmbt .xmbt-right input,
 .fb-content .bt-mj-gs .xmmj .xmbt-right input,
 .fb-content .bt-mj-gs .gs .xmbt-right input {
   border: none;
+  width: 4.5rem;
   font-size: 0.28rem;
   outline: medium;
 }
 
 .fb-content .bt-mj-gs .sjsd {
-  width: 100%;
-  height: 1.6rem;
+  width: 6.9rem;
+  height: 1.4rem;
+  margin: auto;
+  border-bottom: 1px solid #F2F2F2;
 }
 
 .fb-content .bt-mj-gs .sjsd .sjsd-top {
-  width: 7.2rem;
-  height: 0.8rem;
-  line-height: 0.8rem;
-  margin-left: 0.3rem;
+  height: 1.4rem;
+  float: left;
+  line-height: 1.4rem;
 }
 
 .fb-content .bt-mj-gs .sjsd .sjsd-bottom {
-  width: 100%;
-  height: 0.8rem;
+  float: right;
 }
 
 .fb-content .bt-mj-gs .sjsd .sjsd-bottom .fanan {
-  width: 6.74rem;
-  height: 0.56rem;
-  margin: 0.12rem 0.38rem;
-  border: 1px solid #F2F2F2;
-  border-radius: 0.1rem;
+  width: 5.2rem;
+  height: 0.6rem;
+  margin-top: 0.4rem;
 }
 
 .fb-content .bt-mj-gs .sjsd .sjsd-bottom .fanan .fa {
   float: left;
-  width: 33.33%;
-  height: 0.56rem;
-  line-height: 0.56rem;
+  height: 0.6rem;
+  line-height: 0.6rem;
   text-align: center;
-  border-right: 1px solid #F2F2F2;
+  width: 1.6rem;
+  margin-left: 0.1rem;
+  border-radius: 0.6rem;
+  background: #EEEEEE;
 }
 
 .fb-content .bt-mj-gs .sjsd .sjsd-bottom .fanan .fa:last-child {
@@ -240,7 +251,8 @@
 .fb-content .sctp {
   width: 100%;
   min-height: 4.5rem;
-  padding-bottom: 1.5rem;
+  padding: 0.26rem;
+  padding-bottom: 1rem;
   background: white;
   zoom:1;
 }

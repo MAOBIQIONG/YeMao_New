@@ -36,7 +36,10 @@
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="dataParams.description" class="area" :maxlength="limitNum" placeholder="请输入工作描述"></textarea>
+        <p>描述</p>
+        <div class="area-box">
+           <textarea v-model="dataParams.description" class="area" :maxlength="limitNum" placeholder="请输入工作描述"></textarea>
+        </div>
         <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>{{limitNum}}</span></p>
       </div>
       <div class="tjgzjl" v-tap="{methods:showFun,flag:1}">
@@ -258,7 +261,7 @@ export default {
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
   .shijian{
-    width: 1.6rem;
+    width: 1.7rem;
   }
   .zzsj{
     width: 6.9rem !important;

@@ -2,7 +2,7 @@
   <div class="templete-body fabudingdan">
     <div class="header">
       <div class="header-left" v-tap="{ methods:showFun }"><img src="../../../static/images/back.png" /></div>
-      <span>订单详情</span>
+      <span>项目信息</span>
       <div v-if="improve" class="header-right" v-tap="{ methods:update }"><span>完善</span></div>
       <div v-else class="header-right" v-tap="{ methods:submit }"><span>发布</span></div>
     </div>
@@ -42,9 +42,11 @@
               <div class="xt-right"><input type="text" placeholder="请输入项目标题" v-model="subParams.project_title" maxlength="20"/></div>
             </div>
             <div class="xmbt-bottom">
-              <textarea class="xt-txt" placeholder="请详细描述一下项目的内容,500字以内" maxlength="500" v-model="subParams.project_describe"></textarea>
+              <div class="xt-left"><span>项目内容</span></div>
+              <textarea class="xt-txt" placeholder="请详细描述项目内容,500字以内" maxlength="500" v-model="subParams.project_describe"></textarea>
             </div>
           </div>
+          <div class="xian"></div>
           <div class="ys-time">
             <div class="ys">
               <div class="ys-left">
@@ -52,7 +54,9 @@
               </div>
               <div class="ys-right">
                 <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget"/>
+                <span class="danwei">￥</span>
               </div>
+
             </div>
             <div class="qdtime">
               <div class="qdtime-left">
@@ -63,6 +67,7 @@
               </div>
             </div>
           </div>
+          <div class="xian"></div>
           <div class="bt-mj-gs">
             <div class="xmbt">
               <div class="xmbt-left">
@@ -70,6 +75,7 @@
               </div>
               <div class="xmbt-right">
                 <input type="text" placeholder="请输入设计单位" v-model="unit" ref="unit"/>
+                <span class="danwei">㎡</span>
               </div>
             </div>
             <div class="xmmj">
@@ -78,6 +84,7 @@
               </div>
               <div class="xmbt-right">
                 <input type="text" placeholder="请输入设计面积" v-model="area" ref="area"/>
+                <span class="danwei">㎡</span>
               </div>
             </div>
             <div class="sjsd">
@@ -101,7 +108,8 @@
                   <span>工时</span>
                 </div>
                 <div class="xmbt-right">
-                  <input type="text" placeholder="请输入工时" v-model="hours" ref="hours"/>
+                  <input type="text" placeholder="请输入工时" v-model="hours" ref="hours" style="width: 4.2rem"/>
+                  <span>小时</span>
                 </div>
               </div>
               <div class="gsh-bottom">
@@ -111,16 +119,17 @@
                 <div class="gb-right">
                   <!--<span><datetime v-model="startTime"　:start-date="today"></datetime></span> / <span><datetime v-model="endTime" :start-date="tomorrow"></datetime></span>-->
                   <div class="flex-box">
-                    <div class="f1"><datetime v-model="startTime"　:start-date="today"></datetime></div>
-                    <div class="f2">/</div>
-                    <div class="f1"><datetime v-model="endTime" :start-date="tomorrow"></datetime></div>
+                    <div class="f1"><datetime v-model="startTime":start-date="today" class="riqi"></datetime></div>
+                    <div class="f2"> — </div>
+                    <div class="f1"><datetime v-model="endTime" :start-date="tomorrow" class="riqi"></datetime></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="xian"></div>
           <div class="sctp" id="image-upload" v-if="improve!=1">
-            <div class="sc-top">上传图片</div>
+            <!--<div class="sc-top">上传图片</div>-->
             <div class="img-upload">
               <div class="img" v-for="(img,index) in base64Arr" :key="index" :style="{backgroundImage: 'url(' + img + ')'}" v-tap="{methods:toPreviewer,pagename:'uploadImgPreviewer',src:img,index:index  }">
                 <div class="del-btn" v-tap="{methods:clearImgs,index:index}"></div>
@@ -677,22 +686,33 @@
   .fb-content{
     padding-top: 1.2rem;
   }
+  .xmlx .vux-popup-picker-value{
+    text-align: right;
+  }
+  .fabudingdan .weui-cell_access .weui-cell__ft{
+    padding-right:0;
+  }
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../../static/css/employer/fabudingdan.css';
+  .xian{
+    width: 100%;
+    height: 0.2rem;
+    background: #F2F2F2;
+  }
+  .demo5-item-selected {
+    background: #f65aa6 !important;
+    color:#fff;
+  }
+  /*选择时间*/
   .shijian{
     width: 1.6rem;
   }
-  .demo5-item-selected {
-    background: #f65aa6;
-    color:#fff;
-  }
-  .xmlx-kuang{
+  .riqi{
     width: 1.5rem;
   }
-
-  .flex-box{}
-  .flex-box .f1{ min-width: 1.2rem; }
-  .flex-box .f2{ padding: 0 0.1rem; }
+  .flex-box .f1{
+    margin-right: 0.07rem;
+  }
 </style>

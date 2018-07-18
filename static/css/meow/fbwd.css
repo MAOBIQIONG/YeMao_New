@@ -56,7 +56,7 @@
 
 .content .sctp {
   width: 100%;
-  border-bottom: 1px solid #cccccc;
+  /*border-bottom: 1px solid #cccccc;*/
   padding-bottom: 0.4rem;
   margin-top: 0.2rem;
 }

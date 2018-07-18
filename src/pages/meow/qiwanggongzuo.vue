@@ -11,7 +11,7 @@
       <div class="ys-time">
         <div class="qdtime">
           <div class="qdtime-left">
-            <span>职位</span>
+            <span>期望职位</span>
           </div>
           <div class="qdtime-right">
             <input v-model="dataParams.expected_positions" type="text" placeholder="请输入职位,20字以内" maxlength="20" />
@@ -36,9 +36,13 @@
           </div>
         </div>
       </div>
+      <div class="xian"></div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea v-model="dataParams.expected_description" class="area" maxlength="300" placeholder="对于期望工作的描述"></textarea>
+        <p>描述</p>
+        <div class="area-box">
+           <textarea v-model="dataParams.expected_description" class="area" maxlength="300" placeholder="对于期望工作的描述"></textarea>
+        </div>
         <p class="xianzhi"><span class="zs">{{300-dataParams.expected_description.length}}</span>/<span>300</span></p>
       </div>
     </div>
@@ -226,6 +230,45 @@
     }
   }
 </script>
+
+<style>
+
+</style>
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
+   /*2018/7/18页面优化*/
+  .content{
+    background: white;
+  }
+  .xian{
+    width: 100%;
+    height: 0.2rem;
+    background: #F2F2F2;
+  }
+  .content .ys-time{
+    width: 100%;
+    background: white;
+    margin-bottom:0rem;
+  }
+  .content .ys-time .qdtime .qdtime-left{
+    color: #4B4B4B;
+    line-height: 0.78rem;
+  }
+  .content .ys-time .qdtime .qdtime-right {
+    float: right;
+    height: 0.8rem;
+    width: 4.6rem;
+    min-width: 1.2rem;
+  }
+  .content .ys-time .qdtime .qdtime-right input{
+    border: none;
+    font-size: 0.28rem;
+    outline: medium;
+    text-align: left;
+  }
+
+  .content .pc-shuru p{
+    line-height: 0.6rem;
+    padding-left: 0.3rem;
+  }
 </style>

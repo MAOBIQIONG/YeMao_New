@@ -27,14 +27,16 @@
       >
         <div>
           <div class="jianli" v-for="(item,index) in list" :key="index" @click="toDetail(item._id,item.user_id)">
-            <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
-              <!-- <img src="../../../static/images/bj.jpg"/> -->
+            <div class="jianli-top">
+              <div class="touxiang2" :style="{backgroundImage:`url(${checkAvatar(item.img)})`}">
+                <!-- <img src="../../../static/images/bj.jpg"/> -->
+              </div>
+              <div class="jieshao jieshao2">
+                <p class="name"><span>{{item.real_name}}</span>&nbsp;&nbsp;<span>{{item.education}}</span> <span>{{item.working_year | getWorkyearsName}}</span> <span>￥{{item.expected_salary}}</span></p>
+                <p class="qiwan"><span :class="item.city[0]==''? 'xs':''">{{getName([item.city[0]])}}</span> <span>{{item.expected_positions}}</span></p>
+              </div>
             </div>
-            <div class="jieshao">
-              <p class="name"><span>{{item.real_name}}</span>/<span>{{item.expected_positions}}</span></p>
-              <p class="qiwan"><span>{{getName([item.city[0]])}}</span>&nbsp;<span>{{item.working_year | getWorkyearsName}}</span>&nbsp;<span>{{item.education}}</span>&nbsp;<span>￥{{item.expected_salary}}</span></p>
-              <p class="xinge">{{item.description}}</p>
-            </div>
+            <div class="xinge">{{item.description}}</div>
           </div>
           <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
@@ -282,4 +284,77 @@ export default {
 <style scoped>
   @import '../../../static/css/meow/shouchang-jianli.css';
   .scroller{background:transparent!important;}
+  /*2018/7/17页面优化更改*/
+  .content{
+    background: #F7F7F7;
+  }
+
+  .jianli-top{
+    width: 100%;
+  }
+  .jianli{
+    margin-bottom: 0.2rem;
+    background: white;
+    padding-bottom: 0.2rem;
+  }
+  .xs{
+    display: block;
+  }
+  .yc{
+    display: none;
+  }
+  .content .jianli .jieshao .qiwan{
+    color: #4B4B4B;
+  }
+  .jianli .touxiang2{
+    float: left;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background-color: #CCCCCC;
+    margin: 0.3rem;
+    margin-bottom: 0.1rem;
+    overflow: hidden;
+    background-position: center center;
+    background-size: cover;
+  }
+  .content .jianli .jieshao2{
+    float: left;
+    width: 5.5rem;
+    min-height: 1rem;
+    max-height: 1.25rem;
+    border-bottom: none;
+    font-size: 0.3rem;
+    margin-top: 0.1rem;
+  }
+  .content .jianli .jieshao2 .name{
+    font-size: 0.3rem;
+    color:#777777;
+  }
+  .name span:first-child{
+    font-size: 0.34rem;
+    height: 0.5rem;
+    display: inline-block;
+    max-width:2rem;
+    vertical-align: bottom;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    color:#4B4B4B;
+  }
+  .xinge {
+    display: block;
+    width: 6.8rem;
+    height: 0.8rem;
+    line-height: 0.4rem;
+    font-size: 0.26rem;
+    color: #4B4B4B;
+    margin: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+  }
 </style>

@@ -21,32 +21,53 @@
       </div>
     </div>
     <div class="content content-p">
+      <!--搜索历史-->
+      <div class="seach-lishi">
+        <div class="seach-ls">
+          <span class="sl-left">历史搜索</span>
+          <span class="sl-right" v-tap="{methods:clearHistory,index:-1}"></span>
+        </div>
+        <div class="searchls-list">
+          <!--<div class="ls-list"v-for="(item,index) in historySearch">-->
+            <!--<div class="ll-left" v-tap="{methods:search,value:item}">{{item}}</div>-->
+            <!--<span class="ll-right" v-tap="{methods:clearHistory,index:index}">×</span>-->
+          <!--</div>-->
+
+          <!--2018-7.17新样式-->
+          <span class="lsjl" v-for="(item,index) in historySearch" v-tap="{methods:search,value:item}">{{item}}</span>
+          <!--2018-7.17新样式-->
+        </div>
+      </div>
       <!--热门搜索-->
       <div class="rmsearch">
         <div class="search-rm">
           热门搜索
         </div>
-        <div class="f-ul">
+        <!--2018-7.17新样式-->
+        <div class="dingdan">
+          <div class="dingdan-icon"></div>
+          <ul>
+            <li v-for="item in hotSearch2" v-tap="{methods:search,value:item}">{{item}}</li>
+          </ul>
+        </div>
+        <div class="yonghu">
+          <div class="yonghu-icon"></div>
           <ul>
             <li v-for="item in hotSearch" v-tap="{methods:search,value:item}">{{item}}</li>
           </ul>
         </div>
+
+
+
+
+        <!--<div class="f-ul">-->
+          <!--<ul>-->
+            <!--<li v-for="item in hotSearch" v-tap="{methods:search,value:item}">{{item}}</li>-->
+          <!--</ul>-->
+        <!--</div>-->
         <!--<div class="search-list">-->
           <!--<div class="guanjianchi" v-for="item in hotSearch" v-tap="{methods:search,value:item}">{{item}}</div>-->
         <!--</div>-->
-      </div>
-      <!--搜索历史-->
-      <div class="seach-lishi">
-        <div class="seach-ls">
-          <span class="sl-left">搜索历史</span>
-          <span class="sl-right" v-tap="{methods:clearHistory,index:-1}">清除历史</span>
-        </div>
-        <div class="searchls-list">
-          <div class="ls-list" v-for="(item,index) in historySearch">
-            <div class="ll-left" v-tap="{methods:search,value:item}">{{item}}</div>
-            <span class="ll-right" v-tap="{methods:clearHistory,index:index}">×</span>
-          </div>
-        </div>
       </div>
       <toast v-model="showMark" :time="1000" type="text" width="5rem">{{showMsg}}</toast>
     </div>
@@ -64,6 +85,7 @@
         searchValue: "",
         historySearch: [],
         hotSearch: [],
+        hotSearch2: [],
         showMark:false,
         showMsg:"",
       }
@@ -143,7 +165,7 @@
               _self.hotSearch.push(item.user_name);
             })
             orders.forEach(function (item, index) {
-              _self.hotSearch.push(item.project_title);
+              _self.hotSearch2.push(item.project_title);
             })
           }
         })
@@ -156,8 +178,12 @@
 <style scoped>
   @import "../../../static/css/index/search.css";
   /**css1:**/
-  .f-ul{}
-  .f-ul ul{list-style:none;padding: 0 .25rem;margin: 0;line-height: .5rem; }
+  .f-ul ul{
+    list-style:none;
+    padding: 0 .25rem;
+    margin: 0;
+    line-height: .5rem;
+  }
   .f-ul li{
     display:block;
     float:left;
@@ -170,5 +196,69 @@
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+  }
+
+  /*2018页面样式修改优化*/
+  .seach-lishi .seach-ls .sl-right {
+    display: inline-block;
+    width: 0.28rem;
+    height: 0.28rem;
+    background: url("../../../static/images/index/del.png") no-repeat;
+    background-size: 100%;
+    background-position: center;
+    margin-top: 0.25rem;
+    float: right;
+  }
+  .lsjl{
+    display: inline-block;
+    background:#F1F1F1;
+    border-radius:0.6rem;
+    font-size: 0.26rem;
+    color:#5D5D5D;
+    height: 0.6rem;
+    padding: 0.1rem 0.3rem;
+    margin-bottom: 0.2rem;
+  }
+  .dingdan,.yonghu{
+    position: relative;
+    width:7rem;
+    margin: auto;
+    color: rgba(93, 93, 93, 1);
+    font-size: 0.26rem;
+    font-family: 'PingFangSC-Regular';
+  }
+  .dingdan ul,.yonghu ul{
+    margin-left: 0.4rem;
+  }
+  .dingdan ul li,.yonghu ul li{
+    display: inline-block;
+    background:#F1F1F1;
+    border-radius:0.6rem;
+    font-size: 0.26rem;
+    color:#5D5D5D;
+    height: 0.6rem;
+    padding: 0.1rem 0.3rem;
+    margin-bottom: 0.2rem;
+    margin-left: 0.1rem;
+  }
+  .dingdan-icon{
+    position: absolute;
+    top: 0.1rem;
+    left: 0;
+    width: 0.36rem;
+    height: 0.36rem;
+    background: url("../../../static/images/index/dd-icon.png") no-repeat;
+    background-size: 100%;
+    background-position: center;
+  }
+  .yonghu-icon{
+    position: absolute;
+    top: 0.1rem;
+    left: 0;
+    width: 0.36rem;
+    height: 0.36rem;
+    background: url("../../../static/images/index/yh-icon.png") no-repeat;
+    background-size: 100%;
+    background-position: center;
   }
 </style>

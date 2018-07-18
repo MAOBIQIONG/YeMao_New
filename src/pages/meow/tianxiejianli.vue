@@ -13,7 +13,7 @@
              <div class="tu" v-tap="{ methods:modifyAvatar}" :style="{backgroundImage:`url(${checkAvatar(dataParams.img)})`}">
                  <!-- <img src="../../../static/images/meow/xiangji.png" v-if="isNull(dataParams.img)"/> -->
               </div>
-              <p>上传头像</p>
+              <p class="bjtx"></p>
         </div>
         <div class="ys-time">
           <div class="qdtime">
@@ -30,8 +30,7 @@
             </div>
             <div class="qdtime-right">
               <checker v-model="dataParams.gender" radio-required default-item-class="demo1-item" selected-item-class="demo1-item-selected">
-                <checker-item value="男">男</checker-item>
-                <checker-item value="女">女</checker-item>
+                <checker-item class="xiu-xuan" value="男">男</checker-item><checker-item class="xiu-xuan" value="女">女</checker-item>
               </checker>
               <!--<form action="" method="get">-->
                 <!--<label><input name="Fruit" type="radio" value="男" />男 </label>-->
@@ -44,7 +43,7 @@
               <span>出生年月</span>
             </div>
             <div class="qdtime-right">
-              <datetime class="shijian" placeholder="请选择生日" style="padding-right:0"
+              <datetime class="shijian" placeholder="请选择生日"
                         :min-year="1949"
                         :end-date="getCurrDate()"
                         @on-change="onChange"
@@ -65,7 +64,7 @@
             <div class="qdtime-left">
               <span>设计类型</span>
             </div>
-            <div class="qdtime-right">
+            <div class="qdtime-right qd-sel">
               <select class="xmlx-kuang rtl" v-model="dataParams.type">
                 <option value="">请选择类型</option>
                 <option v-for="item in typeList" :value="item._id">{{item.type_name}}</option>
@@ -101,27 +100,30 @@
             <div class="qdtime-left">
               <span>邮箱</span>
             </div>
-            <div class="qdtime-right" style="line-height:normal">
-              <x-input name="email" placeholder="请输入邮箱地址" is-type="email" text-align="right" v-model="dataParams.email"></x-input>
+            <div class="qdtime-right em" style="line-height:normal">
+              <x-input name="email" placeholder="请输入邮箱地址" is-type="email" v-model="dataParams.email"></x-input>
             </div>
           </div>
           <div class="qdtime">
-            <!-- <div class="qdtime-left">
+            <div class="qdtime-left">
               <span>所在城市</span>
             </div>
             <div class="qdtime-right">
               <group class="xmlx-kuang">
-                  <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city"></x-address>
+                  <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" class="crty"></x-address>
               </group>
-            </div> -->
-            <group label-width="3rem" label-align="left">
-              <x-address @on-hide="logHide" title="所在城市" raw-value :list="addressData" hide-district value-text-align="right" v-model="value3" label-align="end"></x-address>
-            </group>
+            </div>
+            <!--<group label-width="3rem" label-align="left">-->
+              <!--<x-address @on-hide="logHide" title="所在城市" raw-value :list="addressData" hide-district value-text-align="right" v-model="value3" label-align="end"></x-address>-->
+            <!--</group>-->
           </div>
         </div>
         <!--留言-->
         <div class="pc-shuru">
-          <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="dataParams.description"></textarea>
+          <p>描述</p>
+          <div class="area-box">
+            <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="dataParams.description"></textarea>
+          </div>
           <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>300</span></p>
         </div>
       </div>
@@ -181,7 +183,7 @@
             loadingShow:false,
             educationList:[
               '博士','硕士','本科','大专','高中','中专','其他'
-            ]
+            ],
         }
     },
     created(){
@@ -431,15 +433,30 @@
             console.log(this.dataParams);
             _self.submit();
             // _self.toUrl('gongzuojinli')
-        }
+        },
     }
   }
 </script>
+<style>
+  .qdtime-right .shijian .weui-cell__ft{
+    text-align: left !important;
+    color: #4B4B4B;
+  }
+  .em .weui-cell{
+    padding: 10px 0px;
+  }
+  .weui-cells:before{
+    border-top: none !important;
+  }
+  .weui-cells:after {
+    border-bottom: none !important;
+  }
+</style>
 <style scoped>
   @import '../../../static/css/meow/tianxiejianli.css';
+  /*选择时间*/
   .shijian{
-    width: 1.9rem;
-    text-align:right;
+    width: 3rem;
   }
   /*性别选ze*/
   .demo1-item {
@@ -448,15 +465,18 @@
     height: 0.8rem;
   }
   .demo1-item-selected {
+    position: relative;
     text-align: center;
     width:0.8rem;
-    color: #f65aa6;
+    color: #ffffff;
+    background:#E83B8B !important;
+    z-index: 3;
+  }
+  .xmlx-kuang{
+    width: 2rem;
   }
   .xmlx-kuang.rtl{
-    direction: rtl;
-  }
-  .weui-cell{
-    padding-right:0!important;
+    /*direction: rtl;*/
   }
   .content{
     overflow-y: auto !important;
@@ -465,20 +485,28 @@
   .flex-content{
     padding-top: 1.2rem;
   }
-</style>
-<style>
-.templete-body .weui-cell_access{
-  display:flex!important;
-  width:100%!important;
-}
+  /*2018/7.17页面优化*/
+  .bjtx{
+    width: 1.5rem !important;
+    background: url("../../../static/images/meow/bjtx.png") no-repeat;
+    background-size: 100%;
+    background-position: center;
+    margin: auto;
+  }
 
-.templete-body .vux-popup-picker-value {
-  text-align:right!important;
-  max-width:4rem!important;
-}
-.templete-body .weui-cell {
- justify-content:space-between!important;
-}
+  .xiu-xuan{
+    width: 1.16rem;
+    height: 0.6rem;
+    line-height: 0.6rem;
+    background: #F0F0F6;
+    border-radius: 0.4rem;
+    margin-right: -0.4rem;
+  }
+  .crty{
+    width: 4rem;
+  }
 </style>
+
+
 
 

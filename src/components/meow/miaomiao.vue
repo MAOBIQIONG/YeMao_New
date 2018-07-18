@@ -56,9 +56,6 @@
                   <div class="sb-yrz" v-if="item.user.authenticating_state>3">已认证</div>
                 </div>
               </div>
-              <div class="st-jiageleixin">
-                <div class="st-jiage">{{timeStamp2String(item.create_date)}}</div>
-              </div>
             </div>
             <div class="sjs-content">
               <!--<div class="sc-jiesao">{{item.title}}</div>-->
@@ -74,8 +71,13 @@
               </ul>
             </div>
             <div class="pinjia">
-              <p class="dz" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,index:index,id:item._id}"><span>{{item.like}}</span></p>
-              <p class="comments"><span></span><span>{{item.comments}}</span></p>
+              <div class="st-jiageleixin">
+                  <div class="st-jiage">{{timeStamp2String(item.create_date)}}</div>
+              </div>
+              <div class="pinjia-right">
+                <p class="dz" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,index:index,id:item._id}"><span>{{item.like}}</span></p>
+                <p class="comments"><span></span><span>{{item.comments}}</span></p>
+              </div>
               <!--<div class="more more-icon"></div>-->
             </div>
             <!--<div v-if="item.prevImgs && item.prevImgs.length > 0" >-->
@@ -460,12 +462,24 @@
       background-position:center center;
       background-size: cover;
   }
-
   /**样式重写**/
   .blank{
     margin-top: 0.1rem;
   }
   .blank_bottom{
     padding-bottom: 1.6rem;
+  }
+
+  /*2018页面样式重写*/
+  .st-jiageleixin{
+    float: left;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    font-size: 0.24rem;
+    color: #A2A2A2
+  }
+  .pinjia-right{
+    float: right;
+    margin-right: 0.2rem;
   }
 </style>

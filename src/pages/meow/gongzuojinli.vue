@@ -28,10 +28,11 @@
                 <div class="gzjl">
                 <div class="rzsj">
                     <div class="rzsj-left">
-                    <span>{{item.start_time}}</span>~<span>{{item.end_time}}</span>
+                    <span>{{item.start_time}}</span>～<span>{{item.end_time}}</span>
                     </div>
                     <div class="rzsj-right" @click="edit(item._id)">
-                    <span><img src="../../../static/images/sx1.png"></span><span>编辑</span>
+                    <!--<span><img src="../../../static/images/sx1.png"></span><span>编辑</span>-->
+                      <span><img src="../../../static/images/meow/bianxie.png"></span>
                     </div>
                 </div>
                 <div class="zwmc">
@@ -44,7 +45,7 @@
             </div>
 
             <div class="tjgzjl" @click="toUrl('bianjigongzuojinli')">
-            添加工作经历
+              <span>+</span>工作经历
             </div>
             <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
         </div>
