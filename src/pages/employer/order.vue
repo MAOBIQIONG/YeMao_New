@@ -108,7 +108,7 @@
               <p>{{getStringDate(bid.create_date,'ymd')}}</p>
             </div>
              <div class="xiu-list">
-               <div class="yuan">{{index}}</div>
+               <div class="yuan">{{index+1}}</div>
                <div class="qdsjs-box">
                  <div class="qb-top">
                    <div class="qt-touxiang" v-tap="{methods:toUrl2,pagename:'sjszxxq',query:{id:bid.user._id}}">
