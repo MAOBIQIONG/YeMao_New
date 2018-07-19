@@ -23,7 +23,7 @@
         :class="{scroller:true}"
     >
         <!--编辑工作经历-->
-        <div class="content content-p" style="padding-top:0;position:static">
+        <div class="content" style="padding-top:0;position:static">
             <div v-for="(item,index) in list" :key="index" v-if="item.is_del==0">
                 <div class="gzjl">
                 <div class="rzsj">
