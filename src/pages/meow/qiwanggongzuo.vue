@@ -14,7 +14,7 @@
             <span>期望职位</span>
           </div>
           <div class="qdtime-right">
-            <input v-model="dataParams.expected_positions" type="text" placeholder="请输入职位,20字以内" maxlength="20" />
+            <input v-model="dataParams.expected_positions" type="text" placeholder="请输入职位,10字以内" maxlength="10" />
           </div>
         </div>
         <div class="qdtime">

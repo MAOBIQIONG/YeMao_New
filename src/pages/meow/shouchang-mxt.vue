@@ -26,24 +26,24 @@
             <div>
                 <div class="weida-list" v-for="(item,index) in list" :key="index">
                     <div class="weida" @click="toDetails(item._id)">
-                    <div class="neirong">
-                        <div class="piapti">
-                            {{item.title}}
-                        </div>
-                        <!--<div class="tupian" v-if="item.imgs">-->
-                            <!--<img :src="checkImg(item.imgs[0])"/>-->
-                        <!--</div>-->
-                        <div class="tupian" v-if="item.imgs && item.imgs.length>0" :style="{backgroundImage: 'url(' + checkImg(item.imgs[0]) + ')'}"></div>
-                        <!-- <div class="tupian" v-else>
-                            <img src="../../../static/images/bj.jpg"/>
-                        </div> -->
-                        <div class="jieshao">
-                            {{item.description}}
-                        </div>
-                    </div>
-                    <div class="pingjia">
-                        <span>{{item.like}}</span>赞同 · <span>{{item.comments}}</span>评论
-                    </div>
+                      <div class="neirong">
+                          <div class="tupian" v-if="item.imgs && item.imgs.length>0" :style="{backgroundImage: 'url(' + checkImg(item.imgs[0]) + ')'}"></div>
+                          <div class="piapti">
+                              {{item.title}}
+                          </div>
+                          <!--<div class="tupian" v-if="item.imgs">-->
+                              <!--<img :src="checkImg(item.imgs[0])"/>-->
+                          <!--</div>-->
+                          <!-- <div class="tupian" v-else>
+                              <img src="../../../static/images/bj.jpg"/>
+                          </div> -->
+                          <div class="jieshao">
+                              {{item.description}}
+                          </div>
+                      </div>
+                      <div class="pingjia">
+                          <span>{{item.like}}</span>&nbsp;&nbsp;赞同<span>{{item.comments}}</span>&nbsp;&nbsp;评论
+                      </div>
                     </div>
                 </div>
                 <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
@@ -268,7 +268,7 @@ export default {
 }
 </script>
 <style scoped>
-  @import '../../../static/css/meow/shouchang-wenda.css';
+  @import '../../../static/css/meow/shouchang-mxt.css';
   .weida-list{
       margin-top:0.2rem;
   }
