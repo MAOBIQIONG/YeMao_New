@@ -180,6 +180,9 @@
 </script>
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
+  .content .pc-shuru .area{
+    width: 100%;
+  }
 </style>
 <style>
 .p-cjxy .weui-cell_access{

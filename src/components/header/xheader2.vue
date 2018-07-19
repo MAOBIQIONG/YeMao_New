@@ -55,11 +55,14 @@
     border-bottom: 1px solid #f2f2f2;
   }
   .vux-header .vux-header-left .left-arrow:before{
-    border-left: 1px solid #f65aa6 !important;
-    border-top: 1px solid #f65aa6 !important;
+    /*border-left: 1px solid #f65aa6 !important;*/
+    /*border-top: 1px solid #f65aa6 !important;*/
+    border-left: 1px solid #4B4B4B !important;
+    border-top: 1px solid #4B4B4B !important;
   }
   .vux-header-title{
-    color: #f65aa6 !important;
+    /*color: #f65aa6 !important;*/
+    color: #4B4B4B !important;;
   }
 
   .vux-header-right{

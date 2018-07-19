@@ -20,8 +20,8 @@
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
-        :class="{scroller:true}"   
-    >   
+        :class="{scroller:true}"
+    >
     <div>
         <div class="content content-p" style="padding-top:0.2rem;" v-for="(item,index) in list" :key="index">
             <div class="jianli" @click="toDetail(item._id,item.user_id)">
@@ -33,13 +33,13 @@
                     <p class="qiwan"><span>{{getName([item.city[0]])}}</span>&nbsp;<span>{{item.working_year | getWorkyearsName}}</span>工作经验&nbsp;<span>{{item.education}}</span>&nbsp;<span>￥{{item.expected_salary}}</span></p>
                     <p class="xinge">{{item.description}}</p>
                 </div>
-            </div>     
+            </div>
         </div>
         <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip" class="loadMore"></load-more>
     </div>
-    
+
     </scroller>
-    
+
   </div>
 </template>
 
@@ -51,7 +51,7 @@ export default {
         LoadMore,
         Toast,
         Loading
-    }, 
+    },
     props:{
         lockX:{
             type:Boolean,
@@ -60,13 +60,13 @@ export default {
         lockY:{
             type:Boolean,
             default:false
-        }, 
+        },
     },
     filters:{
         getWorkyearsName(id){
             return common.getWorkyearsName(id);
         }
-    }, 
+    },
     data: function () {
       return {
         height:'',
@@ -144,7 +144,7 @@ export default {
             } else {
                 console.log('没有获取用户信息');
                 _self.$router.push({name:"login"});
-            }         
+            }
       },
         // 头像
       checkAvatar (path) {
@@ -152,7 +152,7 @@ export default {
       },
       checkImg(path){
         return common.getDefultImg(path);
-      },       
+      },
         getName (value) {
             return value2name(value, ChinaAddressV4Data)
         },

@@ -154,7 +154,7 @@ body,html{
   height: 1.2rem;
   /*非沉浸式*/
   /*height: 0.88rem;*/
-  color: #f65aa6;
+  color: #4B4B4B;
   border-bottom: 1px solid #F2F2F2;
   font-size: 0.4rem;
   line-height: 0.88rem;
@@ -195,6 +195,7 @@ body,html{
   font-size: 0.32rem;
   line-height: 0.88rem;
   text-align: center;
+  color: #f65aa6;
   /*沉浸式样式*/
   top: 0.32rem;
   /*非沉浸式*/
@@ -1555,7 +1556,7 @@ body,html{
   position: static !important;
 }
 .vux-cell-value{
-  color: #999999;
+  color: #4B4B4B !important;
 }
 .vux-cell-primary vux-popup-picker-select-box{
   width: 100%;
@@ -1580,7 +1581,7 @@ body,html{
   word-break:keep-all;           /* 不换行 */
   white-space:nowrap;          /* 不换行 */
   text-overflow:ellipsis;
-  color: #999999 !important;
+  color: #4B4B4B!important;
 }
 
 /**顶部搜索组件样式**/

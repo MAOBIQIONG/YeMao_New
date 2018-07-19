@@ -1,5 +1,5 @@
 <template>
-  <div class="templete-body">
+  <div class="templete-body tianxiejianli-xiu">
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
@@ -105,14 +105,17 @@
             </div>
           </div>
           <div class="qdtime">
-            <div class="qdtime-left">
-              <span>所在城市</span>
-            </div>
-            <div class="qdtime-right">
-              <group class="xmlx-kuang">
-                  <x-address :placeholder="'请选择城市'" title="" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" class="crty"></x-address>
-              </group>
-            </div>
+            <!--<div class="qdtime-left">-->
+              <!--<span>所在城市</span>-->
+            <!--</div>-->
+            <!--<div class="qdtime-right">-->
+              <!--<group class="xmlx-kuang">-->
+                  <!--<x-address :placeholder="'请选择城市'" title="所在城市" :list="addressData" hide-district value-text-align="right" v-model="dataParams.city" class="crty"></x-address>-->
+              <!--</group>-->
+            <!--</div>-->
+            <group label-width="2rem" label-align="left">
+              <x-address title="所在城市" :placeholder="'请选择城市'" raw-value :list="addressData" hide-district value-text-align="left" v-model="dataParams.city" label-align="end"></x-address>
+            </group>
             <!--<group label-width="3rem" label-align="left">-->
               <!--<x-address @on-hide="logHide" title="所在城市" raw-value :list="addressData" hide-district value-text-align="right" v-model="value3" label-align="end"></x-address>-->
             <!--</group>-->
@@ -124,7 +127,7 @@
           <div class="area-box">
             <textarea class="area" maxlength="300" placeholder="请输入个人描述" v-model="dataParams.description"></textarea>
           </div>
-          <p class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>300</span></p>
+          <div class="xianzhi"><span class="zs">{{300-dataParams.description.length}}</span>/<span>300</span></div>
         </div>
       </div>
     </div>
@@ -440,7 +443,7 @@
 <style>
   .qdtime-right .shijian .weui-cell__ft{
     text-align: left !important;
-    color: #4B4B4B;
+    color: #4B4B4B ;
   }
   .em .weui-cell{
     padding: 10px 0px;
@@ -450,6 +453,19 @@
   }
   .weui-cells:after {
     border-bottom: none !important;
+  }
+
+  .tianxiejianli-xiu .weui-cell_access{
+     display:flex!important;
+     width:100%!important;
+   }
+
+  .tianxiejianli-xiu .vux-popup-picker-value {
+    text-align:left!important;
+    max-width:4rem!important;
+  }
+  .tianxiejianli-xiu .weui-cell {
+    justify-content:space-between!important;
   }
 </style>
 <style scoped>

@@ -30,7 +30,7 @@
             <span>在职时间</span>
           </div>
           <div class="qdtime-right">
-            <span><datetime v-model="dataParams.start_time" class="shijian" placeholder="开始时间" :min-year="1978"></datetime></span> / <span><datetime v-model="dataParams.end_time" class="shijian" placeholder="结束时间"  :min-year="1978"></datetime></span>
+            <span><datetime v-model="dataParams.start_time" class="shijian" placeholder="开始时间" :min-year="1978"></datetime></span> / &nbsp;&nbsp;&nbsp;<span><datetime  v-model="dataParams.end_time" class="shijian" placeholder="结束时间"  :min-year="1978"></datetime></span>
           </div>
         </div>
       </div>
@@ -258,6 +258,12 @@ export default {
     }
 }
 </script>
+<style>
+  .weui-cell_access .weui-cell__ft {
+    padding-right: 0;
+    position: relative;
+  }
+</style>
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';
   .shijian{

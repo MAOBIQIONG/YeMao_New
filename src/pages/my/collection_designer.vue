@@ -19,8 +19,8 @@
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
-        :class="{scroller:true}"   
-    >  
+        :class="{scroller:true}"
+    >
     <div>
         <div v-for="(item,index) in list" :key="index" class="content content-p" style="padding-top:0;padding-bottom:0;">
             <div class="szsjs-list" @click="toDetails(item._id)">
@@ -60,7 +60,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
         Scroller,
         LoadMore,
         Toast
-    }, 
+    },
     props:{
         lockX:{
             type:Boolean,
@@ -69,7 +69,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
         lockY:{
             type:Boolean,
             default:false
-        }, 
+        },
     },
     data () {
       return {
@@ -145,7 +145,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
             } else {
                 console.log('没有获取用户信息');
                 _self.$router.push({name:"login"});
-            }         
+            }
       },
         getName (value) {
             return value2name(value, ChinaAddressV4Data)
@@ -176,7 +176,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
                     let data = response.data
                     if (data) {
                         _self.setData(data);
-                        console.log('数据设置完成');  
+                        console.log('数据设置完成');
                     } else {
                         console.log('noData');
                     }
@@ -223,7 +223,7 @@ import {Scroller,LoadMore,Toast} from 'vux'
       },
       checkImg(path){
         return common.getDefultImg(path);
-      },        
+      },
         //下拉刷新
         refreshPageDate(){
             let _self = this

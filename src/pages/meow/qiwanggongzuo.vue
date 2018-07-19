@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="xiu-qiwang">
     <!--头部导航-->
     <div class="header">
       <div class="header-left"@click="goback"><img src="../../../static/images/back.png" /></div>
@@ -26,14 +26,17 @@
           </div>
         </div>
         <div class="qdtime">
-          <div class="qdtime-left">
-            <span>期望城市</span>
-          </div>
-          <div class="qdtime-right">
-            <group class="xmlx-kuang">
-              <x-address @on-hide="logHide" placeholder="请选择城市" title="" :list="addressData" hide-district value-text-align="right" v-model="value3" style="height:0.8rem;line-height:0.8rem;"></x-address>
-            </group>
-          </div>
+          <!--<div class="qdtime-left">-->
+            <!--<span>期望城市</span>-->
+          <!--</div>-->
+          <!--<div class="qdtime-right">-->
+            <!--<group class="xmlx-kuang">-->
+              <!--<x-address @on-hide="logHide" placeholder="请选择城市" title="" :list="addressData" hide-district value-text-align="right" v-model="value3" style="height:0.8rem;line-height:0.8rem;"></x-address>-->
+            <!--</group>-->
+          <!--</div>-->
+          <group label-width="2.25rem" label-align="left">
+            <x-address @on-hide="logHide" title="期望城市" :placeholder="'请选择城市'" raw-value :list="addressData" hide-district value-text-align="left" v-model="value3" label-align="end"></x-address>
+          </group>
         </div>
       </div>
       <div class="xian"></div>
@@ -232,7 +235,18 @@
 </script>
 
 <style>
+  .xiu-qiwang .weui-cell_access{
+    display:flex!important;
+    width:100%!important;
+  }
 
+  .xiu-qiwang .vux-popup-picker-value {
+    text-align:left!important;
+    max-width:5rem!important;
+  }
+  .xiu-qiwang .weui-cell {
+    justify-content:space-between!important;
+  }
 </style>
 <style scoped>
   @import '../../../static/css/meow/bianjigongzuojinli.css';

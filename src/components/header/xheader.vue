@@ -36,6 +36,7 @@
     z-index: 666;
   }
   .vux-header-title{
-    color: #f65aa6 !important;
+    /*color: #f65aa6 !important;*/
+    color: #4B4B4B !important;;
   }
 </style>
