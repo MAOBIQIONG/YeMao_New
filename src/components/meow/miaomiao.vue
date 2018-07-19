@@ -72,7 +72,7 @@
             </div>
             <div class="pinjia">
               <div class="st-jiageleixin">
-                  <div class="st-jiage">{{timeStamp2String(item.create_date)}}</div>
+                  <div class="st-jiage">{{getDateDiff(item.create_date)}}</div>
               </div>
               <div class="pinjia-right">
                 <p class="dz" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,index:index,id:item._id}"><span>{{item.like}}</span></p>
@@ -253,6 +253,9 @@
       // 时间戳转日期
       timeStamp2String(time){
         return common.timeStamp2String(time,'ymd');
+      },
+      getDateDiff(time){
+        return common.getDateDiff(time);
       },
 
       // 点赞效果
