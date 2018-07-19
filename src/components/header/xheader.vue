@@ -37,6 +37,6 @@
   }
   .vux-header-title{
     /*color: #f65aa6 !important;*/
-    color: #4B4B4B !important;;
+    color: #f65aa6 !important;;
   }
 </style>
