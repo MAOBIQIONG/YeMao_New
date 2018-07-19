@@ -6,24 +6,42 @@
 	width: 7.5rem;
 	font-size: 0.28rem;
   background-color: #f2f2f2;
-	color: #666666;
+  margin-bottom: 0.2rem;
+  color: #777777;
 }
 
 .weida-list .weida {
-	padding: 0 0.15rem;
+	padding: 0 0.3rem;
   background: white;
 }
+.piapti {
+  font-size: 0.34rem;
+  color: #4B4B4B;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  padding: 0.2rem 0;
+  overflow: hidden;
+}
+
+.neirong{
+  width: 100%;
+  display: inline-block;
+}
+
+
 
 .weida-list .weida .wd-top {
-	height: 0.8rem;
+	height: 1rem;
+  float: left;
 }
 
 .weida-list .weida .wd-top .touxiang {
 	float: left;
-	width: 0.6rem;
-	height: 0.6rem;
+	width: 0.44rem;
+	height: 0.44rem;
 	border-radius: 50%;
-	margin-top: 0.1rem;
+	margin-top: 0.28rem;
 	margin-right: 0.2rem;
 	background-color: #CCCCCC;
     overflow: hidden;
@@ -38,16 +56,18 @@
 }
 
 .weida-list .weida .wd-top .nicheng {
-	height: 0.8rem;
-	line-height: 0.8rem;
+	height: 1rem;
+  float: left;
+  font-size: 0.26rem;
+	line-height: 1rem;
 }
 
 .weida-list .weida .tupian {
-	width: 7.2rem;
-	height: 3rem;
+	width: 1.86rem;
+	height: 1.3rem;
 	background: #CCCCCC;
-	margin-bottom: 0.1rem;
-  margin-top: 0.1rem;
+  float: left;
+  margin-right: 0.1rem;
 	overflow: hidden;
 }
 .tupian{
@@ -62,19 +82,11 @@
 	display: block;
 }
 
-.weida-list .weida .neirong .piapti {
-	font-size: 0.32rem;
-	color: #000000;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-  padding: 0.1rem 0;
-	overflow: hidden;
-}
-
 .weida-list .weida .neirong .jieshao {
 	margin-top: 0.1rem;
 	line-height: 0.4rem;
+  font-size: 0.3rem;
+  color: #777777;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
@@ -83,9 +95,14 @@
 }
 
 .weida-list .weida .pingjia {
-	height: 0.8rem;
-	line-height: 0.8rem;
+	height: 1rem;
+	line-height: 1rem;
 }
-
-
+.pingjia-right{
+  float: right;
+  font-size: 0.26rem;
+}
+.pingjia-right span{
+  margin-left: 0.2rem;
+}
 /*# sourceMappingURL=shouchang-wenda.css.map */

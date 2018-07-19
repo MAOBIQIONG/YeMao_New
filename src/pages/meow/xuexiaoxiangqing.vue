@@ -12,11 +12,6 @@
         <div class="touxiang" :style="{backgroundImage:`url(${checkAvatar(alumni.school_logo)})`}"></div>
         <div class="mingcheng">
           <div class="xuexiao">{{alumni.school_name}}</div>
-          <!--   -->
-          <div class="jrxs">
-            <span v-if="alumni.addMark==0" v-tap="{methods:joinAlumnis}">+&nbsp;加入学校</span>
-            <span v-if="alumni.addMark==1" v-tap="{methods:toUrl2,pagename:'groupchat',query:{id:alumni.group.tid,name:alumni.group.tname,img:alumni.group.icon}}">+&nbsp;校友交流</span>
-          </div>
         </div>
       </div>
       <div class="xxjj">
@@ -25,6 +20,7 @@
           {{alumni.school_description}}
         </div>
       </div>
+
       <div class="liebiao">
         <!--<div class="list">-->
           <!--<div class="xingxi">管理员</div>-->
@@ -60,6 +56,10 @@
           </div>
           <div class="list-right"><img src="../../../static/images/jiangou.png"></div>
         </div>
+      </div>
+      <div class="jrxs">
+        <span v-if="alumni.addMark==0" v-tap="{methods:joinAlumnis}">加入学校</span>
+        <span v-if="alumni.addMark==1" v-tap="{methods:toUrl2,pagename:'groupchat',query:{id:alumni.group.tid,name:alumni.group.tname,img:alumni.group.icon}}">校友交流</span>
       </div>
     </div>
     <loading :show="loadingShow" text="加载中"></loading>

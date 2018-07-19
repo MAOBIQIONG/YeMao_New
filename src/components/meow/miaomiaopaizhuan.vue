@@ -27,7 +27,9 @@
               <div class="left-zan" :class="item.likeFlag==1?'hover':''" v-tap="{methods:dianzan,id:item._id,index:index}">
                 <span>{{item.like}}</span>
               </div>
-              <div class="right-time">{{timeStamp2String(item.create_date)}}</div>
+              <!--<div class="right-time">{{timeStamp2String(item.create_date)}}</div>-->
+              <div class="right-tx":style="'background-image:url('+checkImg(item.user.img)+')'"></div>
+              <div class="right-time">{{timeStamp2String(item.user.user_name)}}</div>
             </div>
           </div>
         </div>
@@ -208,6 +210,7 @@
         },(response)=>{
           // console.log(response);
           let data = response.data;
+          console.log(data)
           _self.setData(data);
         })
       },

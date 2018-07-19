@@ -272,7 +272,7 @@
   }
   .pc-shuru2 .area{
     width: 100%;
-    height: 2.8rem;
+    height: 2.7rem;
     border: none;
     outline: medium;
     resize: none;

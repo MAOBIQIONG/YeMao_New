@@ -3,17 +3,18 @@
     <!--头部导航-->
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png" /></div>
-      <span>成员列表</span>
+      <span>成员</span>
     </div>
     <div class="content content-p">
-      <div class="dzlist" v-for="(item,index) in alumnisList" :key="index" v-tap="{methods:toDetails,id:item.user_id}">
+      <div class="dzlist" v-for="(item,index) in alumnisList" :key="index">
         <div class="left" :style="{backgroundImage:`url(${checkAvatar(item.user.img)})`}"></div>
-        <div class="right">{{item.user.user_name}}</div>
-        <!-- <div class="renzheng">
-          <div class="sb-qian">签</div>
-          <div class="sb-ysm">已实名</div>
-          <div class="sb-yrz">已认证</div>
-        </div> -->
+        <div class="right">
+          <p>{{item.user.user_name}}</p>
+          <p>{{getTypeName(item.user.user_type)}}</p>
+        </div>
+       <div class="renzheng" v-tap="{methods:toDetails,id:item.user_id}">
+         设计师名片
+        </div>
       </div>
     </div>
   </div>
@@ -37,6 +38,10 @@
         // 头像
         checkAvatar (path) {
             return common.getAvatar(path)
+        },
+        // 用户类型
+        getTypeName (id) {
+          return common.getNameByTypeId(id);
         },
         // 详情页
         toDetails (param) {
@@ -64,7 +69,7 @@
   }
 </script>
 <style scoped>
-  @import '../../../static/css/meow/dianzhan.css';
+  @import '../../../static/css/meow/chengyuan.css';
   .left{
       background-size:cover!important;
       background-position:center center!important;

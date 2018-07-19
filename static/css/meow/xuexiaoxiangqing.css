@@ -3,6 +3,7 @@
   position: fixed;
   width: 100%;
   height: 100%;
+  padding-top: 1.2rem;
   font-size: 0.28rem;
   background: #F2F2F2;
   padding-bottom: 0.4rem;
@@ -10,16 +11,14 @@
 
 .content .xxmc {
   width: 100%;
-  height: 2rem;
+  height: 2.3rem;
   background: white;
-  display: inline-block;
 }
-
 .content .xxmc .touxiang {
   float: left;
-  width: 1.6rem;
-  height: 1.6rem;
-  margin: 0.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.4rem 0.2rem;
 }
 
 .content .xxmc .touxiang img {
@@ -34,66 +33,71 @@
 }
 
 .content .xxmc .mingcheng .xuexiao {
-  font-size: 0.32rem;
-  height: 1rem;
+  font-size: 0.4rem;
   line-height: 0.5rem;
-  padding-top:0.2rem;
+  padding-top:0.4rem;
+  color: #4B4B4B;
 }
 
-.content .xxmc .mingcheng .jrxs {
-  font-size: 0.24rem;
-  height: 1rem;
-  line-height: 1rem;
-}
+ .jrxs {
+   width: 2.78rem;
+   height: 0.93rem;
+   line-height: 0.93rem;
+   font-size: 0.34rem;
+   color: white;
+   text-align: center;
+   border-radius: 2rem;
+   background-color: rgba(232, 59, 139, 1);
+   border: 0.03px solid rgba(232, 59, 139, 1);
+   margin:1.5rem auto ;
+ }
 
-.content .xxmc .mingcheng .jrxs span {
-  margin-right: 0.2rem;
-}
 
 .content .xxjj {
   width: 100%;
   height: auto;
-  padding-bottom:0.1rem;
   background: white;
 }
 
 .content .xxjj p {
+  width: 7.1rem;
   height: 0.8rem;
   line-height: 0.8rem;
+  font-size: 0.3rem;
+  color: #4B4B4B;
   margin-left: 0.2rem;
+  border-top: 1px solid #F2F2F2;
 }
 
 .content .xxjj .jianjie {
   width: 7.1rem;
   margin-left: 0.2rem;
   line-height: 0.4rem;
-
+  font-size: 0.26rem;
+  color: #777777;
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
   overflow-x: hidden;
+  border-bottom: 1px solid #F2F2F2;
 }
 
 .liebiao {
   width: 100%;
   font-size: 0.28rem;
-  display: inline-block;
   background: white;
-  margin-top: 0.05rem;
 }
 
 .liebiao .list {
   width: 100%;
-  height: 0.8rem;
-  line-height: 0.8rem;
-  border-bottom: 1px solid #F2F2F2;
+  height: 1rem;
+  line-height:1rem;
 }
 
 .liebiao .list .xycy {
   float: left;
-  width: 5.3rem;
+  width: 5.2rem;
   height: 0.8rem;
 }
 
@@ -106,7 +110,7 @@
   width: 0.6rem;
   height: 0.6rem;
   float: left;
-  margin: 0.1rem 0;
+  margin: 0.2rem 0;
   margin-left: -0.1rem;
   border-radius: 50%;
   overflow: hidden;
@@ -127,6 +131,8 @@
 
 .liebiao .list .xycy .renshu {
   float: right;
+  font-size: 0.24rem;
+  color: #777777;
 }
 
 .liebiao .list .tupiao {
@@ -141,6 +147,8 @@
 .liebiao .list .xingxi {
   float: left;
   margin-left: 0.2rem;
+  font-size:0.3rem;
+  color: #4B4B4B;
 }
 
 .liebiao .list .guanliyuan {
@@ -188,12 +196,13 @@
   float: right;
   width: 0.8rem;
   height: 0.8rem;
+  margin-top: 0.1rem;
   text-align: right;
 }
 
 .liebiao .list .list-right img {
   width: 0.3rem;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   margin-right: 0.2rem;
 }
 

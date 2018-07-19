@@ -4,6 +4,7 @@
     <div class="header-static"></div>
     <div class="header p-absolute">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png" /></div>
+      <span>喵问答</span>
       <div class="header-right" v-tap="{methods:shareApp}"><img src="../../../static/images/fx1.png" /></div>
     </div>
     <div class="content">
@@ -41,7 +42,7 @@
                           <p class="name">{{chw.user.user_name}}</p>
                       </div>
                       <div class="tm-right">
-                          <span>发布时间</span> <span>{{chw.create_date | dateToString}}</span>
+                          <span>发布于</span> <span>{{chw.create_date | dateToString}}</span>
                       </div>
                   </div>
                 <!--<div class="tupian" v-if="chw.imgs && chw.imgs.length>0" :style="{backgroundImage:`url(${checkImg(chw.imgs[0])})`}">-->
@@ -84,7 +85,7 @@
                       <span>{{likes_num}}</span>人点赞
                       </div>
                   </div>
-                  <p>热门评论</p>
+                  <p>回复</p>
                   <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
                       <div class="top-pinlun">
                           <div class="tp-left2" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}">

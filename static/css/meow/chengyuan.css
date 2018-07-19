@@ -1,0 +1,48 @@
+
+.content .dzlist {
+  width: 6.8rem;
+  height: 1.8rem;
+  background: white;
+  margin: auto;
+  font-size: 0.28rem;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.content .dzlist .left {
+  float: left;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: #CCCCCC;
+  margin-top: 0.3rem;
+}
+
+.content .dzlist .right {
+  float: left;
+  margin-left: 0.2rem;
+  color: #777777;
+  font-size: 0.26rem;
+  margin-top: 0.4rem;
+}
+.content .dzlist .right p:first-child{
+  color: #4B4B4B;
+  font-size: 0.34rem;
+}
+
+.content .dzlist .renzheng {
+  width: 1.62rem;
+  height: 0.54rem;
+  border-radius: 2rem;
+  line-height: 0.54rem;
+  float: right;
+  background-color: rgba(255, 255, 255, 1);
+  border: 0.02rem solid rgba(232, 59, 139, 1);
+  font-size: 0.26rem;
+  text-align: center;
+  color:#E83B8B;
+  margin-top: 0.6rem;
+
+}
+
+
+/*# sourceMappingURL=dianzhan.css.map */

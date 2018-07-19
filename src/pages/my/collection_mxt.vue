@@ -21,6 +21,7 @@
             @on-pullup-loading="pullUpLoading"
             ref="scroller"
             :class="{scroller:true}"
+            style="background: #F2F2F2"
         >
             <div>
                 <div class="weida-list" v-for="(item,index) in list" :key="index">

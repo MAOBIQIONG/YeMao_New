@@ -66,7 +66,7 @@
 
             <!--评论详情-->
             <div class="pinglun">
-            <p>热门评论</p>
+            <p>回复</p>
             <div class="pinlunlist" v-for="(item,index) in comments" :key="index">
                 <div class="top-pinlun">
                 <div class="tp-left2" v-tap="{methods:toUrl,pagename:'sjszxxq',query:{id:item.user._id}}">

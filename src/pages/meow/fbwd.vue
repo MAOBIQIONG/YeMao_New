@@ -8,12 +8,13 @@
     </div>
     <div class="content content-p">
       <div class="xgnc">
-        <div class="left"><input v-model="params.title" type="text" maxlength="38" placeholder="标题（最多38字）" class="btname" ref="title"></div>
+        <div class="left"><input v-model="params.title" type="text" maxlength="38" placeholder="问题标题以问号结尾（最多38字）" class="btname" ref="title"></div>
       </div>
       <!--留言-->
       <div class="pc-shuru">
-        <textarea class="area" ref="area" maxlength="300" placeholder="请输入问题描述" v-model="params.description"></textarea>
-        <p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>
+        <textarea class="area" ref="area" maxlength="300" placeholder="问题描述" v-model="params.description"></textarea>
+        <!--<p class="xianzhi"><span class="zs">300</span>/<span>300</span></p>-->
+        <p class="xianzhi"><span class="zs">{{300-params.title.length}}</span>/<span>300</span></p>
       </div>
       <!--图片上传-->
       <div class="sctp">
@@ -265,5 +266,18 @@
   @import '../../../static/css/meow/fbwd.css';
   .fbwd{
     position: fixed;
+  }
+  .pc-shuru .xianzhi{
+    position: absolute;
+    background: #F1F1F1;
+    right: 0.1rem;
+    bottom: 0.2rem;
+    width: 1.26rem;
+    height: 0.48rem;
+    line-height: 0.48rem;
+    font-size:0.22rem;
+    color: #5D5D5D;
+    text-align: center;
+    border-radius: 0.48rem;
   }
 </style>
