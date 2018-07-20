@@ -47,8 +47,8 @@
               <span v-if="alumniList.length>0">{{alumniList.length}}</span>
               <span v-else>0</span>人
             </div>
-            <ul class="cylist" v-for="(item,index) in alumniList.slice(0,7)" :key="index">
-              <li>
+            <ul class="cylist">
+              <li v-for="(item,index) in alumniList.slice(0,7)" :key="index">
                 <!--<img :src="checkAvatar(item.user.img)" />-->
                 <div class="img" :style="{backgroundImage: 'url(' + checkAvatar(item.user.img) + ')'}"></div>
               </li>

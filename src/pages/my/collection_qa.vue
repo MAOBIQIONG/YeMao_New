@@ -48,7 +48,7 @@
               </div>
               <div class="pingjia-right">
                 <span v-if="item.like">{{item.like}}</span><span v-else>0</span> 赞同 <span v-if="item.comments">{{item.comments}}</span><span
-                v-else>0</span> 评论
+                v-else>0</span> 18 回复
               </div>
             </div>
           </div>

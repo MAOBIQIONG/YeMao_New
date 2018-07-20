@@ -164,7 +164,7 @@
   text-align: center;
   border: 1px solid #CCCCCC;
   border-radius: 0.5rem;
-  color: #CCCCCC;
+  color: #585858;
   margin-right: 0.24rem;
   margin-top: 0.25rem;
 }
@@ -174,9 +174,9 @@
     height: 0.5rem;
     line-height: 0.5rem;
     text-align: center;
-    border: 1px solid #f75ea7;
+    border: 1px solid #CCCCCC;
     border-radius: 0.5rem;
-    color: #f75ea7;
+    color: #585858;
     margin-right: 0.24rem;
     margin-top: 0.25rem;
   }

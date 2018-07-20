@@ -8,7 +8,10 @@
       <!--主体内容-->
       <div class="dcl-content">
         <div class="dcl-banner">
-           <p>订单待交付中…</p>
+           <p v-if="order.project_state>=0&&order.project_state<3">订单待确认中…</p>
+           <p v-if="order.project_state==3">订单待支付中…</p>
+           <p v-if="order.project_state>3&&order.project_state<7">订单待交付中…</p>
+           <p v-if="order.project_state==7">订单已完成</p>
            <p>交易过程中如有疑问请及时沟通</p>
         </div>
         <div class="dcl-top">
@@ -33,7 +36,11 @@
             </div>
           </div>
           <div class="db-miaomiao" v-if="order.winner" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.winner._id,name:order.winner.user_name,img:order.winner.img}}">
-             <div><span><img src='../../../static/images/employer/miaomiao.png'></span><span>联系设计师</span></div>
+             <div>
+               <span><img src='../../../static/images/employer/miaomiao.png'></span>
+               <span v-if="buttonState.user_type=='designer'">联系设计师</span>
+               <span v-if="buttonState.user_type=='employer'">联系雇主</span>
+             </div>
           </div>
           <div class="ddxq-list">
             <div class="ddxq-box">

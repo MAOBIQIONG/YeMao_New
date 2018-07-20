@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-left" v-tap="{methods:showFun}"><img src="../../../static/images/back.png" /></div>
       <span>发布问题</span>
-      <div class="header-right" v-tap="{methods:submit}">完成</div>
+      <div class="header-right" v-tap="{methods:submit}">发布</div>
     </div>
     <div class="content content-p">
       <div class="xgnc">
