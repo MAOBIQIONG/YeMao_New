@@ -33,7 +33,6 @@ a {
 pre{
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
   /*overflow-x: hidden;*/
@@ -88,12 +87,12 @@ body,html{
 
 /*沉浸式样式*/
 .content-e{
-  padding-top: 1.3rem;
+  padding-top: 1.2rem;
   /*padding-top: 0.88rem;*/
 }
 /*沉浸式样式*/
 .content-p{
-  padding-top: 1.3rem;
+  padding-top: 1.2rem;
   /*非沉浸式*/
   /*padding-top:0.88rem;*/
 }
@@ -962,19 +961,21 @@ body,html{
 .ddlist-sjsdai {
   height: 2.6rem;
   background-color: white;
-  margin-top: 0.1rem;
+  margin-bottom: 0.2rem;
 }
 
 .ddlist-sjsdai .ds-top {
+  width: 6.9rem;
+  margin: auto;
   height: 1.8rem;
   border-bottom: 1px solid #F2F2F2;
 }
 
  .ddlist-sjsdai .ds-top .ds-img {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.3rem;
+  height: 1.3rem;
   background-color: #CCCCCC;
-  margin: 0.1rem 0.18rem;
+  margin: 0.25rem 0rem;
   float: left;
   background-position:center center;
   background-size:cover;
@@ -986,41 +987,55 @@ body,html{
 .ddlist-sjsdai .ds-top .ds-jianjie {
   float: left;
   width: 5.4rem;
-  height: 1.6rem;
+  height: 1.2rem;
   line-height: 0.4rem;
-  margin: 0.1rem 0px;
+  margin: 0.3rem 0px;
+  margin-left: 0.2rem;
 }
 
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-top {
   width: 100%;
-  height: 0.93rem;
-  font-size: 0.32rem;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  color: #4e4e4e;
-  padding-top:0.1rem;
-  line-height:0.46rem;
+  height: 0.4rem;
+  font-size: 0.26rem;
+  color: #8D8D8D;
+  line-height:0.4rem;
 }
 
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom {
   width: 100%;
   height: 0.6rem;
   font-size:0.28rem;
-  padding-top:0.12rem;
   color:#999;
 }
 
 .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin {
   float: left;
-  line-height: 0.6rem;
-  height: 0.6rem;
+  line-height: 0.8rem;
+  height: 0.8rem;
 }
 
+.ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin div:first-child{
+  float: left;
+  width: 3rem;
+  line-height: 0.4rem;
+  color: #010101;
+  font-size: 0.28rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-right: 0.2rem;
+}
+.ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin div:last-child{
+  float: right;
+  width: 2.2rem;
+  font-size: 0.32rem;
+  line-height: normal;
+  text-align: right;
+}
  .ddlist-sjsdai .ds-top .ds-jianjie .jianjie-bottom .db-leixin .yuan {
    color: #f74d9f;
-   font-size: 0.36rem;
+   font-size: 0.28rem;
    font-weight: bolder;
 }
 
@@ -1035,7 +1050,14 @@ body,html{
   height: 0.8rem;
   font-size: 0.24rem;
 }
-
+.ddlist-sjsdai .ds-bottom .db-left {
+  float: left;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.26rem;
+  color: #919191;
+  margin-left: 0.3rem;
+}
 .ddlist-sjsdai .ds-bottom .db-right {
   float: right;
   height: 0.8rem;
@@ -1060,9 +1082,12 @@ body,html{
   height: 0.5rem;
   line-height: 0.5rem;
   text-align: center;
-  border: 1px solid #f75ea7;
+  /*border: 1px solid #f75ea7;*/
+  /*border-radius: 0.5rem;*/
+  /*color: #f75ea7;*/
+  border: 1px solid #CCCCCC;
   border-radius: 0.5rem;
-  color: #f75ea7;
+  color: #CCCCCC;
   margin-right: 0.24rem;
   margin-top: 0.15rem;
 }

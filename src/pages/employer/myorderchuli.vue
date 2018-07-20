@@ -2,7 +2,7 @@
   <div class="myorder-employer p-fixed">
     <div class="header">
       <div class="header-left" @click="goback"><img src="../../../static/images/back.png"/></div>
-      <span>我的订单</span>
+      <span>雇主订单</span>
       <!--<div class="header-right" @click="toUrl('fabudingdan')"><img src="../../../static/images/employer/jiahao.png"></div>-->
     </div>
     <!--tab选项卡-->

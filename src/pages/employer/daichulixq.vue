@@ -7,6 +7,10 @@
     <div class="content content-p">
       <!--主体内容-->
       <div class="dcl-content">
+        <div class="dcl-banner">
+           <p>订单待交付中…</p>
+           <p>交易过程中如有疑问请及时沟通</p>
+        </div>
         <div class="dcl-top">
           <img v-if="order.project_state>=0&&order.project_state<3" src="../../../static/images/employer/dcl.png" />
           <img v-if="order.project_state==3" src="../../../static/images/employer/dzf.png" />
@@ -25,16 +29,17 @@
               </div>
               <div class="jianjie-bottom">
                 <div class="db-yushuan"><span>预算</span> <span class="yushuan">￥</span><span class="yushuan">{{order.project_budget}}</span></div>
-                <div class="db-miaomiao" v-if="order.winner" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.winner._id,name:order.winner.user_name,img:order.winner.img}}">
-                  <span><img src='../../../static/images/employer/miaomiao.png'></span><span>喵喵</span>
-                </div>
               </div>
             </div>
+          </div>
+          <div class="db-miaomiao" v-if="order.winner" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.winner._id,name:order.winner.user_name,img:order.winner.img}}">
+             <div><span><img src='../../../static/images/employer/miaomiao.png'></span><span>联系设计师</span></div>
           </div>
           <div class="ddxq-list">
             <div class="ddxq-box">
               <div class="box-left">
-                <span><img src="../../../static/images/employer/07.png"/></span><span>订单类型：</span>
+                <!--<span><img src="../../../static/images/employer/07.png"/></span>-->
+                <span>订单类型：</span>
               </div>
               <div class="box-right">
                 <span>{{order.project_type | designType}}</span>
@@ -42,7 +47,8 @@
             </div>
             <div class="ddxq-box">
               <div class="box-left">
-                <span><img src="../../../static/images/employer/05.png"/></span><span>设计面积：</span>
+                <!--<span><img src="../../../static/images/employer/05.png"/></span>-->
+                <span>设计面积：</span>
               </div>
               <div class="box-right">
                 <span>{{order.project_area}}</span>
@@ -50,7 +56,8 @@
             </div>
             <div class="ddxq-box">
               <div class="box-left">
-                <span><img src="../../../static/images/employer/leixin.png"/></span><span>预计完成：</span>
+                <!--<span><img src="../../../static/images/employer/leixin.png"/></span>-->
+                <span>预计完成：</span>
               </div>
               <div class="box-right">
                 <span>{{getStringDate(order.project_endTime,'ymd')}}</span>
@@ -58,7 +65,8 @@
             </div>
             <div class="ddxq-box">
               <div class="box-left">
-                <span><img src="../../../static/images/employer/04.png"/></span><span>交易状态：</span>
+                <!--<span><img src="../../../static/images/employer/04.png"/></span>-->
+                <span>交易状态：</span>
               </div>
               <div class="box-right">
                 <span>{{order.project_state | getStateName}}</span>
@@ -66,7 +74,8 @@
             </div>
             <div class="ddxq-box">
               <div class="box-left">
-                <span><img src="../../../static/images/employer/02.png"/></span><span>设计深度：</span>
+                <!--<span><img src="../../../static/images/employer/02.png"/></span>-->
+                <span>设计深度：</span>
               </div>
               <div class="box-right">
                 <span :key="index" v-for="(item,index) in order.project_depth">{{item | getDepthName}}</span>
@@ -74,7 +83,8 @@
             </div>
             <div class="ddxq-box">
               <div class="box-left">
-                <span><img src="../../../static/images/employer/03.png"/></span><span>工时：</span>
+                <!--<span><img src="../../../static/images/employer/03.png"/></span>-->
+                <span>工时：</span>
               </div>
               <div class="box-right">
                 <span>{{order.project_workHours}}小时</span>
@@ -82,7 +92,8 @@
             </div>
             <div class="ddxq-box" style="border: none;">
               <div class="box-left">
-                <span><img src="../../../static/images/employer/06.png"/></span><span>地区：</span>
+                <!--<span><img src="../../../static/images/employer/06.png"/></span>-->
+                <span>地区：</span>
               </div>
               <div class="box-right">
                 <span>{{order.project_region}}</span>
@@ -230,7 +241,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
             bidders:[],
             imgSize:0,
             viewMore:false,
-            viewText:'点击查看更多',
+            viewText:'展开',
             buttonState:'',
             confirmShow:false,
             confirmMsg:"确定要取消该订单吗？",
@@ -375,7 +386,7 @@ import {Toast,Confirm,TransferDomDirective as TransferDom} from 'vux'
         viewMoreFun () {
             var _self = this;
             _self.viewMore = _self.viewMore==false ? true : false;
-            _self.viewText = _self.viewMore==false ? '点击查看更多' : '收起';
+            _self.viewText = _self.viewMore==false ? '展开' : '收起';
             var desc = _self.viewMore==false ? _self.getMaxlen(_self.order.project_describe) : _self.order.project_describe;
             _self.$refs.project_describe.innerHTML = desc;
         },

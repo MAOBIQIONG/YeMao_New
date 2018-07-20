@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header-left" v-tap="{methods:goback}"><img src="../../../static/images/back.png"/></div>
       <span>订单</span>
-      <!--<div class="header-right" @click="toUrl('fabudingdan')"><img src="../../../static/images/employer/jiahao.png"></div>-->
+      <div class="header-right" @click="toUrl('fabudingdan')"><img src="../../../static/images/employer/jiahao.png"></div>
     </div>
     <!--tab选项卡-->
         <tab :line-width=2 active-color='#fc378c' v-model="index" class="tabs">

@@ -26,20 +26,23 @@
                         <img :src="checkImg(item.imgs[0])">
                     </div>
                     <div class="ds-jianjie">
-                        <div class="jianjie-top">
-                            {{item.project_title}}
+                      <div class="jianjie-bottom">
+                        <div class="db-leixin">
+                          <div><span>{{item.project_title}}</span></div>
+                          <div><span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span></div>
                         </div>
-                        <div class="jianjie-bottom">
-                            <div class="db-leixin">
-                                <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
-                            </div>
-                            <div class="db-djs" v-if="item.project_state==4">待交付</div>
-                            <div class="db-djs" v-if="item.project_state==5">交付中</div>
-                            <div class="db-djs" v-if="item.project_state==6">审核中</div>
+                      </div>
+                        <div class="jianjie-top">
+                            {{item.project_type | designType}}
                         </div>
                     </div>
                 </div>
                 <div class="ds-bottom">
+                    <div class="db-left">
+                      <div class="db-djs" v-if="item.project_state==4">待交付</div>
+                      <div class="db-djs" v-if="item.project_state==5">交付中</div>
+                      <div class="db-djs" v-if="item.project_state==6">审核中</div>
+                    </div>
                     <div class="db-right">
                       <div class="db-sxdd" v-tap="{methods: toCheck, id: item._id}">一键会审</div>
                       <div v-if="item.project_state==5" class="db-qrdd" v-tap="{methods: showConfirm, type:'submissionConfirm',id:item._id}">确认交付</div>

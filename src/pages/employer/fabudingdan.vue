@@ -53,7 +53,7 @@
                 <span>预算</span>
               </div>
               <div class="ys-right">
-                <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget"/>
+                <input type="text" placeholder="请输入预算金额" v-model="budget" ref="budget" maxlength="6"/>
                 <span class="danwei">￥</span>
               </div>
 

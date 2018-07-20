@@ -24,16 +24,14 @@
                 <div class="ds-top" v-tap="{methods:toDetails,item:item}">
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"></div>
                     <div class="ds-jianjie">
-                        <div class="jianjie-top">
-                            {{item.project_title}}
-                        </div>
                         <div class="jianjie-bottom">
-                            <div class="db-leixin">
-                                <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
-                            </div>
-                            <template>
-                                <div class="db-djs">待支付</div>
-                            </template>
+                        <div class="db-leixin">
+                          <div><span> {{item.project_title}}</span></div>
+                          <div><span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span></div>
+                        </div>
+                      </div>
+                        <div class="jianjie-top">
+                          {{item.project_type | designType}}
                         </div>
                     </div>
                 </div>
@@ -43,6 +41,11 @@
                     <p v-if="item.bidders.length==0">还没有设计师抢单</p>
                 </div> -->
                 <div class="ds-bottom">
+                    <div class="db-left">
+                      <template>
+                        <div class="db-djs">待支付</div>
+                      </template>
+                    </div>
                     <div class="db-right">
                         <!-- <div class="db-qxdd" v-tap="{ methods:cancelOrder, id: item._id}">取消订单</div> -->
                         <div class="db-qxdd" @click="showConfirm(item._id)">取消订单</div>

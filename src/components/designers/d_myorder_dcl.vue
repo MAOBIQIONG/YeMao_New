@@ -25,27 +25,16 @@
                   <!-- <div class="order__tag" v-if="item.invited_state==1">受邀</div> -->
                     <div class="ds-img" :style="{backgroundImage:`url(${checkImg(item.imgs[0])})`}"  v-if="item.imgs"></div>
                     <div class="ds-jianjie">
+                       <div class="jianjie-bottom">
+                        <div class="db-leixin">
+                          <div><span>{{item.project_title}}</span></div>
+                          <div><span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span></div>
+                        </div>
+                      </div>
                         <div class="jianjie-top">
-                            {{item.project_title}}
+                          {{item.project_type | designType}}
                         </div>
-                        <div class="jianjie-bottom">
-                            <div class="db-leixin">
-                                <span>{{item.project_type | designType}}</span> <span class="yuan">￥</span><span class="yuan">{{item.project_budget}}</span>
-                            </div>
-                            <!--状态信息-->
-                            <div ref="statetip">
-                                <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
-                                <template v-else >
-                                    <template v-if="item.project_winBidder === user_id">
-                                        <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
-                                        <div class="db-djs" v-else-if="item.project_state==3">等待雇主支付</div>
-                                        <div class="db-djs" v-else>等待设计师完善订单</div>
-                                    </template>
-                                    <div class="db-djs" v-else>抢单失败</div>
-                                </template>
-                            </div>
 
-                        </div>
                     </div>
                 </div>
                 <!-- <div class="od-renshu myorder">
@@ -55,6 +44,20 @@
                 </div> -->
                 <!--按钮状态-->
                 <div class="ds-bottom">
+                    <div class="db-left">
+                      <!--状态信息-->
+                      <div ref="statetip">
+                        <div v-if="isNull(item.project_winBidder)" class="db-djs">抢单中</div>
+                        <template v-else >
+                          <template v-if="item.project_winBidder === user_id">
+                            <div class="db-djs" v-if="item.project_state==2">等待雇主确认订单</div>
+                            <div class="db-djs" v-else-if="item.project_state==3">等待雇主支付</div>
+                            <div class="db-djs" v-else>等待设计师完善订单</div>
+                          </template>
+                          <div class="db-djs" v-else>抢单失败</div>
+                        </template>
+                      </div>
+                    </div>
                     <div class="db-right" ref="buttons">
                         <template  v-if="!isNull(item.project_winBidder)" >
                             <template v-if="item.project_winBidder === user_id" >
