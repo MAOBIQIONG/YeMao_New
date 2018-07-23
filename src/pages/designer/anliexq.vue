@@ -24,6 +24,7 @@
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
+        style="padding-bottom: .8rem"
       >
         <div>
           <div class="xc-top">
@@ -79,7 +80,6 @@
               </div>
             </div>
           </div>
-          <div style="height: 0.5rem;"></div>
         </div>
         <load-more v-show="loadMoreStatus.show" :show-loading="loadMoreStatus.showLoading" :tip="loadMoreStatus.tip"
                    class="loadMore"></load-more>
@@ -172,7 +172,7 @@
         pullupConfig: {
           content: '上拉加载',
           pullUpHeight: 60,
-          height: 40,
+          height: 20,
           autoRefresh: false,
           downContent: '放开加载',
           upContent: '上拉加载',

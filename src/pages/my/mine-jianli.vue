@@ -411,7 +411,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     width: 0.88rem;
     height: 0.88rem;
     background: url("../../../static/images/xin.png") no-repeat;
-    background-size: 0.6rem 0.6rem;
+    background-size: 0.4rem 0.4rem;
     background-position: center center;
 
   }
@@ -419,7 +419,7 @@ import {Scroller,LoadMore,Toast,Loading,Value2nameFilter as value2name,ChinaAddr
     width: 0.88rem;
     height: 0.88rem;
     background: url("../../../static/images/xinghove.png") no-repeat;
-    background-size: 0.6rem 0.6rem;
+    background-size: 0.4rem 0.4rem;
     background-position: center center;
   }
     .imgNoData{

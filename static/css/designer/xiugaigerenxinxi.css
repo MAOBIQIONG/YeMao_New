@@ -17,7 +17,7 @@
 	float: left;
 	font-size: 0.28rem;
 	height: 0.8rem;
-	line-height: 0.8rem;
+	line-height: 0.78rem;
 	margin-left: 0.3rem;
 }
 
@@ -47,7 +47,7 @@
 .content .ys-time .ys {
 	width: 100%;
 	height: 0.8rem;
-	line-height: 0.8rem;
+	line-height: 0.78rem;
 	border-bottom: 1px solid #F2F2F2;
 }
 
@@ -72,7 +72,7 @@
 .content .ys-time .qdtime {
 	width: 100%;
 	height: 0.8rem;
-	line-height: 0.8rem;
+	line-height: 0.78rem;
 	border-bottom: 1px solid #F2F2F2;
 }
 

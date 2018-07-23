@@ -73,7 +73,7 @@
   .tabs .tabbar-item{
     padding: 0rem 0 .2rem;
     background-size: auto .4rem !important;
-    background-position:  center top .35rem !important;
+    background-position:  center top .25rem !important;
     background-repeat: no-repeat !important;
     -webkit-box-flex: 1;
     -webkit-flex: 1;

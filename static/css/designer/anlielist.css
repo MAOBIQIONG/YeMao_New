@@ -1,86 +1,90 @@
 
- .alzs-list {
-	width: 100%;
-	height: 2.4rem;
-	border-bottom: 1px solid #F2F2F2;
+.alzs-list {
+  width: 100%;
+  height: 2.4rem;
+  border-bottom: 1px solid #F2F2F2;
   background: white;
   padding-top: 0.4rem;
 }
 
- .alzs-list .al-top {
-	width: 6.1rem;
-	height: 1.2rem;
-	margin: auto;
-	/*padding-top: 0.4rem;*/
+.alzs-list .al-top {
+  width: 6.1rem;
+  height: 1.2rem;
+  margin: auto;
+  /*padding-top: 0.4rem;*/
   background: white;
 }
 
- .alzs-list .al-top .touxiang {
-	float: left;
-	width: 1.2rem;
-	height: 1.2rem;
-	background: #CCCCCC;
-	border-radius: 0.1rem;
+.alzs-list .al-top .touxiang {
+  float: left;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: #CCCCCC;
+  border-radius: 0.1rem;
 }
- .alzs-list .al-top .touxiang  img{
+
+.alzs-list .al-top .touxiang img {
   width: 100%;
   height: 100%;
 }
- .alzs-list .al-top .al-right {
-	float: left;
-	width: 4.6rem;
-	height: 1.2rem;
-	margin-left: 0.2rem;
-	font-size: 0.24rem;
+
+.alzs-list .al-top .al-right {
+  float: left;
+  width: 4.6rem;
+  height: 1.2rem;
+  margin-left: 0.2rem;
+  font-size: 0.24rem;
 }
 
- .alzs-list .al-top .al-right .ar-top {
-	height: 0.4rem;
-	line-height: 0.4rem;
-	font-size: 0.28rem;
-}
-
- .alzs-list .al-top .al-right .nenrong {
-	height: 0.8rem;
+.alzs-list .al-top .al-right .ar-top {
+  height: 0.4rem;
   line-height: 0.4rem;
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
+  font-size: 0.28rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
- .alzs-list .al-bottom {
-	height: 0.8rem;
-	line-height: 0.8rem;
-	font-size: 0.24rem;
-	color: #d9d4d9;
+.alzs-list .al-top .al-right .nenrong {
+  height: 0.8rem;
+  line-height: 0.4rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
- .alzs-list .al-bottom .al-left {
-	float: left;
+.alzs-list .al-bottom {
+  height: 0.8rem;
+  line-height: 0.8rem;
+  font-size: 0.24rem;
+  color: #d9d4d9;
 }
 
- .alzs-list .al-bottom .al-left p {
-	float: left;
-	margin-left: 0.4rem;
+.alzs-list .al-bottom .al-left {
+  float: left;
 }
 
- .alzs-list .al-bottom .al-left p span {
-	margin-right: 0.1rem;
-	height: 0.8rem;
-	line-height: 0.8rem;
+.alzs-list .al-bottom .al-left p {
+  float: left;
+  margin-left: 0.4rem;
 }
 
- .alzs-list .al-bottom .al-left p span img {
-	width: 0.4rem;
-	vertical-align: middle;
+.alzs-list .al-bottom .al-left p span {
+  margin-right: 0.1rem;
+  height: 0.8rem;
+  line-height: 0.8rem;
+}
+
+.alzs-list .al-bottom .al-left p span img {
+  width: 0.4rem;
+  vertical-align: middle;
   margin-top: -0.1rem;
 }
 
- .alzs-list .al-bottom .al-right {
-	float: right;
-	margin-right: 0.4rem;
+.alzs-list .al-bottom .al-right {
+  float: right;
+  margin-right: 0.4rem;
 }
-
 
 /*# sourceMappingURL=sjsgeren.css.map */
