@@ -13,7 +13,7 @@
           <span>荣誉名称</span>
         </div>
         <div class="xmlx-right">
-          <input v-model="data.title" type="text" placeholder="请输入荣誉名称,25字以内" maxlength="25"/>
+          <input v-model="data.title" type="text" placeholder="请输入荣誉名称" maxlength="20"/>
         </div>
       </div>
       <div class="xmbt">

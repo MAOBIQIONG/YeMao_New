@@ -24,7 +24,7 @@
         @on-pulldown-loading="pullDownLoading"
         @on-pullup-loading="pullUpLoading"
         ref="scroller"
-        style="padding-bottom: .8rem"
+        style="padding-bottom: 1rem"
       >
         <div>
           <div class="xc-top">
@@ -38,7 +38,7 @@
           </div>
           <div class="xc-banner">
             <!--轮播-->
-            <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange"></swiper>
+            <swiper height="4.8rem" :list="imgs" @on-index-change="onIndexChange" :class="imgs.length==1? 'btn-success':''"></swiper>
           </div>
           <div class="gkrs" style="height: 0.9rem;">
             <div class="zhan dz" :class="chw.likeFlag==1?'hover':''" v-tap="{methods:dianzan}">{{chw.like}}</div>
@@ -172,7 +172,7 @@
         pullupConfig: {
           content: '上拉加载',
           pullUpHeight: 60,
-          height: 20,
+          height:0,
           autoRefresh: false,
           downContent: '放开加载',
           upContent: '上拉加载',
@@ -362,6 +362,7 @@
         _self.chw = data.chw || {};
         _self.answer_id = _self.chw.user._id;
         var imgs = _self.chw.imgs || [];// 图片
+        console.log(imgs)
         if( imgs.length>0 ){
           imgs.forEach(function (item, index) {
             _self.imgs.push({img: _self.getDefultImg(item)});
@@ -369,6 +370,7 @@
         }else {
           _self.imgs.push({img: _self.getDefultImg("")});
         }
+
         // 评论
         _self.comments = data.comments || [];
         if (_self.comments.length < _self.pagination.pageSize) {
@@ -559,6 +561,11 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  .btn-success .vux-indicator-right a{
+    display: none;
+  }
+</style>
 <style scoped>
   @import '../../../static/css/designer/anliexq.css';
   .dz {
@@ -631,4 +638,5 @@
     color: #f661a9!important;
     font-size: 0.3rem!important;
   }
+
 </style>

@@ -1581,7 +1581,7 @@ body,html{
   position: static !important;
 }
 .vux-cell-value{
-  color: #4B4B4B !important;
+  color: #999999;
 }
 .vux-cell-primary vux-popup-picker-select-box{
   width: 100%;

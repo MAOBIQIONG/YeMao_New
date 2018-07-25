@@ -38,8 +38,8 @@
           <div class="db-miaomiao" v-if="order.winner" v-tap="{methods:toUrl2,pagename:'liaotian',query:{id:order.winner._id,name:order.winner.user_name,img:order.winner.img}}">
              <div>
                <span><img src='../../../static/images/employer/miaomiao.png'></span>
-               <span v-if="buttonState.user_type=='designer'">联系设计师</span>
-               <span v-if="buttonState.user_type=='employer'">联系雇主</span>
+               <span v-if="buttonState.user_type=='designer'">联系雇主</span>
+               <span v-if="buttonState.user_type=='employer'">联系设计师</span>
              </div>
           </div>
           <div class="ddxq-list">

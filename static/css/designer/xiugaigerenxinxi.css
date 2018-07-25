@@ -67,6 +67,7 @@
 	border: none;
 	font-size: 0.28rem;
 	outline: medium;
+  color: #999999;
 }
 
 .content .ys-time .qdtime {
@@ -92,6 +93,7 @@
 	border: none;
 	font-size: 0.28rem;
 	outline: medium;
+  color: #999999;
 }
 
 .liebiao {

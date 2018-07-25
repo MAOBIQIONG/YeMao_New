@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: 30px"></load-more>
+        <load-more :show-loading="showLoading" :tip="loadtext" background-color="#fbf9fe" style="margin-top: -0.6rem"></load-more>
       </div>
     </scroller>
   </div>
@@ -234,12 +234,6 @@
   }
   .weui-cells{
     background: transparent !important;
-  }
-  .weui-cell_access {
-    padding:0 !important;
-    height: 0.8rem;
-    width: 1rem;
-    display:inline-block!important;
   }
   .weui-cells:before{
     border: none !important;

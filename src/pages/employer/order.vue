@@ -9,9 +9,10 @@
         <div class="ddxq">
           <div class="ddxq-top xiugai-top">
             <div class="ddxq-img xiugai-ddxq-img" @click="toViewImgs(order.imgs)">
-              <img v-if="order.imgs" :src='checkImg(order.imgs[0])'>
-              <img v-else :src='checkImg("")'>
+              <!--<img v-if="order.imgs" :src='checkImg(order.imgs[0])'>-->
+              <!--<img v-else :src='checkImg("")'>-->
               <!--<div class="num">{{imgSize}}</div>-->
+              <swiper height="3.8rem" :list="imgList" @on-index-change="onIndexChange" ></swiper>
             </div>
             <div class="ddxq-jianjie">
               <div class="jianjie-top">
@@ -167,7 +168,7 @@
 
 <script>
   import xheader2 from '../../components/header/xheader2.vue'
-  import {Confirm, Toast, TransferDomDirective as TransferDom} from 'vux'
+  import {Swiper, SwiperItem,Confirm, Toast, TransferDomDirective as TransferDom} from 'vux'
 
   export default {
     directives: {
@@ -176,7 +177,9 @@
     components: {
       xheader2,
       Toast,
-      Confirm
+      Confirm,
+      Swiper,
+      SwiperItem,
     },
     data() {
       return {
@@ -189,6 +192,8 @@
         user_id: null,
         isInit: false,
         isPart: false,
+        imgList: [],
+        imgIndex: 0,
         collectFlag: 0,
         order: {
           user: {}
@@ -210,6 +215,7 @@
         _self.order_id = _self.$route.query.id;
         _self.userInfo = common.getObjStorage("userInfo") || {};
         _self.user_id = _self.userInfo._id || null;
+        _self.imgList =[];
         _self.initData();
       }
       _self.isInit = true;
@@ -243,7 +249,9 @@
         this.showMark = true;
         this.showMsg = msg;
       },
-
+      onIndexChange (index) {
+        this.imgIndex = index
+      },
       /**************************/
       goback() {
         this.$router.goBack()
@@ -293,6 +301,9 @@
       //头像
       checkAvatar(path) {
         return common.getAvatar(path);
+      },
+      getDefultImg(path){
+        return common.getDefultImg(path)
       },
       // 项目深度
       getDepthName(num) {
@@ -371,6 +382,15 @@
             _self.order = order;
             if (_self.order.imgs) {
               _self.imgSize = _self.order.imgs.length;
+            }
+            var imgs = _self.order.imgs || [];// 图片
+            console.log(imgs.length)
+            if( imgs.length>0 ){
+              imgs.forEach(function (item,i) {
+                _self.imgList.push({img: _self.getDefultImg(item)});
+              })
+            }else {
+              _self.imgList.push({img: _self.getDefultImg("")});
             }
             // 重置订单详情
             _self.shoViewMore = false;

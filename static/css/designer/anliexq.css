@@ -93,6 +93,7 @@
 
 .xqjs {
   background: white;
+  margin-bottom: 0.2rem;
 }
 
 .xqjs .smjs {
@@ -102,10 +103,6 @@
   font-size: 0.28rem;
   line-height: 0.4rem;
   color: #333333;
-}
-
-.pingjia-list {
-  margin-top: 0.4rem;
 }
 
 .pingjia-list .gzpj-list {

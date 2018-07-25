@@ -27,14 +27,17 @@
             </div>
           </div>
           <div class="xmlx">
-            <div class="xmlx-left">
-              <span>项目地区</span>
-            </div>
-            <div class="xmlx-right">
-              <group class="xmlx-kuang">
-                <x-address @on-hide="logHide" @on-show="logShow" title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>
-              </group>
-            </div>
+            <!--<div class="xmlx-left">-->
+              <!--<span>项目地区</span>-->
+            <!--</div>-->
+            <!--<div class="xmlx-right">-->
+              <!--<group class="xmlx-kuang">-->
+                <!--<x-address @on-hide="logHide" @on-show="logShow" title="" :list="addressData" hide-district value-text-align="right" v-model="city"></x-address>-->
+              <!--</group>-->
+            <!--</div>-->
+            <group label-width="2.25rem" label-align="left">
+              <x-address @on-hide="logHide" title="期望城市" :placeholder="'请选择城市'" raw-value :list="addressData" hide-district value-text-align="right" v-model="city" label-align="end"></x-address>
+            </group>
           </div>
           <div class="xmbt">
             <div class="xmbt-top">
@@ -686,11 +689,22 @@
   .fb-content{
     padding-top: 1.2rem;
   }
-  .xmlx .vux-popup-picker-value{
-    text-align: right;
-  }
   .fabudingdan .weui-cell_access .weui-cell__ft{
     padding-right:0;
+  }
+
+  .xmlx .weui-cell_access{
+    display:flex!important;
+    width:100%!important;
+  }
+
+  .xmlx .vux-popup-picker-value {
+    text-align:right!important;
+    max-width:5rem!important;
+    color: #999999!important;
+  }
+  .xmlx .weui-cell {
+    justify-content:space-between!important;
   }
 </style>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
